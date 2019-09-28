@@ -8,11 +8,10 @@ import 'package:treva_shop_flutter/UI/HomeUIComponent/DetailProduct.dart';
 import 'package:treva_shop_flutter/UI/HomeUIComponent/FlashSale.dart';
 import 'package:treva_shop_flutter/UI/HomeUIComponent/MenuDetail.dart';
 import 'package:treva_shop_flutter/UI/HomeUIComponent/PromotionDetail.dart';
-import 'package:treva_shop_flutter/ListItem/CRUDModel.dart';
 import 'package:treva_shop_flutter/ListItem/Product.dart';
-import 'package:provider/provider.dart';
-import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:treva_shop_flutter/Services/CRUDModel.dart';
+import 'package:provider/provider.dart';
 
 
 class Menu extends StatefulWidget {
@@ -85,7 +84,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     double size = mediaQueryData.size.height;
-//    final productProvider = Provider.of<CRUDModel>(context);
+    final productProvider = Provider.of<CRUDModel>(context);
 ////    productProvider.fetchProductsAsStream();
 
 
@@ -550,7 +549,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     Widget _buildBody(BuildContext context) {
 
       return StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance.collection('product').snapshots(),
+        stream: productProvider.fetchProductsAsStream(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           print(snapshot.hasData);
 
@@ -642,7 +641,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                 ),
 
                 /// Call a Grid variable, this is item list in Recomended item
-                Grid,
+                //Grid,
               ],
             ),
           ),

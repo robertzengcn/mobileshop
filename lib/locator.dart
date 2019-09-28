@@ -1,8 +1,8 @@
-
 import 'package:get_it/get_it.dart';
+import './Services/api.dart';
+import './Services/CRUDModel.dart';
 
-import './Api.dart';
-import './CRUDModel.dart';
+
 
 GetIt locator = GetIt();
 

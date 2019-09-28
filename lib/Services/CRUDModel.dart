@@ -1,9 +1,10 @@
 import 'dart:async';
-import './Api.dart';
-import './Product.dart';
-import './Locator.dart';
+import 'package:flutter/material.dart';
+import '../locator.dart';
+import '../Services/api.dart';
+import '../ListItem/Product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-class CRUDModel  {
+class CRUDModel extends ChangeNotifier {
   Api _api = locator<Api>();
 
   List<Product> products;
@@ -11,6 +12,7 @@ class CRUDModel  {
 
   Future<List<Product>> fetchProducts() async {
     var result = await _api.getDataCollection();
+    //print(result.documents);
     products = result.documents
         .map((doc) => Product.fromMap(doc.data, doc.documentID))
         .toList();
