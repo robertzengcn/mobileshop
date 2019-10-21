@@ -7,6 +7,8 @@ import './Services/CRUDModel.dart';
 GetIt locator = GetIt();
 
 void setupLocator() {
-  locator.registerLazySingleton(() => Api('products'));
+  //locator.registerLazySingleton(() => Api('products'));
+  //locator.registerLazySingleton<Api>(() => Api());
+
   locator.registerLazySingleton(() => CRUDModel()) ;
 }

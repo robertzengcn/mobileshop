@@ -9,11 +9,16 @@ import 'package:treva_shop_flutter/UI/LoginOrSignup/Login.dart';
 import 'package:treva_shop_flutter/UI/OnBoarding.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
+import 'package:provider/provider.dart';
+import './locator.dart';
+import './Services/CRUDModel.dart';
+//import 'package:treva_shop_flutter/UI/HomeUIComponent/HomeView.dart';
 
 
 
 /// Run first apps open
 void main() {
+  setupLocator();
   runApp(myApp());
 }
 
@@ -34,24 +39,31 @@ class myApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
       statusBarColor: Colors.transparent, //or set color with: Color(0xFF0000FF)
     ));
-    return new MaterialApp(
-      title: "Amiga Toy",
-      theme: ThemeData(
-          brightness: Brightness.light,
-          backgroundColor: Colors.white,
-          primaryColorLight: Colors.white,
-          primaryColorBrightness: Brightness.light,
-          primaryColor: Colors.white),
-      debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
-      /// Move splash screen to ChoseLogin Layout
-      /// Routes
-      routes: <String, WidgetBuilder>{
-        "login": (BuildContext context) => new Menu()
-      },
-      navigatorObservers: <NavigatorObserver>[observer],
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(builder: (_) => locator<CRUDModel>()),
+      ],
+      child: MaterialApp(
+        title: "Amiga Toy",
+        theme: ThemeData(
+            brightness: Brightness.light,
+            backgroundColor: Colors.white,
+            primaryColorLight: Colors.white,
+            primaryColorBrightness: Brightness.light,
+            primaryColor: Colors.white),
+        debugShowCheckedModeBanner: false,
+        home: SplashScreen(),
+        /// Move splash screen to ChoseLogin Layout
+        /// Routes
+        routes: <String, WidgetBuilder>{
+          //"login": (BuildContext context) => new Menu()
+          "login": (BuildContext context) => new Menu()
+        },
+        navigatorObservers: <NavigatorObserver>[observer],
+      ),
     );
   }
+
 }
 
 /// Component UI

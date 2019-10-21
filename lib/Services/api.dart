@@ -2,10 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 class Api{
   final Firestore _db = Firestore.instance;
-  final String path;
+ final String path;
   CollectionReference ref;
 
   Api( this.path ) {
+
+    ref = _db.collection(path);
+  }
+
+  void SwitchPath(String path){
+
     ref = _db.collection(path);
   }
 
@@ -13,6 +19,7 @@ class Api{
     return ref.getDocuments() ;
   }
   Stream<QuerySnapshot> streamDataCollection() {
+
     return ref.snapshots() ;
   }
   Future<DocumentSnapshot> getDocumentById(String id) {
@@ -27,6 +34,8 @@ class Api{
   Future<void> updateDocument(Map data , String id) {
     return ref.document(id).updateData(data) ;
   }
+
+
 
 
 }

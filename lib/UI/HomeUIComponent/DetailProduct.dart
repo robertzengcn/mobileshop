@@ -254,9 +254,9 @@ class _detailProdukState extends State<detailProduk> {
                           autoplay: false,
                           boxFit: BoxFit.cover,
                           images: [
-                            AssetImage(gridItem.img),
-                            AssetImage(gridItem.img),
-                            AssetImage(gridItem.img),
+                            NetworkImage(gridItem.img),
+                            NetworkImage(gridItem.img),
+                            NetworkImage(gridItem.img),
                           ],
                         ),
                       ),

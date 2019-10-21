@@ -9,7 +9,7 @@ class AppbarGradient extends StatefulWidget {
 }
 
 class _AppbarGradientState extends State<AppbarGradient> {
-  String CountNotice = "4";
+  String CountNotice = "0";
 
     /// Build Appbar in layout home
   @override
@@ -78,7 +78,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
                   Padding(
                     padding: EdgeInsets.only(top: 3.0),
                     child: Text(
-                      "Treva Shop",
+                      "Amiga Toy",
                       style: TextStyle(
                           fontFamily: "Popins",
                           color: Colors.black12,

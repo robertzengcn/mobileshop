@@ -8,6 +8,8 @@ import 'package:treva_shop_flutter/UI/HomeUIComponent/PromotionDetail.dart';
 import 'package:treva_shop_flutter/UI/HomeUIComponent/Search.dart';
 
 class categoryDetail extends StatefulWidget {
+  //final String id;
+  //categoryDetail(this.id);
   @override
   _categoryDetailState createState() => _categoryDetailState();
 }
@@ -59,7 +61,7 @@ class _categoryDetailState extends State<categoryDetail> {
   /// All Widget Component layout
   @override
   Widget build(BuildContext context) {
-
+   // widget.id;
     /// imageSlider in header layout category detail
     var _imageSlider = Padding(
       padding: const EdgeInsets.only(
