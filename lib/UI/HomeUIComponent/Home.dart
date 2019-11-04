@@ -15,6 +15,7 @@ import 'package:treva_shop_flutter/ListItem/Category.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
+import 'package:flutter/scheduler.dart';
 
 
 class Menu extends StatefulWidget {
@@ -123,18 +124,23 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     };
 
     /// Navigation to categoryDetail.dart if user Click icon in Category
-    var onClickCategory = () {
+    var onClickCategory = (id,title) {
+
+      //SchedulerBinding.instance.addPostFrameCallback((_){
       Navigator.of(context).push(PageRouteBuilder(
-          pageBuilder: (_, __, ___) => new categoryDetail(),
-          transitionDuration: Duration(milliseconds: 750),
-          transitionsBuilder:
-              (_, Animation<double> animation, __, Widget child) {
-            return Opacity(
-              opacity: animation.value,
-              child: child,
-            );
-          }));
+            pageBuilder: (_, __, ___) => new categoryDetail(id,title:title ),
+            transitionDuration: Duration(milliseconds: 750),
+            transitionsBuilder:
+                (_, Animation<double> animation, __, Widget child) {
+              return Opacity(
+                opacity: animation.value,
+                child: child,
+              );
+            }));
+     //});
     };
+
+
 
     /// Declare device Size
     var deviceSize = MediaQuery.of(context).size;
@@ -163,14 +169,16 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 //
 //        ],
      images:imagesliders?.map((i){
-       return new NetworkImage(i.url);
+
+         return NetworkImage(i.url);
+
      })?.toList()??[]
       ),
     );
 
 
     var Fireimageslide= StreamBuilder(
-        stream: contentProvider.fetchHomeimageAsStream(),
+        stream: contentProvider.fetchTypeimageAsStream('home'),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
           if (snapshot.hasData) {
@@ -184,9 +192,11 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 //                  itemBuilder: (buildContext, index) =>
 //                      ProductCard(productDetails: products[index]),
 //                );
+
+
             return imageSliderview;
           } else {
-
+            //print("199");
             return CircularProgressIndicator();
           }
         });
@@ -475,7 +485,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 //    var categoryImageBottom =
 
     var Categoryslide= StreamBuilder(//目录的资源获取
-        stream: contentProvider.fetchCategoryAsStream(),
+        stream: contentProvider.fetchlevelCategoryAsStream(0),//取顶级目录
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
           if (snapshot.hasData) {
@@ -488,7 +498,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
               categorymap=categorys.asMap();
                      //print(categorymap[0].title);
             }
-
+            //return categoryImageBottom;
             return Container(
               height: 310.0,
               color: Colors.white,
@@ -520,7 +530,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                                 CategoryItemValue(
                                   image: categorymap[0].image,
                                   title: categorymap[0].title,
-                                  tap: onClickCategory(categorymap[0].id),
+                                  tap: () => onClickCategory(categorymap[0].id,categorymap[0].title),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(top: 10.0),
@@ -528,7 +538,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                                 CategoryItemValue(
                                   image:categorymap[1].image,
                                   title:categorymap[1].title,
-                                  tap: onClickCategory(),
+                                  tap: () => onClickCategory(categorymap[0].id,categorymap[0].title),
                                 ),
                               ],
                             ),
@@ -541,7 +551,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                               CategoryItemValue(
                                 image: categorymap[2].image,
                                 title: categorymap[2].title,
-                                tap: onClickCategory(),
+                                tap: () => onClickCategory(categorymap[0].id,categorymap[0].title),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(top: 10.0),
@@ -549,7 +559,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                               CategoryItemValue(
                                 image: categorymap[3].image,
                                 title: categorymap[3].title,
-                                tap: onClickCategory(),
+                                tap: () => onClickCategory(categorymap[0].id,categorymap[0].title),
                               ),
                             ],
                           ),
@@ -561,7 +571,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                               CategoryItemValue(
                                 image: categorymap[0].image,
                                 title: categorymap[0].title,
-                                tap: onClickCategory(),
+                                tap: () => onClickCategory(categorymap[0].id,categorymap[0].title),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(top: 10.0),
@@ -569,7 +579,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                               CategoryItemValue(
                                 image: categorymap[1].image,
                                 title: categorymap[1].title,
-                                tap: onClickCategory(),
+                                tap: () => onClickCategory(categorymap[0].id,categorymap[0].title),
                               ),
                             ],
                           ),
@@ -581,7 +591,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                               CategoryItemValue(
                                 image: categorymap[2].image,
                                 title: categorymap[2].title,
-                                tap: onClickCategory(),
+                                tap: () => onClickCategory(categorymap[0].id,categorymap[0].title),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(top: 10.0),
@@ -589,7 +599,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                               CategoryItemValue(
                                 image: categorymap[3].image,
                                 title: categorymap[3].title,
-                                tap: onClickCategory(),
+                                tap: () => onClickCategory(categorymap[0].id,categorymap[0].title),
                               ),
                             ],
                           ),
@@ -607,6 +617,8 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
             return CircularProgressIndicator();
           }
         });
+
+
 
 
     ///  Grid item in bottom of Category
@@ -1106,7 +1118,7 @@ class CategoryItemValue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){tap;},
+      onTap: tap,
       child: Container(
         height: 105.0,
         width: 160.0,

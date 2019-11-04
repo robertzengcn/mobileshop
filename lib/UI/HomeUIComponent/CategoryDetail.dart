@@ -1,15 +1,21 @@
+import 'dart:async';
+
+
 import 'package:shimmer/shimmer.dart';
 import 'package:treva_shop_flutter/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:treva_shop_flutter/ListItem/CategoryItem.dart';
-import 'package:treva_shop_flutter/ListItem/CategoryItem.dart';
-import 'package:treva_shop_flutter/ListItem/CategoryItem.dart';
 import 'package:treva_shop_flutter/UI/HomeUIComponent/PromotionDetail.dart';
 import 'package:treva_shop_flutter/UI/HomeUIComponent/Search.dart';
+import 'package:treva_shop_flutter/Services/CRUDModel.dart';
+import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:treva_shop_flutter/ListItem/ImageSlider.dart';
 
 class categoryDetail extends StatefulWidget {
-  //final String id;
-  //categoryDetail(this.id);
+  final String id;
+  final String title;
+  categoryDetail(this.id,{this.title='Category'});
   @override
   _categoryDetailState createState() => _categoryDetailState();
 }
@@ -27,7 +33,7 @@ class _categoryDetailState extends State<categoryDetail> {
   ///
   bool loadImage = true;
 
-
+  List<ImageSlider> imagesliders;
   /// custom text variable is make it easy a custom textStyle black font
   static var _customTextStyleBlack = TextStyle(
       fontFamily: "Gotik",
@@ -61,7 +67,11 @@ class _categoryDetailState extends State<categoryDetail> {
   /// All Widget Component layout
   @override
   Widget build(BuildContext context) {
-   // widget.id;
+    final contentProvider = Provider.of<CRUDModel>(context);
+    widget.id;
+
+
+
     /// imageSlider in header layout category detail
     var _imageSlider = Padding(
       padding: const EdgeInsets.only(
@@ -78,12 +88,11 @@ class _categoryDetailState extends State<categoryDetail> {
           overlayShadow: false,
           overlayShadowColors: Colors.white.withOpacity(0.9),
           overlayShadowSize: 0.9,
-          images: [
-            AssetImage("assets/img/bannerMan1.png"),
-            AssetImage("assets/img/bannerMan2.png"),
-            AssetImage("assets/img/bannerMan3.png"),
-            AssetImage("assets/img/bannerMan4.png"),
-          ],
+          images:imagesliders?.map((i){
+
+              return NetworkImage(i.url);
+
+            })?.toList()??[]
         ),
       ),
     );
@@ -288,6 +297,31 @@ class _categoryDetailState extends State<categoryDetail> {
       ),
     );
 
+    var Categoryimageslide= StreamBuilder(
+        stream: contentProvider.fetchTypeimageAsStream('catelogue'),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
+          if (snapshot.hasData) {
+
+            imagesliders = snapshot.data.documents
+                .map((doc) => ImageSlider.fromMap(doc.data, doc.documentID))
+                .toList();
+            //print(imagesliders);
+//                return ListView.builder(
+//                  itemCount: products.length,
+//                  itemBuilder: (buildContext, index) =>
+//                      ProductCard(productDetails: products[index]),
+//                );
+
+            return _imageSlider;
+            //return imageSliderview;
+          } else {
+
+            return CircularProgressIndicator();
+          }
+        });
+
+
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
@@ -301,7 +335,7 @@ class _categoryDetailState extends State<categoryDetail> {
         ],
         centerTitle: true,
         title: Text(
-          "Man",
+          widget.title,
           style: TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 16.0,
@@ -319,7 +353,8 @@ class _categoryDetailState extends State<categoryDetail> {
           color: Colors.white,
           child: Column(
             children: <Widget>[
-              _imageSlider,
+              //_imageSlider,
+              Categoryimageslide,
               _subCategory,
               _itemDiscount,
               _itemPopular,

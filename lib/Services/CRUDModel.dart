@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../locator.dart';
 import '../Services/api.dart';
 import '../ListItem/Product.dart';
 import '../ListItem/ImageSlider.dart';
@@ -51,7 +50,7 @@ class CRUDModel extends ChangeNotifier {
     Api _api = new Api('product');
     var result  = await _api.addDocument(data.toJson()) ;
 
-    return ;
+    return result;
 
   }
 
@@ -64,8 +63,11 @@ class CRUDModel extends ChangeNotifier {
     Api _api = new Api('category');
     return _api.streamDataCollection();
   }
-  Stream<QuerySnapshot> fetchHomeimageAsStream() {
-    Firestore.instance.collection('image_slider').where('status', isEqualTo: 1).where('type',isEqualTo:'home')
+  Stream<QuerySnapshot> fetchlevelCategoryAsStream(int level) {
+    return Firestore.instance.collection('category').where('level', isEqualTo: level).snapshots();
+  }
+  Stream<QuerySnapshot> fetchTypeimageAsStream(String type) {
+    return Firestore.instance.collection('image_slider').where('status', isEqualTo: 1).where('type',isEqualTo:type)
         .snapshots();
   }
 
