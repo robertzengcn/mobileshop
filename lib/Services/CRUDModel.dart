@@ -23,9 +23,11 @@ class CRUDModel extends ChangeNotifier {
     return products;
   }
 
-  Stream<QuerySnapshot> fetchProductsAsStream() {
-    Api _api = new Api('product');
-    return _api.streamDataCollection();
+  Stream<QuerySnapshot> fetchProductsAsStream({String categolue_id}) {
+//    Api _api = new Api('product');
+//    return _api.streamDataCollection();
+    Query query;
+    return Firestore.instance.collection('product').snapshots();
   }
 
   Future<Product> getProductById(String id) async {
@@ -63,8 +65,18 @@ class CRUDModel extends ChangeNotifier {
     Api _api = new Api('category');
     return _api.streamDataCollection();
   }
-  Stream<QuerySnapshot> fetchlevelCategoryAsStream(int level) {
-    return Firestore.instance.collection('category').where('level', isEqualTo: level).snapshots();
+  Stream<QuerySnapshot> fetchlevelCategoryAsStream(int level,[int top=0]) {
+   //return Firestore.instance.collection('category').where('level', isEqualTo: level).where('top', isEqualTo: top).snapshots();
+//   print(top);
+//   print("69");
+    return Firestore.instance.collection('category').where('level', isEqualTo: level).where('top', isEqualTo: top).orderBy("id").snapshots();
+
+   //    Query nameQuery=stream;
+////
+////      nameQuery = nameQuery.where('top', isEqualTo: top);
+
+
+//   return  nameQuery.snapshots();
   }
   Stream<QuerySnapshot> fetchTypeimageAsStream(String type) {
     return Firestore.instance.collection('image_slider').where('status', isEqualTo: 1).where('type',isEqualTo:type)

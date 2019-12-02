@@ -17,7 +17,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 import 'package:flutter/scheduler.dart';
 
-
 class Menu extends StatefulWidget {
   @override
   _MenuState createState() => _MenuState();
@@ -30,6 +29,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 
   bool isStarted = false;
   var hourssub, minutesub, secondsub;
+
   /// CountDown for timer
   CountDown hours, minutes, seconds;
   int hourstime, minute, second = 0;
@@ -44,7 +44,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     if (this.secondsub == null) {
       secondsub = seconds.stream.listen(null);
       secondsub.onData((Duration d) {
-       // print(d);
+        // print(d);
         setState(() {
           second = d.inSeconds;
         });
@@ -53,7 +53,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     if (this.minutesub == null) {
       minutesub = minutes.stream.listen(null);
       minutesub.onData((Duration d) {
-       // print(d);
+        // print(d);
         setState(() {
           minute = d.inMinutes;
         });
@@ -62,7 +62,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     if (this.hourssub == null) {
       hourssub = hours.stream.listen(null);
       hourssub.onData((Duration d) {
-       // print(d);
+        // print(d);
         setState(() {
           hourstime = d.inHours;
         });
@@ -73,7 +73,6 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
   /// To set duration initState auto start if FlashSale Layout open
   @override
   void initState() {
-
     hours = new CountDown(new Duration(hours: 24));
     minutes = new CountDown(new Duration(hours: 1));
     seconds = new CountDown(new Duration(minutes: 1));
@@ -83,7 +82,6 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     super.initState();
 
     //GridItem.getItem();
-
   }
 
   @override
@@ -93,26 +91,41 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     final contentProvider = Provider.of<CRUDModel>(context);
 ////    productProvider.fetchProductsAsStream();
 
-
     /// Navigation to MenuDetail.dart if user Click icon in category Menu like a example camera
-    var onClickMenuIcon = () {
-      Navigator.of(context).push(PageRouteBuilder(
-          pageBuilder: (_, __, ___) => new menuDetail(),
-          transitionDuration: Duration(milliseconds: 750),
-          /// Set animation with opacity
-          transitionsBuilder:
-              (_, Animation<double> animation, __, Widget child) {
-            return Opacity(
-              opacity: animation.value,
-              child: child,
-            );
-          }));
-    };
+//    var onClickMenuIcon = () {
+//      Navigator.of(context).push(PageRouteBuilder(
+//          pageBuilder: (_, __, ___) => new menuDetail(),
+//          transitionDuration: Duration(milliseconds: 750),
+//
+//          /// Set animation with opacity
+//          transitionsBuilder:
+//              (_, Animation<double> animation, __, Widget child) {
+//            return Opacity(
+//              opacity: animation.value,
+//              child: child,
+//            );
+//          }));
+//    };
 
     /// Navigation to promoDetail.dart if user Click icon in Week Promotion
-    var onClickWeekPromotion = () {
+//    var onClickWeekPromotion = () {
+//      Navigator.of(context).push(PageRouteBuilder(
+//          pageBuilder: (_, __, ___) => new promoDetail(),
+//          transitionDuration: Duration(milliseconds: 750),
+//          transitionsBuilder:
+//              (_, Animation<double> animation, __, Widget child) {
+//            return Opacity(
+//              opacity: animation.value,
+//              child: child,
+//            );
+//          }));
+//    };
+
+    /// Navigation to categoryDetail.dart if user Click icon in Category
+    var onClickCategory = (id, title) {
+      //SchedulerBinding.instance.addPostFrameCallback((_){
       Navigator.of(context).push(PageRouteBuilder(
-          pageBuilder: (_, __, ___) => new promoDetail(),
+          pageBuilder: (_, __, ___) => new categoryDetail(id, title: title),
           transitionDuration: Duration(milliseconds: 750),
           transitionsBuilder:
               (_, Animation<double> animation, __, Widget child) {
@@ -121,44 +134,25 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
               child: child,
             );
           }));
+      //});
     };
-
-    /// Navigation to categoryDetail.dart if user Click icon in Category
-    var onClickCategory = (id,title) {
-
-      //SchedulerBinding.instance.addPostFrameCallback((_){
-      Navigator.of(context).push(PageRouteBuilder(
-            pageBuilder: (_, __, ___) => new categoryDetail(id,title:title ),
-            transitionDuration: Duration(milliseconds: 750),
-            transitionsBuilder:
-                (_, Animation<double> animation, __, Widget child) {
-              return Opacity(
-                opacity: animation.value,
-                child: child,
-              );
-            }));
-     //});
-    };
-
-
 
     /// Declare device Size
-    var deviceSize = MediaQuery.of(context).size;
-
+//    var deviceSize = MediaQuery.of(context).size;
 
     /// ImageSlider in header
     var imageSliderview = Container(
       height: 182.0,
       child: new Carousel(
-        boxFit: BoxFit.cover,
-        dotColor: Color(0xFF6991C7).withOpacity(0.8),
-        dotSize: 5.5,
-        dotSpacing: 16.0,
-        dotBgColor: Colors.transparent,
-        showIndicator: true,
-        overlayShadow: true,
-        overlayShadowColors: Colors.white.withOpacity(0.9),
-        overlayShadowSize: 0.9,
+          boxFit: BoxFit.cover,
+          dotColor: Color(0xFF6991C7).withOpacity(0.8),
+          dotSize: 5.5,
+          dotSpacing: 16.0,
+          dotBgColor: Colors.transparent,
+          showIndicator: true,
+          overlayShadow: true,
+          overlayShadowColors: Colors.white.withOpacity(0.9),
+          overlayShadowSize: 0.9,
 //        images: [
 //
 //          AssetImage("assets/img/baner1.png"),
@@ -168,31 +162,19 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 //          AssetImage("assets/img/baner4.png"),
 //
 //        ],
-     images:imagesliders?.map((i){
-
-         return NetworkImage(i.url);
-
-     })?.toList()??[]
-      ),
+          images: imagesliders?.map((i) {
+                return NetworkImage(i.url);
+              })?.toList() ??
+              []),
     );
 
-
-    var Fireimageslide= StreamBuilder(
+    var Fireimageslide = StreamBuilder(
         stream: contentProvider.fetchTypeimageAsStream('home'),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
           if (snapshot.hasData) {
-
             imagesliders = snapshot.data.documents
                 .map((doc) => ImageSlider.fromMap(doc.data, doc.documentID))
                 .toList();
-            //print(imagesliders);
-//                return ListView.builder(
-//                  itemCount: products.length,
-//                  itemBuilder: (buildContext, index) =>
-//                      ProductCard(productDetails: products[index]),
-//                );
-
 
             return imageSliderview;
           } else {
@@ -200,8 +182,6 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
             return CircularProgressIndicator();
           }
         });
-
-
 
     //CategoryIcon Component
 //    var categoryIcon = Container(
@@ -273,8 +253,6 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 //      ),
 //    );
 
-
-
     /// ListView a WeekPromotion Component
 //    var PromoHorizontalList = Container(
 //      color: Colors.white,
@@ -330,173 +308,169 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 //    );
 //
     /// FlashSale component
-    var FlashSell = Container(
-      height: 390.0,
-      decoration: BoxDecoration(
-        /// To set Gradient in flashSale background
-        gradient: LinearGradient(colors: [
-          Color(0xFF7F7FD5).withOpacity(0.8),
-          Color(0xFF86A8E7),
-          Color(0xFF91EAE4)
-        ]),
-      ),
-
-      /// To set FlashSale Scrolling horizontal
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding:
-                EdgeInsets.only(left: mediaQueryData.padding.left + 20),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    "assets/img/flashsaleicon.png",
-                    height: deviceSize.height * 0.087,
-                  ),
-                  Text(
-                    "Flash",
-                    style: TextStyle(
-                      fontFamily: "Popins",
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    "Sale",
-                    style: TextStyle(
-                      fontFamily: "Sans",
-                      fontSize: 28.0,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                    EdgeInsets.only(top: mediaQueryData.padding.top + 30),
-                  ),
-                  Text(
-                    "End sale in :",
-                    style: TextStyle(
-                      fontFamily: "Sans",
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 2.0),
-                  ),
-                  /// Get a countDown variable
-                  Text(
-                    hourstime.toString() +
-                        " : " +
-                        minute.toString() +
-                        " : " +
-                        second.toString(),
-                    style: TextStyle(
-                      fontFamily: "Sans",
-                      fontSize: 19.0,
-                      letterSpacing: 2.0,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-          Padding(padding: EdgeInsets.only(left: 40.0)),
-
-          /// Get a component flashSaleItem class
-          flashSaleItem(
-            image: "assets/imgItem/mackbook.jpg",
-            title: "Apple Macbook Pro 13 with Touch Bar",
-            normalprice: "\$ 2,020",
-            discountprice: "\$ 1,300",
-            ratingvalue: "(56)",
-            place: "United Kingdom",
-            stock: "9 Available",
-            colorLine: 0xFFFFA500,
-            widthLine: 50.0,
-          ),
-          Padding(padding: EdgeInsets.only(left: 10.0)),
-          flashSaleItem(
-            image: "assets/imgItem/flashsale2.jpg",
-            title: "7 Level Karina Dress Sweet Pesta",
-            normalprice: "\$ 14",
-            discountprice: "\$ 10",
-            ratingvalue: "(16)",
-            place: "United Kingdom",
-            stock: "24 Available",
-            colorLine: 0xFF52B640,
-            widthLine: 100.0,
-          ),
-          Padding(padding: EdgeInsets.only(left: 10.0)),
-          flashSaleItem(
-            image: "assets/imgItem/flashsale3.jpg",
-            title: "Samsung Galaxy Note 9 8GB - 512GB",
-            normalprice: "\$ 1,000",
-            discountprice: "\$ 950",
-            ratingvalue: "(20)",
-            place: "United Kingdom",
-            stock: "14 Available",
-            colorLine: 0xFF52B640,
-            widthLine: 90.0,
-          ),
-          Padding(padding: EdgeInsets.only(left: 10.0)),
-          flashSaleItem(
-            image: "assets/imgItem/flashsale4.jpg",
-            title: "Harry Potter Spesial Edition ",
-            normalprice: "\$ 25",
-            discountprice: "\$ 20",
-            ratingvalue: "(22)",
-            place: "United Kingdom",
-            stock: "5 Available",
-            colorLine: 0xFFFFA500,
-            widthLine: 30.0,
-          ),
-          Padding(padding: EdgeInsets.only(left: 10.0)),
-          flashSaleItem(
-            image: "assets/imgItem/flashsale5.jpg",
-            title: "Pro Evolution Soccer 2019 Steam Original PC Games",
-            normalprice: "\$ 50",
-            discountprice: "\$ 30",
-            ratingvalue: "(10)",
-            place: "United Kingdom",
-            stock: "30 Available",
-            colorLine: 0xFF52B640,
-            widthLine: 100.0,
-          ),
-          Padding(padding: EdgeInsets.only(left: 10.0)),
-        ],
-      ),
-    );
-
+//    var FlashSell = Container(
+//      height: 390.0,
+//      decoration: BoxDecoration(
+//        /// To set Gradient in flashSale background
+//        gradient: LinearGradient(colors: [
+//          Color(0xFF7F7FD5).withOpacity(0.8),
+//          Color(0xFF86A8E7),
+//          Color(0xFF91EAE4)
+//        ]),
+//      ),
+//
+//      /// To set FlashSale Scrolling horizontal
+//      child: ListView(
+//        scrollDirection: Axis.horizontal,
+//        children: <Widget>[
+//          Row(
+//            mainAxisAlignment: MainAxisAlignment.start,
+//            children: <Widget>[
+//              Padding(
+//                padding:
+//                EdgeInsets.only(left: mediaQueryData.padding.left + 20),
+//              ),
+//              Column(
+//                crossAxisAlignment: CrossAxisAlignment.start,
+//                mainAxisAlignment: MainAxisAlignment.center,
+//                children: <Widget>[
+//                  Image.asset(
+//                    "assets/img/flashsaleicon.png",
+//                    height: deviceSize.height * 0.087,
+//                  ),
+//                  Text(
+//                    "Flash",
+//                    style: TextStyle(
+//                      fontFamily: "Popins",
+//                      fontSize: 30.0,
+//                      fontWeight: FontWeight.w600,
+//                      color: Colors.white,
+//                    ),
+//                  ),
+//                  Text(
+//                    "Sale",
+//                    style: TextStyle(
+//                      fontFamily: "Sans",
+//                      fontSize: 28.0,
+//                      fontWeight: FontWeight.w400,
+//                      color: Colors.white,
+//                    ),
+//                  ),
+//                  Padding(
+//                    padding:
+//                    EdgeInsets.only(top: mediaQueryData.padding.top + 30),
+//                  ),
+//                  Text(
+//                    "End sale in :",
+//                    style: TextStyle(
+//                      fontFamily: "Sans",
+//                      fontSize: 15.0,
+//                      fontWeight: FontWeight.w600,
+//                      color: Colors.white,
+//                    ),
+//                  ),
+//                  Padding(
+//                    padding: EdgeInsets.only(top: 2.0),
+//                  ),
+//                  /// Get a countDown variable
+//                  Text(
+//                    hourstime.toString() +
+//                        " : " +
+//                        minute.toString() +
+//                        " : " +
+//                        second.toString(),
+//                    style: TextStyle(
+//                      fontFamily: "Sans",
+//                      fontSize: 19.0,
+//                      letterSpacing: 2.0,
+//                      fontWeight: FontWeight.w600,
+//                      color: Colors.white,
+//                    ),
+//                  ),
+//                ],
+//              )
+//            ],
+//          ),
+//          Padding(padding: EdgeInsets.only(left: 40.0)),
+//
+//          /// Get a component flashSaleItem class
+//          flashSaleItem(
+//            image: "assets/imgItem/mackbook.jpg",
+//            title: "Apple Macbook Pro 13 with Touch Bar",
+//            normalprice: "\$ 2,020",
+//            discountprice: "\$ 1,300",
+//            ratingvalue: "(56)",
+//            place: "United Kingdom",
+//            stock: "9 Available",
+//            colorLine: 0xFFFFA500,
+//            widthLine: 50.0,
+//          ),
+//          Padding(padding: EdgeInsets.only(left: 10.0)),
+//          flashSaleItem(
+//            image: "assets/imgItem/flashsale2.jpg",
+//            title: "7 Level Karina Dress Sweet Pesta",
+//            normalprice: "\$ 14",
+//            discountprice: "\$ 10",
+//            ratingvalue: "(16)",
+//            place: "United Kingdom",
+//            stock: "24 Available",
+//            colorLine: 0xFF52B640,
+//            widthLine: 100.0,
+//          ),
+//          Padding(padding: EdgeInsets.only(left: 10.0)),
+//          flashSaleItem(
+//            image: "assets/imgItem/flashsale3.jpg",
+//            title: "Samsung Galaxy Note 9 8GB - 512GB",
+//            normalprice: "\$ 1,000",
+//            discountprice: "\$ 950",
+//            ratingvalue: "(20)",
+//            place: "United Kingdom",
+//            stock: "14 Available",
+//            colorLine: 0xFF52B640,
+//            widthLine: 90.0,
+//          ),
+//          Padding(padding: EdgeInsets.only(left: 10.0)),
+//          flashSaleItem(
+//            image: "assets/imgItem/flashsale4.jpg",
+//            title: "Harry Potter Spesial Edition ",
+//            normalprice: "\$ 25",
+//            discountprice: "\$ 20",
+//            ratingvalue: "(22)",
+//            place: "United Kingdom",
+//            stock: "5 Available",
+//            colorLine: 0xFFFFA500,
+//            widthLine: 30.0,
+//          ),
+//          Padding(padding: EdgeInsets.only(left: 10.0)),
+//          flashSaleItem(
+//            image: "assets/imgItem/flashsale5.jpg",
+//            title: "Pro Evolution Soccer 2019 Steam Original PC Games",
+//            normalprice: "\$ 50",
+//            discountprice: "\$ 30",
+//            ratingvalue: "(10)",
+//            place: "United Kingdom",
+//            stock: "30 Available",
+//            colorLine: 0xFF52B640,
+//            widthLine: 100.0,
+//          ),
+//          Padding(padding: EdgeInsets.only(left: 10.0)),
+//        ],
+//      ),
+//    );
 
     /// Category Component in bottom of flash sale
 //    var categoryImageBottom =
 
-    var Categoryslide= StreamBuilder(//目录的资源获取
-        stream: contentProvider.fetchlevelCategoryAsStream(0),//取顶级目录
+    var Categoryslide = StreamBuilder(
+        //目录的资源获取
+        stream: contentProvider.fetchlevelCategoryAsStream(0), //取顶级目录
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
           if (snapshot.hasData) {
-
             categorys = snapshot.data.documents
                 .map((doc) => Category.fromMap(doc.data, doc.documentID))
                 .toList();
-                        if(categorys.length>0){
-
-              categorymap=categorys.asMap();
-                     //print(categorymap[0].title);
+            if (categorys.length > 0) {
+              categorymap = categorys.asMap();
             }
             //return categoryImageBottom;
             return Container(
@@ -506,7 +480,8 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(left: 20.0, top: 20.0,right: 20.0),
+                    padding: const EdgeInsets.only(
+                        left: 20.0, top: 20.0, right: 20.0),
                     child: Text(
                       "category",
                       style: TextStyle(
@@ -517,12 +492,14 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(right:20.0),
+                      padding: const EdgeInsets.only(right: 20.0),
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(left: 20.0,),
+                            padding: const EdgeInsets.only(
+                              left: 20.0,
+                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -530,15 +507,17 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                                 CategoryItemValue(
                                   image: categorymap[0].image,
                                   title: categorymap[0].title,
-                                  tap: () => onClickCategory(categorymap[0].id,categorymap[0].title),
+                                  tap: () => onClickCategory(
+                                      categorymap[0].id, categorymap[0].title),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(top: 10.0),
                                 ),
                                 CategoryItemValue(
-                                  image:categorymap[1].image,
-                                  title:categorymap[1].title,
-                                  tap: () => onClickCategory(categorymap[0].id,categorymap[0].title),
+                                  image: categorymap[1].image,
+                                  title: categorymap[1].title,
+                                  tap: () => onClickCategory(
+                                      categorymap[1].id, categorymap[1].title),
                                 ),
                               ],
                             ),
@@ -551,7 +530,8 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                               CategoryItemValue(
                                 image: categorymap[2].image,
                                 title: categorymap[2].title,
-                                tap: () => onClickCategory(categorymap[0].id,categorymap[0].title),
+                                tap: () => onClickCategory(
+                                    categorymap[2].id, categorymap[2].title),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(top: 10.0),
@@ -559,50 +539,51 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                               CategoryItemValue(
                                 image: categorymap[3].image,
                                 title: categorymap[3].title,
-                                tap: () => onClickCategory(categorymap[0].id,categorymap[0].title),
+                                tap: () => onClickCategory(
+                                    categorymap[3].id, categorymap[3].title),
                               ),
                             ],
                           ),
-                          Padding(padding: EdgeInsets.only(left: 10.0)),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(padding: EdgeInsets.only(top: 15.0)),
-                              CategoryItemValue(
-                                image: categorymap[0].image,
-                                title: categorymap[0].title,
-                                tap: () => onClickCategory(categorymap[0].id,categorymap[0].title),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 10.0),
-                              ),
-                              CategoryItemValue(
-                                image: categorymap[1].image,
-                                title: categorymap[1].title,
-                                tap: () => onClickCategory(categorymap[0].id,categorymap[0].title),
-                              ),
-                            ],
-                          ),
-                          Padding(padding: EdgeInsets.only(left: 10.0)),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(padding: EdgeInsets.only(top: 15.0)),
-                              CategoryItemValue(
-                                image: categorymap[2].image,
-                                title: categorymap[2].title,
-                                tap: () => onClickCategory(categorymap[0].id,categorymap[0].title),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 10.0),
-                              ),
-                              CategoryItemValue(
-                                image: categorymap[3].image,
-                                title: categorymap[3].title,
-                                tap: () => onClickCategory(categorymap[0].id,categorymap[0].title),
-                              ),
-                            ],
-                          ),
+                          // Padding(padding: EdgeInsets.only(left: 10.0)),
+//                          Column(
+//                            crossAxisAlignment: CrossAxisAlignment.start,
+//                            children: <Widget>[
+//                              Padding(padding: EdgeInsets.only(top: 15.0)),
+//                              CategoryItemValue(
+//                                image: categorymap[4].image,
+//                                title: categorymap[4].title,
+//                                tap: () => onClickCategory(categorymap[4].id,categorymap[4].title),
+//                              ),
+//                              Padding(
+//                                padding: EdgeInsets.only(top: 10.0),
+//                              ),
+//                              CategoryItemValue(
+//                                image: categorymap[5].image,
+//                                title: categorymap[5].title,
+//                                tap: () => onClickCategory(categorymap[5].id,categorymap[5].title),
+//                              ),
+//                            ],
+//                          ),
+                          // Padding(padding: EdgeInsets.only(left: 10.0)),
+//                          Column(
+//                            crossAxisAlignment: CrossAxisAlignment.start,
+//                            children: <Widget>[
+//                              Padding(padding: EdgeInsets.only(top: 15.0)),
+//                              CategoryItemValue(
+//                                image: categorymap[6].image,
+//                                title: categorymap[6].title,
+//                                tap: () => onClickCategory(categorymap[6].id,categorymap[6].title),
+//                              ),
+//                              Padding(
+//                                padding: EdgeInsets.only(top: 10.0),
+//                              ),
+//                              CategoryItemValue(
+//                                image: categorymap[7].image,
+//                                title: categorymap[7].title,
+//                                tap: () => onClickCategory(categorymap[7].id,categorymap[7].title),
+//                              ),
+//                            ],
+//                          ),
                         ],
                       ),
                     ),
@@ -610,16 +591,10 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                 ],
               ),
             );
-
-
           } else {
-
             return CircularProgressIndicator();
           }
         });
-
-
-
 
     ///  Grid item in bottom of Category
 //    var Grid = SingleChildScrollView(
@@ -657,63 +632,60 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 //      ),
 //    );
 
-
-  var Recomendlist= StreamBuilder(
-            stream: contentProvider.fetchProductsAsStream(),
-            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasData) {
-
-                products = snapshot.data.documents
-                    .map((doc) => Product.fromMap(doc.data, doc.documentID))
-                    .toList();
+    var Recomendlist = StreamBuilder(
+        stream: contentProvider.fetchProductsAsStream(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasData) {
+            products = snapshot.data.documents
+                .map((doc) => Product.fromMap(doc.data, doc.documentID))
+                .toList();
 //                return ListView.builder(
 //                  itemCount: products.length,
 //                  itemBuilder: (buildContext, index) =>
 //                      ProductCard(productDetails: products[index]),
 //                );
-                return SingleChildScrollView(
-                  child: Container(
-                    color: Colors.white,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20.0, top: 20.0),
-                          child: Text(
-                            "Recomended",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 17.0,
-                            ),
-                          ),
+            return SingleChildScrollView(
+              child: Container(
+                color: Colors.white,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0, top: 20.0),
+                      child: Text(
+                        "Recomended",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 17.0,
                         ),
-                        /// To set GridView item
-                        GridView.count(
-                            shrinkWrap: true,
-                            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-                            crossAxisSpacing: 10.0,
-                            mainAxisSpacing: 17.0,
-                            childAspectRatio: 0.545,
-                            crossAxisCount: 2,
-                            primary: false,
-                            children: List.generate(//change list here
-                              products==null?0:products.length,
-                                  (index) => ItemGrid(products[index]),
-                            )
-                        )
-                      ],
+                      ),
                     ),
-                  ),
-                );
-              } else {
 
-                return CircularProgressIndicator();
-              }
-            });
+                    /// To set GridView item
+                    GridView.count(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 20.0),
+                        crossAxisSpacing: 10.0,
+                        mainAxisSpacing: 17.0,
+                        childAspectRatio: 0.545,
+                        crossAxisCount: 2,
+                        primary: false,
+                        children: List.generate(
+                          //change list here
+                          products == null ? 0 : products.length,
+                          (index) => ItemGrid(products[index]),
+                        ))
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return CircularProgressIndicator();
+          }
+        });
 
-
-
-      return Scaffold(
+    return Scaffold(
       /// Use Stack to costume a appbar
       body: Stack(
         children: <Widget>[
@@ -723,6 +695,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                 Padding(
                     padding: EdgeInsets.only(
                         top: mediaQueryData.padding.top + 58.5)),
+
                 /// Call var imageSlider
                 //imageSlider,
                 Fireimageslide,
@@ -734,7 +707,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 //                ),
 
                 /// Call var PromoHorizontalList
-               // PromoHorizontalList,
+                // PromoHorizontalList,
 
                 /// Call var a FlashSell, i am sorry Typo :v
 //                FlashSell,
@@ -806,7 +779,6 @@ class ItemGrid extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-
                 /// Set Animation image to detailProduk layout
                 Hero(
                   tag: "hero-grid-${products.id}",
@@ -880,7 +852,7 @@ class ItemGrid extends StatelessWidget {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0),
+                      const EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -936,14 +908,14 @@ class flashSaleItem extends StatelessWidget {
 
   flashSaleItem(
       {this.image,
-        this.title,
-        this.normalprice,
-        this.discountprice,
-        this.ratingvalue,
-        this.place,
-        this.stock,
-        this.colorLine,
-        this.widthLine});
+      this.title,
+      this.normalprice,
+      this.discountprice,
+      this.ratingvalue,
+      this.place,
+      this.stock,
+      this.colorLine,
+      this.widthLine});
 
   @override
   Widget build(BuildContext context) {
@@ -984,7 +956,7 @@ class flashSaleItem extends StatelessWidget {
                     ),
                     Padding(
                       padding:
-                      EdgeInsets.only(left: 8.0, right: 3.0, top: 15.0),
+                          EdgeInsets.only(left: 8.0, right: 3.0, top: 15.0),
                       child: Text(title,
                           style: TextStyle(
                               fontSize: 10.5,
@@ -1089,7 +1061,7 @@ class flashSaleItem extends StatelessWidget {
                         decoration: BoxDecoration(
                             color: Color(colorLine),
                             borderRadius:
-                            BorderRadius.all(Radius.circular(4.0)),
+                                BorderRadius.all(Radius.circular(4.0)),
                             shape: BoxShape.rectangle),
                       ),
                     )
@@ -1133,21 +1105,20 @@ class CategoryItemValue extends StatelessWidget {
           ),
           child: Center(
               child: Text(
-                title,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: "Berlin",
-                  fontSize: 18.5,
-                  letterSpacing: 0.7,
-                  fontWeight: FontWeight.w800,
-                ),
-              )),
+            title,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: "Berlin",
+              fontSize: 18.5,
+              letterSpacing: 0.7,
+              fontWeight: FontWeight.w800,
+            ),
+          )),
         ),
       ),
     );
   }
 }
-
 
 /// Component item Menu icon bellow a ImageSlider
 class CategoryIconValue extends StatelessWidget {
@@ -1156,17 +1127,17 @@ class CategoryIconValue extends StatelessWidget {
 
   CategoryIconValue(
       {this.icon1,
-        this.tap1,
-        this.icon2,
-        this.tap2,
-        this.icon3,
-        this.tap3,
-        this.icon4,
-        this.tap4,
-        this.title1,
-        this.title2,
-        this.title3,
-        this.title4});
+      this.tap1,
+      this.icon2,
+      this.tap2,
+      this.icon3,
+      this.tap3,
+      this.icon4,
+      this.tap4,
+      this.title1,
+      this.title2,
+      this.title3,
+      this.title4});
 
   @override
   Widget build(BuildContext context) {

@@ -11,9 +11,12 @@ import 'package:treva_shop_flutter/Services/CRUDModel.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:treva_shop_flutter/ListItem/ImageSlider.dart';
+import 'package:treva_shop_flutter/ListItem/Category.dart';
+import 'package:treva_shop_flutter/UI/HomeUIComponent/SubCategory.dart';
+import 'package:treva_shop_flutter/ListItem/Product.dart';
 
 class categoryDetail extends StatefulWidget {
-  final String id;
+  final int id;
   final String title;
   categoryDetail(this.id,{this.title='Category'});
   @override
@@ -26,8 +29,10 @@ class _categoryDetailState extends State<categoryDetail> {
   ///
   /// Get image data dummy from firebase server
   ///
-  var imageNetwork = NetworkImage("https://firebasestorage.googleapis.com/v0/b/beauty-look.appspot.com/o/Screenshot_20181005-213916.png?alt=media&token=f952caf0-2de7-417c-9c9e-3b6dcea953f4");
-
+var imageNetwork = NetworkImage("https://img.alicdn.com/tfscom/i3/2996558363/TB2a.PkdcIrBKNjSZK9XXagoVXa_!!2996558363.jpg_360x360xzq90.jpg_.webp");
+  List<Category> categorys;
+Map<int, Category> categorymap;
+List<Product> products;
   ///
   /// check the condition is right or wrong for image loaded or no
   ///
@@ -53,6 +58,7 @@ class _categoryDetailState extends State<categoryDetail> {
   ///
   @override
   void initState() {
+
     imageNetwork.resolve(ImageConfiguration()).addListener((_,__){
       if(mounted){
         setState(() {
@@ -69,8 +75,6 @@ class _categoryDetailState extends State<categoryDetail> {
   Widget build(BuildContext context) {
     final contentProvider = Provider.of<CRUDModel>(context);
     widget.id;
-
-
 
     /// imageSlider in header layout category detail
     var _imageSlider = Padding(
@@ -97,6 +101,27 @@ class _categoryDetailState extends State<categoryDetail> {
       ),
     );
 
+    List<Widget> ListMyWidgets() {
+      List<Widget> list = new List();
+      if(categorys!=null){
+
+        for(var i = 0; i < categorymap.length; i++){
+          if(i==0){
+            list.add(Padding(padding: EdgeInsets.only(left: 20.0)));
+          }
+          list.add(
+              SubCategory(
+                title: categorymap[i].title,
+                id:categorymap[i].id,
+              )
+          );
+          list.add(Padding(padding: EdgeInsets.only(left: 15.0)));
+
+        }
+      }
+    return list;
+    }
+
     /// Variable Category (Sub Category)
     var _subCategory = Container(
       child: Column(
@@ -110,15 +135,15 @@ class _categoryDetailState extends State<categoryDetail> {
                   "Sub Category",
                   style: _customTextStyleBlack,
                 ),
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => new promoDetail()));
-                  },
-                  child: Text("See More",
-                      style:
-                      _customTextStyleBlue.copyWith(color: Colors.black26)),
-                ),
+//                InkWell(
+//                  onTap: () {
+//                    Navigator.of(context).push(PageRouteBuilder(
+//                        pageBuilder: (_, __, ___) => new promoDetail()));
+//                  },
+//                  child: Text("See More",
+//                      style:
+//                      _customTextStyleBlue.copyWith(color: Colors.black26)),
+//                ),
               ],
             ),
           ),
@@ -126,32 +151,34 @@ class _categoryDetailState extends State<categoryDetail> {
             child: Container(
               color: Colors.white,
               margin: EdgeInsets.only(right: 10.0, top: 5.0),
-              height: 110.0,
+              height: 40.0,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Padding(padding: EdgeInsets.only(left: 20.0)),
-                  KeywordItem(
-                    title: "Polo Shirt",
-                    title2: "Shirt",
-                  ),
-                  Padding(padding: EdgeInsets.only(left: 15.0)),
-                  KeywordItem(
-                    title: "Suit",
-                    title2: "Jacket",
-                  ),
-                  Padding(padding: EdgeInsets.only(left: 15.0)),
-                  KeywordItem(
-                    title: "Jeans",
-                    title2: "Bag",
-                  ),
-                  Padding(padding: EdgeInsets.only(left: 15.0)),
-                  KeywordItem(
-                    title: "Watch",
-                    title2: "Shoes",
-                  ),
-                  Padding(padding: EdgeInsets.only(right: 20.0)),
-                ],
+                children: ListMyWidgets()
+              //  children:
+//                  <Widget>[
+//                  Padding(padding: EdgeInsets.only(left: 20.0)),
+//                  KeywordItem(
+//                    title: "Polo Shirt",
+//                    title2: "Shirt",
+//                  ),
+//                  Padding(padding: EdgeInsets.only(left: 15.0)),
+//                  KeywordItem(
+//                    title: "Suit",
+//                    title2: "Jacket",
+//                  ),
+//                  Padding(padding: EdgeInsets.only(left: 15.0)),
+//                  KeywordItem(
+//                    title: "Jeans",
+//                    title2: "Bag",
+//                  ),
+//                  Padding(padding: EdgeInsets.only(left: 15.0)),
+//                  KeywordItem(
+//                    title: "Watch",
+//                    title2: "Shoes",
+//                  ),
+//                  Padding(padding: EdgeInsets.only(right: 20.0)),
+//                ],
               ),
             ),
           )
@@ -169,7 +196,7 @@ class _categoryDetailState extends State<categoryDetail> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  "Item Discount",
+                  "Item",
                   style: _customTextStyleBlack,
                 ),
                 InkWell(
@@ -193,9 +220,9 @@ class _categoryDetailState extends State<categoryDetail> {
               /// Card to set card loading animation
               ///
               ///
-              child: loadImage? _loadingImageAnimationDiscount(context):
+              child:
               ListView.builder(
-                scrollDirection: Axis.horizontal,
+                scrollDirection: Axis.vertical,
                 itemBuilder: (BuildContext context, int index)=>discountItem(itemDiscount[index]),
                 itemCount: itemDiscount.length,
               ),
@@ -297,21 +324,70 @@ class _categoryDetailState extends State<categoryDetail> {
       ),
     );
 
-    var Categoryimageslide= StreamBuilder(
+    var _Categoryimageslide= StreamBuilder(
         stream: contentProvider.fetchTypeimageAsStream('catelogue'),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
           if (snapshot.hasData) {
-
+            if (snapshot.data.documents.length == 0){//没有子类目
+              return Container(
+                  color: Colors.white // This is optional
+              );
+            }
             imagesliders = snapshot.data.documents
                 .map((doc) => ImageSlider.fromMap(doc.data, doc.documentID))
                 .toList();
-            //print(imagesliders);
-//                return ListView.builder(
-//                  itemCount: products.length,
-//                  itemBuilder: (buildContext, index) =>
-//                      ProductCard(productDetails: products[index]),
-//                );
+
+            return _imageSlider;
+            //return imageSliderview;
+          } else {
+
+            return CircularProgressIndicator();
+          }
+        });
+
+    var _Getsubcatelogue= StreamBuilder(
+        stream: contentProvider.fetchlevelCategoryAsStream(1,widget.id),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
+          if (snapshot.hasData) {
+
+            if (snapshot.data.documents.length == 0){//没有子类目
+              return Container(
+                  color: Colors.white // This is optional
+              );
+            }
+//    for (int i = 0; i < snapshot.data.documents.length; i++) {
+//    DocumentSnapshot doc = snapshot.data.documents.elementAt(i);
+//    print(doc.metadata.isFromCache ? "NOT FROM NETWORK" : "FROM NETWORK");
+//    }
+            categorys = snapshot.data.documents
+                .map((doc) => Category.fromMap(doc.data, doc.documentID))
+                .toList();
+            categorymap = categorys.asMap();
+
+
+            return _subCategory;
+            //return imageSliderview;
+          } else {
+
+            return CircularProgressIndicator();
+          }
+        });
+
+    var _GetItemlist= StreamBuilder(
+        stream: contentProvider.fetchTypeimageAsStream('catelogue'),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
+          if (snapshot.hasData) {
+            if (snapshot.data.documents.length == 0){//没有子类目
+              return Container(
+                  color: Colors.white // This is optional
+              );
+            }
+            imagesliders = snapshot.data.documents
+                .map((doc) => ImageSlider.fromMap(doc.data, doc.documentID))
+                .toList();
 
             return _imageSlider;
             //return imageSliderview;
@@ -354,11 +430,11 @@ class _categoryDetailState extends State<categoryDetail> {
           child: Column(
             children: <Widget>[
               //_imageSlider,
-              Categoryimageslide,
-              _subCategory,
+              _Categoryimageslide,
+              _Getsubcatelogue,
               _itemDiscount,
-              _itemPopular,
-              _itemNew
+//              _itemPopular,
+//              _itemNew
             ],
           ),
         ),
@@ -858,6 +934,8 @@ Widget _loadingImageAnimation(BuildContext context){
     itemCount: itemDiscount.length,
   );
 }
+
+
 
 ///
 ///

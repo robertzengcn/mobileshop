@@ -1,13 +1,13 @@
 class Category {
-  String id;
+  int id;
   String title;
   String image;
   String description;
 
   Category({this.id, this.title,this.image,this.description});
 
-  Category.fromMap(Map snapshot,String id) :
-        id = id ?? '',
+  Category.fromMap(Map snapshot,String documentid) :
+        id = snapshot['id']??0,
         title = snapshot['title'] ?? '',
         description= snapshot['description'] ?? '',
         image = snapshot['image'] ?? '';
