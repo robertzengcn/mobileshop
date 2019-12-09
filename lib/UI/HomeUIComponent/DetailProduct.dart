@@ -282,7 +282,7 @@ class _detailProdukState extends State<detailProduk> {
                           ),
                           Padding(padding: EdgeInsets.only(top: 5.0)),
                           Text(
-                            gridItem.price,
+                            gridItem.price.toString(),
                             style: _customTextStyle,
                           ),
                           Padding(padding: EdgeInsets.only(top: 10.0)),
@@ -313,7 +313,7 @@ class _detailProdukState extends State<detailProduk> {
                                             MainAxisAlignment.center,
                                         children: <Widget>[
                                           Text(
-                                            gridItem.rattingValue,
+                                            gridItem.rattingValue.toString(),
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
@@ -333,7 +333,7 @@ class _detailProdukState extends State<detailProduk> {
                                 Padding(
                                   padding: const EdgeInsets.only(right: 15.0),
                                   child: Text(
-                                    gridItem.itemSale,
+                                    gridItem.itemSale.toString(),
                                     style: TextStyle(
                                         color: Colors.black54,
                                         fontSize: 13.0,

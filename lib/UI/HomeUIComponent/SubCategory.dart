@@ -14,8 +14,8 @@ class SubCategory extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top:4.0,left: 3.0),
           child: Container(
-            height: 20.5,
-            width: 90.0,
+            height: 21,
+           // width: 90.0,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(20.0)),

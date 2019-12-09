@@ -843,7 +843,7 @@ class ItemGrid extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                   child: Text(
-                    products.price,
+                    products.price.toString(),
                     style: TextStyle(
                         fontFamily: "Sans",
                         fontWeight: FontWeight.w500,
@@ -860,7 +860,7 @@ class ItemGrid extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Text(
-                            products.rattingValue,
+                            products.rattingValue.toString(),
                             style: TextStyle(
                                 fontFamily: "Sans",
                                 color: Colors.black26,
@@ -875,7 +875,7 @@ class ItemGrid extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        products.itemSale,
+                        products.itemSale.toString(),
                         style: TextStyle(
                             fontFamily: "Sans",
                             color: Colors.black26,

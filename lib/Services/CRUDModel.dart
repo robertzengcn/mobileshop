@@ -23,11 +23,17 @@ class CRUDModel extends ChangeNotifier {
     return products;
   }
 
-  Stream<QuerySnapshot> fetchProductsAsStream({String categolue_id}) {
+  Stream<QuerySnapshot> fetchProductsAsStream([int catelogue_id]) {
 //    Api _api = new Api('product');
 //    return _api.streamDataCollection();
     Query query;
-    return Firestore.instance.collection('product').snapshots();
+    query=Firestore.instance.collection('product');
+    if(catelogue_id!=null){
+
+
+      query.where('CatalogueId', isEqualTo: catelogue_id);
+    }
+    return query.snapshots();
   }
 
   Future<Product> getProductById(String id) async {

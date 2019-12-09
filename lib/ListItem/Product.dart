@@ -1,22 +1,26 @@
 class Product {
-  String id;
-  String price;
+  int id;
+  double price;
   String title;
   String img;
-  String rattingValue;
-  String itemSale;
+  int rattingValue;
+  int itemSale;
   String description;
+  int catalogueId;
+
+
 
   Product({this.id, this.price, this.title,this.img,this.rattingValue,this.itemSale,this.description});
 
   Product.fromMap(Map snapshot,String id) :
-        id = id ?? '',
-        price = snapshot['price'] ?? '',
+        id = snapshot['id'] ?? '',
+        price = snapshot['price'].toDouble() ?? "",
         title = snapshot['title'] ?? '',
         rattingValue = snapshot['rattingValue'] ?? '',
         itemSale = snapshot['itemSale'] ?? '',
         description= snapshot['description'] ?? '',
-        img = snapshot['img'] ?? '';
+        img = snapshot['img'] ?? '',
+        catalogueId=snapshot['catalogueId'] ?? '';
 
   toJson() {
     return {
@@ -25,7 +29,8 @@ class Product {
       "img": img,
       "rattingValue":rattingValue,
       "itemSale":itemSale,
-      "description":description
+      "description":description,
+      "catalogueId":catalogueId
     };
   }
 }

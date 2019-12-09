@@ -55,7 +55,7 @@ class _ModifyProductState extends State<ModifyProduct> {
               ),
               SizedBox(height: 16,),
               TextFormField(
-                  initialValue: widget.product.price,
+                  initialValue: widget.product.price.toString(),
                   keyboardType: TextInputType.numberWithOptions(),
                   decoration: InputDecoration(
                     border: InputBorder.none,
@@ -90,7 +90,7 @@ class _ModifyProductState extends State<ModifyProduct> {
                 onPressed: () async{
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-                    await productProvider.updateProduct(Product(title: title,price: price,img: productType.toLowerCase()),widget.product.id);
+                    //await productProvider.updateProduct(Product(title: title,price: price,img: productType.toLowerCase()),widget.product.id);
                     Navigator.pop(context) ;
                   }
                 },

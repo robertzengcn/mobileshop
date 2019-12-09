@@ -22,7 +22,7 @@ class ProductDetails extends StatelessWidget {
             iconSize: 35,
             icon: Icon(Icons.delete_forever),
             onPressed: ()async {
-              await productProvider.removeProduct(product.id);
+              //await productProvider.removeProduct(product.id);
               Navigator.pop(context) ;
             },
           ),

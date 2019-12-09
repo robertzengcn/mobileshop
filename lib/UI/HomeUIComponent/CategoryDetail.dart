@@ -151,7 +151,7 @@ List<Product> products;
             child: Container(
               color: Colors.white,
               margin: EdgeInsets.only(right: 10.0, top: 5.0),
-              height: 40.0,
+              height: 42.0,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: ListMyWidgets()
@@ -187,136 +187,169 @@ List<Product> products;
     );
 
     /// Variable item Discount with Card
-    var _itemDiscount = Container(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 30.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "Item",
-                  style: _customTextStyleBlack,
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => new promoDetail()));
-                  },
-                  child: Text("See More", style: _customTextStyleBlue),
-                ),
-              ],
-            ),
-          ),
-          SingleChildScrollView(
-            child: Container(
-              margin: EdgeInsets.only(right: 10.0),
-              height: 300.0,
-              ///
-              ///
-              /// check the condition if image data from server firebase loaded or no
-              /// if image true (image still downloading from server)
-              /// Card to set card loading animation
-              ///
-              ///
-              child:
-              ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemBuilder: (BuildContext context, int index)=>discountItem(itemDiscount[index]),
-                itemCount: itemDiscount.length,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
+//    var _itemDiscount = Container(
+//      child: Column(
+//        children: <Widget>[
+//          Padding(
+//            padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 30.0),
+//            child: Row(
+//              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//              children: <Widget>[
+//                Text(
+//                  "Item",
+//                  style: _customTextStyleBlack,
+//                ),
+//                InkWell(
+//                  onTap: () {
+//                    Navigator.of(context).push(PageRouteBuilder(
+//                        pageBuilder: (_, __, ___) => new promoDetail()));
+//                  },
+//                  child: Text("See More", style: _customTextStyleBlue),
+//                ),
+//              ],
+//            ),
+//          ),
+//          SingleChildScrollView(
+//            child: Container(
+//              margin: EdgeInsets.only(right: 10.0),
+//              height: 300.0,
+//              ///
+//              ///
+//              /// check the condition if image data from server firebase loaded or no
+//              /// if image true (image still downloading from server)
+//              /// Card to set card loading animation
+//              ///
+//              ///
+//              child:
+//              ListView.builder(
+//                scrollDirection: Axis.vertical,
+//                itemBuilder: (BuildContext context, int index)=>discountItem(products[index]),
+//                itemCount: products == null ? 0 : products.length,
+//              ),
+//            ),
+//          )
+//        ],
+//      ),
+//    );
 
     /// Variable item Popular with Card
-    var _itemPopular = Padding(
-      padding: const EdgeInsets.only(top: 30.0),
-      child: Container(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0, left: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "Item Popular",
-                    style: _customTextStyleBlack,
-                  ),
-                  InkWell(
-                    onTap: null,
-                    child: Text("See More", style: _customTextStyleBlue),
-                  ),
-                ],
-              ),
-            ),
-            SingleChildScrollView(
-              child: Container(
-                margin: EdgeInsets.only(right: 10.0),
-                height: 300.0,
-                ///
-                ///
-                /// check the condition if image data from server firebase loaded or no
-                /// if image true (image still downloading from server)
-                /// Card to set card loading animation
-                ///
-                ///
-                child: loadImage? _loadingImageAnimation(context):
-                ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index)=>Item(itemPopularData[index]),
-                  itemCount: itemDiscount.length,
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+//    var _itemPopular = Padding(
+//      padding: const EdgeInsets.only(top: 30.0),
+//      child: Container(
+//        child: Column(
+//          children: <Widget>[
+//            Padding(
+//              padding: const EdgeInsets.only(right: 20.0, left: 20.0),
+//              child: Row(
+//                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                children: <Widget>[
+//                  Text(
+//                    "Item Popular",
+//                    style: _customTextStyleBlack,
+//                  ),
+//                  InkWell(
+//                    onTap: null,
+//                    child: Text("See More", style: _customTextStyleBlue),
+//                  ),
+//                ],
+//              ),
+//            ),
+//            SingleChildScrollView(
+//              child: Container(
+//                margin: EdgeInsets.only(right: 10.0),
+//                height: 300.0,
+//                ///
+//                ///
+//                /// check the condition if image data from server firebase loaded or no
+//                /// if image true (image still downloading from server)
+//                /// Card to set card loading animation
+//                ///
+//                ///
+//                child: loadImage? _loadingImageAnimation(context):
+//                ListView.builder(
+//                  scrollDirection: Axis.horizontal,
+//                  itemBuilder: (BuildContext context, int index)=>Item(itemPopularData[index]),
+//                  itemCount: itemDiscount.length,
+//                ),
+//              ),
+//            )
+//          ],
+//        ),
+//      ),
+//    );
 
     /// Variable New Items with Card
-    var _itemNew = Padding(
-      padding: const EdgeInsets.only(top: 30.0, bottom: 15.0),
+//    var _itemNew = Padding(
+//      padding: const EdgeInsets.only(top: 30.0, bottom: 15.0),
+//      child: Container(
+//        child: Column(
+//          children: <Widget>[
+//            Padding(
+//              padding: const EdgeInsets.only(right: 20.0, left: 20.0),
+//              child: Row(
+//                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                children: <Widget>[
+//                  Text(
+//                    "New Items",
+//                    style: _customTextStyleBlack,
+//                  ),
+//                  InkWell(
+//                    onTap: null,
+//                    child: Text("See More", style: _customTextStyleBlue),
+//                  ),
+//                ],
+//              ),
+//            ),
+//            SingleChildScrollView(
+//              child: Container(
+//                margin: EdgeInsets.only(right: 10.0, bottom: 15.0),
+//                height: 300.0,
+//                ///
+//                ///
+//                /// check the condition if image data from server firebase loaded or no
+//                /// if image true (image still downloading from server)
+//                /// Card to set card loading animation
+//                ///
+//                ///
+//                child: loadImage? _loadingImageAnimation(context):
+//                ListView.builder(
+//                  scrollDirection: Axis.horizontal,
+//                  itemBuilder: (BuildContext context, int index)=> Item(newItems[index]),
+//                  itemCount: itemDiscount.length,
+//                ),
+//              ),
+//            )
+//          ],
+//        ),
+//      ),
+//    );
+
+    /// Grid Item a product
+    var _grid = SingleChildScrollView(
       child: Container(
+        color: Colors.white,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0, left: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "New Items",
-                    style: _customTextStyleBlack,
-                  ),
-                  InkWell(
-                    onTap: null,
-                    child: Text("See More", style: _customTextStyleBlue),
-                  ),
-                ],
-              ),
-            ),
-            SingleChildScrollView(
-              child: Container(
-                margin: EdgeInsets.only(right: 10.0, bottom: 15.0),
-                height: 300.0,
-                ///
-                ///
-                /// check the condition if image data from server firebase loaded or no
-                /// if image true (image still downloading from server)
-                /// Card to set card loading animation
-                ///
-                ///
-                child: loadImage? _loadingImageAnimation(context):
-                ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index)=> Item(newItems[index]),
-                  itemCount: itemDiscount.length,
-                ),
+            ///
+            ///
+            /// check the condition if image data from server firebase loaded or no
+            /// if image true (image still downloading from server)
+            /// Card to set card loading animation
+            ///
+            ///
+            GridView.count(
+              shrinkWrap: true,
+              padding: EdgeInsets.symmetric(horizontal: 7.0, vertical: 10.0),
+              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 15.0,
+              childAspectRatio: 0.545,
+              crossAxisCount: 2,
+              primary: false,
+              children:List.generate(
+                /// Get data in flashSaleItem.dart (ListItem folder)
+                products == null ? 0 : products.length,
+                    (index) => discountItem(products[index]),
               ),
             )
           ],
@@ -326,6 +359,7 @@ List<Product> products;
 
     var _Categoryimageslide= StreamBuilder(
         stream: contentProvider.fetchTypeimageAsStream('catelogue'),
+      //stream:Firestore.instance.collection('image_slider').where('status', isEqualTo: 1).where('type',isEqualTo:'catelogue').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
           if (snapshot.hasData) {
@@ -337,62 +371,63 @@ List<Product> products;
             imagesliders = snapshot.data.documents
                 .map((doc) => ImageSlider.fromMap(doc.data, doc.documentID))
                 .toList();
-
+            print("get images");
+            print(imagesliders);
             return _imageSlider;
             //return imageSliderview;
           } else {
-
+            print("nodata377");
             return CircularProgressIndicator();
           }
         });
 
-    var _Getsubcatelogue= StreamBuilder(
+    var _Getsubcatelogue= StreamBuilder(//get category
         stream: contentProvider.fetchlevelCategoryAsStream(1,widget.id),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
           if (snapshot.hasData) {
 
-            if (snapshot.data.documents.length == 0){//没有子类目
+            if (snapshot.data.documents.length == 0){//not have category
               return Container(
                   color: Colors.white // This is optional
               );
             }
-//    for (int i = 0; i < snapshot.data.documents.length; i++) {
-//    DocumentSnapshot doc = snapshot.data.documents.elementAt(i);
-//    print(doc.metadata.isFromCache ? "NOT FROM NETWORK" : "FROM NETWORK");
-//    }
+
             categorys = snapshot.data.documents
                 .map((doc) => Category.fromMap(doc.data, doc.documentID))
                 .toList();
             categorymap = categorys.asMap();
-
+            print("subcatelogue");
+            print(categorymap);
 
             return _subCategory;
             //return imageSliderview;
           } else {
-
+            print("nodata403");
             return CircularProgressIndicator();
           }
         });
 
-    var _GetItemlist= StreamBuilder(
-        stream: contentProvider.fetchTypeimageAsStream('catelogue'),
+    var  _GetItemlist= StreamBuilder(
+        stream: contentProvider.fetchProductsAsStream(widget.id),
+
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
           if (snapshot.hasData) {
-            if (snapshot.data.documents.length == 0){//没有子类目
+            if (snapshot.data.documents.length == 0){//没有产品
+              print("noitem414");
               return Container(
                   color: Colors.white // This is optional
               );
             }
-            imagesliders = snapshot.data.documents
-                .map((doc) => ImageSlider.fromMap(doc.data, doc.documentID))
+            products = snapshot.data.documents
+                .map((doc) => Product.fromMap(doc.data, doc.documentID))
                 .toList();
 
-            return _imageSlider;
+            return _grid;
             //return imageSliderview;
           } else {
-
+            print("notdata425");
             return CircularProgressIndicator();
           }
         });
@@ -432,7 +467,7 @@ List<Product> products;
               //_imageSlider,
               _Categoryimageslide,
               _Getsubcatelogue,
-              _itemDiscount,
+              _GetItemlist,
 //              _itemPopular,
 //              _itemNew
             ],
@@ -446,7 +481,7 @@ List<Product> products;
 /// Class Component a Item Discount Card
 class discountItem extends StatelessWidget {
 
-  categoryItem item;
+  Product item;
 
   discountItem(this.item);
 
@@ -490,7 +525,7 @@ class discountItem extends StatelessWidget {
                                   topLeft: Radius.circular(7.0),
                                   topRight: Radius.circular(7.0)),
                               image: DecorationImage(
-                                  image: AssetImage(item.image), fit: BoxFit.cover)),
+                                  image: new NetworkImage(item.img), fit: BoxFit.cover)),
                         ),
                         Container(
                           height: 25.5,
@@ -528,7 +563,7 @@ class discountItem extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                       child: Text(
-                        item.Salary,
+                        item.price.toString(),
                         style: TextStyle(
                             fontFamily: "Sans",
                             fontWeight: FontWeight.w500,
@@ -545,7 +580,7 @@ class discountItem extends StatelessWidget {
                           Row(
                             children: <Widget>[
                               Text(
-                                item.Rating,
+                                item.rattingValue.toString(),
                                 style: TextStyle(
                                     fontFamily: "Sans",
                                     color: Colors.black26,
@@ -560,7 +595,7 @@ class discountItem extends StatelessWidget {
                             ],
                           ),
                           Text(
-                            item.sale,
+                            item.itemSale.toString(),
                             style: TextStyle(
                                 fontFamily: "Sans",
                                 color: Colors.black26,
@@ -582,121 +617,122 @@ class discountItem extends StatelessWidget {
 }
 
 /// Class Component Card in Category Detail
-class Item extends StatelessWidget {
-  categoryItem item;
-
-  Item(this.item);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-          top: 20.0, left: 10.0, bottom: 10.0, right: 0.0),
-      child: InkWell(
-        onTap: (){
-
-        },
-        child: Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              boxShadow: [
-                BoxShadow(
-                  color: Color(0xFF656565).withOpacity(0.15),
-                  blurRadius: 2.0,
-                  spreadRadius: 1.0,
-//           offset: Offset(4.0, 10.0)
-                )
-              ]),
-          child: Wrap(
-            children: <Widget>[
-              Container(
-                width: 160.0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Container(
-                      height: 185.0,
-                      width: 160.0,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(7.0),
-                              topRight: Radius.circular(7.0)),
-                          image: DecorationImage(
-                              image: AssetImage(item.image), fit: BoxFit.cover)),
-                    ),
-                    Padding(padding: EdgeInsets.only(top: 7.0)),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                      child: Text(
-                        item.title,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            letterSpacing: 0.5,
-                            color: Colors.black54,
-                            fontFamily: "Sans",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 13.0),
-                      ),
-                    ),
-                    Padding(padding: EdgeInsets.only(top: 1.0)),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                      child: Text(
-                        item.Salary,
-                        style: TextStyle(
-                            fontFamily: "Sans",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.0),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 15.0, right: 15.0, top: 5.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                item.Rating,
-                                style: TextStyle(
-                                    fontFamily: "Sans",
-                                    color: Colors.black26,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12.0),
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: Colors.yellow,
-                                size: 14.0,
-                              )
-                            ],
-                          ),
-                          Text(
-                            item.sale,
-                            style: TextStyle(
-                                fontFamily: "Sans",
-                                color: Colors.black26,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12.0),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+//class Item extends StatelessWidget {
+//  //categoryItem item;
+//  Product item;
+//
+//  Item(this.item);
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return Padding(
+//      padding: const EdgeInsets.only(
+//          top: 20.0, left: 10.0, bottom: 10.0, right: 0.0),
+//      child: InkWell(
+//        onTap: (){
+//
+//        },
+//        child: Container(
+//          decoration: BoxDecoration(
+//              color: Colors.white,
+//              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//              boxShadow: [
+//                BoxShadow(
+//                  color: Color(0xFF656565).withOpacity(0.15),
+//                  blurRadius: 2.0,
+//                  spreadRadius: 1.0,
+////           offset: Offset(4.0, 10.0)
+//                )
+//              ]),
+//          child: Wrap(
+//            children: <Widget>[
+//              Container(
+//                width: 160.0,
+//                child: Column(
+//                  crossAxisAlignment: CrossAxisAlignment.start,
+//                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                  mainAxisSize: MainAxisSize.min,
+//                  children: <Widget>[
+//                    Container(
+//                      height: 185.0,
+//                      width: 160.0,
+//                      decoration: BoxDecoration(
+//                          borderRadius: BorderRadius.only(
+//                              topLeft: Radius.circular(7.0),
+//                              topRight: Radius.circular(7.0)),
+//                          image: DecorationImage(
+//                              image: AssetImage(item.img), fit: BoxFit.cover)),
+//                    ),
+//                    Padding(padding: EdgeInsets.only(top: 7.0)),
+//                    Padding(
+//                      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+//                      child: Text(
+//                        item.title,
+//                        overflow: TextOverflow.ellipsis,
+//                        style: TextStyle(
+//                            letterSpacing: 0.5,
+//                            color: Colors.black54,
+//                            fontFamily: "Sans",
+//                            fontWeight: FontWeight.w500,
+//                            fontSize: 13.0),
+//                      ),
+//                    ),
+//                    Padding(padding: EdgeInsets.only(top: 1.0)),
+//                    Padding(
+//                      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+//                      child: Text(
+//                        item.price.toString(),
+//                        style: TextStyle(
+//                            fontFamily: "Sans",
+//                            fontWeight: FontWeight.w500,
+//                            fontSize: 14.0),
+//                      ),
+//                    ),
+//                    Padding(
+//                      padding: const EdgeInsets.only(
+//                          left: 15.0, right: 15.0, top: 5.0),
+//                      child: Row(
+//                        crossAxisAlignment: CrossAxisAlignment.start,
+//                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                        children: <Widget>[
+//                          Row(
+//                            children: <Widget>[
+//                              Text(
+//                                item.rattingValue.toString(),
+//                                style: TextStyle(
+//                                    fontFamily: "Sans",
+//                                    color: Colors.black26,
+//                                    fontWeight: FontWeight.w500,
+//                                    fontSize: 12.0),
+//                              ),
+//                              Icon(
+//                                Icons.star,
+//                                color: Colors.yellow,
+//                                size: 14.0,
+//                              )
+//                            ],
+//                          ),
+//                          Text(
+//                            item.itemSale.toString(),
+//                            style: TextStyle(
+//                                fontFamily: "Sans",
+//                                color: Colors.black26,
+//                                fontWeight: FontWeight.w500,
+//                                fontSize: 12.0),
+//                          )
+//                        ],
+//                      ),
+//                    ),
+//                  ],
+//                ),
+//              ),
+//            ],
+//          ),
+//        ),
+//      ),
+//    );
+//  }
+//}
 
 ///
 ///
