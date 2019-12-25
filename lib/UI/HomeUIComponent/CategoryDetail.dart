@@ -59,13 +59,18 @@ List<Product> products;
   @override
   void initState() {
 
-    imageNetwork.resolve(ImageConfiguration()).addListener((_,__){
-      if(mounted){
-        setState(() {
-          loadImage=false;
-        });
-      }
-    });
+//    Firestore.instance.collection('image_slider').where('status', isEqualTo: 1).where('type','catelogue').then((data) async {
+//      var list = data.documents;
+//      documents = list;
+//      print("init state document:" +
+//          documents.length.toString()); // value is getting
+//      super.initState();
+//      setState(() {
+//        isDocLoaded = true;
+//        documents = list;
+//      });
+//    });
+
     // TODO: implement initState
     super.initState();
   }
@@ -73,9 +78,9 @@ List<Product> products;
   /// All Widget Component layout
   @override
   Widget build(BuildContext context) {
-    final contentProvider = Provider.of<CRUDModel>(context);
-    widget.id;
 
+    widget.id;
+    final contentProvider = Provider.of<CRUDModel>(context);
     /// imageSlider in header layout category detail
     var _imageSlider = Padding(
       padding: const EdgeInsets.only(
@@ -368,11 +373,13 @@ List<Product> products;
                   color: Colors.white // This is optional
               );
             }
-            imagesliders = snapshot.data.documents
-                .map((doc) => ImageSlider.fromMap(doc.data, doc.documentID))
-                .toList();
-            print("get images");
-            print(imagesliders);
+
+
+            setState(() {
+              imagesliders = snapshot.data.documents
+                  .map((doc) => ImageSlider.fromMap(doc.data, doc.documentID))
+                  .toList();
+            });
             return _imageSlider;
             //return imageSliderview;
           } else {
