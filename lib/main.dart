@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import './locator.dart';
 import './Services/CRUDModel.dart';
 //import 'package:treva_shop_flutter/UI/HomeUIComponent/HomeView.dart';
+import 'package:treva_shop_flutter/Services/catelogue_bloc_provider.dart';
 
 
 
@@ -41,8 +42,10 @@ class myApp extends StatelessWidget {
     ));
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(builder: (_) => locator<CRUDModel>()),
+        ChangeNotifierProvider(create: (_) => locator<CRUDModel>()),
+        CatelogueBlocProvider(create: (_) => CatelogueBlocProvider()),
       ],
+
       child: MaterialApp(
         title: "Amiga Toy",
         theme: ThemeData(

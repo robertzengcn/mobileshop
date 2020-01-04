@@ -67,13 +67,13 @@ class _flashSaleState extends State<flashSale> {
   @override
   void initState() {
 
-    imageNetwork.resolve(new ImageConfiguration()).addListener((_,__){
-      if(mounted){
-        setState(() {
-          loadImage = false;
-        });
-      }
-    });
+//    imageNetwork.resolve(new ImageConfiguration()).addListener((_,__){
+//      if(mounted){
+//        setState(() {
+//          loadImage = false;
+//        });
+//      }
+//    });
 
     hours = new CountDown(new Duration(hours: 24));
     minutes = new CountDown(new Duration(hours: 1));

@@ -9,5 +9,5 @@ class Repository {
 
   Stream<QuerySnapshot> catelogueImagesList(String type) => _firestoreProvider.catelogueImagesList(type);
 
-
+  Stream<QuerySnapshot> fetchlevelCategoryAsStream(int level,[int top=0]) => _firestoreProvider.fetchlevelCategoryAsStream(level,top);
 }

@@ -26,13 +26,13 @@ class _promoDetailState extends State<promoDetail> {
   ///
   @override
   void initState() {
-    imageNetwork.resolve(new ImageConfiguration()).addListener((_,__){
-      if(mounted){
-        setState(() {
-          imageLoad = false;
-        });
-      }
-    });
+//    imageNetwork.resolve(new ImageConfiguration()).addListener((_,__){
+//      if(mounted){
+//        setState(() {
+//          imageLoad = false;
+//        });
+//      }
+//    });
     // TODO: implement initState
     super.initState();
   }

@@ -1,6 +1,4 @@
 import 'dart:async';
-
-
 import 'package:shimmer/shimmer.dart';
 import 'package:treva_shop_flutter/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +12,8 @@ import 'package:treva_shop_flutter/ListItem/ImageSlider.dart';
 import 'package:treva_shop_flutter/ListItem/Category.dart';
 import 'package:treva_shop_flutter/UI/HomeUIComponent/SubCategory.dart';
 import 'package:treva_shop_flutter/ListItem/Product.dart';
+import 'package:treva_shop_flutter/Services/catelogue_bloc_provider.dart';
+import 'package:treva_shop_flutter/Services/catelogue_bloc.dart';
 
 class categoryDetail extends StatefulWidget {
   final int id;
@@ -25,7 +25,11 @@ class categoryDetail extends StatefulWidget {
 
 /// if user click icon in category layout navigate to categoryDetail Layout
 class _categoryDetailState extends State<categoryDetail> {
+  CatelogueBloc _bloc;
 
+  void initState() {
+    super.initState();
+  }
   ///
   /// Get image data dummy from firebase server
   ///
@@ -33,6 +37,9 @@ var imageNetwork = NetworkImage("https://img.alicdn.com/tfscom/i3/2996558363/TB2
   List<Category> categorys;
 Map<int, Category> categorymap;
 List<Product> products;
+
+
+
   ///
   /// check the condition is right or wrong for image loaded or no
   ///
@@ -56,23 +63,35 @@ List<Product> products;
   ///
   /// SetState after imageNetwork loaded to change list card
   ///
+  //@override
+//  void initState() {
+//
+////    Firestore.instance.collection('image_slider').where('status', isEqualTo: 1).where('type','catelogue').then((data) async {
+////      var list = data.documents;
+////      documents = list;
+////      print("init state document:" +
+////          documents.length.toString()); // value is getting
+////      super.initState();
+////      setState(() {
+////        isDocLoaded = true;
+////        documents = list;
+////      });
+////    });
+//
+//    // TODO: implement initState
+//    super.initState();
+//  }
+
   @override
-  void initState() {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _bloc = CatelogueBlocProvider.of(context);
+  }
 
-//    Firestore.instance.collection('image_slider').where('status', isEqualTo: 1).where('type','catelogue').then((data) async {
-//      var list = data.documents;
-//      documents = list;
-//      print("init state document:" +
-//          documents.length.toString()); // value is getting
-//      super.initState();
-//      setState(() {
-//        isDocLoaded = true;
-//        documents = list;
-//      });
-//    });
+  @override
+  void dispose() {
 
-    // TODO: implement initState
-    super.initState();
+    super.dispose();
   }
 
   /// All Widget Component layout
@@ -389,7 +408,8 @@ List<Product> products;
         });
 
     var _Getsubcatelogue= StreamBuilder(//get category
-        stream: contentProvider.fetchlevelCategoryAsStream(1,widget.id),
+        //stream: contentProvider.fetchlevelCategoryAsStream(1,widget.id),
+        stream:contentProvider.fetchlevelCategoryAsStream(1,widget.id),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
           if (snapshot.hasData) {
@@ -404,13 +424,12 @@ List<Product> products;
                 .map((doc) => Category.fromMap(doc.data, doc.documentID))
                 .toList();
             categorymap = categorys.asMap();
-            print("subcatelogue");
-            print(categorymap);
+
 
             return _subCategory;
             //return imageSliderview;
           } else {
-            print("nodata403");
+
             return CircularProgressIndicator();
           }
         });

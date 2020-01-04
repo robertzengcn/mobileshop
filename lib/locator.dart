@@ -8,7 +8,8 @@ GetIt locator = GetIt();
 
 void setupLocator() {
   //locator.registerLazySingleton(() => Api('products'));
-  //locator.registerLazySingleton<Api>(() => Api());
+ locator.registerLazySingleton<Api>(() => Api('products'));
+ //locator.registerLazySingleton<Api>(() => Api('category'));
 
   locator.registerLazySingleton(() => CRUDModel()) ;
 }

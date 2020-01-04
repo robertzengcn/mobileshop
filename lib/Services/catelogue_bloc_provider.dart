@@ -10,8 +10,8 @@ class CatelogueBlocProvider extends InheritedWidget{
   bool updateShouldNotify(_) => true;
 
   static CatelogueBloc of(BuildContext context) {
-    //return (context.dependOnInheritedWidgetOfExactType(CatelogueBlocProvider) as CatelogueBlocProvider).bloc;
-  //return context.dependOnInheritedWidgetOfExactType<CatelogueBlocProvider>.bloc;
+    return (context.inheritFromWidgetOfExactType(CatelogueBlocProvider) as CatelogueBlocProvider).bloc;
+
   }
 
 }

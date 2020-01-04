@@ -42,13 +42,13 @@ class _menuDetailState extends State<menuDetail> {
   ///
   @override
   void initState() {
-    imageNetwork.resolve(ImageConfiguration()).addListener((_,__){
-      if(mounted){
-        setState(() {
-          loadImage=false;
-        });
-      }
-    });
+//    imageNetwork.resolve(ImageConfiguration()).addListener((_,__){
+//      if(mounted){
+//        setState(() {
+//          loadImage=false;
+//        });
+//      }
+//    });
     // TODO: implement initState
     super.initState();
   }
