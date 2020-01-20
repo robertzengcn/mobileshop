@@ -6,8 +6,6 @@ import 'package:treva_shop_flutter/Library/countdown/countdown.dart';
 import 'package:treva_shop_flutter/UI/HomeUIComponent/CategoryDetail.dart';
 import 'package:treva_shop_flutter/UI/HomeUIComponent/DetailProduct.dart';
 import 'package:treva_shop_flutter/UI/HomeUIComponent/FlashSale.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/MenuDetail.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/PromotionDetail.dart';
 import 'package:treva_shop_flutter/ListItem/Product.dart';
 import 'package:treva_shop_flutter/ListItem/ImageSlider.dart';
 import 'package:treva_shop_flutter/Services/CRUDModel.dart';

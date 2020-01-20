@@ -10,16 +10,14 @@ import 'package:treva_shop_flutter/UI/OnBoarding.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:provider/provider.dart';
-import './locator.dart';
-import './Services/CRUDModel.dart';
+
 //import 'package:treva_shop_flutter/UI/HomeUIComponent/HomeView.dart';
-import 'package:treva_shop_flutter/Services/catelogue_bloc_provider.dart';
+
 
 
 
 /// Run first apps open
 void main() {
-  setupLocator();
   runApp(myApp());
 }
 
@@ -42,8 +40,7 @@ class myApp extends StatelessWidget {
     ));
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => locator<CRUDModel>()),
-        CatelogueBlocProvider(create: (_) => CatelogueBlocProvider()),
+
       ],
 
       child: MaterialApp(
