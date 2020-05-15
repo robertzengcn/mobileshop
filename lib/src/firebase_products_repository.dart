@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:treva_shop_flutter/product_repository.dart';
+import 'package:treva_shop_flutter/products_repository.dart';
 import 'entities/entities.dart';
 
 class FirebaseProductsRepository implements ProductsRepository {
@@ -12,15 +12,10 @@ class FirebaseProductsRepository implements ProductsRepository {
   Stream<List<Product>> products() {
     return productCollection.snapshots().map((snapshot) {
       return snapshot.documents
-          .map((doc) => Todo.fromEntity(TodoEntity.fromSnapshot(doc)))
+          .map((doc) => Product.fromEntity(ProductEntity.fromSnapshot(doc)))
           .toList();
     });
   }
 
-  @override
-  Future<void> updateTodo(Todo update) {
-    return todoCollection
-        .document(update.id)
-        .updateData(update.toEntity().toDocument());
-  }
+
 }
