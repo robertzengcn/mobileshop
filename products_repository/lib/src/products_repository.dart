@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:treva_shop_flutter/products_repository.dart';
+import 'package:products_repository/products_repository.dart';
 
 abstract class ProductsRepository {
 

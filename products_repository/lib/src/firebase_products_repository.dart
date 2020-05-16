@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:treva_shop_flutter/products_repository.dart';
+import 'package:products_repository/products_repository.dart';
 import 'entities/entities.dart';
 
 class FirebaseProductsRepository implements ProductsRepository {
