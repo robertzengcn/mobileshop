@@ -10,7 +10,7 @@ import 'package:treva_shop_flutter/Library/intro_views_flutter-2.4.0/lib/Constan
 import 'package:treva_shop_flutter/Library/intro_views_flutter-2.4.0/lib/Models/page_view_model.dart';
 import 'package:treva_shop_flutter/Library/intro_views_flutter-2.4.0/lib/Models/pager_indicator_view_model.dart';
 import 'package:treva_shop_flutter/Library/intro_views_flutter-2.4.0/lib/Models/slide_update_model.dart';
-import 'package:treva_shop_flutter/Library/intro_views_flutter-2.4.0/lib/UI/page.dart';
+import 'package:treva_shop_flutter/Library/intro_views_flutter-2.4.0/lib/UI/pageui.dart';
 import 'package:treva_shop_flutter/Library/intro_views_flutter-2.4.0/lib/UI/page_indicator_buttons.dart';
 import 'package:treva_shop_flutter/Library/intro_views_flutter-2.4.0/lib/UI/pager_indicator.dart';
 
@@ -207,7 +207,7 @@ class _IntroViewsFlutterState extends State<IntroViewsFlutter>
       resizeToAvoidBottomPadding: false,
       body: Stack(
         children: <Widget>[
-          Page(
+          Pageui(
             pageViewModel: pages[activePageIndex],
             percentVisible: 1.0,
             columnMainAxisAlignment: widget.columnMainAxisAlignment,
@@ -215,7 +215,7 @@ class _IntroViewsFlutterState extends State<IntroViewsFlutter>
           PageReveal(
             //next page reveal
             revealPercent: slidePercent,
-            child: Page(
+            child: Pageui(
                 pageViewModel: pages[nextPageIndex],
                 percentVisible: slidePercent,
                 columnMainAxisAlignment: widget.columnMainAxisAlignment),

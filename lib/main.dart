@@ -2,15 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:bloc/bloc.dart';
+//import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:treva_shop_flutter/UI/BottomNavigationBar.dart';
-import 'package:treva_shop_flutter/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
+import 'package:treva_shop_flutter/blocs/blocs.dart';
+//import 'package:treva_shop_flutter/UI/BottomNavigationBar.dart';
+//import 'package:treva_shop_flutter/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
 import 'package:treva_shop_flutter/UI/HomeUIComponent/Home.dart';
-import 'package:treva_shop_flutter/UI/LoginOrSignup/Login.dart';
-import 'package:treva_shop_flutter/UI/OnBoarding.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
+//import 'package:treva_shop_flutter/UI/LoginOrSignup/Login.dart';
+//import 'package:treva_shop_flutter/UI/OnBoarding.dart';
+import 'package:products_repository/products_repository.dart';
+
 
 
 //import 'package:treva_shop_flutter/UI/HomeUIComponent/HomeView.dart';
@@ -44,7 +45,7 @@ class myApp extends StatelessWidget {
           create: (context) {
             return ProductsBloc(
               productsRepository: FirebaseProductsRepository(),
-            );
+            )..add(LoadProducts());
           },
         )
       ],
@@ -63,7 +64,7 @@ class myApp extends StatelessWidget {
         /// Routes
         routes: <String, WidgetBuilder>{
           //"login": (BuildContext context) => new Menu()
-          "login": (BuildContext context) => new Menu()
+          "home": (BuildContext context) => new Menu()
         }
       ),
     );
@@ -86,7 +87,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   /// To navigate layout change
   void NavigatorPage() {
-    Navigator.of(context).pushReplacementNamed("login");
+    Navigator.of(context).pushReplacementNamed("home");
   }
   /// Declare startTime to InitState
   @override

@@ -3,7 +3,7 @@ import 'package:treva_shop_flutter/Library/intro_views_flutter-2.4.0/lib/Models/
 
 
 /// This is the class which contains the Page UI.
-class Page extends StatelessWidget {
+class Pageui extends StatelessWidget {
   ///page details
   final PageViewModel pageViewModel;
 
@@ -14,7 +14,7 @@ class Page extends StatelessWidget {
   final MainAxisAlignment columnMainAxisAlignment;
 
   //Constructor
-  Page({
+  Pageui({
     this.pageViewModel,
     this.percentVisible = 1.0,
     this.columnMainAxisAlignment = MainAxisAlignment.spaceAround,
