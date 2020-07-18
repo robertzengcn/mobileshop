@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:treva_shop_flutter/UI/BottomNavigationBar.dart';
 import 'package:treva_shop_flutter/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
 import 'package:treva_shop_flutter/UI/HomeUIComponent/Home.dart';
@@ -9,7 +11,7 @@ import 'package:treva_shop_flutter/UI/LoginOrSignup/Login.dart';
 import 'package:treva_shop_flutter/UI/OnBoarding.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
-import 'package:provider/provider.dart';
+
 
 //import 'package:treva_shop_flutter/UI/HomeUIComponent/HomeView.dart';
 
@@ -23,9 +25,7 @@ void main() {
 
 /// Set orienttation
 class myApp extends StatelessWidget {
-  static FirebaseAnalytics analytics = FirebaseAnalytics();
-  static FirebaseAnalyticsObserver observer =
-  FirebaseAnalyticsObserver(analytics: analytics);
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +38,15 @@ class myApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
       statusBarColor: Colors.transparent, //or set color with: Color(0xFF0000FF)
     ));
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
-
+        BlocProvider<ProductsBloc>(
+          create: (context) {
+            return ProductsBloc(
+              productsRepository: FirebaseProductsRepository(),
+            );
+          },
+        )
       ],
 
       child: MaterialApp(
@@ -58,8 +64,7 @@ class myApp extends StatelessWidget {
         routes: <String, WidgetBuilder>{
           //"login": (BuildContext context) => new Menu()
           "login": (BuildContext context) => new Menu()
-        },
-        navigatorObservers: <NavigatorObserver>[observer],
+        }
       ),
     );
   }
