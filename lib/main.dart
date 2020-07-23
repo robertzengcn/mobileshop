@@ -10,7 +10,8 @@ import 'package:treva_shop_flutter/blocs/blocs.dart';
 import 'package:treva_shop_flutter/UI/HomeUIComponent/Home.dart';
 //import 'package:treva_shop_flutter/UI/LoginOrSignup/Login.dart';
 //import 'package:treva_shop_flutter/UI/OnBoarding.dart';
-import 'package:products_repository/products_repository.dart';
+import 'package:firebase_repository/products_repository.dart';
+
 
 
 

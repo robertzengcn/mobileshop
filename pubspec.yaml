@@ -20,8 +20,8 @@ dependencies:
   flutter_bloc: ^3.0.0
   equatable: ^1.0.0
 #item repository
-  products_repository:
-    path: products_repository
+  firebase_repository:
+    path: firebase_repository
 
 
   # The following adds the Cupertino Icons font to your application.
