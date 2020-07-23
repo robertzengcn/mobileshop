@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:treva_shop_flutter/blocs/blocs.dart';
 import 'package:treva_shop_flutter/UI/HomeUIComponent/Home.dart';
-import 'package:firebase_repository/products_repository.dart';
+import 'package:firebase_repository/firebase_repository.dart';
 
 /// Run first apps open
 void main() {

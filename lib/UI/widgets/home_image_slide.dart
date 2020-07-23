@@ -9,7 +9,7 @@ class HomeImageSlide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductsBloc, ProductsState>(
-    
+
     );
   }
 }
