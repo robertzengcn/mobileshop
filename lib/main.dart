@@ -1,24 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-//import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:treva_shop_flutter/blocs/blocs.dart';
-//import 'package:treva_shop_flutter/UI/BottomNavigationBar.dart';
-//import 'package:treva_shop_flutter/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
 import 'package:treva_shop_flutter/UI/HomeUIComponent/Home.dart';
-//import 'package:treva_shop_flutter/UI/LoginOrSignup/Login.dart';
-//import 'package:treva_shop_flutter/UI/OnBoarding.dart';
 import 'package:firebase_repository/products_repository.dart';
-
-
-
-
-//import 'package:treva_shop_flutter/UI/HomeUIComponent/HomeView.dart';
-
-
-
 
 /// Run first apps open
 void main() {
