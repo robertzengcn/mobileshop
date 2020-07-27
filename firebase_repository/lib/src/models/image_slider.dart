@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 import '../entities/entities.dart';
 @immutable
-class Product {
+class Image {
 
   final int id;
   final double price;
@@ -12,7 +12,7 @@ class Product {
   final String description;
   final int catalogueId;
 
-  Product(this.id, this.price, this.title,this.img,this.rattingValue,this.itemSale,this.description,this.catalogueId);
+  Image(this.id, this.price, this.title,this.img,this.rattingValue,this.itemSale,this.description,this.catalogueId);
 
 
 
