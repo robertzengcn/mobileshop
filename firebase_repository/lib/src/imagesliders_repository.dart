@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:firebase_repository/firebase_repository.dart';
 
-abstract class ProductsRepository {
+abstract class ImageslidersRepository {
 
   //Future<void> addNewProduct(Product product);
 
   //Future<void> deleteProduct(Product product);
 
-  Stream<List<Product>> products();
+  Stream<List<ImageSlider>> imagesliders();
 
   //Future<void> updateTodo(Product todo);
 }
