@@ -6,15 +6,15 @@ import 'entities/entities.dart';
 
 
 
-class FirebaseImagesliderRepository implements ImageslidersRepository {
-  final productCollection = Firestore.instance.collection('product');
+class FirebaseImageslidersRepository implements ImageslidersRepository {
+  final imagesliderCollection = Firestore.instance.collection('images_slider');
 
 
   @override
-  Stream<List<ImageSlider>> imagesliders() {
-    return imageslideCollection.snapshots().map((snapshot) {
+  Stream<List<Imageslider>> imagesliders() {
+    return imagesliderCollection.snapshots().map((snapshot) {
       return snapshot.documents
-          .map((doc) => Product.fromEntity(ProductEntity.fromSnapshot(doc)))
+          .map((doc) => Imageslider.fromEntity(ImageSliderEntity.fromSnapshot(doc)))
           .toList();
     });
   }

@@ -34,7 +34,14 @@ class myApp extends StatelessWidget {
               productsRepository: FirebaseProductsRepository(),
             )..add(LoadProducts());
           },
-        )
+        ),
+        BlocProvider<ImageslidersBloc>(
+        create: (context) {
+    return ImageslidersBloc(
+    imageslidersRepository: FirebaseImageslidersRepository(),
+    )..add(LoadImageslider());
+    },
+    )
       ],
 
       child: MaterialApp(

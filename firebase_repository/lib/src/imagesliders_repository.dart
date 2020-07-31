@@ -8,7 +8,7 @@ abstract class ImageslidersRepository {
 
   //Future<void> deleteProduct(Product product);
 
-  Stream<List<ImageSlider>> imagesliders();
+  Stream<List<Imageslider>> imagesliders();
 
   //Future<void> updateTodo(Product todo);
 }

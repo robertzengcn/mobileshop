@@ -1,14 +1,14 @@
 import 'package:meta/meta.dart';
 import '../entities/entities.dart';
 @immutable
-class ImageSlider {
+class Imageslider {
 
   final String document_id;
   final int status;
   final String type;
   final String url;
 
-  ImageSlider(this.document_id, this.status, this.type,this.url);
+  Imageslider(this.document_id, this.status, this.type,this.url);
 
 
 
@@ -20,7 +20,7 @@ class ImageSlider {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is ImageSlider &&
+          other is Imageslider &&
               runtimeType == other.runtimeType &&
               document_id == other.document_id &&
               status == other.status &&
@@ -36,8 +36,8 @@ class ImageSlider {
     return ImageSliderEntity(document_id, status, type,url);
   }
 
-  static ImageSlider fromEntity(ImageSliderEntity entity) {
-    return ImageSlider(
+  static Imageslider fromEntity(ImageSliderEntity entity) {
+    return Imageslider(
        entity.document_id,
       entity.status,
       entity.type,

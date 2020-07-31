@@ -1,16 +1,16 @@
 import 'package:equatable/equatable.dart';
 import 'package:firebase_repository/firebase_repository.dart';
 
-abstract class ImagesliderEvent extends Equatable {
-  const ImagesliderEvent();
+abstract class ImageslidersEvent extends Equatable {
+  const ImageslidersEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class LoadImageslider extends ImagesliderEvent {}
+class LoadImageslider extends ImageslidersEvent {}
 
-class ImagesliderUpdated extends ImagesliderEvent {
+class ImagesliderUpdated extends ImageslidersEvent {
   final List<Imageslider> imageslider;
 
   const ImagesliderUpdated(this.imageslider);
@@ -18,3 +18,6 @@ class ImagesliderUpdated extends ImagesliderEvent {
   @override
   List<Object> get props => [imageslider];
 }
+class LoadinghomeImageslider extends ImageslidersEvent {}
+
+class LoadedhomeImageslider extends ImageslidersEvent {}
