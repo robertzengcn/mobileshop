@@ -23,7 +23,7 @@ class ImageslidersBloc extends Bloc<ImageslidersEvent, ImageslidersState> {
 
   Stream<ImageslidersState> _mapLoadImagesToState() async* {
     _imagesliderSubscription?.cancel();
-    _imagesliderSubscription = _imagesliderSubscription.imagesliders().listen(
+    _imagesliderSubscription = _imageslidersRepository.imagesliders().listen(
           (imgsliders) => add(ImagesliderUpdated(imgsliders)),
     );
   }
