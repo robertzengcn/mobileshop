@@ -35,13 +35,13 @@ class myApp extends StatelessWidget {
             )..add(LoadProducts());
           },
         ),
-//        BlocProvider<ImageslidersBloc>(
-//        create: (context) {
-//    return ImageslidersBloc(
-//    imageslidersRepository: FirebaseImageslidersRepository(),
-//    )..add(LoadImageslider());
-//    },
-//    )
+        BlocProvider<ImageslidersBloc>(
+        create: (context) {
+    return ImageslidersBloc(
+    imageslidersRepository: FirebaseImageslidersRepository(),
+    )..add(LoadImageslider());
+    },
+    )
       ],
 
       child: MaterialApp(

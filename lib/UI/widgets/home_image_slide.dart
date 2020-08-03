@@ -8,8 +8,11 @@ class HomeImageSlide extends StatelessWidget {
   HomeImageSlide({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductsBloc, ProductsState>(
-
-    );
+    return BlocBuilder<ImageslidersBloc, ImageslidersState>(
+        builder: (context, state) {
+            if(state is HomeImagesliderLoading){
+              return CircularProgressIndicator();
+            }
+        });
   }
 }

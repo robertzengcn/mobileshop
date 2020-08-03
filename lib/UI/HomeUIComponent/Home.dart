@@ -85,7 +85,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-    double size = mediaQueryData.size.height;
+    //double size = mediaQueryData.size.height;
     final contentProvider = Provider.of<CRUDModel>(context);
 ////    productProvider.fetchProductsAsStream();
 
@@ -139,47 +139,47 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 //    var deviceSize = MediaQuery.of(context).size;
 
     /// ImageSlider in header
-    var imageSliderview = Container(
-      height: 182.0,
-      child: new Carousel(
-          boxFit: BoxFit.cover,
-          dotColor: Color(0xFF6991C7).withOpacity(0.8),
-          dotSize: 5.5,
-          dotSpacing: 16.0,
-          dotBgColor: Colors.transparent,
-          showIndicator: true,
-          overlayShadow: true,
-          overlayShadowColors: Colors.white.withOpacity(0.9),
-          overlayShadowSize: 0.9,
-//        images: [
-//
-//          AssetImage("assets/img/baner1.png"),
-//          AssetImage("assets/img/baner12.png"),
-//          AssetImage("assets/img/baner2.png"),
-//          AssetImage("assets/img/baner3.png"),
-//          AssetImage("assets/img/baner4.png"),
-//
-//        ],
-          images: imagesliders?.map((i) {
-                return NetworkImage(i.url);
-              })?.toList() ??
-              []),
-    );
+//    var imageSliderview = Container(
+//      height: 182.0,
+//      child: new Carousel(
+//          boxFit: BoxFit.cover,
+//          dotColor: Color(0xFF6991C7).withOpacity(0.8),
+//          dotSize: 5.5,
+//          dotSpacing: 16.0,
+//          dotBgColor: Colors.transparent,
+//          showIndicator: true,
+//          overlayShadow: true,
+//          overlayShadowColors: Colors.white.withOpacity(0.9),
+//          overlayShadowSize: 0.9,
+////        images: [
+////
+////          AssetImage("assets/img/baner1.png"),
+////          AssetImage("assets/img/baner12.png"),
+////          AssetImage("assets/img/baner2.png"),
+////          AssetImage("assets/img/baner3.png"),
+////          AssetImage("assets/img/baner4.png"),
+////
+////        ],
+//          images: imagesliders?.map((i) {
+//                return NetworkImage(i.url);
+//              })?.toList() ??
+//              []),
+//    );
 
-    var Fireimageslide = StreamBuilder(
-        stream: contentProvider.fetchTypeimageAsStream('home'),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasData) {
-            imagesliders = snapshot.data.documents
-                .map((doc) => ImageSlider.fromMap(doc.data, doc.documentID))
-                .toList();
-
-            return imageSliderview;
-          } else {
-            //print("199");
-            return CircularProgressIndicator();
-          }
-        });
+//    var Fireimageslide = StreamBuilder(
+//        stream: contentProvider.fetchTypeimageAsStream('home'),
+//        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//          if (snapshot.hasData) {
+//            imagesliders = snapshot.data.documents
+//                .map((doc) => ImageSlider.fromMap(doc.data, doc.documentID))
+//                .toList();
+//
+//            return imageSliderview;
+//          } else {
+//            //print("199");
+//            return CircularProgressIndicator();
+//          }
+//        });
 
     //CategoryIcon Component
 //    var categoryIcon = Container(
@@ -696,7 +696,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 
                 /// Call var imageSlider
                 //imageSlider,
-                Fireimageslide,
+                //Fireimageslide,
 
                 /// Call var categoryIcon
                 //categoryIcon,
@@ -712,14 +712,14 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 //                Padding(
 //                  padding: EdgeInsets.only(top: 10.0),
 //                ),
-                Categoryslide,
+                //Categoryslide,
                 Padding(
                   padding: EdgeInsets.only(bottom: 10.0),
                 ),
 
                 /// Call a Grid variable, this is item list in Recomended item
                 //Grid,
-                Recomendlist,
+                //Recomendlist,
               ],
             ),
           ),
