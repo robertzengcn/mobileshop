@@ -71,5 +71,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.3'
 //    implementation "com.google.firebase:firebase-core:15.0.2"
 //    implementation "com.google.firebase:firebase-messaging:15.0.2"
+    implementation 'com.google.firebase:firebase-core:16.0.7'
 }
 apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin

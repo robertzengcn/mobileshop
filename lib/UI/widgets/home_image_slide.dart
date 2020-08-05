@@ -10,8 +10,10 @@ class HomeImageSlide extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ImageslidersBloc, ImageslidersState>(
         builder: (context, state) {
-            if(state is HomeImagesliderLoading){
-              return CircularProgressIndicator();
+            if(state is HomeImagesliderLoading){// is loading
+              return Center(child: CircularProgressIndicator());
+            }else if(state is HomeImagesliderloaded){
+
             }
         });
   }

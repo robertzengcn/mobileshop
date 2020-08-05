@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:firebase_repository/firebase_repository.dart';
+import 'package:treva_shop_flutter/models/models.dart';
 
 abstract class ImageslidersState extends Equatable {
   const ImageslidersState();
@@ -13,6 +14,23 @@ class HomeImagesliderLoading extends ImageslidersState {}
 /**
  * home images slider load completed
  */
-class HomeImageslidercompleted extends ImageslidersState {}
+class HomeImagesliderloaded extends ImageslidersState {
+  final List<Imageslider> filteredImagesliders;
+  final VisibilityFilter activeFilter;
+
+  const HomeImagesliderloaded(
+      this.filteredImagesliders,
+      this.activeFilter,
+      );
+  @override
+  List<Object> get props => [filteredImagesliders, activeFilter];
+
+  @override
+  String toString() {
+    return 'FilteredTodosLoaded { filteredTodos: $filteredImagesliders, activeFilter: $activeFilter }';
+  }
+
+
+}
 
 
