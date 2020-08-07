@@ -12,8 +12,9 @@ import 'package:treva_shop_flutter/Services/CRUDModel.dart';
 import 'package:treva_shop_flutter/ListItem/Category.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:async';
-import 'package:flutter/scheduler.dart';
+//import 'dart:async';
+//import 'package:flutter/scheduler.dart';
+import 'package:treva_shop_flutter/UI/widgets/home_image_slide.dart';
 
 class Menu extends StatefulWidget {
   @override
@@ -697,7 +698,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                 /// Call var imageSlider
                 //imageSlider,
                 //Fireimageslide,
-
+                HomeImageSlide(),
                 /// Call var categoryIcon
                 //categoryIcon,
 //                Padding(

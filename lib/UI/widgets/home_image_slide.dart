@@ -37,20 +37,20 @@ class HomeImageSlide extends StatelessWidget {
   }
 }
 /// ImageSlider in header
-    var imageSliderview = Container(
-      height: 182.0,
-      child: new Carousel(
-          boxFit: BoxFit.cover,
-          dotColor: Color(0xFF6991C7).withOpacity(0.8),
-          dotSize: 5.5,
-          dotSpacing: 16.0,
-          dotBgColor: Colors.transparent,
-          showIndicator: true,
-          overlayShadow: true,
-          overlayShadowColors: Colors.white.withOpacity(0.9),
-          overlayShadowSize: 0.9,
-          images: imagesliders?.map((i) {
-                return NetworkImage(i.url);
-              })?.toList() ??
-              []),
-    );
+//    var imageSliderview = Container(
+//      height: 182.0,
+//      child: new Carousel(
+//          boxFit: BoxFit.cover,
+//          dotColor: Color(0xFF6991C7).withOpacity(0.8),
+//          dotSize: 5.5,
+//          dotSpacing: 16.0,
+//          dotBgColor: Colors.transparent,
+//          showIndicator: true,
+//          overlayShadow: true,
+//          overlayShadowColors: Colors.white.withOpacity(0.9),
+//          overlayShadowSize: 0.9,
+//          images: imagesliders?.map((i) {
+//                return NetworkImage(i.url);
+//              })?.toList() ??
+//              []),
+//    );
