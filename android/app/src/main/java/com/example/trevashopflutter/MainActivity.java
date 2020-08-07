@@ -1,4 +1,4 @@
-package com.example.trevashopflutter;
+package com.amigatoy.appdata;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
