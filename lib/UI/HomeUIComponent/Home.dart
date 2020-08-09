@@ -10,7 +10,7 @@ import 'package:amigatoy/ListItem/Product.dart';
 import 'package:amigatoy/ListItem/ImageSlider.dart';
 import 'package:amigatoy/Services/CRUDModel.dart';
 import 'package:amigatoy/ListItem/Category.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'dart:async';
 //import 'package:flutter/scheduler.dart';
@@ -87,7 +87,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     //double size = mediaQueryData.size.height;
-    final contentProvider = Provider.of<CRUDModel>(context);
+//    final contentProvider = Provider.of<CRUDModel>(context);
 ////    productProvider.fetchProductsAsStream();
 
     /// Navigation to MenuDetail.dart if user Click icon in category Menu like a example camera
@@ -460,140 +460,140 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     /// Category Component in bottom of flash sale
 //    var categoryImageBottom =
 
-    var Categoryslide = StreamBuilder(
-        //目录的资源获取
-        stream: contentProvider.fetchlevelCategoryAsStream(0), //取顶级目录
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasData) {
-            categorys = snapshot.data.documents
-                .map((doc) => Category.fromMap(doc.data, doc.documentID))
-                .toList();
-            if (categorys.length > 0) {
-              categorymap = categorys.asMap();
-            }
-            //return categoryImageBottom;
-            return Container(
-              height: 310.0,
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20.0, top: 20.0, right: 20.0),
-                    child: Text(
-                      "category",
-                      style: TextStyle(
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: "Sans"),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 20.0),
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 20.0,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Padding(padding: EdgeInsets.only(top: 15.0)),
-                                CategoryItemValue(
-                                  image: categorymap[0].image,
-                                  title: categorymap[0].title,
-                                  tap: () => onClickCategory(
-                                      categorymap[0].id, categorymap[0].title),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 10.0),
-                                ),
-                                CategoryItemValue(
-                                  image: categorymap[1].image,
-                                  title: categorymap[1].title,
-                                  tap: () => onClickCategory(
-                                      categorymap[1].id, categorymap[1].title),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(padding: EdgeInsets.only(left: 10.0)),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(padding: EdgeInsets.only(top: 15.0)),
-                              CategoryItemValue(
-                                image: categorymap[2].image,
-                                title: categorymap[2].title,
-                                tap: () => onClickCategory(
-                                    categorymap[2].id, categorymap[2].title),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 10.0),
-                              ),
-                              CategoryItemValue(
-                                image: categorymap[3].image,
-                                title: categorymap[3].title,
-                                tap: () => onClickCategory(
-                                    categorymap[3].id, categorymap[3].title),
-                              ),
-                            ],
-                          ),
-                          // Padding(padding: EdgeInsets.only(left: 10.0)),
+//    var Categoryslide = StreamBuilder(
+//        //目录的资源获取
+//        stream: contentProvider.fetchlevelCategoryAsStream(0), //取顶级目录
+//        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//          if (snapshot.hasData) {
+//            categorys = snapshot.data.documents
+//                .map((doc) => Category.fromMap(doc.data, doc.documentID))
+//                .toList();
+//            if (categorys.length > 0) {
+//              categorymap = categorys.asMap();
+//            }
+//            //return categoryImageBottom;
+//            return Container(
+//              height: 310.0,
+//              color: Colors.white,
+//              child: Column(
+//                crossAxisAlignment: CrossAxisAlignment.start,
+//                children: <Widget>[
+//                  Padding(
+//                    padding: const EdgeInsets.only(
+//                        left: 20.0, top: 20.0, right: 20.0),
+//                    child: Text(
+//                      "category",
+//                      style: TextStyle(
+//                          fontSize: 17.0,
+//                          fontWeight: FontWeight.w700,
+//                          fontFamily: "Sans"),
+//                    ),
+//                  ),
+//                  Expanded(
+//                    child: Padding(
+//                      padding: const EdgeInsets.only(right: 20.0),
+//                      child: ListView(
+//                        scrollDirection: Axis.horizontal,
+//                        children: <Widget>[
+//                          Padding(
+//                            padding: const EdgeInsets.only(
+//                              left: 20.0,
+//                            ),
+//                            child: Column(
+//                              crossAxisAlignment: CrossAxisAlignment.start,
+//                              children: <Widget>[
+//                                Padding(padding: EdgeInsets.only(top: 15.0)),
+//                                CategoryItemValue(
+//                                  image: categorymap[0].image,
+//                                  title: categorymap[0].title,
+//                                  tap: () => onClickCategory(
+//                                      categorymap[0].id, categorymap[0].title),
+//                                ),
+//                                Padding(
+//                                  padding: EdgeInsets.only(top: 10.0),
+//                                ),
+//                                CategoryItemValue(
+//                                  image: categorymap[1].image,
+//                                  title: categorymap[1].title,
+//                                  tap: () => onClickCategory(
+//                                      categorymap[1].id, categorymap[1].title),
+//                                ),
+//                              ],
+//                            ),
+//                          ),
+//                          Padding(padding: EdgeInsets.only(left: 10.0)),
 //                          Column(
 //                            crossAxisAlignment: CrossAxisAlignment.start,
 //                            children: <Widget>[
 //                              Padding(padding: EdgeInsets.only(top: 15.0)),
 //                              CategoryItemValue(
-//                                image: categorymap[4].image,
-//                                title: categorymap[4].title,
-//                                tap: () => onClickCategory(categorymap[4].id,categorymap[4].title),
+//                                image: categorymap[2].image,
+//                                title: categorymap[2].title,
+//                                tap: () => onClickCategory(
+//                                    categorymap[2].id, categorymap[2].title),
 //                              ),
 //                              Padding(
 //                                padding: EdgeInsets.only(top: 10.0),
 //                              ),
 //                              CategoryItemValue(
-//                                image: categorymap[5].image,
-//                                title: categorymap[5].title,
-//                                tap: () => onClickCategory(categorymap[5].id,categorymap[5].title),
+//                                image: categorymap[3].image,
+//                                title: categorymap[3].title,
+//                                tap: () => onClickCategory(
+//                                    categorymap[3].id, categorymap[3].title),
 //                              ),
 //                            ],
 //                          ),
-                          // Padding(padding: EdgeInsets.only(left: 10.0)),
-//                          Column(
-//                            crossAxisAlignment: CrossAxisAlignment.start,
-//                            children: <Widget>[
-//                              Padding(padding: EdgeInsets.only(top: 15.0)),
-//                              CategoryItemValue(
-//                                image: categorymap[6].image,
-//                                title: categorymap[6].title,
-//                                tap: () => onClickCategory(categorymap[6].id,categorymap[6].title),
-//                              ),
-//                              Padding(
-//                                padding: EdgeInsets.only(top: 10.0),
-//                              ),
-//                              CategoryItemValue(
-//                                image: categorymap[7].image,
-//                                title: categorymap[7].title,
-//                                tap: () => onClickCategory(categorymap[7].id,categorymap[7].title),
-//                              ),
-//                            ],
-//                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            );
-          } else {
-            return CircularProgressIndicator();
-          }
-        });
+//                          // Padding(padding: EdgeInsets.only(left: 10.0)),
+////                          Column(
+////                            crossAxisAlignment: CrossAxisAlignment.start,
+////                            children: <Widget>[
+////                              Padding(padding: EdgeInsets.only(top: 15.0)),
+////                              CategoryItemValue(
+////                                image: categorymap[4].image,
+////                                title: categorymap[4].title,
+////                                tap: () => onClickCategory(categorymap[4].id,categorymap[4].title),
+////                              ),
+////                              Padding(
+////                                padding: EdgeInsets.only(top: 10.0),
+////                              ),
+////                              CategoryItemValue(
+////                                image: categorymap[5].image,
+////                                title: categorymap[5].title,
+////                                tap: () => onClickCategory(categorymap[5].id,categorymap[5].title),
+////                              ),
+////                            ],
+////                          ),
+//                          // Padding(padding: EdgeInsets.only(left: 10.0)),
+////                          Column(
+////                            crossAxisAlignment: CrossAxisAlignment.start,
+////                            children: <Widget>[
+////                              Padding(padding: EdgeInsets.only(top: 15.0)),
+////                              CategoryItemValue(
+////                                image: categorymap[6].image,
+////                                title: categorymap[6].title,
+////                                tap: () => onClickCategory(categorymap[6].id,categorymap[6].title),
+////                              ),
+////                              Padding(
+////                                padding: EdgeInsets.only(top: 10.0),
+////                              ),
+////                              CategoryItemValue(
+////                                image: categorymap[7].image,
+////                                title: categorymap[7].title,
+////                                tap: () => onClickCategory(categorymap[7].id,categorymap[7].title),
+////                              ),
+////                            ],
+////                          ),
+//                        ],
+//                      ),
+//                    ),
+//                  )
+//                ],
+//              ),
+//            );
+//          } else {
+//            return CircularProgressIndicator();
+//          }
+//        });
 
     ///  Grid item in bottom of Category
 //    var Grid = SingleChildScrollView(
@@ -631,58 +631,58 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 //      ),
 //    );
 
-    var Recomendlist = StreamBuilder(
-        stream: contentProvider.fetchProductsAsStream(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasData) {
-            products = snapshot.data.documents
-                .map((doc) => Product.fromMap(doc.data, doc.documentID))
-                .toList();
-//                return ListView.builder(
-//                  itemCount: products.length,
-//                  itemBuilder: (buildContext, index) =>
-//                      ProductCard(productDetails: products[index]),
-//                );
-            return SingleChildScrollView(
-              child: Container(
-                color: Colors.white,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20.0, top: 20.0),
-                      child: Text(
-                        "Recomended",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 17.0,
-                        ),
-                      ),
-                    ),
-
-                    /// To set GridView item
-                    GridView.count(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 20.0),
-                        crossAxisSpacing: 10.0,
-                        mainAxisSpacing: 17.0,
-                        childAspectRatio: 0.545,
-                        crossAxisCount: 2,
-                        primary: false,
-                        children: List.generate(
-                          //change list here
-                          products == null ? 0 : products.length,
-                          (index) => ItemGrid(products[index]),
-                        ))
-                  ],
-                ),
-              ),
-            );
-          } else {
-            return CircularProgressIndicator();
-          }
-        });
+//    var Recomendlist = StreamBuilder(
+//        stream: contentProvider.fetchProductsAsStream(),
+//        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//          if (snapshot.hasData) {
+//            products = snapshot.data.documents
+//                .map((doc) => Product.fromMap(doc.data, doc.documentID))
+//                .toList();
+////                return ListView.builder(
+////                  itemCount: products.length,
+////                  itemBuilder: (buildContext, index) =>
+////                      ProductCard(productDetails: products[index]),
+////                );
+//            return SingleChildScrollView(
+//              child: Container(
+//                color: Colors.white,
+//                child: Column(
+//                  crossAxisAlignment: CrossAxisAlignment.start,
+//                  children: <Widget>[
+//                    Padding(
+//                      padding: const EdgeInsets.only(left: 20.0, top: 20.0),
+//                      child: Text(
+//                        "Recomended",
+//                        style: TextStyle(
+//                          fontWeight: FontWeight.w700,
+//                          fontSize: 17.0,
+//                        ),
+//                      ),
+//                    ),
+//
+//                    /// To set GridView item
+//                    GridView.count(
+//                        shrinkWrap: true,
+//                        padding: EdgeInsets.symmetric(
+//                            horizontal: 10.0, vertical: 20.0),
+//                        crossAxisSpacing: 10.0,
+//                        mainAxisSpacing: 17.0,
+//                        childAspectRatio: 0.545,
+//                        crossAxisCount: 2,
+//                        primary: false,
+//                        children: List.generate(
+//                          //change list here
+//                          products == null ? 0 : products.length,
+//                          (index) => ItemGrid(products[index]),
+//                        ))
+//                  ],
+//                ),
+//              ),
+//            );
+//          } else {
+//            return CircularProgressIndicator();
+//          }
+//        });
 
     return Scaffold(
       /// Use Stack to costume a appbar

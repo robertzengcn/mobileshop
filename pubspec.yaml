@@ -32,6 +32,7 @@ dependencies:
   transparent_image: ^0.1.0
   flutter_slidable: ^0.4.9
   flutter_rating: ^0.0.2
+  change_app_package_name: ^0.1.2
 
 
 dev_dependencies:
