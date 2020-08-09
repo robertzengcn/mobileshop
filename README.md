@@ -1,5 +1,5 @@
 
-# treva_shop_flutter
+# amigatoy
 
 A new Flutter project.
 
