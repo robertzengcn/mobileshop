@@ -1,20 +1,20 @@
-import 'package:treva_shop_flutter/Library/carousel_pro/carousel_pro.dart';
+import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/ListItem/HomeGridItemRecomended.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/AppbarGradient.dart';
-import 'package:treva_shop_flutter/Library/countdown/countdown.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/CategoryDetail.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/DetailProduct.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/FlashSale.dart';
-import 'package:treva_shop_flutter/ListItem/Product.dart';
-import 'package:treva_shop_flutter/ListItem/ImageSlider.dart';
-import 'package:treva_shop_flutter/Services/CRUDModel.dart';
-import 'package:treva_shop_flutter/ListItem/Category.dart';
+import 'package:amigatoy/ListItem/HomeGridItemRecomended.dart';
+import 'package:amigatoy/UI/HomeUIComponent/AppbarGradient.dart';
+import 'package:amigatoy/Library/countdown/countdown.dart';
+import 'package:amigatoy/UI/HomeUIComponent/CategoryDetail.dart';
+import 'package:amigatoy/UI/HomeUIComponent/DetailProduct.dart';
+import 'package:amigatoy/UI/HomeUIComponent/FlashSale.dart';
+import 'package:amigatoy/ListItem/Product.dart';
+import 'package:amigatoy/ListItem/ImageSlider.dart';
+import 'package:amigatoy/Services/CRUDModel.dart';
+import 'package:amigatoy/ListItem/Category.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'dart:async';
 //import 'package:flutter/scheduler.dart';
-import 'package:treva_shop_flutter/UI/widgets/home_image_slide.dart';
+import 'package:amigatoy/UI/widgets/home_image_slide.dart';
 
 class Menu extends StatefulWidget {
   @override

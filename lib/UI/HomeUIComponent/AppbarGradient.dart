@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/UI/AcountUIComponent/Notification.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/Search.dart';
-import 'package:treva_shop_flutter/UI/AcountUIComponent/Message.dart';
+import 'package:amigatoy/UI/AcountUIComponent/Notification.dart';
+import 'package:amigatoy/UI/HomeUIComponent/Search.dart';
+import 'package:amigatoy/UI/AcountUIComponent/Message.dart';
 
 class AppbarGradient extends StatefulWidget {
   @override

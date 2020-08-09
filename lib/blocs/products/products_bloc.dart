@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:treva_shop_flutter/blocs/products/products.dart';
+import 'package:amigatoy/blocs/products/products.dart';
 import 'package:firebase_repository/firebase_repository.dart';
 
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {

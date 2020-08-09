@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:treva_shop_flutter/blocs/imageslider/imagesliders.dart';
+import 'package:amigatoy/blocs/imageslider/imagesliders.dart';
 import 'package:firebase_repository/firebase_repository.dart';
 
 class ImageslidersBloc extends Bloc<ImageslidersEvent, ImageslidersState> {

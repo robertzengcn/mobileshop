@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/CategoryDetail.dart';
+import 'package:amigatoy/UI/HomeUIComponent/CategoryDetail.dart';
 /// Popular Keyword Item class
 class SubCategory extends StatelessWidget {
   @override

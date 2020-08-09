@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:treva_shop_flutter/UI/BottomNavigationBar.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/Home.dart';
+import 'package:amigatoy/UI/BottomNavigationBar.dart';
+import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 /// Componen Login Animation to set Animation in login like a bounce ball to fullscreen
 class LoginAnimation extends StatefulWidget {
   /// To set type animation and  start and end animation

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/ListItem/Product.dart';
-import 'package:treva_shop_flutter/Services/CRUDModel.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/ModifyProduct.dart';
+import 'package:amigatoy/ListItem/Product.dart';
+import 'package:amigatoy/Services/CRUDModel.dart';
+import 'package:amigatoy/UI/HomeUIComponent/ModifyProduct.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetails extends StatelessWidget {

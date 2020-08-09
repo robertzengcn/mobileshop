@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/ListItem/Product.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/productDetails.dart';
+import 'package:amigatoy/ListItem/Product.dart';
+import 'package:amigatoy/UI/HomeUIComponent/productDetails.dart';
 
 
 class ProductCard extends StatelessWidget {

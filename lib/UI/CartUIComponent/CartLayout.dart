@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/ListItem/CartItemData.dart';
-import 'package:treva_shop_flutter/UI/CartUIComponent/Delivery.dart';
+import 'package:amigatoy/ListItem/CartItemData.dart';
+import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class cart extends StatefulWidget {

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/ListItem/Product.dart';
-import 'package:treva_shop_flutter/Services/CRUDModel.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/productCard.dart';
+import 'package:amigatoy/ListItem/Product.dart';
+import 'package:amigatoy/Services/CRUDModel.dart';
+import 'package:amigatoy/UI/HomeUIComponent/productCard.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {

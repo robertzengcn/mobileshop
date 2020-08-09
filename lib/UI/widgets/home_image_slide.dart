@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:treva_shop_flutter/blocs/blocs.dart';
-import 'package:treva_shop_flutter/Library/carousel_pro/carousel_pro.dart';
+import 'package:amigatoy/blocs/blocs.dart';
+import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 
 class HomeImageSlide extends StatelessWidget {
   HomeImageSlide({Key key}) : super(key: key);

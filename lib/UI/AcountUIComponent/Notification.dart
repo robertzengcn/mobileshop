@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/ListItem/notificationsData.dart';
+import 'package:amigatoy/ListItem/notificationsData.dart';
 
 class notification extends StatefulWidget {
   @override

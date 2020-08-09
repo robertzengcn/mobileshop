@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/ListItem/MenuItem.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/PromotionDetail.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/Search.dart';
+import 'package:amigatoy/ListItem/MenuItem.dart';
+import 'package:amigatoy/UI/HomeUIComponent/PromotionDetail.dart';
+import 'package:amigatoy/UI/HomeUIComponent/Search.dart';
 import 'package:shimmer/shimmer.dart';
 
 class menuDetail extends StatefulWidget {

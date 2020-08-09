@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/Library/intro_views_flutter-2.4.0/lib/Constants/constants.dart';
+import 'package:amigatoy/Library/intro_views_flutter-2.4.0/lib/Constants/constants.dart';
 
-import 'package:treva_shop_flutter/Library/intro_views_flutter-2.4.0/lib/Models/page_button_view_model.dart';
+import 'package:amigatoy/Library/intro_views_flutter-2.4.0/lib/Models/page_button_view_model.dart';
 
 /// Skip button class
 

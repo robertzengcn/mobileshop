@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/UI/BottomNavigationBar.dart';
-import 'package:treva_shop_flutter/UI/LoginOrSignup/Login.dart';
-import 'package:treva_shop_flutter/UI/LoginOrSignup/LoginAnimation.dart';
-import 'package:treva_shop_flutter/UI/LoginOrSignup/Signup.dart';
+import 'package:amigatoy/UI/BottomNavigationBar.dart';
+import 'package:amigatoy/UI/LoginOrSignup/Login.dart';
+import 'package:amigatoy/UI/LoginOrSignup/LoginAnimation.dart';
+import 'package:amigatoy/UI/LoginOrSignup/Signup.dart';
 
 
 class Signup extends StatefulWidget {

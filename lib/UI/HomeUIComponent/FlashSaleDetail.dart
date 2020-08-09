@@ -1,9 +1,9 @@
-import 'package:treva_shop_flutter/Library/carousel_pro/carousel_pro.dart';
+import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/ListItem/FlashSaleItem.dart';
-import 'package:treva_shop_flutter/UI/CartUIComponent/CartLayout.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/ChatItem.dart';
-import 'package:treva_shop_flutter/UI/CartUIComponent/Delivery.dart';
+import 'package:amigatoy/ListItem/FlashSaleItem.dart';
+import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
+import 'package:amigatoy/UI/HomeUIComponent/ChatItem.dart';
+import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 
 class flashSaleDetail extends StatefulWidget {
   @override

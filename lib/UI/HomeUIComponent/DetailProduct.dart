@@ -1,13 +1,13 @@
-import 'package:treva_shop_flutter/Library/carousel_pro/carousel_pro.dart';
+import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/ListItem/HomeGridItemRecomended.dart';
-import 'package:treva_shop_flutter/UI/CartUIComponent/CartLayout.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/ChatItem.dart';
-import 'package:treva_shop_flutter/UI/CartUIComponent/Delivery.dart';
+import 'package:amigatoy/ListItem/HomeGridItemRecomended.dart';
+import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
+import 'package:amigatoy/UI/HomeUIComponent/ChatItem.dart';
+import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 
 import 'package:flutter_rating/flutter_rating.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/ReviewLayout.dart';
-import 'package:treva_shop_flutter/ListItem/Product.dart';
+import 'package:amigatoy/UI/HomeUIComponent/ReviewLayout.dart';
+import 'package:amigatoy/ListItem/Product.dart';
 
 class detailProduk extends StatefulWidget {
   Product gridItem;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
-import 'package:treva_shop_flutter/Library/Expanded/ExpandedDetailRatting.dart';
-import 'package:treva_shop_flutter/Library/Expanded/ExpandedDetailReviews.dart';
+import 'package:amigatoy/Library/Expanded/ExpandedDetailRatting.dart';
+import 'package:amigatoy/Library/Expanded/ExpandedDetailReviews.dart';
 
 class ReviewsAll extends StatefulWidget {
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/ListItem/BrandDataList.dart';
+import 'package:amigatoy/ListItem/BrandDataList.dart';
 
 class privatemessage extends StatefulWidget {
 

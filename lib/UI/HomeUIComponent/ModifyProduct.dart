@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/ListItem/Product.dart';
-import 'package:treva_shop_flutter/Services/CRUDModel.dart';
+import 'package:amigatoy/ListItem/Product.dart';
+import 'package:amigatoy/Services/CRUDModel.dart';
 import 'package:provider/provider.dart';
 
 

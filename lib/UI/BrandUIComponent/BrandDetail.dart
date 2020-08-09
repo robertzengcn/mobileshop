@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/ListItem/BrandDataList.dart';
-import 'package:treva_shop_flutter/UI/BrandUIComponent/Chat.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/Home.dart';
+import 'package:amigatoy/ListItem/BrandDataList.dart';
+import 'package:amigatoy/UI/BrandUIComponent/Chat.dart';
+import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 
 class brandDetail extends StatefulWidget {
   @override

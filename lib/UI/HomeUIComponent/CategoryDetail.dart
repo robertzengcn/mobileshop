@@ -1,19 +1,19 @@
 import 'dart:async';
 import 'package:shimmer/shimmer.dart';
-import 'package:treva_shop_flutter/Library/carousel_pro/carousel_pro.dart';
+import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/ListItem/CategoryItem.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/PromotionDetail.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/Search.dart';
-import 'package:treva_shop_flutter/Services/CRUDModel.dart';
+import 'package:amigatoy/ListItem/CategoryItem.dart';
+import 'package:amigatoy/UI/HomeUIComponent/PromotionDetail.dart';
+import 'package:amigatoy/UI/HomeUIComponent/Search.dart';
+import 'package:amigatoy/Services/CRUDModel.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:treva_shop_flutter/ListItem/ImageSlider.dart';
-import 'package:treva_shop_flutter/ListItem/Category.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/SubCategory.dart';
-import 'package:treva_shop_flutter/ListItem/Product.dart';
-import 'package:treva_shop_flutter/Services/catelogue_bloc_provider.dart';
-import 'package:treva_shop_flutter/Services/catelogue_bloc.dart';
+import 'package:amigatoy/ListItem/ImageSlider.dart';
+import 'package:amigatoy/ListItem/Category.dart';
+import 'package:amigatoy/UI/HomeUIComponent/SubCategory.dart';
+import 'package:amigatoy/ListItem/Product.dart';
+import 'package:amigatoy/Services/catelogue_bloc_provider.dart';
+import 'package:amigatoy/Services/catelogue_bloc.dart';
 
 class categoryDetail extends StatefulWidget {
   final int id;

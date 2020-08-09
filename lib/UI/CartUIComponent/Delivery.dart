@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/UI/BottomNavigationBar.dart';
-import 'package:treva_shop_flutter/UI/CartUIComponent/Payment.dart';
+import 'package:amigatoy/UI/BottomNavigationBar.dart';
+import 'package:amigatoy/UI/CartUIComponent/Payment.dart';
 
 class delivery extends StatefulWidget {
   @override

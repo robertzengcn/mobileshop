@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:firebase_repository/firebase_repository.dart';
-import 'package:treva_shop_flutter/models/models.dart';
+import 'package:amigatoy/models/models.dart';
 
 abstract class ImageslidersState extends Equatable {
   const ImageslidersState();

@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:treva_shop_flutter/ListItem/Category.dart';
+import 'package:amigatoy/ListItem/Category.dart';
 
 class CatelogueBloc{
   final _repository = Repository();
