@@ -16,6 +16,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:flutter/scheduler.dart';
 import 'package:amigatoy/UI/widgets/home_image_slide.dart';
 
+/**
+ * Homepage
+ */
 class Menu extends StatefulWidget {
   @override
   _MenuState createState() => _MenuState();
