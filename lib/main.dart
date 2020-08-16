@@ -2,21 +2,48 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc/bloc.dart';
 import 'package:amigatoy/blocs/blocs.dart';
 import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 import 'package:firebase_repository/firebase_repository.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:amigatoy/constants/application_constants.dart';
 
+class SimpleBlocDelegate extends BlocDelegate {
+  @override
+  void onEvent(Bloc bloc, Object event) {
+    super.onEvent(bloc, event);
+    print(event);
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    super.onTransition(bloc, transition);
+    print(transition);
+  }
+
+  @override
+  void onError(Bloc bloc, Object error, StackTrace stacktrace) {
+    super.onError(bloc, error, stacktrace);
+    print(error);
+  }
+}
 /// Run first apps open
-void main() {
+void main() async {
+  BlocSupervisor.delegate = SimpleBlocDelegate();
+  await Parse().initialize(keyParseApplicationId, keyParseServerUrl,
+      masterKey: keyParseMasterKey,
+      debug: true,
+      coreStore: await CoreStoreSharedPrefsImp.getInstance());
   runApp(myApp());
 }
 
 /// Set orienttation
 class myApp extends StatelessWidget {
 
-
   @override
   Widget build(BuildContext context) {
+
     /// To set orientation always portrait
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -28,20 +55,21 @@ class myApp extends StatelessWidget {
     ));
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ProductsBloc>(
-          create: (context) {
-            return ProductsBloc(
-              productsRepository: FirebaseProductsRepository(),
-            )..add(LoadProducts());
-          },
-        ),
-        BlocProvider<ImageslidersBloc>(
-        create: (context) {
-    return ImageslidersBloc(
-    imageslidersRepository: FirebaseImageslidersRepository(),
-    )..add(LoadImageslider());
-    },
-    )
+//        BlocProvider<ProductsBloc>(
+//          create: (context) {
+//            return ProductsBloc(
+//              productsRepository: FirebaseProductsRepository(),
+//            )..add(LoadProducts());
+//          },
+//        ),
+//        BlocProvider<ImageslidersBloc>(
+//        create: (context) {
+//    return ImageslidersBloc(
+//    imageslidersRepository: FirebaseImageslidersRepository(),
+//    )..add(LoadImageslider());
+//    },
+//    )
+      BlocProvider<ImageslidersBloc>()
       ],
 
       child: MaterialApp(
