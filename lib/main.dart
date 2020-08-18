@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc/bloc.dart';
-import 'package:amigatoy/blocs/blocs.dart';
+import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
-import 'package:firebase_repository/firebase_repository.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:amigatoy/constants/application_constants.dart';
+import 'package:amigatoy/Repository/repository.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -69,7 +69,13 @@ class myApp extends StatelessWidget {
 //    )..add(LoadImageslider());
 //    },
 //    )
-      BlocProvider<ImageslidersBloc>()
+      BlocProvider<CarouselsBloc>(
+        create: (context) {
+    return CarouselsBloc(
+      carouselsRepository: CarouselRepository(),
+    )..add(FetchCarousels(type:'home'));
+    },
+      )
       ],
 
       child: MaterialApp(

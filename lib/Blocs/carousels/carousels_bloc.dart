@@ -8,7 +8,7 @@ import 'package:amigatoy/Models/models.dart';
 
 class CarouselsBloc extends Bloc<CarouselsEvent, CarouselsState> {
   final CarouselRepository _carouselRepository;
-  StreamSubscription _carouselSubscription;
+//  StreamSubscription _carouselSubscription;
 
   CarouselsBloc({@required CarouselRepository carouselsRepository})
       : assert(carouselsRepository != null),
@@ -19,12 +19,13 @@ class CarouselsBloc extends Bloc<CarouselsEvent, CarouselsState> {
   @override
   Stream<CarouselsState> mapEventToState(CarouselsEvent event) async* {
     if (event is FetchCarousels) {
-      yield CarouselsLoading();
+      yield CarouselsLoading(type: event.type);
       try {
         List<Carousel> result = await _carouselRepository.loadPicbytype(event.type);
-//        yield WeatherLoaded(weather: weather);
+        yield Carouselsloaded(result);
+
       } catch (_) {
-//        yield WeatherError();
+        yield CarouselsError();
       }
     }
   }
