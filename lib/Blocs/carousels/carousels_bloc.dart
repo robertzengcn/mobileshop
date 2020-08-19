@@ -22,7 +22,7 @@ class CarouselsBloc extends Bloc<CarouselsEvent, CarouselsState> {
       yield CarouselsLoading(type: event.type);
       try {
         List<Carousel> result = await _carouselRepository.loadPicbytype(event.type);
-        yield Carouselsloaded(result);
+        yield Carouselsloaded(lstCarousel:result);
 
       } catch (_) {
         yield CarouselsError();
