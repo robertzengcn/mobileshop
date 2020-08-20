@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_repository/firebase_repository.dart';
+
 
 abstract class CarouselsEvent extends Equatable {
   const CarouselsEvent();

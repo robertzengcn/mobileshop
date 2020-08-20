@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:amigatoy/ListItem/Product.dart';
-import 'package:amigatoy/Services/CRUDModel.dart';
+//import 'package:amigatoy/Services/CRUDModel.dart';
 import 'package:amigatoy/UI/HomeUIComponent/productCard.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +14,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final productProvider = Provider.of<CRUDModel>(context);
+//    final productProvider = Provider.of<CRUDModel>(context);
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -28,24 +27,24 @@ class _HomeViewState extends State<HomeView> {
         title: Center(child: Text('Test add product')),
       ),
       body: Container(
-        child: StreamBuilder(
-            stream: productProvider.fetchProductsAsStream(),
-            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasData) {
-                print(snapshot.data.documents);
-                products = snapshot.data.documents
-                    .map((doc) => Product.fromMap(doc.data, doc.documentID))
-                    .toList();
-                return ListView.builder(
-                  itemCount: products.length,
-                  itemBuilder: (buildContext, index) =>
-                      ProductCard(productDetails: products[index]),
-                );
-              } else {
-
-                return Text('fetching');
-              }
-            }),
+//        child: StreamBuilder(
+//            stream: productProvider.fetchProductsAsStream(),
+//            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//              if (snapshot.hasData) {
+//                print(snapshot.data.documents);
+//                products = snapshot.data.documents
+//                    .map((doc) => Product.fromMap(doc.data, doc.documentID))
+//                    .toList();
+//                return ListView.builder(
+//                  itemCount: products.length,
+//                  itemBuilder: (buildContext, index) =>
+//                      ProductCard(productDetails: products[index]),
+//                );
+//              } else {
+//
+//                return Text('fetching');
+//              }
+//            }),
       ),
     );
     ;

@@ -5,15 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:amigatoy/ListItem/CategoryItem.dart';
 import 'package:amigatoy/UI/HomeUIComponent/PromotionDetail.dart';
 import 'package:amigatoy/UI/HomeUIComponent/Search.dart';
-import 'package:amigatoy/Services/CRUDModel.dart';
+//import 'package:amigatoy/Services/CRUDModel.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:amigatoy/ListItem/ImageSlider.dart';
 import 'package:amigatoy/ListItem/Category.dart';
 import 'package:amigatoy/UI/HomeUIComponent/SubCategory.dart';
 import 'package:amigatoy/ListItem/Product.dart';
-import 'package:amigatoy/Services/catelogue_bloc_provider.dart';
-import 'package:amigatoy/Services/catelogue_bloc.dart';
+//import 'package:amigatoy/Services/catelogue_bloc_provider.dart';
+//import 'package:amigatoy/Services/catelogue_bloc.dart';
 
 class categoryDetail extends StatefulWidget {
   final int id;
@@ -25,7 +24,7 @@ class categoryDetail extends StatefulWidget {
 
 /// if user click icon in category layout navigate to categoryDetail Layout
 class _categoryDetailState extends State<categoryDetail> {
-  CatelogueBloc _bloc;
+//  CatelogueBloc _bloc;
 
   void initState() {
     super.initState();
@@ -85,7 +84,7 @@ List<Product> products;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _bloc = CatelogueBlocProvider.of(context);
+//    _bloc = CatelogueBlocProvider.of(context);
   }
 
   @override
@@ -99,7 +98,7 @@ List<Product> products;
   Widget build(BuildContext context) {
 
     widget.id;
-    final contentProvider = Provider.of<CRUDModel>(context);
+//    final contentProvider = Provider.of<CRUDModel>(context);
     /// imageSlider in header layout category detail
     var _imageSlider = Padding(
       padding: const EdgeInsets.only(
@@ -381,82 +380,82 @@ List<Product> products;
       ),
     );
 
-    var _Categoryimageslide= StreamBuilder(
-        stream: contentProvider.fetchTypeimageAsStream('catelogue'),
-      //stream:Firestore.instance.collection('image_slider').where('status', isEqualTo: 1).where('type',isEqualTo:'catelogue').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//    var _Categoryimageslide= StreamBuilder(
+//        stream: contentProvider.fetchTypeimageAsStream('catelogue'),
+//      //stream:Firestore.instance.collection('image_slider').where('status', isEqualTo: 1).where('type',isEqualTo:'catelogue').snapshots(),
+//        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//
+//          if (snapshot.hasData) {
+//            if (snapshot.data.documents.length == 0){//没有子类目
+//              return Container(
+//                  color: Colors.white // This is optional
+//              );
+//            }
+//
+//
+//            setState(() {
+//              imagesliders = snapshot.data.documents
+//                  .map((doc) => ImageSlider.fromMap(doc.data, doc.documentID))
+//                  .toList();
+//            });
+//            return _imageSlider;
+//            //return imageSliderview;
+//          } else {
+//            print("nodata377");
+//            return CircularProgressIndicator();
+//          }
+//        });
 
-          if (snapshot.hasData) {
-            if (snapshot.data.documents.length == 0){//没有子类目
-              return Container(
-                  color: Colors.white // This is optional
-              );
-            }
+//    var _Getsubcatelogue= StreamBuilder(//get category
+//        //stream: contentProvider.fetchlevelCategoryAsStream(1,widget.id),
+//        stream:contentProvider.fetchlevelCategoryAsStream(1,widget.id),
+//        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//
+//          if (snapshot.hasData) {
+//
+//            if (snapshot.data.documents.length == 0){//not have category
+//              return Container(
+//                  color: Colors.white // This is optional
+//              );
+//            }
+//
+//            categorys = snapshot.data.documents
+//                .map((doc) => Category.fromMap(doc.data, doc.documentID))
+//                .toList();
+//            categorymap = categorys.asMap();
+//
+//
+//            return _subCategory;
+//            //return imageSliderview;
+//          } else {
+//
+//            return CircularProgressIndicator();
+//          }
+//        });
 
-
-            setState(() {
-              imagesliders = snapshot.data.documents
-                  .map((doc) => ImageSlider.fromMap(doc.data, doc.documentID))
-                  .toList();
-            });
-            return _imageSlider;
-            //return imageSliderview;
-          } else {
-            print("nodata377");
-            return CircularProgressIndicator();
-          }
-        });
-
-    var _Getsubcatelogue= StreamBuilder(//get category
-        //stream: contentProvider.fetchlevelCategoryAsStream(1,widget.id),
-        stream:contentProvider.fetchlevelCategoryAsStream(1,widget.id),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
-          if (snapshot.hasData) {
-
-            if (snapshot.data.documents.length == 0){//not have category
-              return Container(
-                  color: Colors.white // This is optional
-              );
-            }
-
-            categorys = snapshot.data.documents
-                .map((doc) => Category.fromMap(doc.data, doc.documentID))
-                .toList();
-            categorymap = categorys.asMap();
-
-
-            return _subCategory;
-            //return imageSliderview;
-          } else {
-
-            return CircularProgressIndicator();
-          }
-        });
-
-    var  _GetItemlist= StreamBuilder(
-        stream: contentProvider.fetchProductsAsStream(widget.id),
-
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
-          if (snapshot.hasData) {
-            if (snapshot.data.documents.length == 0){//没有产品
-              print("noitem414");
-              return Container(
-                  color: Colors.white // This is optional
-              );
-            }
-            products = snapshot.data.documents
-                .map((doc) => Product.fromMap(doc.data, doc.documentID))
-                .toList();
-
-            return _grid;
-            //return imageSliderview;
-          } else {
-            print("notdata425");
-            return CircularProgressIndicator();
-          }
-        });
+//    var  _GetItemlist= StreamBuilder(
+//        stream: contentProvider.fetchProductsAsStream(widget.id),
+//
+//        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//
+//          if (snapshot.hasData) {
+//            if (snapshot.data.documents.length == 0){//没有产品
+//              print("noitem414");
+//              return Container(
+//                  color: Colors.white // This is optional
+//              );
+//            }
+//            products = snapshot.data.documents
+//                .map((doc) => Product.fromMap(doc.data, doc.documentID))
+//                .toList();
+//
+//            return _grid;
+//            //return imageSliderview;
+//          } else {
+//            print("notdata425");
+//            return CircularProgressIndicator();
+//          }
+//        });
 
 
     return Scaffold(
@@ -491,9 +490,9 @@ List<Product> products;
           child: Column(
             children: <Widget>[
               //_imageSlider,
-              _Categoryimageslide,
-              _Getsubcatelogue,
-              _GetItemlist,
+//              _Categoryimageslide,
+//              _Getsubcatelogue,
+//              _GetItemlist,
 //              _itemPopular,
 //              _itemNew
             ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:amigatoy/ListItem/Product.dart';
-import 'package:amigatoy/Services/CRUDModel.dart';
+//import 'package:amigatoy/Services/CRUDModel.dart';
 import 'package:amigatoy/UI/HomeUIComponent/ModifyProduct.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +11,7 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productProvider = Provider.of<CRUDModel>(context);
+//    final productProvider = Provider.of<CRUDModel>(context);
 
     return Scaffold(
       appBar: AppBar(
