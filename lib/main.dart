@@ -30,6 +30,7 @@ class SimpleBlocDelegate extends BlocDelegate {
 }
 /// Run first apps open
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   BlocSupervisor.delegate = SimpleBlocDelegate();
   await Parse().initialize(keyParseApplicationId, keyParseServerUrl,
       masterKey: keyParseMasterKey,

@@ -18,8 +18,9 @@ class HomeImageSlidestate extends State<HomeImageSlide>{
     return BlocBuilder<CarouselsBloc, CarouselsState>(
         builder: (context, state) {
             if(state is CarouselsEmpty){// is loading
-              return Center(child: CircularProgressIndicator());
-            }else if(state is Carouselsloaded){
+              return Center(child: Text('Please Select a Location'));
+            }
+            if(state is Carouselsloaded){
               final imagesliders = state.lstCarousel;
               return Container(
                 height: 182.0,
@@ -39,6 +40,7 @@ class HomeImageSlidestate extends State<HomeImageSlide>{
                         []),
               );
             }
+            return Center(child: CircularProgressIndicator());
         });
   }
 }
