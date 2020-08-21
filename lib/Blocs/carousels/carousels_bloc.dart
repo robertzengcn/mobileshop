@@ -19,9 +19,10 @@ class CarouselsBloc extends Bloc<CarouselsEvent, CarouselsState> {
   @override
   Stream<CarouselsState> mapEventToState(CarouselsEvent event) async* {
     if (event is FetchCarousels) {
-      yield CarouselsLoading(type: event.type);
+      yield CarouselsLoading();
       try {
         List<Carousel> result = await _carouselRepository.loadPicbytype(event.type);
+        print(result);
         yield Carouselsloaded(lstCarousel:result);
 
       } catch (_) {

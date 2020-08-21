@@ -18,7 +18,7 @@ class HomeImageSlidestate extends State<HomeImageSlide>{
     return BlocBuilder<CarouselsBloc, CarouselsState>(
         builder: (context, state) {
             if(state is CarouselsEmpty){// is loading
-              return Center(child: Text('Please Select a Location'));
+              return Center(child: CircularProgressIndicator());
             }
             if(state is Carouselsloaded){
               final imagesliders = state.lstCarousel;

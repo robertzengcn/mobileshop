@@ -15,8 +15,7 @@ class CarouselsEmpty extends CarouselsState {}
  * loading home images
  */
 class CarouselsLoading extends CarouselsState {
-  final String type;
-  const CarouselsLoading({@required this.type}) : assert(type != null);
+
 }
 /**
  * home images slider load completed
