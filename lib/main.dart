@@ -33,7 +33,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   BlocSupervisor.delegate = SimpleBlocDelegate();
   await Parse().initialize(keyParseApplicationId, keyParseServerUrl,
-      masterKey: keyParseMasterKey,
+      clientKey:keyParseclientKey,
       debug: true,
       coreStore: await CoreStoreSharedPrefsImp.getInstance());
   runApp(myApp());
