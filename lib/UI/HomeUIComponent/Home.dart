@@ -143,32 +143,32 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 //    var deviceSize = MediaQuery.of(context).size;
 
     /// ImageSlider in header
-    var imageSliderview = Container(
-      height: 182.0,
-      child: new Carousel(
-          boxFit: BoxFit.cover,
-          dotColor: Color(0xFF6991C7).withOpacity(0.8),
-          dotSize: 5.5,
-          dotSpacing: 16.0,
-          dotBgColor: Colors.transparent,
-          showIndicator: true,
-          overlayShadow: true,
-          overlayShadowColors: Colors.white.withOpacity(0.9),
-          overlayShadowSize: 0.9,
-//        images: [
-//
-//          AssetImage("assets/img/baner1.png"),
-//          AssetImage("assets/img/baner12.png"),
-//          AssetImage("assets/img/baner2.png"),
-//          AssetImage("assets/img/baner3.png"),
-//          AssetImage("assets/img/baner4.png"),
-//
-//        ],
-          images: imagesliders?.map((i) {
-                return NetworkImage(i.url);
-              })?.toList() ??
-              []),
-    );
+//    var imageSliderview = Container(
+//      height: 182.0,
+//      child: new Carousel(
+//          boxFit: BoxFit.cover,
+//          dotColor: Color(0xFF6991C7).withOpacity(0.8),
+//          dotSize: 5.5,
+//          dotSpacing: 16.0,
+//          dotBgColor: Colors.transparent,
+//          showIndicator: true,
+//          overlayShadow: true,
+//          overlayShadowColors: Colors.white.withOpacity(0.9),
+//          overlayShadowSize: 0.9,
+////        images: [
+////
+////          AssetImage("assets/img/baner1.png"),
+////          AssetImage("assets/img/baner12.png"),
+////          AssetImage("assets/img/baner2.png"),
+////          AssetImage("assets/img/baner3.png"),
+////          AssetImage("assets/img/baner4.png"),
+////
+////        ],
+//          images: imagesliders?.map((i) {
+//                return NetworkImage(i.url);
+//              })?.toList() ??
+//              []),
+//    );
 
 //    var Fireimageslide = StreamBuilder(
 //        stream: contentProvider.fetchTypeimageAsStream('home'),
@@ -703,7 +703,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                 //Fireimageslide,
                 HomeImageSlide(),
                 /// Call var categoryIcon
-                //categoryIcon,
+//                categoryIcon,
 //                Padding(
 //                  padding: EdgeInsets.only(top: 10.0),
 //                ),
