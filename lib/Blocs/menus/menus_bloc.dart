@@ -1,32 +1,32 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:amigatoy/Blocs/carousels/carousels.dart';
+import 'package:amigatoy/Blocs/menus/menus.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
 
 
-class MenusBloc extends Bloc<CarouselsEvent, CarouselsState> {
-  final CarouselRepository _carouselRepository;
+class MenusBloc extends Bloc<MenusEvent, MenusState> {
+  final MenuRepository _menuRepository;
 //  StreamSubscription _carouselSubscription;
 
-  MenusBloc({@required CarouselRepository carouselsRepository})
-      : assert(carouselsRepository != null),
-        _carouselRepository = carouselsRepository;
+  MenusBloc({@required MenuRepository menuRepository})
+      : assert(menuRepository != null),
+        _menuRepository = menuRepository;
   @override
-  CarouselsState get initialState => CarouselsEmpty();
+  MenusState get initialState => MenusEmpty();
 
   @override
-  Stream<CarouselsState> mapEventToState(CarouselsEvent event) async* {
-    if (event is FetchCarousels) {
-      yield CarouselsLoading();
+  Stream<MenusState> mapEventToState(MenusEvent event) async* {
+    if (event is FetchMenus) {
+      yield MenusLoading();
       try {
-        List<Carousel> result = await _carouselRepository.loadPicbytype(event.type);
+        List<Menu> result = await _menuRepository.loadMenulist();
         print(result);
-        yield Carouselsloaded(lstCarousel:result);
+        yield Menusloaded(lstMenu:result);
 
       } catch (_) {
-        yield CarouselsError();
+        yield MenusError();
       }
     }
   }
