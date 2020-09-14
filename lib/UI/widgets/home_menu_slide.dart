@@ -11,16 +11,16 @@ class HomeMenuSlide extends StatefulWidget {
 }
 class HomeMenuSlidestate extends State<HomeMenuSlide>{
 //  HomeImageSlide({Key key}) : super(key: key);
-  List<Carousel> lst;
+//  List<Carousel> lst;
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CarouselsBloc, CarouselsState>(
+    return BlocBuilder<MenusBloc, MenusState>(
         builder: (context, state) {
-            if(state is CarouselsEmpty){// is loading
+            if(state is MenusEmpty){// is loading
               return Center(child: CircularProgressIndicator());
             }
-            if(state is Carouselsloaded){
-              final imagesliders = state.lstCarousel;
+            if(state is Menusloaded){
+              final menusliders = state.lstMenu;
               return Container(
                 height: 182.0,
                 child: new Carousel(
@@ -33,7 +33,7 @@ class HomeMenuSlidestate extends State<HomeMenuSlide>{
                     overlayShadow: true,
                     overlayShadowColors: Colors.white.withOpacity(0.9),
                     overlayShadowSize: 0.9,
-                    images: imagesliders?.map((i) {
+                    images: menusliders?.map((i) {
                       return NetworkImage(i.url);
                     })?.toList() ??
                         []),

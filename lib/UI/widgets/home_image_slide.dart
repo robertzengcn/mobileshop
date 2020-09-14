@@ -12,7 +12,7 @@ class HomeImageSlide extends StatefulWidget {
 }
 class HomeImageSlidestate extends State<HomeImageSlide>{
 //  HomeImageSlide({Key key}) : super(key: key);
-  List<Carousel> lst;
+//  List<Carousel> lst;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CarouselsBloc, CarouselsState>(
