@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
+import 'package:amigatoy/Models/models.dart';
 
 class HomeMenuSlide extends StatefulWidget {
   @override
@@ -22,26 +23,32 @@ class HomeMenuSlidestate extends State<HomeMenuSlide>{
             if(state is Menusloaded){
               final menusliders = state.lstMenu;
               return Container(
-                height: 182.0,
-                child: new Carousel(
-                    boxFit: BoxFit.cover,
-                    dotColor: Color(0xFF6991C7).withOpacity(0.8),
-                    dotSize: 5.5,
-                    dotSpacing: 16.0,
-                    dotBgColor: Colors.transparent,
-                    showIndicator: true,
-                    overlayShadow: true,
-                    overlayShadowColors: Colors.white.withOpacity(0.9),
-                    overlayShadowSize: 0.9,
-                    images: menusliders?.map((i) {
-                      return NetworkImage(i.url);
-                    })?.toList() ??
-                        []),
+                height: 30.0,
+                margin: EdgeInsets.symmetric(vertical: 5.0),
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                      children: menusliders.map((value) {
+
+                      }).toList(),
+                  )
               );
             }
             return Center(child: CircularProgressIndicator());
         });
   }
+}
+
+var menuItem=Container(
+
+);
+
+Widget _buildChatPage(Menu menu) {
+
+  return Container(
+      child:new Text(
+        menu.title
+      )
+  );
 }
 /// ImageSlider in header
 //    var imageSliderview = Container(
