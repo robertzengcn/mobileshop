@@ -15,6 +15,7 @@ import 'package:amigatoy/ListItem/Category.dart';
 //import 'dart:async';
 //import 'package:flutter/scheduler.dart';
 import 'package:amigatoy/UI/widgets/home_image_slide.dart';
+import 'package:amigatoy/UI/widgets/home_menu.dart';
 
 /**
  * Homepage
@@ -717,6 +718,10 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 //                  padding: EdgeInsets.only(top: 10.0),
 //                ),
                 //Categoryslide,
+                Padding(
+                  padding: EdgeInsets.only(bottom: 10.0),
+                ),
+                HomeMenu(),
                 Padding(
                   padding: EdgeInsets.only(bottom: 10.0),
                 ),

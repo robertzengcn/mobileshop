@@ -6,11 +6,11 @@ import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/Models/models.dart';
 
-class HomeMenuSlide extends StatefulWidget {
+class HomeMenu extends StatefulWidget {
   @override
-  HomeMenuSlidestate createState() => HomeMenuSlidestate();
+  HomeMenustate createState() => HomeMenustate();
 }
-class HomeMenuSlidestate extends State<HomeMenuSlide>{
+class HomeMenustate extends State<HomeMenu>{
 //  HomeImageSlide({Key key}) : super(key: key);
 //  List<Carousel> lst;
   @override
@@ -28,7 +28,7 @@ class HomeMenuSlidestate extends State<HomeMenuSlide>{
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                       children: menusliders.map((value) {
-
+                      return _buildChatPage(value);
                       }).toList(),
                   )
               );

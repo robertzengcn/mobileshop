@@ -56,27 +56,20 @@ class myApp extends StatelessWidget {
     ));
     return MultiBlocProvider(
       providers: [
-//        BlocProvider<ProductsBloc>(
-//          create: (context) {
-//            return ProductsBloc(
-//              productsRepository: FirebaseProductsRepository(),
-//            )..add(LoadProducts());
-//          },
-//        ),
-//        BlocProvider<ImageslidersBloc>(
-//        create: (context) {
-//    return ImageslidersBloc(
-//    imageslidersRepository: FirebaseImageslidersRepository(),
-//    )..add(LoadImageslider());
-//    },
-//    )
       BlocProvider<CarouselsBloc>(
         create: (context) {
     return CarouselsBloc(
       carouselsRepository: CarouselRepository(),
     )..add(FetchCarousels(type:'home'));
     },
-      )
+      ),
+        BlocProvider<MenusBloc>(
+          create: (context) {
+            return MenusBloc(
+              menuRepository: MenuRepository(),
+            )..add(FetchMenutype(type:'home'));
+          },
+        )
       ],
 
       child: MaterialApp(

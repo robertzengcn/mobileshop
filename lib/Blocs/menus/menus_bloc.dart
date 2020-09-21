@@ -18,10 +18,10 @@ class MenusBloc extends Bloc<MenusEvent, MenusState> {
 
   @override
   Stream<MenusState> mapEventToState(MenusEvent event) async* {
-    if (event is FetchMenus) {
+    if (event is FetchMenutype) {
       yield MenusLoading();
       try {
-        List<Menu> result = await _menuRepository.loadMenulist();
+        List<Menu> result = await _menuRepository.fetchMenutype(event.type);
         print(result);
         yield Menusloaded(lstMenu:result);
 

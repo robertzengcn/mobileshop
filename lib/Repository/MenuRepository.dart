@@ -28,4 +28,19 @@ class MenuRepository{
 
     return lst;
   }
+
+  /// 通过type参数载入菜单
+  Future<List> fetchMenutype(String type) async {
+    var queryBuilder = QueryBuilder<Menu>(Menu())
+      ..whereContains(Menu.keyMenuType, "home");
+
+    var response = await queryBuilder.query();
+    List<Menu> lst = new List();
+    if (response.success&& response.result != null) {
+      for (Menu m in response.result) {
+        lst.add(m);
+      }
+    }
+    return lst;
+  }
 }
