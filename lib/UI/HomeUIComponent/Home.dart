@@ -702,7 +702,8 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                 /// Call var imageSlider
                 //imageSlider,
                 //Fireimageslide,
-                HomeImageSlide(),
+                HomeMenu(),
+
                 /// Call var categoryIcon
 //                categoryIcon,
 //                Padding(
@@ -721,7 +722,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                 Padding(
                   padding: EdgeInsets.only(bottom: 10.0),
                 ),
-                HomeMenu(),
+                HomeImageSlide(),
                 Padding(
                   padding: EdgeInsets.only(bottom: 10.0),
                 ),

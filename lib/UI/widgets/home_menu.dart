@@ -45,6 +45,10 @@ var menuItem=Container(
 Widget _buildChatPage(Menu menu) {
 
   return Container(
+      padding: const EdgeInsets.all(3.0),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.blueAccent)
+      ),
       child:new Text(
         menu.title
       )
