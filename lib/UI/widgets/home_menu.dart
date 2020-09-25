@@ -23,8 +23,8 @@ class HomeMenustate extends State<HomeMenu>{
             if(state is Menusloaded){
               final menusliders = state.lstMenu;
               return Container(
-                height: 30.0,
-                margin: EdgeInsets.symmetric(vertical: 5.0),
+                height: 20.0,
+                margin: EdgeInsets.symmetric(vertical: 1.0),
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                       children: menusliders.map((value) {
@@ -45,12 +45,14 @@ var menuItem=Container(
 Widget _buildChatPage(Menu menu) {
 
   return Container(
-      padding: const EdgeInsets.all(3.0),
+      padding: const EdgeInsets.all(1.0),
       decoration: BoxDecoration(
           border: Border.all(color: Colors.blueAccent)
       ),
       child:new Text(
-        menu.title
+        menu.title,
+        style: TextStyle(fontStyle: FontStyle.italic),
+        textAlign: TextAlign.center,
       )
   );
 }
