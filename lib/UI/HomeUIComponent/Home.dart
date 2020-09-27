@@ -723,9 +723,9 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
 //                  padding: EdgeInsets.only(bottom: 2),
 //                ),
                 HomeImageSlide(),
-//                Padding(
-//                  padding: EdgeInsets.only(bottom: 2.0),
-//                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 2.0),
+                ),
 
                 /// Call a Grid variable, this is item list in Recomended item
                 //Grid,

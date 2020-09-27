@@ -23,12 +23,13 @@ class HomeMenustate extends State<HomeMenu>{
             if(state is Menusloaded){
               final menusliders = state.lstMenu;
               return Container(
+//                  color: Color(0xFF6991C7),
                 height: 20.0,
                 margin: EdgeInsets.symmetric(vertical: 1.0),
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                       children: menusliders.map((value) {
-                      return _buildChatPage(value);
+                      return _buildMenuitem(value);
                       }).toList(),
                   )
               );
@@ -42,16 +43,21 @@ var menuItem=Container(
 
 );
 
-Widget _buildChatPage(Menu menu) {
+Widget _buildMenuitem(Menu menu) {
 
   return Container(
+//      color: Color(0xFF6991C7),
+//      decoration: BoxDecoration(
+//        color: Color(0xFF6991C7),
+//      ),
       padding: const EdgeInsets.all(1.0),
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.blueAccent)
+          color: Color(0xFF6991C7),
+          border: Border.all(color: Color(0xFF6991C7))
       ),
       child:new Text(
         menu.title,
-        style: TextStyle(fontStyle: FontStyle.italic),
+        style: TextStyle(fontStyle: FontStyle.italic,color:Colors.white),
         textAlign: TextAlign.center,
       )
   );
