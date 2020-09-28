@@ -4,33 +4,33 @@ import 'package:amigatoy/Models/models.dart';
 
 
 
-abstract class MenusState extends Equatable {
-  const MenusState();
+abstract class ProductsState extends Equatable {
+  const ProductsState();
 //  CarouselsState([List props = const[]]) : super([props]);
 //  @override
  List<Object> get props => [];
 }
-class MenusEmpty extends MenusState {}
+class ProductsEmpty extends ProductsState {}
 /**
  * loading home images
  */
-class MenusLoading extends MenusState {
+class ProductsLoading extends ProductsState {
 
 }
 /**
  * home images slider load completed
  */
-class Menusloaded extends MenusState {
-  final List<Menu> lstMenu;
+class Productsloaded extends ProductsState {
+  final List<Product> lstProduct;
 
 
-  const Menusloaded({@required this.lstMenu}) : assert(lstMenu != null);
+  const Productsloaded({@required this.lstProduct}) : assert(lstProduct != null);
 
   @override
-  List<Object> get props => [lstMenu];
+  List<Object> get props => [lstProduct];
 }
 
-class MenusError extends MenusState {}
+class ProductsError extends ProductsState {}
 
 
 

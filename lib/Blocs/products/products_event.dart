@@ -2,26 +2,26 @@ import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
 
-abstract class MenusEvent extends Equatable {
-  const MenusEvent();
+abstract class ProductsEvent extends Equatable {
+  const ProductsEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class FetchMenus extends MenusEvent {
+class FetchProducts extends ProductsEvent {
 
 
-  const FetchMenus();
+  const FetchProducts();
 
   @override
   List<Object> get props => [];
 }
 
-class FetchMenutype extends MenusEvent {
+class FetchProducttype extends ProductsEvent {
   final String type;
 
-  const FetchMenutype({@required this.type}) : assert(type != null);
+  const FetchProducttype({@required this.type}) : assert(type != null);
 
   @override
   List<Object> get props => [type];
@@ -35,6 +35,6 @@ class FetchMenutype extends MenusEvent {
 //  @override
 //  List<Object> get props => [imageslider];
 //}
-class LoadingMenus extends MenusEvent {}
+class LoadingMenus extends ProductsEvent {}
 
-class LoadedMenus  extends MenusEvent {}
+class LoadedMenus  extends ProductsEvent {}
