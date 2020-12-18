@@ -35,6 +35,6 @@ class FetchProducttype extends ProductsEvent {
 //  @override
 //  List<Object> get props => [imageslider];
 //}
-class LoadingMenus extends ProductsEvent {}
-
-class LoadedMenus  extends ProductsEvent {}
+//class LoadingMenus extends ProductsEvent {}
+//
+//class LoadedMenus  extends ProductsEvent {}

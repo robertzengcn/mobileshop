@@ -18,7 +18,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
 
   @override
   Stream<ProductsState> mapEventToState(ProductsEvent event) async* {
-    if (event is FetchProducts) {
+    if (event is FetchProducttype) {
       yield ProductsLoading();
       try {
         List<Product> result = await _productRepository.fetchProducttype(event.type);
