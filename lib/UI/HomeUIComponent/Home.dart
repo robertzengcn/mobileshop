@@ -1,4 +1,4 @@
-import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
+//import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:amigatoy/ListItem/HomeGridItemRecomended.dart';
 import 'package:amigatoy/UI/HomeUIComponent/AppbarGradient.dart';
@@ -8,25 +8,20 @@ import 'package:amigatoy/UI/HomeUIComponent/DetailProduct.dart';
 import 'package:amigatoy/UI/HomeUIComponent/FlashSale.dart';
 import 'package:amigatoy/ListItem/Product.dart';
 import 'package:amigatoy/ListItem/ImageSlider.dart';
-//import 'package:amigatoy/Services/CRUDModel.dart';
 import 'package:amigatoy/ListItem/Category.dart';
-//import 'package:provider/provider.dart';
-//import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'dart:async';
-//import 'package:flutter/scheduler.dart';
 import 'package:amigatoy/UI/widgets/home_image_slide.dart';
 import 'package:amigatoy/UI/widgets/home_menu.dart';
 
 /**
  * Homepage
  */
-class Menu extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  _MenuState createState() => _MenuState();
+  _HomeState createState() => _HomeState();
 }
 
 /// Component all widget in home
-class _MenuState extends State<Menu> with TickerProviderStateMixin {
+class _HomeState extends State<Home> with TickerProviderStateMixin {
   /// Declare class GridItem from HomeGridItemReoomended.dart in folder ListItem
   GridItem gridItem;
 

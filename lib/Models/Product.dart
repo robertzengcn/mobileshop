@@ -1,20 +1,34 @@
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:equatable/equatable.dart';
 
+class Product extends Equatable {
 
+  final int products_id;
+  final int products_quantity;
+  final String products_model;
+  final String products_image;
+  final double products_price;
+  final double products_weight;
 
-class Product extends ParseObject implements ParseCloneable {
+  const Product({
+    this.products_id,
+    this.products_quantity,
+    this.products_model,
+    this.products_image,
+    this.products_price,
+    this.products_weight
+  });
+  @override
+  List<Object> get props => [
+    products_id,
+    formattedCondition,
+    minTemp,
+    temp,
+    maxTemp,
+    locationId,
+    created,
+    lastUpdated,
+    location,
+  ];
 
-
-  Product() : super(_keyMenuTableName);
-  Product.clone(): this();
-
-  static const String _keyMenuTableName = 'Product';
-  static const String keyMenuTitle = 'title';
-  static const String keyMenuType = 'type';
-
-  /// Looks strangely hacky but due to Flutter not using reflection, we have to
-  /// mimic a clone
-  @override clone(Map map) => Product.clone()..fromJson(map);
-  String get title => get<String>(keyMenuTitle);
 
 }

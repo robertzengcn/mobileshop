@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:amigatoy/ListItem/Product.dart';
-import 'package:amigatoy/UI/HomeUIComponent/productDetails.dart';
+import 'package:amigatoy/Models/Product_rm.dart';
+
 
 
 class ProductCard extends StatelessWidget {

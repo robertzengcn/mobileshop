@@ -69,6 +69,13 @@ class myApp extends StatelessWidget {
               menuRepository: MenuRepository(),
             )..add(FetchMenutype(type:'home'));
           },
+        ),
+        BlocProvider<FeaturedsBloc>(
+          create: (context) {
+            return FeaturedsBloc(
+              featuredRepository: FeaturedRepository(),
+            )..add(FetchFeatureds());
+          },
         )
       ],
 
@@ -86,7 +93,7 @@ class myApp extends StatelessWidget {
         /// Routes
         routes: <String, WidgetBuilder>{
           //"login": (BuildContext context) => new Menu()
-          "home": (BuildContext context) => new Menu()
+          "home": (BuildContext context) => new Home()
         }
       ),
     );

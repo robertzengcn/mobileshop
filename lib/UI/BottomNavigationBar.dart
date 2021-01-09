@@ -15,7 +15,7 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
  Widget callPage(int current) {
   switch (current) {
    case 0:
-    return new Menu();
+    return new Home();
    case 1:
     return new brand();
    case 2:
@@ -24,7 +24,7 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
     return new profil();
     break;
    default:
-    return Menu();
+    return Home();
   }
  }
 
