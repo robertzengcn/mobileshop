@@ -20,15 +20,23 @@ class Product extends Equatable {
   @override
   List<Object> get props => [
     products_id,
-    formattedCondition,
-    minTemp,
-    temp,
-    maxTemp,
-    locationId,
-    created,
-    lastUpdated,
-    location,
+    products_quantity,
+    products_model,
+    products_image,
+    products_price,
+    products_weight
   ];
+
+  static Product fromJson(dynamic json) {
+    return Product(
+      products_id: json['products_id'] as int,
+      products_quantity: json['products_quantity'] as int,
+      products_model: json['products_model'],
+      products_image: json['products_image'],
+      products_price: json['products_price'] as double,
+      products_weight: json['products_weight'],
+    );
+  }
 
 
 }

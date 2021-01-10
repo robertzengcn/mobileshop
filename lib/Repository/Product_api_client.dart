@@ -14,6 +14,7 @@ class ProductApiClient{
   Future<List<Product>> getProductlist() async{
     http.Response response = await http.get(
         '$baseUrl/');
+
     var responseJson = json.decode(response.body);
     return (responseJson['data'] as List)
         .map((p) => Product.fromJson(p))
