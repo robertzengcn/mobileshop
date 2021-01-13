@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:amigatoy/Models/Product_rm.dart';
+import 'package:amigatoy/Models/Product.dart';
 
 
 
@@ -30,7 +30,7 @@ class ProductCard extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Hero(
-                  tag: productDetails.id,
+                  tag: productDetails.products_id,
                   child: Image.network(
                     productDetails.img,
                     height: MediaQuery

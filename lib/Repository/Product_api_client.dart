@@ -15,9 +15,17 @@ class ProductApiClient{
     http.Response response = await http.get(
         '$baseUrl/');
 
-    var responseJson = json.decode(response.body);
-    return (responseJson['data'] as List)
-        .map((p) => Product.fromJson(p))
-        .toList();
+    if (response.statusCode == 200) {
+      var responseJson = json.decode(response.body);
+      if(responseJson['status']==true){
+        return (responseJson['data'] as List)
+            .map((p) => Product.fromJson(p))
+            .toList();
+      }else{
+        throw Exception('get product data failure');
+      }
+    } else {
+      throw Exception('Unable to fetch products from the REST API');
+    }
   }
 }
