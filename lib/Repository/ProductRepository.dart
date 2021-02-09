@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 import 'dart:async';
 import 'package:amigatoy/Models/models.dart';
-import 'package:amigatoy/Repository/Product_api_client.dart';
+import 'package:amigatoy/Repository/repository.dart';
 
 class ProductRepository{
   final ProductApiClient productApiClient;
@@ -17,18 +17,4 @@ class ProductRepository{
     return lst;
   }
 
-  /// 通过type参数载入菜单
-//  Future<List> fetchProducttype(String type) async {
-//    var queryBuilder = QueryBuilder<Product>(Product())
-//      ..whereContains(Product.keyProductType, "home");
-//
-//    var response = await queryBuilder.query();
-//    List<Product> lst = new List();
-//    if (response.success&& response.result != null) {
-//      for (Product m in response.result) {
-//        lst.add(m);
-//      }
-//    }
-//    return lst;
-//  }
 }

@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
-import 'package:amigatoy/constants/application_constants.dart';
 import 'package:amigatoy/Repository/repository.dart';
+import 'package:http/http.dart' as http;
+
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -32,10 +32,15 @@ class SimpleBlocDelegate extends BlocDelegate {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   BlocSupervisor.delegate = SimpleBlocDelegate();
-  await Parse().initialize(keyParseApplicationId, keyParseServerUrl,
-      clientKey:keyParseclientKey,
-      debug: true,
-      coreStore: await CoreStoreSharedPrefsImp.getInstance());
+//  await Parse().initialize(keyParseApplicationId, keyParseServerUrl,
+//      clientKey:keyParseclientKey,
+//      debug: true,
+//      coreStore: await CoreStoreSharedPrefsImp.getInstance());
+//  final CarouselRepository carouselRepository = CarouselRepository(
+//    carouselApiClient: CarouselsApiClient(
+//      httpClient: http.Client(),
+//    ),
+//  );
   runApp(myApp());
 }
 
@@ -59,21 +64,24 @@ class myApp extends StatelessWidget {
       BlocProvider<CarouselsBloc>(
         create: (context) {
     return CarouselsBloc(
-      carouselsRepository: CarouselRepository(),
+      carouselsRepository: CarouselRepository(carouselApiClient: CarouselsApiClient(
+        httpClient: http.Client(),
+      )),
     )..add(FetchCarousels(type:'home'));
     },
       ),
         BlocProvider<MenusBloc>(
           create: (context) {
             return MenusBloc(
-              menuRepository: MenuRepository(),
+              menuRepository: MenuRepository(menuApiClient:MenuApiClient(httpClient: http.Client()
+              )),
             )..add(FetchMenutype(type:'home'));
           },
         ),
         BlocProvider<FeaturedsBloc>(
           create: (context) {
             return FeaturedsBloc(
-              featuredRepository: FeaturedRepository(),
+              featuredRepository: FeaturedRepository(productApiClient:ProductApiClient(httpClient: http.Client())),
             )..add(FetchFeatureds());
           },
         )

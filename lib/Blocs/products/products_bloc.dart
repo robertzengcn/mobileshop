@@ -21,7 +21,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     if (event is FetchProducttype) {
       yield ProductsLoading();
       try {
-        List<Product> result = await _productRepository.fetchProducttype(event.type);
+        List<Product> result = await _productRepository.loadProductlist();
         print(result);
         yield Productsloaded(lstProduct:result);
 
