@@ -1,15 +1,29 @@
-import 'package:parse_server_sdk/parse_server_sdk.dart';
-const String _keyTableName = 'Carousel';
-const String keyUrl = 'url';
+import 'package:equatable/equatable.dart';
 
-class Carousel extends ParseObject implements ParseCloneable {
+class Carousel extends Equatable {
 
-  Carousel() : super(_keyTableName);
-  Carousel.clone(): this();
+  final int id;
+  final String title;
+  final String url;
 
-  /// Looks strangely hacky but due to Flutter not using reflection, we have to
-  /// mimic a clone
-  @override clone(Map map) => Carousel.clone()..fromJson(map);
-  String get url => get<String>(keyUrl);
+  const Carousel({
+    this.id,
+    this.title,
+    this.url,
+  });
+  @override
+  List<Object> get props => [
+    id,
+    title,
+    url
+  ];
+
+  static Carousel fromJson(dynamic json) {
+    return Carousel(
+        id: json['id'] as int,
+        title:json['title'],
+        url: json['url']
+    );
+  }
 
 }

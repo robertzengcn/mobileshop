@@ -11,6 +11,7 @@ import 'package:amigatoy/ListItem/ImageSlider.dart';
 import 'package:amigatoy/ListItem/Category.dart';
 import 'package:amigatoy/UI/widgets/home_image_slide.dart';
 import 'package:amigatoy/UI/widgets/home_menu.dart';
+import 'package:amigatoy/UI/widgets/home_recommend.dart';
 
 /**
  * Homepage
@@ -120,20 +121,20 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 //    };
 
     /// Navigation to categoryDetail.dart if user Click icon in Category
-    var onClickCategory = (id, title) {
-      //SchedulerBinding.instance.addPostFrameCallback((_){
-      Navigator.of(context).push(PageRouteBuilder(
-          pageBuilder: (_, __, ___) => new categoryDetail(id, title: title),
-          transitionDuration: Duration(milliseconds: 750),
-          transitionsBuilder:
-              (_, Animation<double> animation, __, Widget child) {
-            return Opacity(
-              opacity: animation.value,
-              child: child,
-            );
-          }));
-      //});
-    };
+//    var onClickCategory = (id, title) {
+//      //SchedulerBinding.instance.addPostFrameCallback((_){
+//      Navigator.of(context).push(PageRouteBuilder(
+//          pageBuilder: (_, __, ___) => new categoryDetail(id, title: title),
+//          transitionDuration: Duration(milliseconds: 750),
+//          transitionsBuilder:
+//              (_, Animation<double> animation, __, Widget child) {
+//            return Opacity(
+//              opacity: animation.value,
+//              child: child,
+//            );
+//          }));
+//      //});
+//    };
 
     /// Declare device Size
 //    var deviceSize = MediaQuery.of(context).size;
@@ -724,6 +725,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
                 /// Call a Grid variable, this is item list in Recomended item
                 //Grid,
+                //recommend product list
+                HomeRecommend(),
                 //Recomendlist,
               ],
             ),

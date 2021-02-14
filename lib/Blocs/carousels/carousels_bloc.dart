@@ -8,7 +8,6 @@ import 'package:amigatoy/Models/models.dart';
 
 class CarouselsBloc extends Bloc<CarouselsEvent, CarouselsState> {
   final CarouselRepository _carouselRepository;
-//  StreamSubscription _carouselSubscription;
 
   CarouselsBloc({@required CarouselRepository carouselsRepository})
       : assert(carouselsRepository != null),
