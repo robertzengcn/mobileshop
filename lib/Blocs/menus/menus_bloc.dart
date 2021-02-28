@@ -22,7 +22,7 @@ class MenusBloc extends Bloc<MenusEvent, MenusState> {
       yield MenusLoading();
       try {
         List<Menu> result = await _menuRepository.fetchMenutype(event.type);
-        print(result);
+//        print(result);
         yield Menusloaded(lstMenu:result);
 
       } catch (_) {

@@ -1,8 +1,8 @@
 import 'package:meta/meta.dart';
 import 'package:amigatoy/Models/models.dart';
-//import 'package:amigatoy/Repository/carousels_api_client.dart;
+//import 'package:amigatoy/Repository/carouselsApiClient.dart;
 //import 'package:amigatoy/Repository/repository.dart';
-import 'package:amigatoy/Repository/carousels_api_client.dart';
+import 'package:amigatoy/Repository/carouselsApiClient.dart';
 
 
 class CarouselRepository{
@@ -24,16 +24,5 @@ class CarouselRepository{
 
     return lst;
   }
-//  Future<List> loadAllPic() async {
-//    var apiResponse = await Carousel().getAll();
-//
-//    List<Carousel> lst = new List();
-//    if (apiResponse.success && apiResponse.result != null) {
-//      for (Carousel m in apiResponse.result) {
-//        lst.add(m);
-//      }
-//    }
-//
-//    return lst;
-//  }
+
 }

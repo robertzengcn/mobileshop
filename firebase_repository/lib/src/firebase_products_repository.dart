@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+//import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:firebase_repository/firebase_repository.dart';
 import 'entities/entities.dart';
 

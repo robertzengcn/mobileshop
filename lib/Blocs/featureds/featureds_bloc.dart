@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:amigatoy/Blocs/featureds/featureds.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
-
+import 'dart:developer' as developer;
 
 class FeaturedsBloc extends Bloc<FeaturedEvent, FeaturedState> {
   final FeaturedRepository _featuredRepository;
@@ -21,11 +21,19 @@ class FeaturedsBloc extends Bloc<FeaturedEvent, FeaturedState> {
     if (event is FetchFeatureds) {
       yield FeaturedLoading();
       try {
+//        developer.log('get feature product list',
+//          name: 'my.app.category',
+//
+//        );
         List<Product> result = await _featuredRepository.loadFeaturedlist();
-        print(result);
+        developer.log('feature list end',
+          name: 'my.app.category',
+          error: result
+        );
         yield Featuredloaded(lstFeatureds:result);
 
-      } catch (_) {
+      } catch (e) {
+        print('error caught: $e');
         yield FeaturedError();
       }
     }

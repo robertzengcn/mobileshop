@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 //import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:amigatoy/Models/models.dart';
-import 'package:amigatoy/Repository/menu_api_client.dart';
+import 'package:amigatoy/Repository/menuApiClient.dart';
 
 class MenuRepository{
   final MenuApiClient menuApiClient;

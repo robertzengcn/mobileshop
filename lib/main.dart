@@ -7,6 +7,7 @@ import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:http/http.dart' as http;
+import 'dart:developer' as developer;
 
 
 class SimpleBlocDelegate extends BlocDelegate {
@@ -41,6 +42,7 @@ void main() async {
 //      httpClient: http.Client(),
 //    ),
 //  );
+//  developer.log('start app', name: 'my.app.category');
   runApp(myApp());
 }
 

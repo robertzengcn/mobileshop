@@ -13,9 +13,9 @@ import 'package:amigatoy/UI/widgets/home_image_slide.dart';
 import 'package:amigatoy/UI/widgets/home_menu.dart';
 import 'package:amigatoy/UI/widgets/home_recommend.dart';
 
-/**
- * Homepage
- */
+
+///Homepage
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
