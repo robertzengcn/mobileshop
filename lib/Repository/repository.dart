@@ -1,6 +1,6 @@
-export 'product_api_client.dart';
-export 'menu_api_client.dart';
-export 'carousels_api_client.dart';
+export 'productApiClient.dart';
+export 'menuApiClient.dart';
+export 'carouselsApiClient.dart';
 export 'CarouselRepository.dart';
 export 'MenuRepository.dart';
 export 'ProductRepository.dart';

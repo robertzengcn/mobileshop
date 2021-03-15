@@ -11,15 +11,14 @@ abstract class CarouselsState extends Equatable {
  List<Object> get props => [];
 }
 class CarouselsEmpty extends CarouselsState {}
-/**
- * loading home images
- */
+/// loading home images
+
 class CarouselsLoading extends CarouselsState {
 
 }
-/**
- * home images slider load completed
- */
+
+///home images slider load completed
+
 class Carouselsloaded extends CarouselsState {
   final List<Carousel> lstCarousel;
 

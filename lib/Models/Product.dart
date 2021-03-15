@@ -37,8 +37,8 @@ class Product extends Equatable {
       products_quantity: json['products_quantity'] as int,
       products_model: json['products_model'],
       products_image: json['products_image'],
-      products_price: json['products_price'] as double,
-      products_weight: json['products_weight'],
+      products_price: json['products_price'].toDouble() as double,
+      products_weight: json['products_weight'].toDouble() as double,
     );
   }
 

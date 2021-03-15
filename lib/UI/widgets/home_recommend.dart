@@ -5,6 +5,7 @@ import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/UI/HomeUIComponent/productCard.dart';
+import 'dart:developer' as developer;
 
 class HomeRecommend extends StatefulWidget {
   @override
@@ -21,12 +22,13 @@ class HomeRecommendstate extends State<HomeRecommend>{
           }
           if(state is Featuredloaded){
             final featurelist = state.lstFeatureds;
+//           developer.log('feature list', name: 'my.app.category', error: featurelist);
             return Container(
 //                  color: Color(0xFF6991C7),
                 height: 20.0,
                 margin: EdgeInsets.symmetric(vertical: 1.0),
                 child: ListView(
-                  scrollDirection: Axis.horizontal,
+                  scrollDirection: Axis.vertical,
                   children: featurelist.map((value) {
                     return ProductCard(productDetails:value);
                   }).toList(),
