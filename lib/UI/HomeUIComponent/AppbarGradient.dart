@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:amigatoy/UI/AcountUIComponent/Notification.dart';
+//import 'package:amigatoy/UI/AcountUIComponent/Notification.dart';
 import 'package:amigatoy/UI/HomeUIComponent/Search.dart';
 import 'package:amigatoy/UI/AcountUIComponent/Message.dart';
+import 'package:amigatoy/UI/widgets/SideMenu.dart';
+import 'package:amigatoy/UI/LoginOrSignup/LoginAnimation.dart';
+import 'package:amigatoy/UI/LoginOrSignup/Login.dart';
+
 
 class AppbarGradient extends StatefulWidget {
   @override
@@ -10,7 +14,7 @@ class AppbarGradient extends StatefulWidget {
 
 class _AppbarGradientState extends State<AppbarGradient> {
   String CountNotice = "0";
-
+//  static const IconData menuicon = IconData(0xe867, fontFamily: 'MaterialIcons');
     /// Build Appbar in layout home
   @override
   Widget build(BuildContext context) {
@@ -95,24 +99,38 @@ class _AppbarGradientState extends State<AppbarGradient> {
           InkWell(
               onTap: () {
                 Navigator.of(context).push(
-                    PageRouteBuilder(pageBuilder: (_, __, ___) => new chat()));
+                    PageRouteBuilder(pageBuilder: (_, __, ___) => new loginScreen()));
               },
-              child: Image.asset(
-                "assets/img/chat.png",
-                height: media.devicePixelRatio + 20.0,
-              )),
+//              child: Image.asset(
+//                "assets/img/chat.png",
+//                height: media.devicePixelRatio + 20.0,
+//              )
+          child:Icon(
+            Icons.account_circle,
+            color: Colors.white,
+            size: 26.0,
+            semanticLabel: 'Text to announce in accessibility modes',
+          )
+              ),
+
           /// Icon notification (if user click navigate to notification layout)
           InkWell(
             onTap: () {
               Navigator.of(context).push(PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => new notification()));
+                  pageBuilder: (_, __, ___) => new SideMenu()));
             },
             child: Stack(
               alignment: AlignmentDirectional(-3.0, -3.0),
               children: <Widget>[
-                Image.asset(
-                  "assets/img/notifications-button.png",
-                  height: 24.0,
+//                Image.asset(
+//                  "assets/img/notifications-button.png",
+//                  height: 24.0,
+//                ),
+                Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                  size: 26.0,
+                  semanticLabel: 'Text to announce in accessibility modes',
                 ),
                 CircleAvatar(
                   radius: 8.6,

@@ -7,7 +7,7 @@ import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:amigatoy/UI/HomeUIComponent/ReviewLayout.dart';
-import 'package:amigatoy/ListItem/Product.dart';
+import 'package:amigatoy/Models/Product.dart';
 
 class detailProduk extends StatefulWidget {
   Product gridItem;
@@ -245,7 +245,7 @@ class _detailProdukState extends State<detailProduk> {
                   Container(
                     height: 300.0,
                     child: Hero(
-                      tag: "hero-grid-${gridItem.id}",
+                      tag: "hero-grid-${gridItem.products_id}",
                       child: Material(
                         child: new Carousel(
                           dotColor: Colors.black26,
@@ -254,9 +254,9 @@ class _detailProdukState extends State<detailProduk> {
                           autoplay: false,
                           boxFit: BoxFit.cover,
                           images: [
-                            NetworkImage(gridItem.img),
-                            NetworkImage(gridItem.img),
-                            NetworkImage(gridItem.img),
+                            NetworkImage(gridItem.products_image),
+                            NetworkImage(gridItem.products_image),
+                            NetworkImage(gridItem.products_image),
                           ],
                         ),
                       ),
@@ -277,12 +277,12 @@ class _detailProdukState extends State<detailProduk> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            gridItem.title,
+                            gridItem.products_name,
                             style: _customTextStyle,
                           ),
                           Padding(padding: EdgeInsets.only(top: 5.0)),
                           Text(
-                            gridItem.price.toString(),
+                            gridItem.products_price.toString(),
                             style: _customTextStyle,
                           ),
                           Padding(padding: EdgeInsets.only(top: 10.0)),
@@ -313,7 +313,7 @@ class _detailProdukState extends State<detailProduk> {
                                             MainAxisAlignment.center,
                                         children: <Widget>[
                                           Text(
-                                            gridItem.rattingValue.toString(),
+                                            gridItem.products_quantity.toString(),
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
@@ -333,7 +333,7 @@ class _detailProdukState extends State<detailProduk> {
                                 Padding(
                                   padding: const EdgeInsets.only(right: 15.0),
                                   child: Text(
-                                    gridItem.itemSale.toString(),
+                                    gridItem.products_quantity.toString(),
                                     style: TextStyle(
                                         color: Colors.black54,
                                         fontSize: 13.0,
@@ -443,7 +443,7 @@ class _detailProdukState extends State<detailProduk> {
                                   right: 20.0,
                                   bottom: 10.0,
                                   left: 20.0),
-                              child: Text(gridItem.description,
+                              child: Text(gridItem.products_name,
                                   style: _detailText),
                             ),
                             Center(

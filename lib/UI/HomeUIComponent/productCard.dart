@@ -22,11 +22,11 @@ class ProductCard extends StatelessWidget {
             height: MediaQuery
                 .of(context)
                 .size
-                .height * 0.45,
+                .height * 0.8,
             width: MediaQuery
                 .of(context)
                 .size
-                .width * 0.9,
+                .width * 0.5,
             child: Column(
               children: <Widget>[
                 Hero(
@@ -48,9 +48,10 @@ class ProductCard extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         productDetails.products_name,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontWeight: FontWeight.w900,
-                            fontSize: 22,
+                            fontSize: 13.0,
                             fontStyle: FontStyle.italic),
                       ),
                       Text(

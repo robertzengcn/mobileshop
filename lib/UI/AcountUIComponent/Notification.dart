@@ -115,7 +115,8 @@ class _notificationState extends State<notification> {
                         Divider(height: 5.0),
                       ],
                     ),
-                  ));
+                  )
+              );
             }):noItemNotifications()
     );
   }
