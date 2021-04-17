@@ -7,8 +7,7 @@ import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:http/http.dart' as http;
-import 'dart:developer' as developer;
-
+//import 'dart:developer' as developer;
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -29,6 +28,7 @@ class SimpleBlocDelegate extends BlocDelegate {
     print(error);
   }
 }
+
 /// Run first apps open
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,67 +48,75 @@ void main() async {
 
 /// Set orienttation
 class myApp extends StatelessWidget {
-
+  final userRepository = UserRepository();
   @override
   Widget build(BuildContext context) {
-
     /// To set orientation always portrait
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
     ///Set color status bar
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
       statusBarColor: Colors.transparent, //or set color with: Color(0xFF0000FF)
     ));
     return MultiBlocProvider(
       providers: [
-      BlocProvider<CarouselsBloc>(
-        create: (context) {
-    return CarouselsBloc(
-      carouselsRepository: CarouselRepository(carouselApiClient: CarouselsApiClient(
-        httpClient: http.Client(),
-      )),
-    )..add(FetchCarousels(type:'home'));
-    },
-      ),
+        BlocProvider<CarouselsBloc>(
+          create: (context) {
+            return CarouselsBloc(
+              carouselsRepository: CarouselRepository(
+                  carouselApiClient: CarouselsApiClient(
+                httpClient: http.Client(),
+              )),
+            )..add(FetchCarousels(type: 'home'));
+          },
+        ),
         BlocProvider<MenusBloc>(
           create: (context) {
             return MenusBloc(
-              menuRepository: MenuRepository(menuApiClient:MenuApiClient(httpClient: http.Client()
-              )),
-            )..add(FetchMenutype(type:'home'));
+              menuRepository: MenuRepository(
+                  menuApiClient: MenuApiClient(httpClient: http.Client())),
+            )..add(FetchMenutype(type: 'home'));
           },
         ),
         BlocProvider<FeaturedsBloc>(
           create: (context) {
             return FeaturedsBloc(
-              featuredRepository: FeaturedRepository(productApiClient:ProductApiClient(httpClient: http.Client())),
+              featuredRepository: FeaturedRepository(
+                  productApiClient:
+                      ProductApiClient(httpClient: http.Client())),
             )..add(FetchFeatureds());
           },
-        )
+        ),
+        BlocProvider<AuthenticationBloc>(
+          create: (context) {
+            return AuthenticationBloc(
+                userRepository: userRepository
+            )..add(AppStarted());
+          },
+        ),
       ],
-
       child: MaterialApp(
-        title: "Amiga Toy",
-        theme: ThemeData(
-            brightness: Brightness.light,
-            backgroundColor: Colors.white,
-            primaryColorLight: Colors.white,
-            primaryColorBrightness: Brightness.light,
-            primaryColor: Colors.white),
-        debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
-        /// Move splash screen to ChoseLogin Layout
-        /// Routes
-        routes: <String, WidgetBuilder>{
-          //"login": (BuildContext context) => new Menu()
-          "home": (BuildContext context) => new Home()
-        }
-      ),
+          title: "Amiga Toy",
+          theme: ThemeData(
+              brightness: Brightness.light,
+              backgroundColor: Colors.white,
+              primaryColorLight: Colors.white,
+              primaryColorBrightness: Brightness.light,
+              primaryColor: Colors.white),
+          debugShowCheckedModeBanner: false,
+          home: SplashScreen(),
+
+          /// Move splash screen to ChoseLogin Layout
+          /// Routes
+          routes: <String, WidgetBuilder>{
+            //"login": (BuildContext context) => new Menu()
+            "home": (BuildContext context) => new Home()
+          }),
     );
   }
-
 }
 
 /// Component UI
@@ -120,20 +128,24 @@ class SplashScreen extends StatefulWidget {
 /// Component UI
 class _SplashScreenState extends State<SplashScreen> {
   @override
+
   /// Setting duration in splash screen
   startTime() async {
     return new Timer(Duration(milliseconds: 4500), NavigatorPage);
   }
+
   /// To navigate layout change
   void NavigatorPage() {
     Navigator.of(context).pushReplacementNamed("home");
   }
+
   /// Declare startTime to InitState
   @override
   void initState() {
     super.initState();
     startTime();
   }
+
   /// Code Create UI Splash Screen
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,9 +160,9 @@ class _SplashScreenState extends State<SplashScreen> {
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   colors: [
-                    Color.fromRGBO(0, 0, 0, 0.3),
-                    Color.fromRGBO(0, 0, 0, 0.4)
-                  ],
+                Color.fromRGBO(0, 0, 0, 0.3),
+                Color.fromRGBO(0, 0, 0, 0.4)
+              ],
                   begin: FractionalOffset.topCenter,
                   end: FractionalOffset.bottomCenter)),
           child: Center(
@@ -162,6 +174,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     Padding(
                       padding: EdgeInsets.only(top: 30.0),
                     ),
+
                     /// Text header "Welcome To" (Click to open code)
                     Text(
                       "Welcome to",
@@ -172,6 +185,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         fontSize: 19.0,
                       ),
                     ),
+
                     /// Animation text Treva Shop to choose Login with Hero Animation (Click to open code)
                     Hero(
                       tag: "Treva",
