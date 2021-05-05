@@ -11,7 +11,7 @@ class CarouselRepository{
   CarouselRepository({@required this.carouselApiClient})
       : assert(carouselApiClient != null);
   ///获取图片列表
-  Future<List> loadPicbytype(String type) async {
+  Future<List<Carousel>> loadPicbytype(String type) async {
     Future<List<Carousel>> lst = carouselApiClient.getCarouselbytype(type);
 //    var apiResponse = await Carousel().getAll();
 

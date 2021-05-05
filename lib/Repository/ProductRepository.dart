@@ -9,7 +9,7 @@ class ProductRepository{
   ProductRepository({@required this.productApiClient})
       : assert(productApiClient != null);
 
-  Future<List> loadProductlist() async {
+  Future<List<Product>> loadProductlist() async {
 
 
     Future<List<Product>> lst = productApiClient.getProductlist();

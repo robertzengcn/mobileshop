@@ -29,7 +29,7 @@ class MenuRepository{
   }
 
   /// 通过type参数载入菜单
-  Future<List> fetchMenutype(String type) async {
+  Future<List<Menu>> fetchMenutype(String type) async {
     Future<List<Menu>> lst = menuApiClient.getMenubytype(type);
 //    var queryBuilder = QueryBuilder<Menu>(Menu())
 //      ..whereContains(Menu.keyMenuType, "home");

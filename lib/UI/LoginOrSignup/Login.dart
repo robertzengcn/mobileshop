@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:amigatoy/UI/LoginOrSignup/LoginAnimation.dart';
 import 'package:amigatoy/UI/LoginOrSignup/Signup.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:amigatoy/Blocs/blocs.dart';
 
 class loginScreen extends StatefulWidget {
   @override
@@ -56,7 +57,17 @@ class _loginScreenState extends State<loginScreen>
     mediaQueryData.devicePixelRatio;
     mediaQueryData.size.width;
     mediaQueryData.size.height;
-    return Scaffold(
+    return BlocListener<LoginBloc, LoginState>(
+    listener: (context, state) {
+          if (state.status.isSubmissionFailure) {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                const SnackBar(content: Text('Authentication Failure')),
+              );
+          }
+        },
+      child:Scaffold(
       backgroundColor: Colors.white,
       body: Container(
         /// Set Background image in layout (Click to open code)
@@ -108,7 +119,7 @@ class _loginScreenState extends State<loginScreen>
                                 Hero(
                                   tag: "Treva",
                                   child: Text(
-                                    "Treva Shop",
+                                    "Amiga Toy",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w900,
                                         letterSpacing: 0.6,
@@ -163,14 +174,16 @@ class _loginScreenState extends State<loginScreen>
                             ),
 
                             /// Button Signup
-                            FlatButton(
-                                padding: EdgeInsets.only(top: 20.0),
+                            TextButton(
+//                                padding: EdgeInsets.only(top: 20.0),
                                 onPressed: () {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (BuildContext context) =>
                                               new Signup()));
                                 },
+                                style: TextButton.styleFrom(
+                                    padding: EdgeInsets.only(top: 20.0)),
                                 child: Text(
                                   "Not Have Acount? Sign Up",
                                   style: TextStyle(
@@ -214,6 +227,7 @@ class _loginScreenState extends State<loginScreen>
           ),
         ),
       ),
+    )
     );
   }
 }

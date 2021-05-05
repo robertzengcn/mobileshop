@@ -64,7 +64,7 @@ class Carousel extends StatefulWidget {
   final Duration autoplayDuration;
 
   Carousel(
-      {this.images,
+      {@required this.images,
         this.animationCurve = Curves.ease,
         this.animationDuration = const Duration(milliseconds: 300),
         this.dotSize = 8.0,
@@ -122,7 +122,7 @@ class CarouselState extends State<Carousel> {
   @override
   void dispose() {
     _controller.dispose();
-    _controller = null;
+//    _controller = null;
     timer?.cancel();
     timer = null;
     super.dispose();

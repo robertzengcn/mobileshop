@@ -4,6 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Blocs/authentication/authentication.dart';
+import 'package:amigatoy/Models/models.dart';
+import 'package:formz/formz.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
@@ -39,6 +41,22 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       } catch (error) {
         yield LoginFailure(error: error.toString());
       }
+    }else if(event is LoginUsernameChanged) {
+      yield _mapUsernameChangedToState(event, state);
+    } else if (event is LoginPasswordChanged) {
+      yield _mapPasswordChangedToState(event, state);
+    } else if (event is LoginSubmitted) {
+      yield* _mapLoginSubmittedToState(event, state);
     }
+  }
+  LoginState _mapUsernameChangedToState(
+      LoginUsernameChanged event,
+      LoginState state,
+      ) {
+    final username = Username.dirty(event.username);
+    return state.copyWith(
+      username: username,
+      status: Formz.validate([state.password, username]),
+    );
   }
 }

@@ -12,7 +12,7 @@ class FeaturedRepository{
   FeaturedRepository({@required this.productApiClient})
       : assert(productApiClient != null);
 
-  Future<List> loadFeaturedlist() async {
+  Future<List<Product>> loadFeaturedlist() async {
     Future<List<Product>> lst = productApiClient.getFeaturelist();
 
     return lst;
