@@ -5,7 +5,7 @@ import 'package:amigatoy/UI/LoginOrSignup/LoginAnimation.dart';
 import 'package:amigatoy/UI/LoginOrSignup/Signup.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
-
+import 'package:formz/formz.dart';
 class loginScreen extends StatefulWidget {
   @override
   _loginScreenState createState() => _loginScreenState();

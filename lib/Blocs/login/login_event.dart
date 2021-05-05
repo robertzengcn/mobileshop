@@ -2,6 +2,8 @@ part of 'login_bloc.dart';
 
 abstract class LoginEvent extends Equatable {
   const LoginEvent();
+  @override
+  List<Object> get props => [];
 }
 class LoginUsernameChanged extends LoginEvent {
   const LoginUsernameChanged(this.username);
@@ -27,4 +29,7 @@ class LoginButtonPressed extends LoginEvent {
   @override
   String toString() =>
       'LoginButtonPressed { username: $username, password: $password }';
+}
+class LoginSubmitted extends LoginEvent {
+  const LoginSubmitted();
 }

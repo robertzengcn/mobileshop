@@ -59,4 +59,33 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       status: Formz.validate([state.password, username]),
     );
   }
+
+  LoginState _mapPasswordChangedToState(
+      LoginPasswordChanged event,
+      LoginState state,
+      ) {
+    final password = Password.dirty(event.password);
+    return state.copyWith(
+      password: password,
+      status: Formz.validate([password, state.username]),
+    );
+  }
+
+  Stream<LoginState> _mapLoginSubmittedToState(
+      LoginSubmitted event,
+      LoginState state,
+      ) async* {
+    if (state.status.isValidated) {
+      yield state.copyWith(status: FormzStatus.submissionInProgress);
+      try {
+        await userRepository.authenticate(
+          username: state.username.value,
+          password: state.password.value,
+        );
+        yield state.copyWith(status: FormzStatus.submissionSuccess);
+      } on Exception catch (_) {
+        yield state.copyWith(status: FormzStatus.submissionFailure);
+      }
+    }
+  }
 }
