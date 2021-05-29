@@ -64,23 +64,23 @@ class Carousel extends StatefulWidget {
   final Duration autoplayDuration;
 
   Carousel(
-      {@required this.images,
+      {required this.images,
         this.animationCurve = Curves.ease,
         this.animationDuration = const Duration(milliseconds: 300),
         this.dotSize = 8.0,
         this.dotSpacing = 25.0,
         this.dotIncreaseSize = 2.0,
         this.dotColor = Colors.white,
-        this.dotBgColor,
+        required this.dotBgColor,
         this.showIndicator = true,
         this.indicatorBgPadding = 20.0,
         this.boxFit = BoxFit.cover,
         this.borderRadius = false,
-        this.radius,
+        required this.radius,
         this.moveIndicatorFromBottom = 0.0,
         this.noRadiusForIndicator = false,
         this.overlayShadow = false,
-        this.overlayShadowColors,
+        required this.overlayShadowColors,
         this.overlayShadowSize = 0.5,
         this.autoplay = true,
         this.autoplayDuration = const Duration(seconds: 3)})
@@ -98,12 +98,13 @@ class Carousel extends StatefulWidget {
 
 class CarouselState extends State<Carousel> {
   PageController _controller = new PageController();
-  Timer timer;
+  Timer? timer;
   @override
   void initState() {
     super.initState();
 
     if (widget.autoplay) {
+
       timer = new Timer.periodic(widget.autoplayDuration, (_) {
         if (_controller.page == widget.images.length - 1) {
           _controller.animateToPage(
@@ -153,14 +154,11 @@ class CarouselState extends State<Carousel> {
               end: Alignment.center,
               stops: [0.0, widget.overlayShadowSize],
               colors: [
-                widget.overlayShadowColors != null
-                    ? widget.overlayShadowColors
+                widget.overlayShadowColors
                     .withOpacity(1.0)
-                    : Colors.grey[800].withOpacity(1.0),
-                widget.overlayShadowColors != null
-                    ? widget.overlayShadowColors
+                    ,
+                widget.overlayShadowColors
                     .withOpacity(0.0)
-                    : Colors.grey[800].withOpacity(0.0)
               ],
             ),
           ),
@@ -187,9 +185,7 @@ class CarouselState extends State<Carousel> {
           right: 0.0,
           child: new Container(
             decoration: new BoxDecoration(
-              color: widget.dotBgColor == null
-                  ? Colors.grey[800].withOpacity(0.5)
-                  : widget.dotBgColor,
+              color:widget.dotBgColor,
               borderRadius: widget.borderRadius
                   ? (widget.noRadiusForIndicator
                   ? null
@@ -231,13 +227,13 @@ class CarouselState extends State<Carousel> {
 /// An indicator showing the currently selected page of a PageController
 class DotsIndicator extends AnimatedWidget {
   DotsIndicator(
-      {this.controller,
-        this.itemCount,
-        this.onPageSelected,
-        this.color,
-        this.dotSize,
-        this.dotIncreaseSize,
-        this.dotSpacing})
+      {required this.controller,
+        required  this.itemCount,
+        required this.onPageSelected,
+        required this.color,
+        required this.dotSize,
+        required this.dotIncreaseSize,
+        required this.dotSpacing})
       : super(listenable: controller);
 
   // The PageController that this DotsIndicator is representing.

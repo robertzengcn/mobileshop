@@ -27,13 +27,13 @@ class ExpansionTileCustomRatting extends StatefulWidget {
   /// the tile to reveal or hide the [children]. The [initiallyExpanded] property must
   /// be non-null.
   const ExpansionTileCustomRatting({
-    Key key,
-    this.leading,
-    @required this.title,
-    this.backgroundColor,
-    this.onExpansionChanged,
+    required Key key,
+    required this.leading,
+    required this.title,
+    required this.backgroundColor,
+    required this.onExpansionChanged,
     this.children = const <Widget>[],
-    this.trailing,
+    required this.trailing,
     this.initiallyExpanded = false,
   }) : assert(initiallyExpanded != null),
         super(key: key);
@@ -83,13 +83,13 @@ class _ExpansionTileCustomRattingState extends State<ExpansionTileCustomRatting>
   final ColorTween _iconColorTween = ColorTween();
   final ColorTween _backgroundColorTween = ColorTween();
 
-  AnimationController _controller;
-  Animation<double> _iconTurns;
-  Animation<double> _heightFactor;
-  Animation<Color> _borderColor;
-  Animation<Color> _headerColor;
-  Animation<Color> _iconColor;
-  Animation<Color> _backgroundColor;
+  late AnimationController _controller;
+  late Animation<double> _iconTurns;
+  late Animation<double> _heightFactor;
+  late Animation<Color> _borderColor;
+  late Animation<Color> _headerColor;
+  late Animation<Color> _iconColor;
+  late Animation<Color> _backgroundColor;
 
   bool _isExpanded = false;
   bool _gradientExpanded = true;

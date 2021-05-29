@@ -23,9 +23,10 @@ class Carouselsloaded extends CarouselsState {
   final List<Carousel> lstCarousel;
 
 
-  const Carouselsloaded({@required this.lstCarousel}) : assert(lstCarousel != null);
+  const Carouselsloaded({required this.lstCarousel}) : assert(lstCarousel != null);
 
   @override
+
   List<Object> get props => [lstCarousel];
 }
 

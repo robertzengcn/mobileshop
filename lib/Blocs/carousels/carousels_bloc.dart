@@ -9,7 +9,7 @@ import 'package:amigatoy/Models/models.dart';
 class CarouselsBloc extends Bloc<CarouselsEvent, CarouselsState> {
   final CarouselRepository _carouselRepository;
 
-  CarouselsBloc({@required CarouselRepository carouselsRepository})
+  CarouselsBloc({required CarouselRepository carouselsRepository})
       : assert(carouselsRepository != null),
         _carouselRepository = carouselsRepository;
   @override

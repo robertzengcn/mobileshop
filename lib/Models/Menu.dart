@@ -9,11 +9,11 @@ class Menu extends Equatable {
   final String image;
 
   const Menu({
-    this.id,
-    this.title,
-    this.value,
-    this.desc,
-    this.image,
+    required this.id,
+    required this.title,
+    required this.value,
+    required this.desc,
+    required this.image,
   });
   @override
   List<Object> get props => [

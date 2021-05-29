@@ -11,13 +11,13 @@ class Product extends Equatable {
   final double products_weight;
 
   const Product({
-    this.products_id,
-    this.products_quantity,
-    this.products_name,
-    this.products_model,
-    this.products_image,
-    this.products_price,
-    this.products_weight
+    required this.products_id,
+    required this.products_quantity,
+    required this.products_name,
+    required this.products_model,
+    required this.products_image,
+    required this.products_price,
+    required this.products_weight
   });
   @override
   List<Object> get props => [

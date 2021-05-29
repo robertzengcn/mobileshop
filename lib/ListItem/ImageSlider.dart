@@ -3,7 +3,9 @@ class ImageSlider {
   String url;
 
 
-  ImageSlider({this.url});
+  ImageSlider({
+    required this.id,
+    required this.url});
 
   ImageSlider.fromMap(Map snapshot,String id) :
         id = id ?? '',

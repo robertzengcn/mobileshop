@@ -6,11 +6,11 @@ class Brand {
   final items item;
 
   const Brand({
-    this.img,
-    this.id,
-    this.name,
-    this.desc,
-    this.item,
+    required this.img,
+    required this.id,
+    required this.name,
+    required this.desc,
+    required this.item,
   });
 }
 
@@ -23,12 +23,12 @@ class items {
   final String itemImg;
 
   const items(
-      {this.itemName,
-        this.itemPrice,
-        this.itemRatting,
-        this.itemSale,
-        this.itemId,
-        this.itemImg});
+      {required this.itemName,
+        required this.itemPrice,
+        required this.itemRatting,
+        required this.itemSale,
+        required this.itemId,
+        required this.itemImg});
 }
 
 List<Brand> brandData = [

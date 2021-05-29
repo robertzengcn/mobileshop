@@ -24,7 +24,7 @@ class Productsloaded extends ProductsState {
   final List<Product> lstProduct;
 
 
-  const Productsloaded({@required this.lstProduct}) : assert(lstProduct != null);
+  const Productsloaded({required this.lstProduct}) : assert(lstProduct != null);
 
   @override
   List<Object> get props => [lstProduct];

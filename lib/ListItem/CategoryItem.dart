@@ -2,11 +2,11 @@ class categoryItem{
   final String image, title, Salary, Rating, sale;
 
   categoryItem({
-    this.image,
-    this.title,
-    this.Salary,
-    this.Rating,
-    this.sale
+    required this.image,
+    required this.title,
+    required this.Salary,
+    required this.Rating,
+    required this.sale
   });
 }
 

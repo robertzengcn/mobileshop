@@ -21,7 +21,7 @@ class FetchMenus extends MenusEvent {
 class FetchMenutype extends MenusEvent {
   final String type;
 
-  const FetchMenutype({@required this.type}) : assert(type != null);
+  const FetchMenutype({required this.type}) : assert(type != null);
 
   @override
   List<Object> get props => [type];

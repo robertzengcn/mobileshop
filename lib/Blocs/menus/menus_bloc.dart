@@ -10,7 +10,7 @@ class MenusBloc extends Bloc<MenusEvent, MenusState> {
   final MenuRepository _menuRepository;
 //  StreamSubscription _carouselSubscription;
 
-  MenusBloc({@required MenuRepository menuRepository})
+  MenusBloc({required MenuRepository menuRepository})
       : assert(menuRepository != null),
         _menuRepository = menuRepository;
   @override

@@ -24,7 +24,7 @@ class Menusloaded extends MenusState {
   final List<Menu> lstMenu;
 
 
-  const Menusloaded({@required this.lstMenu}) : assert(lstMenu != null);
+  const Menusloaded({required this.lstMenu}) : assert(lstMenu != null);
 
   @override
   List<Object> get props => [lstMenu];

@@ -8,7 +8,7 @@ import 'package:amigatoy/Repository/carouselsApiClient.dart';
 class CarouselRepository{
   final CarouselsApiClient carouselApiClient;
 
-  CarouselRepository({@required this.carouselApiClient})
+  CarouselRepository({required this.carouselApiClient})
       : assert(carouselApiClient != null);
   ///获取图片列表
   Future<List<Carousel>> loadPicbytype(String type) async {

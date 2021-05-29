@@ -24,7 +24,7 @@ class Featuredloaded extends FeaturedState {
   final List<Product> lstFeatureds;
 
 
-  const Featuredloaded({@required this.lstFeatureds}) : assert(lstFeatureds != null);
+  const Featuredloaded({required this.lstFeatureds}) : assert(lstFeatureds != null);
 
   @override
   List<Object> get props => [lstFeatureds];

@@ -21,7 +21,7 @@ class FetchFeatureds extends FeaturedEvent {
 class FetchFeaturedtype extends FeaturedEvent {
   final String type;
 
-  const FetchFeaturedtype({@required this.type}) : assert(type != null);
+  const FetchFeaturedtype({required this.type}) : assert(type != null);
 
   @override
   List<Object> get props => [type];

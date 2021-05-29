@@ -8,10 +8,10 @@ class Carousel extends Equatable {
   final String type;
 
   const Carousel({
-    this.id,
-    this.title,
-    this.url,
-    this.type
+    required this.id,
+    required this.title,
+    required this.url,
+    required this.type
   });
   @override
   List<Object> get props => [

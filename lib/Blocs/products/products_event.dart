@@ -21,7 +21,7 @@ class FetchProducts extends ProductsEvent {
 class FetchProducttype extends ProductsEvent {
   final String type;
 
-  const FetchProducttype({@required this.type}) : assert(type != null);
+  const FetchProducttype({required this.type}) : assert(type != null);
 
   @override
   List<Object> get props => [type];

@@ -10,7 +10,15 @@ class Product {
 
 
 
-  Product({this.id, this.price, this.title,this.img,this.rattingValue,this.itemSale,this.description});
+  Product({required this.id,
+    required this.price,
+    required this.title,
+    required this.img,
+    required this.rattingValue,
+    required this.itemSale,
+    required this.description,
+    required this.catalogueId
+  });
 
   Product.fromMap(Map snapshot,String id) :
         id = snapshot['id'] ?? '',

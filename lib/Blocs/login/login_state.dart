@@ -11,9 +11,9 @@ class LoginState extends Equatable {
   final Username username;
   final Password password;
   LoginState copyWith({
-    FormzStatus status,
-    Username username,
-    Password password,
+    FormzStatus? status,
+    Username? username,
+    Password? password,
   }) {
     return LoginState(
       status: status ?? this.status,
@@ -34,7 +34,7 @@ class LoginLoading extends LoginState {}
 class LoginFailure extends LoginState {
   final String error;
 
-  const LoginFailure({@required this.error});
+  const LoginFailure({required this.error});
 
   @override
   List<Object> get props => [error];

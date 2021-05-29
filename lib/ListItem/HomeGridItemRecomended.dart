@@ -10,13 +10,13 @@ String itemSale;
 String description;
 
   GridItem(
-      {this.id,
-        this.img,
-        this.title,
-        this.price,
-        this.rattingValue,
-        this.itemSale,
-        this.description});
+      {required this.id,
+        required this.img,
+        required this.title,
+        required this.price,
+        required this.rattingValue,
+        required this.itemSale,
+        required this.description});
 
 
 

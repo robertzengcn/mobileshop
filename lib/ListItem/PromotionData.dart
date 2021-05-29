@@ -2,11 +2,11 @@ class promotionData {
   String image, title, salary, rating, sale;
 
   promotionData({
-    this.image,
-    this.title,
-    this.salary,
-    this.rating,
-    this.sale
+    required this.image,
+    required this.title,
+    required this.salary,
+    required this.rating,
+    required this.sale
 });
 
 }

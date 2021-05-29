@@ -10,7 +10,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   final ProductRepository _productRepository;
 //  StreamSubscription _carouselSubscription;
 
-  ProductsBloc({@required ProductRepository productRepository})
+  ProductsBloc({required ProductRepository productRepository})
       : assert(productRepository != null),
         _productRepository = productRepository;
   @override

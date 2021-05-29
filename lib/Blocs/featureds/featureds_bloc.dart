@@ -10,7 +10,7 @@ class FeaturedsBloc extends Bloc<FeaturedEvent, FeaturedState> {
   final FeaturedRepository _featuredRepository;
 //  StreamSubscription _carouselSubscription;
 
-  FeaturedsBloc({@required FeaturedRepository featuredRepository})
+  FeaturedsBloc({required FeaturedRepository featuredRepository})
       : assert(featuredRepository != null),
         _featuredRepository = featuredRepository;
   @override

@@ -14,19 +14,19 @@ class SaleItem {
   final String description;
 
   const SaleItem(
-      {this.id,
-      this.image,
-      this.title,
-      this.ratingStart,
-      this.normalprice,
-      this.discountprice,
-      this.ratingvalue,
-      this.place,
-      this.stock,
-      this.colorLine,
-      this.widthLine,
-      this.detailProduct,
-      this.description});
+      {required this.id,
+      required this.image,
+      required this.title,
+        required this.ratingStart,
+        required this.normalprice,
+        required this.discountprice,
+        required this.ratingvalue,
+        required this.place,
+        required this.stock,
+        required this.colorLine,
+        required this.widthLine,
+        required this.detailProduct,
+        required this.description});
 }
 
 List<SaleItem> flashData = [

@@ -12,7 +12,7 @@ abstract class CarouselsEvent extends Equatable {
 class FetchCarousels extends CarouselsEvent {
   final String type;
 
-  const FetchCarousels({@required this.type}) : assert(type != null);
+  const FetchCarousels({required this.type}) : assert(type != null);
 
   @override
   List<Object> get props => [type];
