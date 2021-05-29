@@ -5,7 +5,7 @@ import 'package:amigatoy/Repository/menuApiClient.dart';
 
 class MenuRepository{
   final MenuApiClient menuApiClient;
-  MenuRepository({@required this.menuApiClient})
+  MenuRepository({required this.menuApiClient})
       : assert(menuApiClient != null);
 //  Future<List> loadPicbytype(String type) async {
 ////    var apiResponse = await Carousel().getAll();

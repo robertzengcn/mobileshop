@@ -10,7 +10,7 @@ import 'dart:developer' as developer;
 class ProductApiClient{
 
   final http.Client httpClient;
-  ProductApiClient({@required this.httpClient}) : assert(httpClient != null);
+  ProductApiClient({required this.httpClient}) : assert(httpClient != null);
 
   @override
   Future<List<Product>> getProductlist() async{

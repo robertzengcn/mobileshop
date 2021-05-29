@@ -329,7 +329,7 @@ class dataTransaction extends StatelessWidget {
   @override
   String date, item, price;
 
-  dataTransaction({this.date, this.item, this.price});
+  dataTransaction({required this.date, required this.item, required this.price});
 
   Widget build(BuildContext context) {
     return Column(

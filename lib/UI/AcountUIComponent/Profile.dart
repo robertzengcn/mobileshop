@@ -235,7 +235,7 @@ class category extends StatelessWidget {
   GestureTapCallback tap;
   double padding;
 
-  category({this.txt, this.image, this.tap, this.padding});
+  category({required this.txt, required this.image, required this.tap, required this.padding});
 
   Widget build(BuildContext context) {
     return InkWell(

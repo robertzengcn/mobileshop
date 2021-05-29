@@ -33,9 +33,9 @@ class _categoryDetailState extends State<categoryDetail> {
   /// Get image data dummy from firebase server
   ///
 var imageNetwork = NetworkImage("https://img.alicdn.com/tfscom/i3/2996558363/TB2a.PkdcIrBKNjSZK9XXagoVXa_!!2996558363.jpg_360x360xzq90.jpg_.webp");
-  List<Category> categorys;
-Map<int, Category> categorymap;
-List<Product> products;
+  late List<Category> categorys;
+  late Map<int, Category> categorymap;
+  late List<Product> products;
 
 
 
@@ -44,7 +44,7 @@ List<Product> products;
   ///
   bool loadImage = true;
 
-  List<ImageSlider> imagesliders;
+  late List<ImageSlider> imagesliders;
   /// custom text variable is make it easy a custom textStyle black font
   static var _customTextStyleBlack = TextStyle(
       fontFamily: "Gotik",
@@ -119,95 +119,96 @@ List<Product> products;
 
               return NetworkImage(i.url);
 
-            })?.toList()??[]
+            })?.toList()??[],
+            radius:Radius.circular(8.0)
         ),
       ),
     );
 
-    List<Widget> ListMyWidgets() {
-      List<Widget> list = new List();
-      if(categorys!=null){
-
-        for(var i = 0; i < categorymap.length; i++){
-          if(i==0){
-            list.add(Padding(padding: EdgeInsets.only(left: 20.0)));
-          }
-          list.add(
-              SubCategory(
-                title: categorymap[i].title,
-                id:categorymap[i].id,
-              )
-          );
-          list.add(Padding(padding: EdgeInsets.only(left: 15.0)));
-
-        }
-      }
-    return list;
-    }
+//    List<Widget> ListMyWidgets() {
+//      List<Widget> list = [];
+//      if(categorys!=null&&categorymap!=null){
+//
+//        for(var i = 0; i < categorymap.length; i++){
+//          if(i==0){
+//            list.add(Padding(padding: EdgeInsets.only(left: 20.0)));
+//          }
+//          list.add(
+//              SubCategory(
+//                title: categorymap[i].title,
+//                id:categorymap[i].id,
+//              )
+//          );
+//          list.add(Padding(padding: EdgeInsets.only(left: 15.0)));
+//
+//        }
+//      }
+//    return list;
+//    }
 
     /// Variable Category (Sub Category)
-    var _subCategory = Container(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0, left: 20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "Sub Category",
-                  style: _customTextStyleBlack,
-                ),
-//                InkWell(
-//                  onTap: () {
-//                    Navigator.of(context).push(PageRouteBuilder(
-//                        pageBuilder: (_, __, ___) => new promoDetail()));
-//                  },
-//                  child: Text("See More",
-//                      style:
-//                      _customTextStyleBlue.copyWith(color: Colors.black26)),
+//    var _subCategory = Container(
+//      child: Column(
+//        children: <Widget>[
+//          Padding(
+//            padding: const EdgeInsets.only(right: 20.0, left: 20.0),
+//            child: Row(
+//              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//              children: <Widget>[
+//                Text(
+//                  "Sub Category",
+//                  style: _customTextStyleBlack,
 //                ),
-              ],
-            ),
-          ),
-          SingleChildScrollView(
-            child: Container(
-              color: Colors.white,
-              margin: EdgeInsets.only(right: 10.0, top: 5.0),
-              height: 42.0,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: ListMyWidgets()
-              //  children:
-//                  <Widget>[
-//                  Padding(padding: EdgeInsets.only(left: 20.0)),
-//                  KeywordItem(
-//                    title: "Polo Shirt",
-//                    title2: "Shirt",
-//                  ),
-//                  Padding(padding: EdgeInsets.only(left: 15.0)),
-//                  KeywordItem(
-//                    title: "Suit",
-//                    title2: "Jacket",
-//                  ),
-//                  Padding(padding: EdgeInsets.only(left: 15.0)),
-//                  KeywordItem(
-//                    title: "Jeans",
-//                    title2: "Bag",
-//                  ),
-//                  Padding(padding: EdgeInsets.only(left: 15.0)),
-//                  KeywordItem(
-//                    title: "Watch",
-//                    title2: "Shoes",
-//                  ),
-//                  Padding(padding: EdgeInsets.only(right: 20.0)),
-//                ],
-              ),
-            ),
-          )
-        ],
-      ),
-    );
+////                InkWell(
+////                  onTap: () {
+////                    Navigator.of(context).push(PageRouteBuilder(
+////                        pageBuilder: (_, __, ___) => new promoDetail()));
+////                  },
+////                  child: Text("See More",
+////                      style:
+////                      _customTextStyleBlue.copyWith(color: Colors.black26)),
+////                ),
+//              ],
+//            ),
+//          ),
+//          SingleChildScrollView(
+//            child: Container(
+//              color: Colors.white,
+//              margin: EdgeInsets.only(right: 10.0, top: 5.0),
+//              height: 42.0,
+//              child: ListView(
+//                scrollDirection: Axis.horizontal,
+//                children: ListMyWidgets()
+//              //  children:
+////                  <Widget>[
+////                  Padding(padding: EdgeInsets.only(left: 20.0)),
+////                  KeywordItem(
+////                    title: "Polo Shirt",
+////                    title2: "Shirt",
+////                  ),
+////                  Padding(padding: EdgeInsets.only(left: 15.0)),
+////                  KeywordItem(
+////                    title: "Suit",
+////                    title2: "Jacket",
+////                  ),
+////                  Padding(padding: EdgeInsets.only(left: 15.0)),
+////                  KeywordItem(
+////                    title: "Jeans",
+////                    title2: "Bag",
+////                  ),
+////                  Padding(padding: EdgeInsets.only(left: 15.0)),
+////                  KeywordItem(
+////                    title: "Watch",
+////                    title2: "Shoes",
+////                  ),
+////                  Padding(padding: EdgeInsets.only(right: 20.0)),
+////                ],
+//              ),
+//            ),
+//          )
+//        ],
+//      ),
+//    );
 
     /// Variable item Discount with Card
 //    var _itemDiscount = Container(

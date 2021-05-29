@@ -10,7 +10,7 @@ class cart extends StatefulWidget {
 
 class _cartState extends State<cart> {
 
-  final  List<cartItem> items = new List();
+  final  List<cartItem> items = [];
 
   @override
   void initState() {

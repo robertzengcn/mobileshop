@@ -6,7 +6,7 @@ class SubCategory extends StatelessWidget {
   String title;
   int id;
 
-  SubCategory({this.title,this.id});
+  SubCategory({required this.title,required this.id});
 
   Widget build(BuildContext context) {
     return Column(

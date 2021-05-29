@@ -9,7 +9,7 @@ import 'package:amigatoy/Repository/productApiClient.dart';
 
 class FeaturedRepository{
   final ProductApiClient productApiClient;
-  FeaturedRepository({@required this.productApiClient})
+  FeaturedRepository({required this.productApiClient})
       : assert(productApiClient != null);
 
   Future<List<Product>> loadFeaturedlist() async {

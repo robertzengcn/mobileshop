@@ -286,7 +286,7 @@ class _brandDetailState extends State<brandDetail> {
                                   } else {
                                     (notif = "Notifications");
                                   }});
-                                _key.currentState.showSnackBar(snackBar);
+                                _key.currentState?.showSnackBar(snackBar);
                               },
                             )
                           ],
@@ -479,7 +479,7 @@ class buttonCustom extends StatelessWidget {
   Color color;
   GestureTapCallback ontap;
 
-  buttonCustom({this.txt, this.color, this.ontap});
+  buttonCustom({required this.txt, required this.color, required this.ontap});
 
   @override
   Widget build(BuildContext context) {

@@ -9,7 +9,7 @@ import 'package:amigatoy/constants/application_constants.dart';
 class MenuApiClient{
 
   final http.Client httpClient;
-  MenuApiClient({@required this.httpClient}) : assert(httpClient != null);
+  MenuApiClient({required this.httpClient}) : assert(httpClient != null);
 
   @override
   Future<List<Menu>> getMenulist() async{

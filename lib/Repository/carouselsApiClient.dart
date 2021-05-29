@@ -10,7 +10,7 @@ import 'dart:developer' as developer;
 class CarouselsApiClient{
 
   final http.Client httpClient;
-  CarouselsApiClient({@required this.httpClient}) : assert(httpClient != null);
+  CarouselsApiClient({required this.httpClient}) : assert(httpClient != null);
 
   @override
   Future<List<Carousel>> getCarousellist() async{
