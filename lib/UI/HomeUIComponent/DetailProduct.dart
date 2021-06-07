@@ -27,7 +27,7 @@ class _detailProdukState extends State<detailProduk> {
   _detailProdukState(this.gridItem);
 
   @override
-  static BuildContext ctx;
+//  static late BuildContext ctx;
   int valueItemChart = 0;
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
@@ -253,6 +253,7 @@ class _detailProdukState extends State<detailProduk> {
                           dotBgColor: Colors.transparent,
                           autoplay: false,
                           boxFit: BoxFit.cover,
+                          overlayShadowColors:Colors.grey[800],
                           images: [
                             NetworkImage(gridItem.products_image),
                             NetworkImage(gridItem.products_image),
