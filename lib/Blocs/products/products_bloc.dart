@@ -7,21 +7,21 @@ import 'package:amigatoy/Models/models.dart';
 
 
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
-  final ProductRepository _productRepository;
+  final ProductRepository productRepository;
 //  StreamSubscription _carouselSubscription;
 
-  ProductsBloc({required ProductRepository productRepository})
-      : assert(productRepository != null),
-        _productRepository = productRepository;
-  @override
-  ProductsState get initialState => ProductsEmpty();
+  ProductsBloc({required this.productRepository}):super(ProductsEmpty());
+//      : assert(productRepository != null),
+//        _productRepository = productRepository;
+//  @override
+//  ProductsState get initialState => ProductsEmpty();
 
   @override
   Stream<ProductsState> mapEventToState(ProductsEvent event) async* {
     if (event is FetchProducttype) {
       yield ProductsLoading();
       try {
-        List<Product> result = await _productRepository.loadProductlist();
+        List<Product> result = await productRepository.loadProductlist();
         print(result);
         yield Productsloaded(lstProduct:result);
 

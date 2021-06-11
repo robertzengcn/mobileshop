@@ -8,9 +8,10 @@ import 'package:amigatoy/Repository/productApiClient.dart';
 ///get featured products
 
 class FeaturedRepository{
-  final ProductApiClient productApiClient;
-  FeaturedRepository({required this.productApiClient})
-      : assert(productApiClient != null);
+//  final ProductApiClient productApiClient;
+  ProductApiClient productApiClient=ProductApiClient();
+  FeaturedRepository();
+//      : assert(productApiClient != null);
 
   Future<List<Product>> loadFeaturedlist() async {
     Future<List<Product>> lst = productApiClient.getFeaturelist();

@@ -52,7 +52,7 @@ class Carousel extends StatefulWidget {
   final bool overlayShadow;
 
   //Choose the color of the overlay Shadow color. Default Colors.grey[800]
-  final Color? overlayShadowColors;
+  final Color overlayShadowColors;
 
   //Choose the size of the Overlay Shadow, from 0.0 to 1.0. Default 0.5
   final double overlayShadowSize;
@@ -80,7 +80,7 @@ class Carousel extends StatefulWidget {
         this.moveIndicatorFromBottom = 0.0,
         this.noRadiusForIndicator = false,
         this.overlayShadow = false,
-        this.overlayShadowColors,
+        required this.overlayShadowColors,
         this.overlayShadowSize = 0.5,
         this.autoplay = true,
         this.autoplayDuration = const Duration(seconds: 3)})

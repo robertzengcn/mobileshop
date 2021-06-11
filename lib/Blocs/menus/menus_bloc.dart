@@ -7,21 +7,23 @@ import 'package:amigatoy/Models/models.dart';
 
 
 class MenusBloc extends Bloc<MenusEvent, MenusState> {
-  final MenuRepository _menuRepository;
+  final MenuRepository menuRepository;
 //  StreamSubscription _carouselSubscription;
 
-  MenusBloc({required MenuRepository menuRepository})
-      : assert(menuRepository != null),
-        _menuRepository = menuRepository;
+  MenusBloc({
+    required  this.menuRepository
+  }):super(MenusEmpty());
+//      : assert(menuRepository != null),
+//        _menuRepository = menuRepository;
   @override
-  MenusState get initialState => MenusEmpty();
+//  MenusState get initialState => MenusEmpty();
 
   @override
   Stream<MenusState> mapEventToState(MenusEvent event) async* {
     if (event is FetchMenutype) {
       yield MenusLoading();
       try {
-        List<Menu> result = await _menuRepository.fetchMenutype(event.type);
+        List<Menu> result = await menuRepository.fetchMenutype(event.type);
 //        print(result);
         yield Menusloaded(lstMenu:result);
 

@@ -4,19 +4,22 @@ import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/constants/application_constants.dart';
-
+import 'dart:io';
 import 'dart:developer' as developer;
 
 class CarouselsApiClient{
 
-  final http.Client httpClient;
-  CarouselsApiClient({required this.httpClient}) : assert(httpClient != null);
-
+//  final http.Client httpClient;
+//  CarouselsApiClient();
+//  CarouselsApiClient() ;
+//  this.httpClient;
+//  http.Client();
+//  HttpClient client = new HttpClient();
   @override
   Future<List<Carousel>> getCarousellist() async{
-
+    var url = Uri.parse('$appServerUrl/Carouse');
     http.Response response = await http.get(
-        '$appServerUrl/Carouse',
+        url,
       headers: {
         'Application-Id': '$appId',
       }
@@ -44,8 +47,9 @@ class CarouselsApiClient{
   ///get carousel by type
   @override
   Future<List<Carousel>> getCarouselbytype(String type) async{
+    var url = Uri.parse('$appServerUrl/Carouse/?type='+type);
     http.Response response = await http.get(
-        '$appServerUrl/Carouse/?type='+type,
+      url,
           headers: {
         'Application-Id': '$appId',
       },
