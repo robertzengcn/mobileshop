@@ -17,8 +17,8 @@ class _flashSaleDetailState extends State<flashSaleDetail> {
   final SaleItem itemSale;
   _flashSaleDetailState(this.itemSale);
 
-  @override
-  static BuildContext ctx;
+//  @override
+//  static BuildContext ctx;
   int valueItemChart = 0;
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
@@ -229,6 +229,7 @@ class _flashSaleDetailState extends State<flashSaleDetail> {
                               AssetImage(itemSale.image),
                               AssetImage(itemSale.image),
                             ],
+                              radius:Radius.circular(8.0)
                           ),
                         ),
                       )),
@@ -475,7 +476,8 @@ class _flashSaleDetailState extends State<flashSaleDetail> {
               setState(() {
                 valueItemChart++;
               });
-              _key.currentState.showSnackBar(snackbar);
+              ScaffoldMessenger.of(context).showSnackBar(snackbar);
+//              _key.currentState.showSnackBar(snackbar);
             },
 
             /// Shopping Cart in bottom layout
@@ -554,11 +556,11 @@ class _flashSaleDetailState extends State<flashSaleDetail> {
 /// class Item for card in "top rated products"
 class FavoriteItem extends StatelessWidget {
   String image, Rating, Salary, title, sale;
-  FavoriteItem({this.image, this.Rating, this.Salary, this.title, this.sale});
+  FavoriteItem({required this.image,required this.Rating, required this.Salary, required this.title, required this.sale});
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData mediaQueryData = MediaQuery.of(context);
+//    MediaQueryData mediaQueryData = MediaQuery.of(context);
     return Padding(
       padding: const EdgeInsets.only(left: 5.0),
       child: Container(

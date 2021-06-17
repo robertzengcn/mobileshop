@@ -1,6 +1,6 @@
 import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:amigatoy/ListItem/HomeGridItemRecomended.dart';
+//import 'package:amigatoy/ListItem/HomeGridItemRecomended.dart';
 import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
 import 'package:amigatoy/UI/HomeUIComponent/ChatItem.dart';
 import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
@@ -26,7 +26,7 @@ class _detailProdukState extends State<detailProduk> {
   final Product gridItem;
   _detailProdukState(this.gridItem);
 
-  @override
+//  @override
 //  static late BuildContext ctx;
   int valueItemChart = 0;
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
@@ -252,8 +252,9 @@ class _detailProdukState extends State<detailProduk> {
                           dotIncreaseSize: 1.7,
                           dotBgColor: Colors.transparent,
                           autoplay: false,
+                          radius:Radius.circular(8.0),
                           boxFit: BoxFit.cover,
-                          overlayShadowColors:Colors.grey[800],
+                          overlayShadowColors:(Colors.grey[800]!=null)?Colors.grey[800]:Colors.grey[800],
                           images: [
                             NetworkImage(gridItem.products_image),
                             NetworkImage(gridItem.products_image),
@@ -591,7 +592,8 @@ class _detailProdukState extends State<detailProduk> {
               setState(() {
                 valueItemChart++;
               });
-              _key.currentState.showSnackBar(snackbar);
+//              _key.currentState?.showSnackBar(snackbar);
+              ScaffoldMessenger.of(context).showSnackBar(snackbar);
             },
             child: Padding(
               padding: const EdgeInsets.only(bottom: 5.0),
@@ -666,7 +668,7 @@ class _detailProdukState extends State<detailProduk> {
   }
 
 
-  Widget _buildRating(String date, String details, Function changeRating,String image) {
+  Widget _buildRating(String date, String details, RatingChangeCallback changeRating,String image) {
     return ListTile(
       leading: Container(
         height: 45.0,
@@ -700,9 +702,9 @@ class _detailProdukState extends State<detailProduk> {
 
 /// RadioButton for item choose in size
 class RadioButtonCustom extends StatefulWidget {
-  String txt;
+   final String txt;
 
-  RadioButtonCustom({this.txt});
+  RadioButtonCustom({required this.txt});
 
   @override
   _RadioButtonCustomState createState() => _RadioButtonCustomState(this.txt);
@@ -755,7 +757,7 @@ class _RadioButtonCustomState extends State<RadioButtonCustom> {
 
 /// RadioButton for item choose in color
 class RadioButtonColor extends StatefulWidget {
-  Color clr;
+  final Color clr;
 
   RadioButtonColor(this.clr);
 
@@ -805,11 +807,11 @@ class _RadioButtonColorState extends State<RadioButtonColor> {
 class FavoriteItem extends StatelessWidget {
   String image, Rating, Salary, title, sale;
 
-  FavoriteItem({this.image, this.Rating, this.Salary, this.title, this.sale});
+  FavoriteItem({required this.image, required this.Rating, required this.Salary, required this.title, required this.sale});
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData mediaQueryData = MediaQuery.of(context);
+//    MediaQueryData mediaQueryData = MediaQuery.of(context);
     return Padding(
       padding: const EdgeInsets.only(left: 5.0),
       child: Container(

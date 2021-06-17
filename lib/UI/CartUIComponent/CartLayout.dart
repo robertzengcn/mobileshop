@@ -62,7 +62,8 @@ class _cartState extends State<cart> {
               /// Widget for list view slide delete
               ///
               return Slidable(
-                delegate: new SlidableDrawerDelegate(),
+                actionPane: SlidableDrawerActionPane(),
+//                delegate: new SlidableDrawerDelegate(),
                 actionExtentRatio: 0.25,
                 actions: <Widget>[
                   new IconSlideAction(

@@ -8,13 +8,14 @@ import 'package:amigatoy/constants/application_constants.dart';
 
 class MenuApiClient{
 
-  final http.Client httpClient;
-  MenuApiClient({required this.httpClient}) : assert(httpClient != null);
+//  final http.Client httpClient;
+  MenuApiClient() ;
 
   @override
   Future<List<Menu>> getMenulist() async{
+    var url = Uri.parse('$appServerUrl/MenuList');
     http.Response response = await http.get(
-        '$appServerUrl/MenuList',
+      url,
       headers: {
         'Application-Id': '$appId',
       },
@@ -37,8 +38,9 @@ class MenuApiClient{
   ///get menu by type
   @override
   Future<List<Menu>> getMenubytype(String type) async{
+    var url = Uri.parse('$appServerUrl/MenuList/?type='+type);
     http.Response response = await http.get(
-        '$appServerUrl/MenuList/?type='+type,
+       url,
       headers: {
         'Application-Id': '$appId',
       },

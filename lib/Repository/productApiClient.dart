@@ -9,13 +9,15 @@ import 'dart:developer' as developer;
 
 class ProductApiClient{
 
-  final http.Client httpClient;
-  ProductApiClient({required this.httpClient}) : assert(httpClient != null);
+//  final http.Client httpClient;
+
+  ProductApiClient();
 
   @override
   Future<List<Product>> getProductlist() async{
+    var url = Uri.parse('$appServerUrl/ProductList');
     http.Response response = await http.get(
-        '$appServerUrl/ProductList',
+      url,
       headers: {
         'Application-Id': '$appId',
       },
@@ -40,8 +42,9 @@ class ProductApiClient{
 
   @override
   Future<List<Product>> getFeaturelist() async{
+    var url = Uri.parse('$appServerUrl/Featurelist');
     http.Response response = await http.get(
-        '$appServerUrl/Featurelist',
+      url,
       headers: {
         'Application-Id': '$appId',
       },

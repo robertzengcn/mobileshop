@@ -3,7 +3,7 @@ import 'package:amigatoy/Library/countdown/countdown.dart';
 import 'package:flutter/material.dart';
 import 'package:amigatoy/ListItem/FlashSaleItem.dart';
 import 'package:amigatoy/UI/HomeUIComponent/FlashSaleDetail.dart';
-import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
+//import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 
 class flashSale extends StatefulWidget {
   @override
@@ -26,9 +26,9 @@ class _flashSaleState extends State<flashSale> {
   @override
   var hourssub, minutesub, secondsub;
   /// CountDown for timer
-  CountDown hours, minutes, seconds;
-  int hourstime, minute, second = 0;
-  SaleItem itemSale;
+  late CountDown hours, minutes, seconds;
+  late int hourstime, minute, second = 0;
+  late SaleItem itemSale;
   ///
   /// SetState after imageNetwork loaded to change list card
   /// And
@@ -86,7 +86,7 @@ class _flashSaleState extends State<flashSale> {
 
   /// Component widget in flashSale layout
   Widget build(BuildContext context) {
-    MediaQueryData mediaQueryData = MediaQuery.of(context);
+//    MediaQueryData mediaQueryData = MediaQuery.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(

@@ -23,19 +23,19 @@ class Home extends StatefulWidget {
 /// Component all widget in home
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   /// Declare class GridItem from HomeGridItemReoomended.dart in folder ListItem
-  GridItem gridItem;
+  late GridItem gridItem;
 
   bool isStarted = false;
   var hourssub, minutesub, secondsub;
 
   /// CountDown for timer
-  CountDown hours, minutes, seconds;
-  int hourstime, minute, second = 0;
+  late CountDown hours, minutes, seconds;
+  late int hourstime, minute, second = 0;
 
-  List<Product> products;
-  List<ImageSlider> imagesliders;
-  List<Category> categorys;
-  Map<int, Category> categorymap;
+  late List<Product> products;
+  late List<ImageSlider> imagesliders;
+  late List<Category> categorys;
+  late Map<int, Category> categorymap;
 
   /// Set for StartStopPress CountDown
   onStartStopPress() {
@@ -755,15 +755,15 @@ class flashSaleItem extends StatelessWidget {
   final double widthLine;
 
   flashSaleItem(
-      {this.image,
-      this.title,
-      this.normalprice,
-      this.discountprice,
-      this.ratingvalue,
-      this.place,
-      this.stock,
-      this.colorLine,
-      this.widthLine});
+      {required this.image,
+        required this.title,
+        required this.normalprice,
+        required this.discountprice,
+        required this.ratingvalue,
+        required this.place,
+        required this.stock,
+        required this.colorLine,
+        required this.widthLine});
 
   @override
   Widget build(BuildContext context) {
@@ -930,9 +930,9 @@ class CategoryItemValue extends StatelessWidget {
   GestureTapCallback tap;
 
   CategoryItemValue({
-    this.image,
-    this.title,
-    this.tap,
+    required this.image,
+    required this.title,
+    required this.tap,
   });
 
   @override
@@ -974,18 +974,18 @@ class CategoryIconValue extends StatelessWidget {
   GestureTapCallback tap1, tap2, tap3, tap4;
 
   CategoryIconValue(
-      {this.icon1,
-      this.tap1,
-      this.icon2,
-      this.tap2,
-      this.icon3,
-      this.tap3,
-      this.icon4,
-      this.tap4,
-      this.title1,
-      this.title2,
-      this.title3,
-      this.title4});
+      {required this.icon1,
+        required this.tap1,
+        required this.icon2,
+        required this.tap2,
+        required this.icon3,
+        required this.tap3,
+        required this.icon4,
+        required this.tap4,
+        required this.title1,
+        required this.title2,
+        required this.title3,
+        required this.title4});
 
   @override
   Widget build(BuildContext context) {
