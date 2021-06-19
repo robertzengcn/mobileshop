@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating/flutter_rating.dart';
+//import 'package:flutter_rating/flutter_rating.dart';
 //import 'package:amigatoy/Library/Expanded/ExpandedDetailRatting.dart';
 //import 'package:amigatoy/Library/Expanded/ExpandedDetailReviews.dart';
 
@@ -56,12 +56,12 @@ class _ReviewsAllState extends State<ReviewsAll> {
                       Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            StarRating(
-                              size: 25.0,
-                              starCount: 5,
-                              rating: rating,
-                              color: Colors.yellow,
-                            ),
+//                            StarRating(
+//                              size: 25.0,
+//                              starCount: 5,
+//                              rating: rating,
+//                              color: Colors.yellow,
+//                            ),
                             SizedBox(width: 5.0),
                             Text('8 Reviews')
                           ]),
@@ -82,16 +82,16 @@ class _ReviewsAllState extends State<ReviewsAll> {
                   ),
                   title: Row(
                     children: <Widget>[
-                      StarRating(
-                        size: 20.0,
-                        rating: rating,
-                        starCount: starCount,
-                        color: Colors.yellow,
-                        onRatingChanged:   (rating) {
-                          setState(() {
-                            this.rating = rating;
-                          });
-                        },),
+//                      StarRating(
+//                        size: 20.0,
+//                        rating: rating,
+//                        starCount: starCount,
+//                        color: Colors.yellow,
+//                        onRatingChanged:   (rating) {
+//                          setState(() {
+//                            this.rating = rating;
+//                          });
+//                        },),
                       SizedBox(width: 8.0),
                       Text(
                         "01 Jan 2019",
@@ -353,7 +353,7 @@ class _ReviewsAllState extends State<ReviewsAll> {
       ),
     );
   }
-  Widget _buildRating(String date, String details, RatingChangeCallback changeRating,String image) {
+  Widget _buildRating(String date, String details, Function changeRating,String image) {
     return ListTile(
       leading: Container(
         height: 45.0,
@@ -365,12 +365,12 @@ class _ReviewsAllState extends State<ReviewsAll> {
       ),
       title: Row(
         children: <Widget>[
-          StarRating(
-              size: 20.0,
-              rating: rating,
-              starCount: starCount,
-              color: Colors.yellow,
-              onRatingChanged: changeRating),
+//          StarRating(
+//              size: 20.0,
+//              rating: rating,
+//              starCount: starCount,
+//              color: Colors.yellow,
+//              onRatingChanged: changeRating),
           SizedBox(width: 8.0),
           Text(
             date,

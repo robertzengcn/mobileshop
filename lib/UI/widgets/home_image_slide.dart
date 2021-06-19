@@ -35,10 +35,9 @@ class HomeImageSlidestate extends State<HomeImageSlide>{
                     overlayShadowColors: Colors.white.withOpacity(0.9),
                     overlayShadowSize: 0.9,
                     radius:Radius.circular(8.0),
-                    images: imagesliders?.map((i) {
+                    images: imagesliders.map((i) {
                       return NetworkImage(i.url);
-                    })?.toList() ??
-                        []),
+                    }).toList()),
               );
             }
             return Center(child: CircularProgressIndicator());

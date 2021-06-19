@@ -5,7 +5,7 @@ import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
 import 'package:amigatoy/UI/HomeUIComponent/ChatItem.dart';
 import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 
-import 'package:flutter_rating/flutter_rating.dart';
+//import 'package:flutter_rating/flutter_rating.dart';
 import 'package:amigatoy/UI/HomeUIComponent/ReviewLayout.dart';
 import 'package:amigatoy/Models/Product.dart';
 
@@ -521,12 +521,12 @@ class _detailProdukState extends State<detailProduk> {
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
-                                      StarRating(
-                                        size: 25.0,
-                                        starCount: 5,
-                                        rating: 4.0,
-                                        color: Colors.yellow,
-                                      ),
+//                                      StarRating(
+//                                        size: 25.0,
+//                                        starCount: 5,
+//                                        rating: 4.0,
+//                                        color: Colors.yellow,
+//                                      ),
                                       SizedBox(width: 5.0),
                                       Text('8 Reviews')
                                     ]),
@@ -668,7 +668,7 @@ class _detailProdukState extends State<detailProduk> {
   }
 
 
-  Widget _buildRating(String date, String details, RatingChangeCallback changeRating,String image) {
+  Widget _buildRating(String date, String details, Function changeRating,String image) {
     return ListTile(
       leading: Container(
         height: 45.0,
@@ -680,12 +680,12 @@ class _detailProdukState extends State<detailProduk> {
       ),
       title: Row(
         children: <Widget>[
-          StarRating(
-              size: 20.0,
-              rating: 3.5,
-              starCount: 5,
-              color: Colors.yellow,
-              onRatingChanged: changeRating),
+//          StarRating(
+//              size: 20.0,
+//              rating: 3.5,
+//              starCount: 5,
+//              color: Colors.yellow,
+//              onRatingChanged: changeRating),
           SizedBox(width: 8.0),
           Text(
             date,
