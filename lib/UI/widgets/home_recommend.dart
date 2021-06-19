@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 //import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/Models/models.dart';
-import 'package:amigatoy/UI/HomeUIComponent/productCard.dart';
-import 'dart:developer' as developer;
+//import 'package:amigatoy/UI/HomeUIComponent/productCard.dart';
+//import 'dart:developer' as developer;
 import 'package:amigatoy/UI/widgets/item_grid.dart';
 
 class HomeRecommend extends StatefulWidget {
@@ -42,7 +42,7 @@ class HomeRecommendstate extends State<HomeRecommend> {
   }
 
   List<Widget> getWidgets(List<Product> lstFeatureds) {
-    List<Widget> widgetlist = List();
+    List<Widget> widgetlist = [];
     int plength = lstFeatureds.length; //总数量
     if (plength == 0) {
       return widgetlist;

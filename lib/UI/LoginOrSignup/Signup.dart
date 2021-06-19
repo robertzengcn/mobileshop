@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:amigatoy/UI/BottomNavigationBar.dart';
+//import 'package:amigatoy/UI/BottomNavigationBar.dart';
 import 'package:amigatoy/UI/LoginOrSignup/Login.dart';
 import 'package:amigatoy/UI/LoginOrSignup/LoginAnimation.dart';
-import 'package:amigatoy/UI/LoginOrSignup/Signup.dart';
+//import 'package:amigatoy/UI/LoginOrSignup/Signup.dart';
 
 
 class Signup extends StatefulWidget {
@@ -14,9 +14,9 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> with TickerProviderStateMixin {
   //Animation Declaration
-  AnimationController sanimationController;
-  AnimationController animationControllerScreen;
-  Animation animationScreen;
+  late AnimationController sanimationController;
+  late AnimationController animationControllerScreen;
+  late Animation animationScreen;
   var tap = 0;
 
   /// Set AnimationController to initState
@@ -181,12 +181,12 @@ class _SignupState extends State<Signup> with TickerProviderStateMixin {
                                   tap = 1;
                                 });
                                 _PlayAnimation();
-                                return tap;
+//                                return tap;
                               },
                               child: buttonBlackBottom(),
                             )
                           : new LoginAnimation(
-                              animationController: sanimationController.view,
+                              animationController: sanimationController,
                             )
                     ],
                   ),
@@ -207,7 +207,7 @@ class textFromField extends StatelessWidget {
   IconData icon;
   TextInputType inputType;
 
-  textFromField({this.email, this.icon, this.inputType, this.password});
+  textFromField({required this.email, required this.icon, required this.inputType, required this.password});
 
   @override
   Widget build(BuildContext context) {

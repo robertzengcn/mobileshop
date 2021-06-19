@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:amigatoy/ListItem/Product.dart';
 //import 'package:amigatoy/Services/CRUDModel.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 
 
 class ModifyProduct extends StatefulWidget {
   final Product product;
 
-  ModifyProduct({@required this.product});
+  ModifyProduct({required this.product});
 
   @override
   _ModifyProductState createState() => _ModifyProductState();
@@ -16,11 +16,11 @@ class ModifyProduct extends StatefulWidget {
 class _ModifyProductState extends State<ModifyProduct> {
   final _formKey = GlobalKey<FormState>();
 
-  String productType ;
+  late String productType ;
 
-  String title ;
+  late String title ;
 
-  String price ;
+  late String price ;
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +46,16 @@ class _ModifyProductState extends State<ModifyProduct> {
                     fillColor: Colors.grey[300],
                     filled: true,
                   ),
-                  validator: (value) {
-                    if (value.isEmpty) {
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
                       return 'Please enter Product Title';
                     }
                   },
-                  onSaved: (value) => title = value
+                  onSaved: (String? value){
+                    if(value != null){
+                      price = value;
+                    }
+                  }
               ),
               SizedBox(height: 16,),
               TextFormField(
@@ -64,17 +68,21 @@ class _ModifyProductState extends State<ModifyProduct> {
                     filled: true,
                   ),
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value == null || value.isEmpty) {
                       return 'Please enter The price';
                     }
                   },
-                  onSaved: (value) => price = value
+                  onSaved: (String? value){
+                    if(value != null){
+                      price = value;
+                    }
+                  }
               ),
               DropdownButton<String>(
                 value: productType,
-                onChanged: (String newValue) {
+                onChanged: (String? newValue) {
                   setState(() {
-                    productType = newValue;
+                    productType = newValue!;
                   });
                 },
                 items: <String>['Bag', 'Computer', 'Dress', 'Phone','Shoes']
@@ -85,17 +93,17 @@ class _ModifyProductState extends State<ModifyProduct> {
                   );
                 }).toList(),
               ),
-              RaisedButton(
-                splashColor: Colors.red,
+              ElevatedButton(
+//                splashColor: Colors.red,
                 onPressed: () async{
-                  if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState?.save();
                     //await productProvider.updateProduct(Product(title: title,price: price,img: productType.toLowerCase()),widget.product.id);
                     Navigator.pop(context) ;
                   }
                 },
                 child: Text('Modify Product', style: TextStyle(color: Colors.white)),
-                color: Colors.blue,
+//                color: Colors.blue,
               )
 
             ],

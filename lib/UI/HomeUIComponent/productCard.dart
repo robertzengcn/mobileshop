@@ -6,7 +6,7 @@ import 'package:amigatoy/Models/Product.dart';
 class ProductCard extends StatelessWidget {
   final Product productDetails;
 
-  ProductCard({@required this.productDetails});
+  ProductCard({required this.productDetails});
 
   @override
   Widget build(BuildContext context) {

@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class ProductDetails extends StatelessWidget {
   final Product product;
 
-  ProductDetails({@required this.product});
+  ProductDetails({required this.product});
 
   @override
   Widget build(BuildContext context) {

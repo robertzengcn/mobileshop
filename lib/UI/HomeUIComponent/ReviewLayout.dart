@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
-import 'package:amigatoy/Library/Expanded/ExpandedDetailRatting.dart';
-import 'package:amigatoy/Library/Expanded/ExpandedDetailReviews.dart';
+//import 'package:amigatoy/Library/Expanded/ExpandedDetailRatting.dart';
+//import 'package:amigatoy/Library/Expanded/ExpandedDetailReviews.dart';
 
 class ReviewsAll extends StatefulWidget {
   @override
@@ -22,9 +22,9 @@ class _ReviewsAllState extends State<ReviewsAll> {
 
   Widget build(BuildContext context) {
 
-    MediaQueryData mediaQuery = MediaQuery.of(context);
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
-    final MediaQueryData media = MediaQuery.of(context);
+//    MediaQueryData mediaQuery = MediaQuery.of(context);
+//    final double statusBarHeight = MediaQuery.of(context).padding.top;
+//    final MediaQueryData media = MediaQuery.of(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -99,20 +99,20 @@ class _ReviewsAllState extends State<ReviewsAll> {
                       )
                     ],
                   ),
-                  subtitle:  ExpansionTileReview(
-                    title:Text(
-                      'Item delivered in good condition. I will recommend to other buyer',style: _detailText,
-                    ),
-                    children:[
-                      SizedBox(height: 10.0),
-                      Text("Very Recommended item i love it very love it",style: _detailText,),
-                      SizedBox(height: 10.0),
-                      Text("Item delivered in good condition. I will recommend to other buyer.",style: _detailText,),
-                    ],
-//                              child: Text("Read More",style: _subHeaderCustomStyle.copyWith(fontSize: 13.0,color: Colors.blueAccent),
-//                              textAlign: TextAlign.end,
-//                              ),
-                  ),
+//                  subtitle:  ExpansionTileReview(
+//                    title:Text(
+//                      'Item delivered in good condition. I will recommend to other buyer',style: _detailText,
+//                    ),
+//                    children:[
+//                      SizedBox(height: 10.0),
+//                      Text("Very Recommended item i love it very love it",style: _detailText,),
+//                      SizedBox(height: 10.0),
+//                      Text("Item delivered in good condition. I will recommend to other buyer.",style: _detailText,),
+//                    ],
+////                              child: Text("Read More",style: _subHeaderCustomStyle.copyWith(fontSize: 13.0,color: Colors.blueAccent),
+////                              textAlign: TextAlign.end,
+////                              ),
+//                  ),
                 ),
                 Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
                   child: _line(),
@@ -178,142 +178,142 @@ class _ReviewsAllState extends State<ReviewsAll> {
                 _line(),
                 Column(
                   children: <Widget>[
-                    ExpansionTileCustomRatting(
-                      title: _buildRating('18 Nov 2018',
-                          'Item delivered in good condition. I will recommend to other buyer.',
-                              (rating) {
-                            setState(() {
-                              this.rating = rating;
-                            });
-                          },
-                          "assets/avatars/avatar-6.jpg"
-                      ),
-                      children:[
-                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
-                          child: _line(),
-                        ),
-                        _buildRating('18 Nov 2018',
-                            'Item delivered in good condition. I will recommend to other buyer.',
-                                (rating) {
-                              setState(() {
-                                this.rating = rating;
-                              });
-                            },
-                            "assets/avatars/avatar-1.jpg"
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
-                          child: _line(),
-                        ),
-                        _buildRating('18 Nov 2018',
-                            'Item delivered in good condition. I will recommend to other buyer.',
-                                (rating) {
-                              setState(() {
-                                this.rating = rating;
-                              });
-                            },
-                            "assets/avatars/avatar-3.jpg"
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
-                          child: _line(),
-                        ),
-                        _buildRating('18 Nov 2018',
-                            'Item delivered in good condition. I will recommend to other buyer.',
-                                (rating) {
-                              setState(() {
-                                this.rating = rating;
-                              });
-                            },
-                            "assets/avatars/avatar-2.jpg"
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
-                          child: _line(),
-                        ),
-                        _buildRating('18 Nov 2018',
-                            'Item delivered in good condition. I will recommend to other buyer.',
-                                (rating) {
-                              setState(() {
-                                this.rating = rating;
-                              });
-                            },
-                            "assets/avatars/avatar-1.jpg"
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
-                          child: _line(),
-                        ),
-                        _buildRating('18 Nov 2018',
-                            'Item delivered in good condition. I will recommend to other buyer.',
-                                (rating) {
-                              setState(() {
-                                this.rating = rating;
-                              });
-                            },
-                            "assets/avatars/avatar-5.jpg"
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
-                          child: _line(),
-                        ),
-                        _buildRating('18 Nov 2018',
-                            'Item delivered in good condition. I will recommend to other buyer.',
-                                (rating) {
-                              setState(() {
-                                this.rating = rating;
-                              });
-                            },
-                            "assets/avatars/avatar-5.jpg"
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
-                          child: _line(),
-                        ),
-                        _buildRating('18 Nov 2018',
-                            'Item delivered in good condition. I will recommend to other buyer.',
-                                (rating) {
-                              setState(() {
-                                this.rating = rating;
-                              });
-                            },
-                            "assets/avatars/avatar-5.jpg"
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
-                          child: _line(),
-                        ),
-                        _buildRating('18 Nov 2018',
-                            'Item delivered in good condition. I will recommend to other buyer.',
-                                (rating) {
-                              setState(() {
-                                this.rating = rating;
-                              });
-                            },
-                            "assets/avatars/avatar-5.jpg"
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
-                          child: _line(),
-                        ),
-                        _buildRating('18 Nov 2018',
-                            'Item delivered in good condition. I will recommend to other buyer.',
-                                (rating) {
-                              setState(() {
-                                this.rating = rating;
-                              });
-                            },
-                            "assets/avatars/avatar-5.jpg"
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
-                          child: _line(),
-                        ),
-                        _buildRating('18 Nov 2018',
-                            'Item delivered in good condition. I will recommend to other buyer.',
-                                (rating) {
-                              setState(() {
-                                this.rating = rating;
-                              });
-                            },
-                            "assets/avatars/avatar-5.jpg"
-                        ),
-                      ],
-//                              child: Text("Read More",style: _subHeaderCustomStyle.copyWith(fontSize: 13.0,color: Colors.blueAccent),
-//                              textAlign: TextAlign.end,
-//                              ),
-                    ),
+//                    ExpansionTileCustomRatting(
+//                      title: _buildRating('18 Nov 2018',
+//                          'Item delivered in good condition. I will recommend to other buyer.',
+//                              (rating) {
+//                            setState(() {
+//                              this.rating = rating;
+//                            });
+//                          },
+//                          "assets/avatars/avatar-6.jpg"
+//                      ),
+//                      children:[
+//                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
+//                          child: _line(),
+//                        ),
+//                        _buildRating('18 Nov 2018',
+//                            'Item delivered in good condition. I will recommend to other buyer.',
+//                                (rating) {
+//                              setState(() {
+//                                this.rating = rating;
+//                              });
+//                            },
+//                            "assets/avatars/avatar-1.jpg"
+//                        ),
+//                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
+//                          child: _line(),
+//                        ),
+//                        _buildRating('18 Nov 2018',
+//                            'Item delivered in good condition. I will recommend to other buyer.',
+//                                (rating) {
+//                              setState(() {
+//                                this.rating = rating;
+//                              });
+//                            },
+//                            "assets/avatars/avatar-3.jpg"
+//                        ),
+//                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
+//                          child: _line(),
+//                        ),
+//                        _buildRating('18 Nov 2018',
+//                            'Item delivered in good condition. I will recommend to other buyer.',
+//                                (rating) {
+//                              setState(() {
+//                                this.rating = rating;
+//                              });
+//                            },
+//                            "assets/avatars/avatar-2.jpg"
+//                        ),
+//                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
+//                          child: _line(),
+//                        ),
+//                        _buildRating('18 Nov 2018',
+//                            'Item delivered in good condition. I will recommend to other buyer.',
+//                                (rating) {
+//                              setState(() {
+//                                this.rating = rating;
+//                              });
+//                            },
+//                            "assets/avatars/avatar-1.jpg"
+//                        ),
+//                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
+//                          child: _line(),
+//                        ),
+//                        _buildRating('18 Nov 2018',
+//                            'Item delivered in good condition. I will recommend to other buyer.',
+//                                (rating) {
+//                              setState(() {
+//                                this.rating = rating;
+//                              });
+//                            },
+//                            "assets/avatars/avatar-5.jpg"
+//                        ),
+//                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
+//                          child: _line(),
+//                        ),
+//                        _buildRating('18 Nov 2018',
+//                            'Item delivered in good condition. I will recommend to other buyer.',
+//                                (rating) {
+//                              setState(() {
+//                                this.rating = rating;
+//                              });
+//                            },
+//                            "assets/avatars/avatar-5.jpg"
+//                        ),
+//                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
+//                          child: _line(),
+//                        ),
+//                        _buildRating('18 Nov 2018',
+//                            'Item delivered in good condition. I will recommend to other buyer.',
+//                                (rating) {
+//                              setState(() {
+//                                this.rating = rating;
+//                              });
+//                            },
+//                            "assets/avatars/avatar-5.jpg"
+//                        ),
+//                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
+//                          child: _line(),
+//                        ),
+//                        _buildRating('18 Nov 2018',
+//                            'Item delivered in good condition. I will recommend to other buyer.',
+//                                (rating) {
+//                              setState(() {
+//                                this.rating = rating;
+//                              });
+//                            },
+//                            "assets/avatars/avatar-5.jpg"
+//                        ),
+//                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
+//                          child: _line(),
+//                        ),
+//                        _buildRating('18 Nov 2018',
+//                            'Item delivered in good condition. I will recommend to other buyer.',
+//                                (rating) {
+//                              setState(() {
+//                                this.rating = rating;
+//                              });
+//                            },
+//                            "assets/avatars/avatar-5.jpg"
+//                        ),
+//                        Padding(padding: EdgeInsets.only(left: 20.0,right: 20.0,top: 15.0,bottom: 7.0),
+//                          child: _line(),
+//                        ),
+//                        _buildRating('18 Nov 2018',
+//                            'Item delivered in good condition. I will recommend to other buyer.',
+//                                (rating) {
+//                              setState(() {
+//                                this.rating = rating;
+//                              });
+//                            },
+//                            "assets/avatars/avatar-5.jpg"
+//                        ),
+//                      ],
+////                              child: Text("Read More",style: _subHeaderCustomStyle.copyWith(fontSize: 13.0,color: Colors.blueAccent),
+////                              textAlign: TextAlign.end,
+////                              ),
+//                    ),
                   ],
                 ),
                 Padding(padding: EdgeInsets.only(bottom: 40.0)),
@@ -353,7 +353,7 @@ class _ReviewsAllState extends State<ReviewsAll> {
       ),
     );
   }
-  Widget _buildRating(String date, String details, Function changeRating,String image) {
+  Widget _buildRating(String date, String details, RatingChangeCallback changeRating,String image) {
     return ListTile(
       leading: Container(
         height: 45.0,

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:amigatoy/UI/BottomNavigationBar.dart';
-import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
+//import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 
 /// Componen Login Animation to set Animation in login like a bounce ball to fullscreen
 class LoginAnimation extends StatefulWidget {
   /// To set type animation and  start and end animation
-  LoginAnimation({Key key, this.animationController})
+  LoginAnimation({Key? key, required this.animationController})
       : animation = new Tween(
           end: 900.0,
           begin: 70.0,
@@ -17,7 +17,7 @@ class LoginAnimation extends StatefulWidget {
   final AnimationController animationController;
   final Animation animation;
 
-  Widget _buildAnimation(BuildContext context, Widget child) {
+  Widget _buildAnimation(BuildContext context, Widget? child) {
     /// Setting shape a animation
     return Padding(
         padding: EdgeInsets.only(bottom: 60.0),

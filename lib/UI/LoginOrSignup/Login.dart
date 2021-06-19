@@ -14,7 +14,7 @@ class loginScreen extends StatefulWidget {
 class _loginScreenState extends State<loginScreen>
     with TickerProviderStateMixin {
   //Animation Declaration
-  AnimationController sanimationController;
+  late AnimationController sanimationController;
 
   var tap = 0;
 
@@ -211,15 +211,15 @@ class _loginScreenState extends State<loginScreen>
                               tap = 1;
                             });
                             new LoginAnimation(
-                              animationController: sanimationController.view,
+                              animationController: sanimationController,
                             );
                             _PlayAnimation();
-                            return tap;
+//                            return tap;
                           },
                           child: buttonBlackBottom(),
                         )
                       : new LoginAnimation(
-                          animationController: sanimationController.view,
+                          animationController: sanimationController,
                         )
                 ],
               ),
@@ -239,7 +239,7 @@ class textFromField extends StatelessWidget {
   IconData icon;
   TextInputType inputType;
 
-  textFromField({this.email, this.icon, this.inputType, this.password});
+  textFromField({required this.email, required this.icon, required this.inputType, required this.password});
 
   @override
   Widget build(BuildContext context) {

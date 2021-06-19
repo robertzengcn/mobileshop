@@ -6,12 +6,14 @@ import 'package:bloc/bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 import 'package:amigatoy/Repository/repository.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 //import 'dart:developer' as developer;
 
-class SimpleBlocDelegate extends BlocDelegate {
+
+
+class SimpleBlocObserver extends BlocObserver {
   @override
-  void onEvent(Bloc bloc, Object event) {
+  void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
     print(event);
   }
@@ -23,7 +25,7 @@ class SimpleBlocDelegate extends BlocDelegate {
   }
 
   @override
-  void onError(Bloc bloc, Object error, StackTrace stacktrace) {
+  void onError(BlocBase bloc, Object error, StackTrace stacktrace) {
     super.onError(bloc, error, stacktrace);
     print(error);
   }
@@ -32,7 +34,8 @@ class SimpleBlocDelegate extends BlocDelegate {
 /// Run first apps open
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  BlocSupervisor.delegate = SimpleBlocDelegate();
+  Bloc.observer = SimpleBlocObserver();
+//  BlocSupervisor.delegate = SimpleBlocDelegate();
 //  await Parse().initialize(keyParseApplicationId, keyParseServerUrl,
 //      clientKey:keyParseclientKey,
 //      debug: true,
@@ -67,9 +70,7 @@ class myApp extends StatelessWidget {
           create: (context) {
             return CarouselsBloc(
               carouselsRepository: CarouselRepository(
-                  carouselApiClient: CarouselsApiClient(
-                httpClient: http.Client(),
-              )),
+                  carouselApiClient: CarouselsApiClient()),
             )..add(FetchCarousels(type: 'home'));
           },
         ),
@@ -77,16 +78,14 @@ class myApp extends StatelessWidget {
           create: (context) {
             return MenusBloc(
               menuRepository: MenuRepository(
-                  menuApiClient: MenuApiClient(httpClient: http.Client())),
+                  menuApiClient: MenuApiClient()),
             )..add(FetchMenutype(type: 'home'));
           },
         ),
         BlocProvider<FeaturedsBloc>(
           create: (context) {
             return FeaturedsBloc(
-              featuredRepository: FeaturedRepository(
-                  productApiClient:
-                      ProductApiClient(httpClient: http.Client())),
+              featuredRepository: FeaturedRepository(),
             )..add(FetchFeatureds());
           },
         ),

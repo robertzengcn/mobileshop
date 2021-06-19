@@ -202,7 +202,7 @@ class KeywordItem extends StatelessWidget {
   @override
   String title, title2;
 
-  KeywordItem({this.title, this.title2});
+  KeywordItem({required this.title, required this.title2});
 
   Widget build(BuildContext context) {
     return Column(
@@ -266,7 +266,7 @@ class KeywordItem extends StatelessWidget {
 class FavoriteItem extends StatelessWidget {
   String image, Rating, Salary, title, sale;
 
-  FavoriteItem({this.image, this.Rating, this.Salary, this.title, this.sale});
+  FavoriteItem({required this.image, required this.Rating, required this.Salary, required this.title, required this.sale});
 
   @override
   Widget build(BuildContext context) {

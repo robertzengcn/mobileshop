@@ -10,7 +10,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  List<Product> products;
+  late List<Product> products;
 
   @override
   Widget build(BuildContext context) {

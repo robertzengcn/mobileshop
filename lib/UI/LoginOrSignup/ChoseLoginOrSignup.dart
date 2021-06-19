@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:amigatoy/UI/BottomNavigationBar.dart';
-import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
+//import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 import 'package:amigatoy/UI/LoginOrSignup/Login.dart';
 import 'package:amigatoy/UI/LoginOrSignup/Signup.dart';
 
@@ -15,7 +15,7 @@ class ChoseLogin extends StatefulWidget {
 /// Component Widget this layout UI
 class _ChoseLoginState extends State<ChoseLogin> with TickerProviderStateMixin {
   /// Declare Animation
-  AnimationController animationController;
+  late AnimationController animationController;
   var tapLogin = 0;
   var tapSignup = 0;
 
@@ -79,12 +79,14 @@ class _ChoseLoginState extends State<ChoseLogin> with TickerProviderStateMixin {
         dotBgColor: Colors.transparent,
         showIndicator: false,
         overlayShadow: false,
+        radius:Radius.circular(8.0),
         images: [
           AssetImage('assets/img/girl.png'),
           AssetImage("assets/img/SliderLogin2.png"),
           AssetImage('assets/img/SliderLogin3.png'),
           AssetImage("assets/img/SliderLogin4.png"),
         ],
+
       ),
           ),
          Container(
@@ -181,13 +183,14 @@ class _ChoseLoginState extends State<ChoseLogin> with TickerProviderStateMixin {
                                           tapLogin = 1;
                                         });
                                         _Playanimation();
-                                        return tapLogin;
+//                                        return tapLogin;
                                       },
                                       child: ButtonCustom(txt: "Signup"),
                                     ),
                                   )
                                 : AnimationSplashSignup(
-                                    animationController: animationController.view,
+
+                                    animationController: animationController,
                                   ),
                             Padding(padding: EdgeInsets.only(top: 15.0)),
                             Center(
@@ -247,13 +250,14 @@ class _ChoseLoginState extends State<ChoseLogin> with TickerProviderStateMixin {
                                       tapSignup = 1;
                                     });
                                     _Playanimation();
-                                    return tapSignup;
+//                                    return tapSignup;
                                   },
                                   child: ButtonCustom(txt: "Login"),
                                 ),
                               )
                             : AnimationSplashLogin(
-                                animationController: animationController.view,
+
+                                animationController: animationController,
                               ),
                       ],
                     ),
@@ -273,9 +277,9 @@ class _ChoseLoginState extends State<ChoseLogin> with TickerProviderStateMixin {
 class ButtonCustom extends StatelessWidget {
   @override
   String txt;
-  GestureTapCallback ontap;
+  late GestureTapCallback ontap;
 
-  ButtonCustom({this.txt});
+  ButtonCustom({required this.txt});
 
   Widget build(BuildContext context) {
     return Material(
@@ -309,7 +313,7 @@ class ButtonCustom extends StatelessWidget {
 
 /// Set Animation Login if user click button login
 class AnimationSplashLogin extends StatefulWidget {
-  AnimationSplashLogin({Key key, this.animationController})
+  AnimationSplashLogin({Key? key, required this.animationController})
       : animation = new Tween(
           end: 900.0,
           begin: 70.0,
@@ -320,7 +324,7 @@ class AnimationSplashLogin extends StatefulWidget {
   final AnimationController animationController;
   final Animation animation;
 
-  Widget _buildAnimation(BuildContext context, Widget child) {
+  Widget _buildAnimation(BuildContext context, Widget? child) {
     return Padding(
       padding: EdgeInsets.only(bottom: 60.0),
       child: Container(
@@ -357,7 +361,7 @@ class _AnimationSplashLoginState extends State<AnimationSplashLogin> {
 
 /// Set Animation signup if user click button signup
 class AnimationSplashSignup extends StatefulWidget {
-  AnimationSplashSignup({Key key, this.animationController})
+  AnimationSplashSignup({Key? key, required this.animationController})
       : animation = new Tween(
           end: 900.0,
           begin: 70.0,
@@ -368,7 +372,7 @@ class AnimationSplashSignup extends StatefulWidget {
   final AnimationController animationController;
   final Animation animation;
 
-  Widget _buildAnimation(BuildContext context, Widget child) {
+  Widget _buildAnimation(BuildContext context, Widget? child) {
     return Padding(
       padding: EdgeInsets.only(bottom: 60.0),
       child: Container(
