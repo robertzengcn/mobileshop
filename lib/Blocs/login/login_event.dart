@@ -13,6 +13,14 @@ class LoginUsernameChanged extends LoginEvent {
   @override
   List<Object> get props => [username];
 }
+class LoginPasswordChanged extends LoginEvent {
+  const LoginPasswordChanged(this.password);
+
+  final String password;
+
+  @override
+  List<Object> get props => [password];
+}
 
 class LoginButtonPressed extends LoginEvent {
   final String username;
@@ -32,4 +40,7 @@ class LoginButtonPressed extends LoginEvent {
 }
 class LoginSubmitted extends LoginEvent {
   const LoginSubmitted();
+}
+class LoginSuccessed extends LoginEvent {
+
 }

@@ -38,8 +38,9 @@ class _SignupState extends State<Signup> with TickerProviderStateMixin {
   /// Dispose animationController
   @override
   void dispose() {
-    super.dispose();
     sanimationController.dispose();
+    super.dispose();
+
   }
 
   /// Playanimation set forward reverse

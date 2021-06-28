@@ -6,6 +6,8 @@ import 'package:amigatoy/UI/LoginOrSignup/Signup.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:formz/formz.dart';
+import 'package:email_validator/email_validator.dart';
+
 class loginScreen extends StatefulWidget {
   @override
   _loginScreenState createState() => _loginScreenState();
@@ -15,9 +17,10 @@ class _loginScreenState extends State<loginScreen>
     with TickerProviderStateMixin {
   //Animation Declaration
   late AnimationController sanimationController;
-
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   var tap = 0;
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
 
   /// set state animation controller
@@ -38,8 +41,9 @@ class _loginScreenState extends State<loginScreen>
   /// Dispose animation controller
   @override
   void dispose() {
-    super.dispose();
     sanimationController.dispose();
+    super.dispose();
+
   }
 
   /// Playanimation set forward reverse
@@ -54,9 +58,26 @@ class _loginScreenState extends State<loginScreen>
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-    mediaQueryData.devicePixelRatio;
+    // mediaQueryData.devicePixelRatio;
     mediaQueryData.size.width;
     mediaQueryData.size.height;
+
+    _onLoginButtonPressed() {
+//      final FormState form = _formKey.currentState!;
+      if (_formKey.currentState!.validate()) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Processing Data')));
+
+      } else {
+        print('Form is invalid');
+      }
+      BlocProvider.of<LoginBloc>(context).add(
+        LoginButtonPressed(
+          username: _emailController.text,
+          password: _passwordController.text,
+        ),
+      );
+    }
     return BlocListener<LoginBloc, LoginState>(
     listener: (context, state) {
           if (state.status.isSubmissionFailure) {
@@ -65,169 +86,188 @@ class _loginScreenState extends State<loginScreen>
               ..showSnackBar(
                 const SnackBar(content: Text('Authentication Failure')),
               );
-          }
-        },
-      child:Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-        /// Set Background image in layout (Click to open code)
-        decoration: BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage("assets/img/loginscreenbackground.png"),
-          fit: BoxFit.cover,
-        )),
-        child: Container(
-          /// Set gradient color in image (Click to open code)
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromRGBO(0, 0, 0, 0.0),
-                Color.fromRGBO(0, 0, 0, 0.3)
-              ],
-              begin: FractionalOffset.topCenter,
-              end: FractionalOffset.bottomCenter,
-            ),
-          ),
-          /// Set component layout
-          child: ListView(
-            children: <Widget>[
-              Stack(
-                alignment: AlignmentDirectional.bottomCenter,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        alignment: AlignmentDirectional.topCenter,
-                        child: Column(
-                          children: <Widget>[
-                            /// padding logo
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    top: mediaQueryData.padding.top + 40.0)),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Image(
-                                  image: AssetImage("assets/img/Logo.png"),
-                                  height: 70.0,
-                                ),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10.0)),
-
-                                /// Animation text treva shop accept from signup layout (Click to open code)
-                                Hero(
-                                  tag: "Treva",
-                                  child: Text(
-                                    "Amiga Toy",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w900,
-                                        letterSpacing: 0.6,
-                                        color: Colors.white,
-                                        fontFamily: "Sans",
-                                        fontSize: 20.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            /// ButtonCustomFacebook
-                            Padding(
-                                padding: EdgeInsets.symmetric(vertical: 30.0)),
-                            buttonCustomFacebook(),
-
-                            /// ButtonCustomGoogle
-                            Padding(
-                                padding: EdgeInsets.symmetric(vertical: 7.0)),
-                            buttonCustomGoogle(),
-                            /// Set Text
-                            Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10.0)),
-                            Text(
-                              "OR",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  color: Colors.white,
-                                  letterSpacing: 0.2,
-                                  fontFamily: 'Sans',
-                                  fontSize: 17.0),
-                            ),
-
-                            /// TextFromField Email
-                            Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10.0)),
-                            textFromField(
-                              icon: Icons.email,
-                              password: false,
-                              email: "Email",
-                              inputType: TextInputType.emailAddress,
-                            ),
-
-                            /// TextFromField Password
-                            Padding(
-                                padding: EdgeInsets.symmetric(vertical: 5.0)),
-                            textFromField(
-                              icon: Icons.vpn_key,
-                              password: true,
-                              email: "Password",
-                              inputType: TextInputType.text,
-                            ),
-
-                            /// Button Signup
-                            TextButton(
-//                                padding: EdgeInsets.only(top: 20.0),
-                                onPressed: () {
+          }else if(state is LoginCompleted){//用户登录成功
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (BuildContext context) =>
                                               new Signup()));
-                                },
-                                style: TextButton.styleFrom(
-                                    padding: EdgeInsets.only(top: 20.0)),
-                                child: Text(
-                                  "Not Have Acount? Sign Up",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: "Sans"),
-                                )),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: mediaQueryData.padding.top + 100.0,
-                                  bottom: 0.0),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  /// Set Animaion after user click buttonLogin
-                  tap == 0
-                      ? InkWell(
-                          splashColor: Colors.yellow,
-                          onTap: () {
-                            setState(() {
-                              tap = 1;
-                            });
-                            new LoginAnimation(
-                              animationController: sanimationController,
-                            );
-                            _PlayAnimation();
-//                            return tap;
-                          },
-                          child: buttonBlackBottom(),
-                        )
-                      : new LoginAnimation(
-                          animationController: sanimationController,
-                        )
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+          }
+        },
+      child:BlocBuilder<LoginBloc, LoginState>(
+    builder: (context, state) {
+    return Scaffold(
+    backgroundColor: Colors.white,
+    body: Container(
+    /// Set Background image in layout (Click to open code)
+    decoration: BoxDecoration(
+    image: DecorationImage(
+    image: AssetImage("assets/img/loginscreenbackground.png"),
+    fit: BoxFit.cover,
+    )),
+    child: Container(
+    /// Set gradient color in image (Click to open code)
+    decoration: BoxDecoration(
+    gradient: LinearGradient(
+    colors: [
+    Color.fromRGBO(0, 0, 0, 0.0),
+    Color.fromRGBO(0, 0, 0, 0.3)
+    ],
+    begin: FractionalOffset.topCenter,
+    end: FractionalOffset.bottomCenter,
+    ),
+    ),
+    /// Set component layout
+    child: ListView(
+    children: <Widget>[
+    Stack(
+    alignment: AlignmentDirectional.bottomCenter,
+    children: <Widget>[
+    Column(
+    children: <Widget>[
+    Container(
+    alignment: AlignmentDirectional.topCenter,
+    child: Column(
+    children: <Widget>[
+    /// padding logo
+    Padding(
+    padding: EdgeInsets.only(
+    top: mediaQueryData.padding.top + 40.0)),
+    Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+    Image(
+    image: AssetImage("assets/img/Logo.png"),
+    height: 70.0,
+    ),
+    Padding(
+    padding:
+    EdgeInsets.symmetric(horizontal: 10.0)),
+
+    /// Animation text treva shop accept from signup layout (Click to open code)
+    Hero(
+    tag: "Treva",
+    child: Text(
+    "Amiga Toy",
+    style: TextStyle(
+    fontWeight: FontWeight.w900,
+    letterSpacing: 0.6,
+    color: Colors.white,
+    fontFamily: "Sans",
+    fontSize: 20.0),
+    ),
+    ),
+    ],
+    ),
+
+    /// ButtonCustomFacebook
+    Padding(
+    padding: EdgeInsets.symmetric(vertical: 30.0)),
+    buttonCustomFacebook(),
+
+    /// ButtonCustomGoogle
+    Padding(
+    padding: EdgeInsets.symmetric(vertical: 7.0)),
+    buttonCustomGoogle(),
+    /// Set Text
+    Padding(
+    padding: EdgeInsets.symmetric(vertical: 10.0)),
+    Text(
+    "OR",
+    style: TextStyle(
+    fontWeight: FontWeight.w900,
+    color: Colors.white,
+    letterSpacing: 0.2,
+    fontFamily: 'Sans',
+    fontSize: 17.0),
+    ),
+    Form(
+    key: _formKey,
+    /// TextFromField Email
+    child: Column(
+    children: <Widget>[
+        Padding(
+    padding: EdgeInsets.symmetric(vertical: 10.0)),
+
+      textFromField(
+    icon: Icons.email,
+    password: false,
+    email: "Email",
+    inputType: TextInputType.emailAddress,
+    controllerValue:_emailController
+    ),
+
+    /// TextFromField Password
+    Padding(
+    padding: EdgeInsets.symmetric(vertical: 5.0)),
+    textFromField(
+    icon: Icons.vpn_key,
+    password: true,
+    email: "Password",
+    inputType: TextInputType.text,
+    controllerValue:_passwordController
+    ),
+
+    /// Button Signup
+    TextButton(
+//                                padding: EdgeInsets.only(top: 20.0),
+    onPressed:
+    state is! LoginLoading ? _onLoginButtonPressed : null,
+//                                  Navigator.of(context).pushReplacement(
+//                                      MaterialPageRoute(
+//                                          builder: (BuildContext context) =>
+//                                              new Signup()));
+
+    style: TextButton.styleFrom(
+    padding: EdgeInsets.only(top: 20.0)),
+    child: Text(
+    "Not Have Acount? Sign Up",
+    style: TextStyle(
+    color: Colors.white,
+    fontSize: 13.0,
+    fontWeight: FontWeight.w600,
+    fontFamily: "Sans"),
     )
+    ),
+    ]
+    ),
+    ),
+    Padding(
+    padding: EdgeInsets.only(
+    top: mediaQueryData.padding.top + 100.0,
+    bottom: 0.0),
+    )
+    ],
+    ),
+    ),
+    ],
+    ),
+    /// Set Animaion after user click buttonLogin
+    tap == 0
+    ? InkWell(
+    splashColor: Colors.yellow,
+    onTap: () {
+    setState(() {
+    tap = 1;
+    });
+    new LoginAnimation(
+    animationController: sanimationController,
+    );
+    _PlayAnimation();
+//                            return tap;
+    },
+    child: buttonBlackBottom(),
+    )
+        : new LoginAnimation(
+    animationController: sanimationController,
+    )
+    ],
+    ),
+    ],
+    ),
+    ),
+    ),
+    );
+    })
     );
   }
 }
@@ -238,8 +278,8 @@ class textFromField extends StatelessWidget {
   String email;
   IconData icon;
   TextInputType inputType;
-
-  textFromField({required this.email, required this.icon, required this.inputType, required this.password});
+  TextEditingController controllerValue;
+  textFromField({required this.email, required this.icon, required this.inputType, required this.password,required this.controllerValue});
 
   @override
   Widget build(BuildContext context) {
@@ -274,6 +314,19 @@ class textFromField extends StatelessWidget {
                     color: Colors.black38,
                     fontWeight: FontWeight.w600)),
             keyboardType: inputType,
+            controller: controllerValue,
+            validator: (String? value) {
+             if(value == null || value.isEmpty){
+               return 'Please enter some text';
+             }else if(email=='Email'){
+               bool emailValid=EmailValidator.validate(value);
+
+               if(!emailValid){
+                 return 'email address error';
+               }
+             }
+              return null;
+            },
           ),
         ),
       ),

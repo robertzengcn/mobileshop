@@ -36,7 +36,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         );
 
         authenticationBloc.add(LoggedIn(token: token));
-        yield LoginInitial();
+        yield LoginCompleted();
       } catch (error) {
         yield LoginFailure(error: error.toString());
       }

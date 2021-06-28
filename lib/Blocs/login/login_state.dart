@@ -42,11 +42,9 @@ class LoginFailure extends LoginState {
   @override
   String toString() => 'LoginFailure { error: $error }';
 }
-class LoginPasswordChanged extends LoginEvent {
-  const LoginPasswordChanged(this.password);
+//用户登录完成
+class LoginCompleted extends LoginState {}
 
-  final String password;
 
-  @override
-  List<Object> get props => [password];
-}
+
+

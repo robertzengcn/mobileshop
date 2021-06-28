@@ -52,6 +52,7 @@ void main() async {
 /// Set orienttation
 class myApp extends StatelessWidget {
   final userRepository = UserRepository();
+
   @override
   Widget build(BuildContext context) {
     /// To set orientation always portrait
@@ -94,6 +95,14 @@ class myApp extends StatelessWidget {
             return AuthenticationBloc(
                 userRepository: userRepository
             )..add(AppStarted());
+          },
+        ),
+        BlocProvider<LoginBloc>(
+          create: (context) {
+            return LoginBloc(
+              authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+              userRepository: userRepository,
+            );
           },
         ),
       ],
