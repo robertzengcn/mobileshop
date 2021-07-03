@@ -6,3 +6,4 @@ export 'MenuRepository.dart';
 export 'ProductRepository.dart';
 export 'FeaturedRepository.dart';
 export 'UserRepository.dart';
+export 'userApiClient.dart';

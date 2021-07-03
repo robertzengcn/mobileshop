@@ -12,11 +12,11 @@ class UserApiClient{
   UserApiClient() ;
 
   @override
-  Future<List<Menu>> loginAuth(String username,String password) async{
+  Future <User> loginAuth(String username,String password) async{
     var url = Uri.parse('$appServerUrl/loginAuth');
     http.Response response = await http.post(
       url,
-      body: {'username': username, 'password': password},
+      body: {'email': username, 'password': password},
       headers: {
         'Application-Id': '$appId',
       },
@@ -24,15 +24,16 @@ class UserApiClient{
 
     if (response.statusCode != 200) {
 
-      throw Exception('Unable to fetch products from the REST API');
+      throw Exception('Unable to fetch data from the REST API');
     }
       var responseJson = json.decode(response.body);
       if(responseJson['status']==true){
-        return (responseJson['data'] as List)
-            .map((p) => Menu.fromJson(p))
-            .toList();
+        return User.fromJson(responseJson['data']);
+//        return (responseJson['data'] as List)
+//            .map((p) => Menu.fromJson(p))
+//            .toList();
       }else{
-        throw Exception('Validation failed');
+        throw Exception(responseJson['msg']);
       }
 
   }
