@@ -21,6 +21,8 @@ dependencies:
   equatable: ^2.0.2
   parse_server_sdk: ^3.0.0
   http: ^0.13.3
+  sqflite: ^2.0.0+3
+  path_provider: ^2.0.2
 #item repository
 #  firebase_repository:
 #    path: firebase_repository

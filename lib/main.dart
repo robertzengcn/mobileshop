@@ -6,6 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 import 'package:amigatoy/Repository/repository.dart';
+import 'package:amigatoy/database/database.dart';
 //import 'package:http/http.dart' as http;
 //import 'dart:developer' as developer;
 
@@ -34,7 +35,10 @@ class SimpleBlocObserver extends BlocObserver {
 /// Run first apps open
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   Bloc.observer = SimpleBlocObserver();
+  DatabaseProvider databaseprovider=DatabaseProvider();
+  databaseprovider.createDatabase();
 //  BlocSupervisor.delegate = SimpleBlocDelegate();
 //  await Parse().initialize(keyParseApplicationId, keyParseServerUrl,
 //      clientKey:keyParseclientKey,

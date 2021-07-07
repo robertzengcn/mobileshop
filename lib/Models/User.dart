@@ -2,30 +2,44 @@ import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
 
-  final int id;
+  final int userid;
   final String username;
-  final String token;
+  final String usertoken;
 
 
   const User({
-    required this.id,
+    required this.userid,
     required this.username,
-    required this.token
+    required this.usertoken
   });
   @override
   List<Object> get props => [
-    id,
+    userid,
     username,
-    token
+    usertoken
   ];
-
+//convert item from json to object
   static User fromJson(dynamic json) {
     return User(
-        id: json['id'] as int,
+      userid: json['id'] as int,
       username: json['username'],
-        token:json['token'],
+      usertoken:json['token'],
     );
   }
+  Map<String, dynamic> toDatabaseJson() => {
+    //This will be used to convert User objects that
+    //are to be stored into the datbase in a form of JSON        "id": this.id,
+    "userid": this.userid,
+    "username": this.username,
+    "usertoken":this.usertoken
+  };
+
+  factory User.fromMap(Map<String, dynamic> json) => new User(
+    userid: json["userid"],
+    username: json["username"],
+    usertoken: json["usertoken"],
+  );
+
 
 //  String get userToken{
 //    return token;

@@ -9,6 +9,7 @@ import 'package:amigatoy/UI/AcountUIComponent/Profile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 //import 'package:amigatoy/Models/models.dart';
+import 'package:amigatoy/UI/BrandUIComponent/BrandLayout.dart';
 
 class AppbarGradient extends StatefulWidget {
   @override
@@ -131,7 +132,7 @@ class _AppbarGradientState extends State<AppbarGradient> {
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => new SideMenu()));
+                      pageBuilder: (_, __, ___) => new brand()));
                 },
                 child: Stack(
                   alignment: AlignmentDirectional(-3.0, -3.0),

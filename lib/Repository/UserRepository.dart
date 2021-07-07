@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/Repository/repository.dart';
+import 'package:amigatoy/dao/user_dao.dart';
 
 class UserRepository {
   final UserApiClient userApiClient;
+  final userDao = UserDao();
   UserRepository({required this.userApiClient})
       : assert(userApiClient != null);
 
@@ -15,7 +17,7 @@ class UserRepository {
   }) async {
 //    await Future.delayed(Duration(seconds: 1));
     User futureUser=await userApiClient.loginAuth(username, password);
-    return futureUser.token;
+    return futureUser.usertoken;
 //    futureUser.then((news) {
 //      print(news);
 //    });
@@ -38,4 +40,7 @@ class UserRepository {
     await Future.delayed(Duration(seconds: 1));
     return false;
   }
+  Future insertUser(User user) => userDao.createUser(user);
+
+  Future getUserbytoken({required String token}) => userDao.getUserbytoken(token);
 }
