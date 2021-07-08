@@ -31,11 +31,13 @@ class DatabaseProvider{
   void initDB(Database database, int version) async {
     await database.execute("CREATE TABLE $userTABLE ("
         "id INTEGER PRIMARY KEY, "
-        "description TEXT, "
+        "user_id INTEGER, "
     /*SQLITE doesn't have boolean type
         so we store isDone as integer where 0 is false
         and 1 is true*/
-        "is_done INTEGER "
+        "user_name TEXT, "
+        "user_token TEXT, "
+        "user_expired TEXT, "
         ")");
   }
 

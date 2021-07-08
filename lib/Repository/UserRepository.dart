@@ -11,13 +11,13 @@ class UserRepository {
   UserRepository({required this.userApiClient})
       : assert(userApiClient != null);
 
-  Future<String> authenticate({
+  Future<User> authenticate({
     required String username,
     required String password,
   }) async {
 //    await Future.delayed(Duration(seconds: 1));
     User futureUser=await userApiClient.loginAuth(username, password);
-    return futureUser.usertoken;
+    return futureUser;
 //    futureUser.then((news) {
 //      print(news);
 //    });

@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 //import 'package:meta/meta.dart';
 import 'package:amigatoy/Repository/repository.dart';
+import 'package:amigatoy/Models/User.dart';
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
@@ -34,7 +35,8 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
     if (event is LoggedIn) {
       yield AuthenticationLoading();
-      await userRepository.persistToken(event.token);
+//      await userRepository.persistToken(event.token);
+      await userRepository.insertUser(event.user);
       yield AuthenticationAuthenticated();
     }
 
