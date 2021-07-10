@@ -3,12 +3,15 @@ import 'package:amigatoy/database/database.dart';
 import 'package:amigatoy/Models/models.dart';
 
 class UserDao{
+
   final dbProvider = DatabaseProvider.dbProvider;
   final String columnuserId = 'userid';
   final String columnUsername = 'username';
   final String columnuserToken = 'token';
   //Adds new Todo records
   Future<int> createUser(User user) async {
+
+//    dbProvider
     final db = await dbProvider.database;
     var result = db.insert(userTABLE, user.toDatabaseJson());
     return result;

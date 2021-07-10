@@ -37,8 +37,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Bloc.observer = SimpleBlocObserver();
-  DatabaseProvider databaseprovider=DatabaseProvider();
-  databaseprovider.createDatabase();
+//  DatabaseProvider databaseprovider=DatabaseProvider();
+//
+//  databaseprovider.createDatabase();
 //  BlocSupervisor.delegate = SimpleBlocDelegate();
 //  await Parse().initialize(keyParseApplicationId, keyParseServerUrl,
 //      clientKey:keyParseclientKey,

@@ -31,7 +31,7 @@ class User extends Equatable {
       userid: json['id'] as int,
       username: json['username'],
       usertoken:json['token'],
-      userexpired:userexpire
+      userexpired:userexpire,
     );
   }
   Map<String, dynamic> toDatabaseJson() => {
