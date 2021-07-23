@@ -24,10 +24,10 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   ) async* {
     // TODO: implement mapEventToState
     if (event is AppStarted) {
-      final bool hasToken = await userRepository.hasToken();
+      final User? user = await userRepository.hasToken();
 
-      if (hasToken) {
-        yield AuthenticationAuthenticated();
+      if (user!=null) {
+        yield AuthenticationAuthenticated(token:user.usertoken);
       } else {
         yield AuthenticationUnauthenticated();
       }
@@ -37,12 +37,12 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       yield AuthenticationLoading();
 //      await userRepository.persistToken(event.token);
       await userRepository.insertUser(event.user);
-      yield AuthenticationAuthenticated();
+      yield AuthenticationAuthenticated(token:event.user.usertoken);
     }
 
     if (event is LoggedOut) {
       yield AuthenticationLoading();
-      await userRepository.deleteToken();
+      await userRepository.deleteToken(event.token);
       yield AuthenticationUnauthenticated();
     }
   }

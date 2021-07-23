@@ -10,27 +10,29 @@ abstract class ProductsState extends Equatable {
 //  @override
  List<Object> get props => [];
 }
-class ProductsEmpty extends ProductsState {}
-/**
- * loading home images
- */
-class ProductsLoading extends ProductsState {
+class ProductsInitState extends ProductsState {}
+
+class ProductsEmptyState extends ProductsState {}
+
+///loading home images
+
+class ProductsLoadingState extends ProductsState {
 
 }
-/**
- * home images slider load completed
- */
-class Productsloaded extends ProductsState {
-  final List<Product> lstProduct;
 
 
-  const Productsloaded({required this.lstProduct}) : assert(lstProduct != null);
+
+class ProductsloadedState extends ProductsState {
+  final Product product;
+
+
+  const ProductsloadedState({required this.product}) : assert(product != null);
 
   @override
-  List<Object> get props => [lstProduct];
+  List<Object> get props => [product];
 }
 
-class ProductsError extends ProductsState {}
+class ProductsErrorState extends ProductsState {}
 
 
 

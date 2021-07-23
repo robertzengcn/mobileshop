@@ -4,17 +4,22 @@ import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/Repository/repository.dart';
 
 class ProductRepository{
-  final ProductApiClient productApiClient;
+  ProductApiClient productApiClient=ProductApiClient();
 
-  ProductRepository({required this.productApiClient})
-      : assert(productApiClient != null);
+  ProductRepository();
 
   Future<List<Product>> loadProductlist() async {
 
 
-    Future<List<Product>> lst = productApiClient.getProductlist();
+    List<Product> lst =await productApiClient.getProductlist();
 
     return lst;
+  }
+
+  Future <Product> getProductbyid(int id) async {
+    Product product=await productApiClient.getProductbyid(id);
+
+    return product;
   }
 
 }

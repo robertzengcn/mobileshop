@@ -23,9 +23,10 @@ class UserRepository {
 //    });
   }
 
-  Future<void> deleteToken() async {
+  Future<void> deleteToken(String token) async {
     /// delete from keystore/keychain
-    await Future.delayed(Duration(seconds: 1));
+//    await Future.delayed(Duration(seconds: 1));
+    await userDao.deleteUserbytoken(token);
     return;
   }
 
@@ -35,10 +36,11 @@ class UserRepository {
     return;
   }
 
-  Future<bool> hasToken() async {
+  Future<User?> hasToken() async {
     /// read from keystore/keychain
-    await Future.delayed(Duration(seconds: 1));
-    return false;
+//    await Future.delayed(Duration(seconds: 1));
+    User? user=await userDao.getToken();
+    return user;
   }
   Future insertUser(User user) => userDao.createUser(user);
 

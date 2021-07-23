@@ -10,32 +10,22 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   final ProductRepository productRepository;
 //  StreamSubscription _carouselSubscription;
 
-  ProductsBloc({required this.productRepository}):super(ProductsEmpty());
-//      : assert(productRepository != null),
-//        _productRepository = productRepository;
-//  @override
-//  ProductsState get initialState => ProductsEmpty();
+  ProductsBloc({required this.productRepository}):super(ProductsEmptyState());
+
 
   @override
   Stream<ProductsState> mapEventToState(ProductsEvent event) async* {
-    if (event is FetchProducttype) {
-      yield ProductsLoading();
-      try {
-        List<Product> result = await productRepository.loadProductlist();
-        print(result);
-        yield Productsloaded(lstProduct:result);
-
-      } catch (_) {
-        yield ProductsError();
-      }
+    if(event is ProductScreenLoadedEvent){
+//      try {
+        yield ProductsLoadingState();
+        Product loadproduct=await productRepository.getProductbyid(event.productId);
+        yield ProductsloadedState(product:loadproduct);
+//      } catch (e) {
+//        print(e);
+//        yield ProductsErrorState();
+//      }
     }
   }
 
-//  Stream<CarouselsState> _mapLoadImagesToState() async* {
-//    _carouselSubscription?.cancel();
-//    _imagesliderSubscription = _imageslidersRepository.imagesliders().listen(
-//          (imgsliders) => add(ImagesliderUpdated(imgsliders)),
-//    );
-//  }
 
 }

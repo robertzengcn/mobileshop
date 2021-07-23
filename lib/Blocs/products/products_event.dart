@@ -9,32 +9,39 @@ abstract class ProductsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchProducts extends ProductsEvent {
+class FetchProductsEvent extends ProductsEvent {
 
 
-  const FetchProducts();
+  const FetchProductsEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class FetchProducttype extends ProductsEvent {
+class FetchProducttypeEvent extends ProductsEvent {
   final String type;
 
-  const FetchProducttype({required this.type}) : assert(type != null);
+  const FetchProducttypeEvent({required this.type}) : assert(type != null);
 
   @override
   List<Object> get props => [type];
 }
 
-//class ImagesliderUpdated extends CarouselsEvent {
-//  final List<Imageslider> imageslider;
-//
-//  const ImagesliderUpdated(this.imageslider);
-//
-//  @override
-//  List<Object> get props => [imageslider];
-//}
-//class LoadingMenus extends ProductsEvent {}
-//
-//class LoadedMenus  extends ProductsEvent {}
+///产品详情页面打开
+@immutable
+class ProductScreenLoadedEvent extends ProductsEvent {
+  final int productId;
+
+  ProductScreenLoadedEvent({
+    required this.productId,
+  });}
+
+
+@immutable
+class ProductAddToFavoritesEvent extends ProductsEvent { }
+
+@immutable
+class ProductRemoveFromFavoritesEvent extends ProductsEvent {}
+
+@immutable
+class ProductAddToCartEvent extends ProductsEvent {}

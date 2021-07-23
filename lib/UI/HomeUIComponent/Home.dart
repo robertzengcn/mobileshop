@@ -39,6 +39,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   /// Set for StartStopPress CountDown
   onStartStopPress() {
+    if (!mounted) return;
     if (this.secondsub == null) {
       secondsub = seconds.stream.listen(null);
       secondsub.onData((Duration d) {

@@ -196,7 +196,7 @@ class _flashSaleDetailState extends State<flashSaleDetail> {
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(
-          "Produk Detail",
+          "123Produk Detail",
           style: TextStyle(
             fontWeight: FontWeight.w500,
             color: Colors.black54,

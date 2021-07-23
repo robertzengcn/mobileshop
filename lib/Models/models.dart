@@ -5,4 +5,5 @@ export 'Product.dart';
 export 'Username.dart';
 export 'Password.dart';
 export 'User.dart';
+export 'Review.dart';
 

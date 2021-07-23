@@ -23,10 +23,14 @@ class User extends Equatable {
   ];
 //convert item from json to object
   static User fromJson(dynamic json) {
-    int expiretime=DateTime.now().millisecondsSinceEpoch+json['expire'] as int;
-    var expireObj = new DateTime.fromMicrosecondsSinceEpoch(expiretime);
+//    int expiretime=DateTime.now().millisecondsSinceEpoch+json['expire'] as int;
+//    print('expiretime:'+expiretime.toString());
+    var today = DateTime.now();
+    var expireObj = today.add(const Duration(days: 30));
+//    var expireObj = new DateTime.fromMicrosecondsSinceEpoch(expiretime);
     var format = new DateFormat('yyyy-MM-dd HH:mm ss');
     final String userexpire = format.format(expireObj);
+    print(userexpire);
     return User(
       userid: json['id'] as int,
       username: json['username'],
@@ -39,13 +43,15 @@ class User extends Equatable {
     //are to be stored into the datbase in a form of JSON        "id": this.id,
     "user_id": this.userid,
     "user_name": this.username,
-    "user_token":this.usertoken
+    "user_token":this.usertoken,
+    "user_expired":this.userexpired
   };
 
   factory User.fromMap(Map<String, dynamic> json) => new User(
-    userid: json["userid"],
-    username: json["username"],
-    usertoken: json["usertoken"],
+    userid: json["user_id"],
+    username: json["user_name"],
+    usertoken: json["user_token"],
+
   );
 
 

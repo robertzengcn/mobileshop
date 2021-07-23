@@ -7,3 +7,4 @@ export 'ProductRepository.dart';
 export 'FeaturedRepository.dart';
 export 'UserRepository.dart';
 export 'userApiClient.dart';
+export 'ReviewRepository.dart';

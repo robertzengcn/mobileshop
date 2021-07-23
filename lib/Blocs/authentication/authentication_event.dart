@@ -23,5 +23,11 @@ class LoggedIn extends AuthenticationEvent {
 //  String toString() => 'LoggedIn { token: $token }';
 }
 
-class LoggedOut extends AuthenticationEvent {}
+class LoggedOut extends AuthenticationEvent {
+  final String token;
+  const LoggedOut({required this.token});
+  @override
+  List<Object> get props => [token];
+
+}
 
