@@ -16,8 +16,6 @@ import 'package:amigatoy/Repository/repository.dart';
 //import 'package:html/dom.dart' as dom;
 import 'package:flutter_html/flutter_html.dart';
 
-
-
 class detailProduk extends StatefulWidget {
   Product gridItem;
 
@@ -29,29 +27,23 @@ class detailProduk extends StatefulWidget {
 
 /// Detail Product for Recomended Grid in home screen
 class _detailProdukState extends State<detailProduk> {
-
   /// Declaration List item HomeGridItemRe....dart Class
   final Product gridItem;
   _detailProdukState(this.gridItem);
 
-
-
   Widget build(BuildContext context) {
-    return BlocProvider<ProductsBloc>(
-        create: (context) {
-      return ProductsBloc(
-          productRepository: ProductRepository())
-        ..add(ProductScreenLoadedEvent(productId:gridItem.products_id
-        ));
-    },
-    child:ProductWrapper()
-    );
+    return MultiBlocProvider(providers: [
+      BlocProvider<ProductsBloc>(create: (context) {
+        return ProductsBloc(productRepository: ProductRepository())
+          ..add(ProductScreenLoadedEvent(productId: gridItem.products_id));
+      }),
+      BlocProvider<ReviewsBloc>(create: (context) {
+        //加载产品的评论
+        return ReviewsBloc(reviewRepository: ReviewRepository())
+          ..add(FetchProReviewsEvent(pid: gridItem.products_id));
+      }),
+    ], child: ProductWrapper());
   }
-
-
-
-
-
 }
 
 class ProductWrapper extends StatefulWidget {
@@ -60,19 +52,20 @@ class ProductWrapper extends StatefulWidget {
 }
 
 class _ProductWrapperState extends State<ProductWrapper> {
-  double rating = 3.5;
+//  double rating = 3.5;
   int starCount = 5;
   //  @override
 //  static late BuildContext ctx;
   int valueItemChart = 0;
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
-  Widget _productDesc(String productdesc){
+  Widget _productDesc(String productdesc) {
     Widget html = Html(
       data: productdesc,
     );
     return html;
   }
+
   /// BottomSheet for view more in specification
   void _bottomSheet(String productDesc) {
     showModalBottomSheet(
@@ -97,16 +90,16 @@ class _ProductWrapperState extends State<ProductWrapper> {
                       Padding(padding: EdgeInsets.only(top: 20.0)),
                       Center(
                           child: Text(
-                            "Description",
-                            style: _subHeaderCustomStyle,
-                          )),
+                        "Description",
+                        style: _subHeaderCustomStyle,
+                      )),
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 20.0, left: 20.0, right: 20.0, bottom: 20.0),
 //                        child: Text(
 //                            productDesc,
 //                            style: _detailText),
-                      child:_productDesc(productDesc),
+                        child: _productDesc(productDesc),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0),
@@ -161,7 +154,8 @@ class _ProductWrapperState extends State<ProductWrapper> {
 
   /// Variable Component UI use in bottom layout "Top Rated Products"
   var _suggestedItem = Padding(
-    padding: const EdgeInsets.only(left: 15.0, right: 20.0, top: 30.0, bottom: 20.0),
+    padding:
+        const EdgeInsets.only(left: 15.0, right: 20.0, top: 30.0, bottom: 20.0),
     child: Container(
       height: 280.0,
       child: Column(
@@ -233,35 +227,6 @@ class _ProductWrapperState extends State<ProductWrapper> {
     ),
   );
 
-  Widget _buildRating(String date, String details, Function changeRating,String image) {
-    return ListTile(
-      leading: Container(
-        height: 45.0,
-        width: 45.0,
-        decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage(image),fit: BoxFit.cover),
-            borderRadius: BorderRadius.all(Radius.circular(50.0))
-        ),
-      ),
-      title: Row(
-        children: <Widget>[
-//          StarRating(
-//              size: 20.0,
-//              rating: 3.5,
-//              starCount: 5,
-//              color: Colors.yellow,
-//              onRatingChanged: changeRating),
-          SizedBox(width: 8.0),
-          Text(
-            date,
-            style: TextStyle(fontSize: 12.0),
-          )
-        ],
-      ),
-      subtitle: Text(details,style: _detailText,),
-    );
-  }
-
 
 
   @override
@@ -271,8 +236,8 @@ class _ProductWrapperState extends State<ProductWrapper> {
         builder: (BuildContext context, ProductsState state) {
           if (state is ProductsLoadingState) {
             return Center(child: CircularProgressIndicator());
-          }else if(state is ProductsloadedState){
-            List<dynamic>? prolist=state.product.products_image_list;
+          } else if (state is ProductsloadedState) {
+            List<dynamic>? prolist = state.product.products_image_list;
             prolist?.insert(0, state.product.products_image);
 //            var proimglist =prolist?.map((s) =>NetworkImage(s)).toList();
             return Scaffold(
@@ -281,8 +246,8 @@ class _ProductWrapperState extends State<ProductWrapper> {
                 actions: <Widget>[
                   InkWell(
                     onTap: () {
-                      Navigator.of(context).push(
-                          PageRouteBuilder(pageBuilder: (_, __, ___) => new cart()));
+                      Navigator.of(context).push(PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => new cart()));
                     },
                     child: Stack(
                       alignment: AlignmentDirectional(-1.0, -0.8),
@@ -298,7 +263,8 @@ class _ProductWrapperState extends State<ProductWrapper> {
                           backgroundColor: Colors.red,
                           child: Text(
                             valueItemChart.toString(),
-                            style: TextStyle(color: Colors.white, fontSize: 13.0),
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 13.0),
                           ),
                         ),
                       ],
@@ -332,26 +298,32 @@ class _ProductWrapperState extends State<ProductWrapper> {
                               tag: "hero-grid-${state.product.products_id}",
                               child: Material(
                                 child: new Carousel(
-                                  dotColor: Colors.black26,
-                                  dotIncreaseSize: 1.7,
-                                  dotBgColor: Colors.transparent,
-                                  autoplay: false,
-                                  radius:Radius.circular(8.0),
-                                  boxFit: BoxFit.cover,
-                                  overlayShadowColors:(Colors.grey[800]!=null)?Colors.grey[800]:Colors.grey[800],
+                                    dotColor: Colors.black26,
+                                    dotIncreaseSize: 1.7,
+                                    dotBgColor: Colors.transparent,
+                                    autoplay: false,
+                                    radius: Radius.circular(8.0),
+                                    boxFit: BoxFit.cover,
+                                    overlayShadowColors:
+                                        (Colors.grey[800] != null)
+                                            ? Colors.grey[800]
+                                            : Colors.grey[800],
 //                                  images: [
 //                                    NetworkImage(state.product.products_image),
 //                                    NetworkImage(state.product.products_image),
 //                                    NetworkImage(state.product.products_image),
 //                                  ],
-                                  images:prolist!.map((s) =>NetworkImage(s) as dynamic).toList()
-                                ),
+                                    images: prolist!
+                                        .map((s) => NetworkImage(s) as dynamic)
+                                        .toList()),
                               ),
                             ),
                           ),
+
                           /// Background white title,price and ratting
                           Container(
-                            decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                            decoration:
+                                BoxDecoration(color: Colors.white, boxShadow: [
                               BoxShadow(
                                 color: Color(0xFF656565).withOpacity(0.15),
                                 blurRadius: 1.0,
@@ -359,7 +331,8 @@ class _ProductWrapperState extends State<ProductWrapper> {
                               )
                             ]),
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 20.0, top: 10.0),
+                              padding:
+                                  const EdgeInsets.only(left: 20.0, top: 10.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -378,10 +351,11 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                     height: 1.0,
                                   ),
                                   Padding(
-                                    padding:
-                                    const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                                    padding: const EdgeInsets.only(
+                                        top: 10.0, bottom: 10.0),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         Row(
                                           children: <Widget>[
@@ -390,23 +364,25 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                               width: 75.0,
                                               decoration: BoxDecoration(
                                                 color: Colors.lightGreen,
-                                                borderRadius: BorderRadius
-                                                    .all(Radius.circular(20.0)),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(20.0)),
                                               ),
                                               child: Row(
                                                 crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                                    CrossAxisAlignment.center,
                                                 mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                                    MainAxisAlignment.center,
                                                 children: <Widget>[
                                                   Text(
-                                                    state.product.products_quantity.toString(),
-                                                    style:
-                                                    TextStyle(color: Colors.white),
+                                                    state.product
+                                                        .products_quantity
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        color: Colors.white),
                                                   ),
                                                   Padding(
-                                                      padding:
-                                                      EdgeInsets.only(left: 8.0)),
+                                                      padding: EdgeInsets.only(
+                                                          left: 8.0)),
                                                   Icon(
                                                     Icons.star,
                                                     color: Colors.white,
@@ -418,9 +394,11 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                           ],
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(right: 15.0),
+                                          padding: const EdgeInsets.only(
+                                              right: 15.0),
                                           child: Text(
-                                            state.product.products_quantity.toString(),
+                                            state.product.products_quantity
+                                                .toString(),
                                             style: TextStyle(
                                                 color: Colors.black54,
                                                 fontSize: 13.0,
@@ -434,22 +412,26 @@ class _ProductWrapperState extends State<ProductWrapper> {
                               ),
                             ),
                           ),
+
                           /// Background white for chose Size and Color
                           Padding(
                             padding: const EdgeInsets.only(top: 10.0),
                             child: Container(
                               height: 220.0,
                               width: 600.0,
-                              decoration:
-                              BoxDecoration(color: Colors.white, boxShadow: [
-                                BoxShadow(
-                                  color: Color(0xFF656565).withOpacity(0.15),
-                                  blurRadius: 1.0,
-                                  spreadRadius: 0.2,
-                                )
-                              ]),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Color(0xFF656565).withOpacity(0.15),
+                                      blurRadius: 1.0,
+                                      spreadRadius: 0.2,
+                                    )
+                                  ]),
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 20.0, left: 20.0),
+                                padding: const EdgeInsets.only(
+                                    top: 20.0, left: 20.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
@@ -459,26 +441,34 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                         RadioButtonCustom(
                                           txt: "S",
                                         ),
-                                        Padding(padding: EdgeInsets.only(left: 15.0)),
+                                        Padding(
+                                            padding:
+                                                EdgeInsets.only(left: 15.0)),
                                         RadioButtonCustom(
                                           txt: "M",
                                         ),
-                                        Padding(padding: EdgeInsets.only(left: 15.0)),
+                                        Padding(
+                                            padding:
+                                                EdgeInsets.only(left: 15.0)),
                                         RadioButtonCustom(
                                           txt: "L",
                                         ),
-                                        Padding(padding: EdgeInsets.only(left: 15.0)),
+                                        Padding(
+                                            padding:
+                                                EdgeInsets.only(left: 15.0)),
                                         RadioButtonCustom(
                                           txt: "XL",
                                         ),
                                       ],
                                     ),
-                                    Padding(padding: EdgeInsets.only(top: 15.0)),
+                                    Padding(
+                                        padding: EdgeInsets.only(top: 15.0)),
                                     Divider(
                                       color: Colors.black12,
                                       height: 1.0,
                                     ),
-                                    Padding(padding: EdgeInsets.only(top: 10.0)),
+                                    Padding(
+                                        padding: EdgeInsets.only(top: 10.0)),
                                     Text(
                                       "Color",
                                       style: _subHeaderCustomStyle,
@@ -486,9 +476,13 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                     Row(
                                       children: <Widget>[
                                         RadioButtonColor(Colors.black),
-                                        Padding(padding: EdgeInsets.only(left: 15.0)),
+                                        Padding(
+                                            padding:
+                                                EdgeInsets.only(left: 15.0)),
                                         RadioButtonColor(Colors.white),
-                                        Padding(padding: EdgeInsets.only(left: 15.0)),
+                                        Padding(
+                                            padding:
+                                                EdgeInsets.only(left: 15.0)),
                                         RadioButtonColor(Colors.blue),
                                       ],
                                     ),
@@ -504,21 +498,24 @@ class _ProductWrapperState extends State<ProductWrapper> {
                             child: Container(
                               height: 205.0,
                               width: 600.0,
-                              decoration:
-                              BoxDecoration(color: Colors.white, boxShadow: [
-                                BoxShadow(
-                                  color: Color(0xFF656565).withOpacity(0.15),
-                                  blurRadius: 1.0,
-                                  spreadRadius: 0.2,
-                                )
-                              ]),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Color(0xFF656565).withOpacity(0.15),
+                                      blurRadius: 1.0,
+                                      spreadRadius: 0.2,
+                                    )
+                                  ]),
                               child: Padding(
                                 padding: EdgeInsets.only(top: 20.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 20.0),
+                                      padding:
+                                          const EdgeInsets.only(left: 20.0),
                                       child: Text(
                                         "Description",
                                         style: _subHeaderCustomStyle,
@@ -532,12 +529,16 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                           left: 20.0),
 //                                      child: Text(state.product.products_shortdesc??state.product.products_name,
 //                                          style: _detailText),
-                                    child:_productDesc(state.product.products_shortdesc??state.product.products_name),
+                                      child: _productDesc(
+                                          state.product.products_shortdesc ??
+                                              state.product.products_name),
                                     ),
                                     Center(
                                       child: InkWell(
                                         onTap: () {
-                                          _bottomSheet(state.product.products_description??state.product.products_name);
+                                          _bottomSheet(state.product
+                                                  .products_description ??
+                                              state.product.products_name);
                                         },
                                         child: Text(
                                           "View More",
@@ -556,111 +557,8 @@ class _ProductWrapperState extends State<ProductWrapper> {
                             ),
                           ),
 
-                          /// Background white for Ratting
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: Container(
-                              height:415.0,
-                              width: 600.0,
-                              decoration:
-                              BoxDecoration(color: Colors.white, boxShadow: [
-                                BoxShadow(
-                                  color: Color(0xFF656565).withOpacity(0.15),
-                                  blurRadius: 1.0,
-                                  spreadRadius: 0.2,
-                                )
-                              ]),
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 20.0,left: 20.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Text('Reviews',style: _subHeaderCustomStyle,),
-                                        Padding(
-                                          padding: const EdgeInsets.only(left:20.0,top: 15.0,bottom: 15.0),
-                                          child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: <Widget>[
-                                              InkWell(
-                                                child: Padding(
-                                                    padding:EdgeInsets.only(top:2.0,right: 3.0),
-                                                    child: Text('View All',style: _subHeaderCustomStyle.copyWith(color: Colors.indigoAccent,fontSize: 14.0),)),
-                                                onTap: () {
-                                                  Navigator.of(context).push(PageRouteBuilder(pageBuilder: (_,__,___)=>ReviewsAll()));
-                                                },
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(right: 15.0,top: 2.0),
-                                                child: Icon(Icons.arrow_forward_ios,size: 18.0,color: Colors.black54,),
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      children: <Widget>[
-                                        Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: <Widget>[
-//                                      StarRating(
-//                                        size: 25.0,
-//                                        starCount: 5,
-//                                        rating: 4.0,
-//                                        color: Colors.yellow,
-//                                      ),
-                                              SizedBox(width: 5.0),
-                                              Text('8 Reviews')
-                                            ]),
-                                      ],
-                                    ),
-                                    Padding(padding: EdgeInsets.only(left: 0.0,right: 20.0,top: 15.0,bottom: 7.0),
-                                      child: _line(),
-                                    ),
-                                    _buildRating('18 Nov 2018',
-                                        'Item delivered in good condition. I will recommend to other buyer.',
-                                            (rating) {
-                                          setState(() {
-                                            this.rating = rating;
-                                          });
-                                        },
-                                        "assets/avatars/avatar-1.jpg"
-                                    ),
-                                    Padding(padding: EdgeInsets.only(left: 0.0,right: 20.0,top: 15.0,bottom: 7.0),
-                                      child: _line(),
-                                    ),
-                                    _buildRating('18 Nov 2018',
-                                        'Item delivered in good condition. I will recommend to other buyer.',
-                                            (rating) {
-                                          setState(() {
-                                            this.rating = rating;
-                                          });
-                                        },
-                                        "assets/avatars/avatar-4.jpg"
-                                    ),
-                                    Padding(padding: EdgeInsets.only(left: 0.0,right: 20.0,top: 15.0,bottom: 7.0),
-                                      child: _line(),
-                                    ),
-                                    _buildRating('18 Nov 2018',
-                                        'Item delivered in good condition. I will recommend to other buyer.',
-                                            (rating) {
-                                          setState(() {
-                                            this.rating = rating;
-                                          });
-                                        },
-                                        "assets/avatars/avatar-2.jpg"
-                                    ),
-                                    Padding(padding: EdgeInsets.only(bottom: 20.0)),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-
+                          ///review 出现位置
+                          ReviewInfoContiner(),
                           _suggestedItem
                         ],
                       ),
@@ -706,7 +604,8 @@ class _ProductWrapperState extends State<ProductWrapper> {
                             InkWell(
                               onTap: () {
                                 Navigator.of(context).push(PageRouteBuilder(
-                                    pageBuilder: (_, ___, ____) => new chatItem()));
+                                    pageBuilder: (_, ___, ____) =>
+                                        new chatItem()));
                               },
                               child: Container(
                                 height: 40.0,
@@ -725,7 +624,8 @@ class _ProductWrapperState extends State<ProductWrapper> {
                             InkWell(
                               onTap: () {
                                 Navigator.of(context).push(PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) => new delivery()));
+                                    pageBuilder: (_, __, ___) =>
+                                        new delivery()));
                               },
                               child: Container(
                                 height: 45.0,
@@ -757,9 +657,238 @@ class _ProductWrapperState extends State<ProductWrapper> {
   }
 }
 
+class ReviewInfoContiner extends StatefulWidget {
+  @override
+  _ReviewInfoContinerState createState() => _ReviewInfoContinerState();
+}
+
+class _ReviewInfoContinerState extends State<ReviewInfoContiner> {
+  double rating = 3.5;
+  /// Custom Text for Detail title
+  static var _detailText = TextStyle(
+      fontFamily: "Gotik",
+      color: Colors.black54,
+      letterSpacing: 0.3,
+      wordSpacing: 0.5);
+
+  /// Custom Text for Header title
+  static var _subHeaderCustomStyle = TextStyle(
+      color: Colors.black54,
+      fontWeight: FontWeight.w700,
+      fontFamily: "Gotik",
+      fontSize: 16.0);
+  Widget _buildRating(
+      String date, String details, Function changeRating, String image) {
+    return ListTile(
+      leading: Container(
+        height: 45.0,
+        width: 45.0,
+        decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
+            borderRadius: BorderRadius.all(Radius.circular(50.0))),
+      ),
+      title: Row(
+        children: <Widget>[
+//          StarRating(
+//              size: 20.0,
+//              rating: 3.5,
+//              starCount: 5,
+//              color: Colors.yellow,
+//              onRatingChanged: changeRating),
+          SizedBox(width: 8.0),
+          Text(
+            date,
+            style: TextStyle(fontSize: 12.0),
+          )
+        ],
+      ),
+      subtitle: Text(
+        details,
+        style: _detailText,
+      ),
+    );
+  }
+
+  Widget _buildReviwlist(){
+    return Container(
+//      height: 120.0,
+      child:Row(
+        children: <Widget>[
+      Expanded(
+        child:Padding(
+            padding: EdgeInsets.only(
+                left: 0.0,
+                right: 20.0,
+                top: 15.0,
+                bottom: 7.0),
+            child: _line(),
+          ),
+      ),
+          _buildRating('18 Nov 2018',
+              'Item delivered in good condition. I will recommend to other buyer.',
+                  (rating) {
+                setState(() {
+                  this.rating = rating;
+                });
+              }, "assets/avatars/avatar-1.jpg"),
+//    ),
+//    )
+        ])
+    );
+  }
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ReviewsBloc, ReviewsState>(
+        bloc: BlocProvider.of<ReviewsBloc>(context),
+        builder: (BuildContext context, ReviewsState state) {
+          if (state is ReviewloadingState) {
+
+            return Center(child: CircularProgressIndicator());
+          } else if (state is ReviewloadedState) {
+            return Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Container(
+                  height: 415.0,
+                  width: 600.0,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color:
+                          Color(0xFF656565).withOpacity(0.15),
+                          blurRadius: 1.0,
+                          spreadRadius: 0.2,
+                        )
+                      ]),
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 20.0, left: 20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              'Reviews',
+                              style: _subHeaderCustomStyle,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20.0,
+                                  top: 15.0,
+                                  bottom: 15.0),
+                              child: Row(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                MainAxisAlignment.start,
+                                children: <Widget>[
+                                  InkWell(
+                                    child: Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 2.0, right: 3.0),
+                                        child: Text(
+                                          'View All',
+                                          style: _subHeaderCustomStyle
+                                              .copyWith(
+                                              color: Colors
+                                                  .indigoAccent,
+                                              fontSize: 14.0),
+                                        )),
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          PageRouteBuilder(
+                                              pageBuilder: (_, __,
+                                                  ___) =>
+                                                  ReviewsAll()));
+                                    },
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 15.0, top: 2.0),
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 18.0,
+                                      color: Colors.black54,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.start,
+                                children: <Widget>[
+//                                      StarRating(
+//                                        size: 25.0,
+//                                        starCount: 5,
+//                                        rating: 4.0,
+//                                        color: Colors.yellow,
+//                                      ),
+                                  SizedBox(width: 5.0),
+                                  Text(state.reviewlist.length.toString()+' Reviews')
+                                ]),
+                          ],
+                        ),
+//                        state.reviewlist.map()
+                      for ( var i in state.reviewlist )
+                        _buildReviwlist(),
+
+
+
+//                        Padding(
+//                          padding: EdgeInsets.only(
+//                              left: 0.0,
+//                              right: 20.0,
+//                              top: 15.0,
+//                              bottom: 7.0),
+//                          child: _line(),
+//                        ),
+
+//                        _buildRating('18 Nov 2018',
+//                            'Item delivered in good condition. I will recommend to other buyer.',
+//                                (rating) {
+//                              setState(() {
+//                                this.rating = rating;
+//                              });
+//                            }, "assets/avatars/avatar-4.jpg"),
+//                        Padding(
+//                          padding: EdgeInsets.only(
+//                              left: 0.0,
+//                              right: 20.0,
+//                              top: 15.0,
+//                              bottom: 7.0),
+//                          child: _line(),
+//                        ),
+//                        _buildRating('18 Nov 2018',
+//                            'Item delivered in good condition. I will recommend to other buyer.',
+//                                (rating) {
+//                              setState(() {
+//                                this.rating = rating;
+//                              });
+//                            }, "assets/avatars/avatar-2.jpg"),
+                        Padding(
+                            padding: EdgeInsets.only(bottom: 20.0)),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+//            );
+          }
+          return Container();
+        });
+  }
+}
+
 /// RadioButton for item choose in size
 class RadioButtonCustom extends StatefulWidget {
-   final String txt;
+  final String txt;
 
   RadioButtonCustom({required this.txt});
 
@@ -779,17 +908,17 @@ class _RadioButtonCustomState extends State<RadioButtonCustom> {
       padding: const EdgeInsets.only(top: 10.0),
       child: InkWell(
         onTap: () {
-        setState(() {
-              if (itemSelected == false) {
-                setState(() {
-                  itemSelected = true;
-                });
-              } else if (itemSelected == true) {
-                setState(() {
-                  itemSelected = false;
-                });
-              }
-            });
+          setState(() {
+            if (itemSelected == false) {
+              setState(() {
+                itemSelected = true;
+              });
+            } else if (itemSelected == true) {
+              setState(() {
+                itemSelected = false;
+              });
+            }
+          });
         },
         child: Container(
           height: 37.0,
@@ -840,7 +969,6 @@ class _RadioButtonColorState extends State<RadioButtonColor> {
             });
           } else if (itemSelected == true) {
             setState(() {
-
               itemSelected = false;
             });
           }
@@ -864,7 +992,12 @@ class _RadioButtonColorState extends State<RadioButtonColor> {
 class FavoriteItem extends StatelessWidget {
   String image, Rating, Salary, title, sale;
 
-  FavoriteItem({required this.image, required this.Rating, required this.Salary, required this.title, required this.sale});
+  FavoriteItem(
+      {required this.image,
+      required this.Rating,
+      required this.Salary,
+      required this.title,
+      required this.sale});
 
   @override
   Widget build(BuildContext context) {
@@ -968,8 +1101,8 @@ class FavoriteItem extends StatelessWidget {
   }
 }
 
-Widget _line(){
-  return  Container(
+Widget _line() {
+  return Container(
     height: 0.9,
     width: double.infinity,
     color: Colors.black12,

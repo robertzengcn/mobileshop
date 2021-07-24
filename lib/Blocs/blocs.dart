@@ -4,4 +4,5 @@ export './products/products.dart';
 export './featureds/featureds.dart';
 export './authentication/authentication.dart';
 export './login/login_bloc.dart';
+export './reviews/reviews_bloc.dart';
 

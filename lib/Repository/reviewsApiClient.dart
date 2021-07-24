@@ -22,7 +22,7 @@ class ReviewsApiClient{
 //    Future<http.Response> response =httpclient.get('Carouse');
 
     if (response.statusCode != 200) {
-    } else {
+
       throw Exception('Unable to fetch reviews from the REST API');
 
     }
