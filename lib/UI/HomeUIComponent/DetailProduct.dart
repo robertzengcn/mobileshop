@@ -6,15 +6,18 @@ import 'package:amigatoy/UI/HomeUIComponent/ChatItem.dart';
 import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 
 //import 'package:flutter_rating/flutter_rating.dart';
-import 'package:amigatoy/UI/HomeUIComponent/ReviewLayout.dart';
+//import 'package:amigatoy/UI/HomeUIComponent/ReviewLayout.dart';
 import 'package:amigatoy/Models/Product.dart';
-
+import 'package:amigatoy/Models/Review.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Repository/repository.dart';
 //import 'package:html/parser.dart' as htmlparser;
 //import 'package:html/dom.dart' as dom;
 import 'package:flutter_html/flutter_html.dart';
+import 'package:intl/intl.dart';
+import 'package:amigatoy/Models/Product_options.dart';
+import 'package:amigatoy/Models/Product_attributes.dart';
 
 class detailProduk extends StatefulWidget {
   Product gridItem;
@@ -57,8 +60,17 @@ class _ProductWrapperState extends State<ProductWrapper> {
   //  @override
 //  static late BuildContext ctx;
   int valueItemChart = 0;
-  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
+  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+  List<int?> aoptionList = [0,0,0,0,0,0,0,0,0,0,0];
+  void initState() {
+//    for (var i = 0; i < 10; i++) {
+//      aoptionList[i] = 0;
+//    }
+    super.initState();
+  }
+
+//  int? _character =0;
   Widget _productDesc(String productdesc) {
     Widget html = Html(
       data: productdesc,
@@ -227,8 +239,136 @@ class _ProductWrapperState extends State<ProductWrapper> {
     ),
   );
 
+  List<Widget> _attributeslist(
+      List<ProductAtttibutes>? productatttibutes, int changeKey) {
+    List<Widget> wList = [];
+//    print(productatttibutes);
+//    int? _pcharacter = productatttibutes?.first.products_attributes_id;
+    if (aoptionList[changeKey] == 0) {
+      aoptionList[changeKey] = productatttibutes?.first.products_attributes_id;
+    }
+//    print(_character);
+    productatttibutes?.forEach((item) {
+//      print(item.products_options_type);
+      if (item.products_options_type == 2) {
+//        wList.add(RadioButtonCustom(
+//          txt: item.products_options_values_name,
+//        ));
+//            SizedBox(
+//            Expanded(
+//          child:
+        wList.add(SizedBox(
+            height: 50,
+            width: 200,
+            child: RadioListTile<int>(
+              title: Text(item.products_options_values_name),
+              value: item.products_attributes_id,
+              groupValue: aoptionList[changeKey],
+              onChanged: (int? value) {
+                setState(() {
 
+                  aoptionList[changeKey] = value;
+                });
+              },
+            )));
+//        ));
+//        wList.add(Padding(padding: EdgeInsets.only(left: 15.0)));
 
+      }
+    });
+    return wList;
+  }
+
+  ///产品属性列表
+  Widget _getAttributes(ProductOptions products_option,
+      List<ProductAtttibutes>? productatttibutes, int changeKey) {
+    //loop product attributes
+    List<Widget> oList = [];
+//    oList.add(Text(products_option.products_options_name,
+//        style: _subHeaderCustomStyle));
+    oList.add(Padding(
+      padding: const EdgeInsets.only(top: 20, bottom: 30),
+      child: Text(products_option.products_options_name,
+          style: _subHeaderCustomStyle),
+    ));
+//    oList.add(SizedBox(height: 30));
+    List<Widget> attlist = _attributeslist(productatttibutes, changeKey);
+    Widget rowColumn = Column(
+//        mainAxisAlignment: MainAxisAlignment.center,
+//        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: attlist);
+
+    oList.add(rowColumn);
+
+    return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: oList);
+
+//    return Row(
+//        crossAxisAlignment: CrossAxisAlignment.start,
+//        mainAxisSize: MainAxisSize.min,
+//        children: <Widget>[
+//
+//          Text(products_option.products_options_name, style: _subHeaderCustomStyle),
+//          Row(
+//            children: <Widget>[
+//              RadioButtonCustom(
+//                txt: "S",
+//              ),
+//              Padding(
+//                  padding:
+//                  EdgeInsets.only(left: 15.0)),
+//              RadioButtonCustom(
+//                txt: "M",
+//              ),
+//              Padding(
+//                  padding:
+//                  EdgeInsets.only(left: 15.0)),
+//              RadioButtonCustom(
+//                txt: "L",
+//              ),
+//              Padding(
+//                  padding:
+//                  EdgeInsets.only(left: 15.0)),
+//              RadioButtonCustom(
+//                txt: "XL",
+//              ),
+//            ],
+//          ),
+//          Padding(
+//              padding: EdgeInsets.only(top: 15.0)),
+//          Divider(
+//            color: Colors.black12,
+//            height: 1.0,
+//          ),
+//          Padding(
+//              padding: EdgeInsets.only(top: 10.0)),
+//
+//          Text(
+//            "Color",
+//            style: _subHeaderCustomStyle,
+//          ),
+//          Row(
+//            children: <Widget>[
+//              RadioButtonColor(Colors.black),
+//              Padding(
+//                  padding:
+//                  EdgeInsets.only(left: 15.0)),
+//              RadioButtonColor(Colors.white),
+//              Padding(
+//                  padding:
+//                  EdgeInsets.only(left: 15.0)),
+//              RadioButtonColor(Colors.blue),
+//            ],
+//          ),
+//
+//        ]);
+  }
+
+  int? optionOne = 0;
+  int? option1 = 0;
+  List<dynamic>? prolist=[];
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductsBloc, ProductsState>(
@@ -237,9 +377,43 @@ class _ProductWrapperState extends State<ProductWrapper> {
           if (state is ProductsLoadingState) {
             return Center(child: CircularProgressIndicator());
           } else if (state is ProductsloadedState) {
-            List<dynamic>? prolist = state.product.products_image_list;
+            prolist=[];
+            print(state.product.products_image_list);
+//            prolist = state.product.products_image_list;
             prolist?.insert(0, state.product.products_image);
-//            var proimglist =prolist?.map((s) =>NetworkImage(s)).toList();
+//            print(prolist);
+            List<Widget> productAtt = [];
+
+
+//            var products_attributor_arr=state.product.products_attributor?.values.toList();
+//            state.product.products_option?.map((i,v){
+//              _getAttributes(v,products_attributor_arr[i]);
+//            });
+            //处理产品属性
+            if (state.product.products_option != null) {
+              int i = 1;
+              for (var key
+                  in state.product.products_option?.values.toList() ?? []) {
+
+                Widget productAttri = _getAttributes(
+                    key,
+                    state.product.products_attributor?[key.products_option_id],
+                    i);
+//                print(state.product.products_attributor?.keys);
+//                print(348);
+//                print(key.products_option_id);
+//                print(state.product.products_attributor?[key.products_option_id]);
+                productAtt.add(productAttri);
+                productAtt.add(Padding(padding: EdgeInsets.only(top: 15.0)));
+                productAtt.add(Divider(
+                  color: Colors.black12,
+                  height: 1.0,
+                ));
+                productAtt.add(Padding(padding: EdgeInsets.only(top: 10.0)));
+                i++;
+              }
+//              print(productAtt);
+            }
             return Scaffold(
               key: _key,
               appBar: AppBar(
@@ -308,11 +482,6 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                         (Colors.grey[800] != null)
                                             ? Colors.grey[800]
                                             : Colors.grey[800],
-//                                  images: [
-//                                    NetworkImage(state.product.products_image),
-//                                    NetworkImage(state.product.products_image),
-//                                    NetworkImage(state.product.products_image),
-//                                  ],
                                     images: prolist!
                                         .map((s) => NetworkImage(s) as dynamic)
                                         .toList()),
@@ -433,61 +602,65 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                 padding: const EdgeInsets.only(
                                     top: 20.0, left: 20.0),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text("Size", style: _subHeaderCustomStyle),
-                                    Row(
-                                      children: <Widget>[
-                                        RadioButtonCustom(
-                                          txt: "S",
-                                        ),
-                                        Padding(
-                                            padding:
-                                                EdgeInsets.only(left: 15.0)),
-                                        RadioButtonCustom(
-                                          txt: "M",
-                                        ),
-                                        Padding(
-                                            padding:
-                                                EdgeInsets.only(left: 15.0)),
-                                        RadioButtonCustom(
-                                          txt: "L",
-                                        ),
-                                        Padding(
-                                            padding:
-                                                EdgeInsets.only(left: 15.0)),
-                                        RadioButtonCustom(
-                                          txt: "XL",
-                                        ),
-                                      ],
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: productAtt
+//                                  <Widget>[
+//                                    ///attributes start
+//                                    Text("Size", style: _subHeaderCustomStyle),
+//                                    Row(
+//                                      children: <Widget>[
+//                                        RadioButtonCustom(
+//                                          txt: "S",
+//                                        ),
+//                                        Padding(
+//                                            padding:
+//                                                EdgeInsets.only(left: 15.0)),
+//                                        RadioButtonCustom(
+//                                          txt: "M",
+//                                        ),
+//                                        Padding(
+//                                            padding:
+//                                                EdgeInsets.only(left: 15.0)),
+//                                        RadioButtonCustom(
+//                                          txt: "L",
+//                                        ),
+//                                        Padding(
+//                                            padding:
+//                                                EdgeInsets.only(left: 15.0)),
+//                                        RadioButtonCustom(
+//                                          txt: "XL",
+//                                        ),
+//                                      ],
+//                                    ),
+//                                    Padding(
+//                                        padding: EdgeInsets.only(top: 15.0)),
+//                                    Divider(
+//                                      color: Colors.black12,
+//                                      height: 1.0,
+//                                    ),
+//                                    Padding(
+//                                        padding: EdgeInsets.only(top: 10.0)),
+//                                    Text(
+//                                      "Color",
+//                                      style: _subHeaderCustomStyle,
+//                                    ),
+//                                    Row(
+//                                      children: <Widget>[
+//                                        RadioButtonColor(Colors.black),
+//                                        Padding(
+//                                            padding:
+//                                                EdgeInsets.only(left: 15.0)),
+//                                        RadioButtonColor(Colors.white),
+//                                        Padding(
+//                                            padding:
+//                                                EdgeInsets.only(left: 15.0)),
+//                                        RadioButtonColor(Colors.blue),
+//                                      ],
+//                                    ),
+//                                    ///attributes end
+//                                  ],
                                     ),
-                                    Padding(
-                                        padding: EdgeInsets.only(top: 15.0)),
-                                    Divider(
-                                      color: Colors.black12,
-                                      height: 1.0,
-                                    ),
-                                    Padding(
-                                        padding: EdgeInsets.only(top: 10.0)),
-                                    Text(
-                                      "Color",
-                                      style: _subHeaderCustomStyle,
-                                    ),
-                                    Row(
-                                      children: <Widget>[
-                                        RadioButtonColor(Colors.black),
-                                        Padding(
-                                            padding:
-                                                EdgeInsets.only(left: 15.0)),
-                                        RadioButtonColor(Colors.white),
-                                        Padding(
-                                            padding:
-                                                EdgeInsets.only(left: 15.0)),
-                                        RadioButtonColor(Colors.blue),
-                                      ],
-                                    ),
-                                  ],
-                                ),
                               ),
                             ),
                           ),
@@ -664,6 +837,7 @@ class ReviewInfoContiner extends StatefulWidget {
 
 class _ReviewInfoContinerState extends State<ReviewInfoContiner> {
   double rating = 3.5;
+
   /// Custom Text for Detail title
   static var _detailText = TextStyle(
       fontFamily: "Gotik",
@@ -679,7 +853,8 @@ class _ReviewInfoContinerState extends State<ReviewInfoContiner> {
       fontSize: 16.0);
   Widget _buildRating(
       String date, String details, Function changeRating, String image) {
-    return ListTile(
+    return Expanded(
+        child: ListTile(
       leading: Container(
         height: 45.0,
         width: 45.0,
@@ -706,140 +881,122 @@ class _ReviewInfoContinerState extends State<ReviewInfoContiner> {
         details,
         style: _detailText,
       ),
-    );
+    ));
   }
 
-  Widget _buildReviwlist(){
-    return Container(
-//      height: 120.0,
-      child:Row(
+  Widget _buildReviwlist(Review review) {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd H:m');
+    final String reviewdate = formatter.format(review.review_time);
+    return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-      Expanded(
-        child:Padding(
-            padding: EdgeInsets.only(
-                left: 0.0,
-                right: 20.0,
-                top: 15.0,
-                bottom: 7.0),
-            child: _line(),
-          ),
-      ),
-          _buildRating('18 Nov 2018',
-              'Item delivered in good condition. I will recommend to other buyer.',
-                  (rating) {
-                setState(() {
-                  this.rating = rating;
-                });
-              }, "assets/avatars/avatar-1.jpg"),
+//      Expanded(
+//        child: Padding(
+//          padding:
+//              EdgeInsets.only(left: 0.0, right: 2.0, top: 5.0, bottom: 7.0),
+//          child: _line(),
+//        ),
+//      ),
+          _buildRating(reviewdate, review.description, (rating) {
+            setState(() {
+              this.rating = rating;
+            });
+          }, "assets/avatars/avatar-1.jpg"),
+
 //    ),
 //    )
-        ])
-    );
+        ]);
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ReviewsBloc, ReviewsState>(
         bloc: BlocProvider.of<ReviewsBloc>(context),
         builder: (BuildContext context, ReviewsState state) {
           if (state is ReviewloadingState) {
-
             return Center(child: CircularProgressIndicator());
           } else if (state is ReviewloadedState) {
             return Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: Container(
-                  height: 415.0,
-                  width: 600.0,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color:
-                          Color(0xFF656565).withOpacity(0.15),
-                          blurRadius: 1.0,
-                          spreadRadius: 0.2,
-                        )
-                      ]),
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 20.0, left: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              'Reviews',
-                              style: _subHeaderCustomStyle,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20.0,
-                                  top: 15.0,
-                                  bottom: 15.0),
-                              child: Row(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                MainAxisAlignment.start,
-                                children: <Widget>[
-                                  InkWell(
-                                    child: Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 2.0, right: 3.0),
-                                        child: Text(
-                                          'View All',
-                                          style: _subHeaderCustomStyle
-                                              .copyWith(
-                                              color: Colors
-                                                  .indigoAccent,
-                                              fontSize: 14.0),
-                                        )),
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                          PageRouteBuilder(
-                                              pageBuilder: (_, __,
-                                                  ___) =>
-                                                  ReviewsAll()));
-                                    },
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 15.0, top: 2.0),
-                                    child: Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 18.0,
-                                      color: Colors.black54,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.start,
-                                children: <Widget>[
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Container(
+                height: 415.0,
+                width: 600.0,
+                decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                  BoxShadow(
+                    color: Color(0xFF656565).withOpacity(0.15),
+                    blurRadius: 1.0,
+                    spreadRadius: 0.2,
+                  )
+                ]),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 20.0, left: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Reviews',
+                            style: _subHeaderCustomStyle,
+                          ),
+//                          Padding(
+//                            padding: const EdgeInsets.only(
+//                                left: 20.0, top: 15.0, bottom: 15.0),
+//                            child: Row(
+//                              crossAxisAlignment: CrossAxisAlignment.start,
+//                              mainAxisAlignment: MainAxisAlignment.start,
+//                              children: <Widget>[
+//                                InkWell(
+//                                  child: Padding(
+//                                      padding:
+//                                          EdgeInsets.only(top: 2.0, right: 3.0),
+//                                      child: Text(
+//                                        'View All',
+//                                        style: _subHeaderCustomStyle.copyWith(
+//                                            color: Colors.indigoAccent,
+//                                            fontSize: 14.0),
+//                                      )),
+//                                  onTap: () {
+//                                    Navigator.of(context).push(PageRouteBuilder(
+//                                        pageBuilder: (_, __, ___) =>
+//                                            ReviewsAll()));
+//                                  },
+//                                ),
+//                                Padding(
+//                                  padding: const EdgeInsets.only(
+//                                      right: 15.0, top: 2.0),
+//                                  child: Icon(
+//                                    Icons.arrow_forward_ios,
+//                                    size: 18.0,
+//                                    color: Colors.black54,
+//                                  ),
+//                                )
+//                              ],
+//                            ),
+//                          )
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
 //                                      StarRating(
 //                                        size: 25.0,
 //                                        starCount: 5,
 //                                        rating: 4.0,
 //                                        color: Colors.yellow,
 //                                      ),
-                                  SizedBox(width: 5.0),
-                                  Text(state.reviewlist.length.toString()+' Reviews')
-                                ]),
-                          ],
-                        ),
+                                SizedBox(width: 5.0),
+                                Text(state.reviewlist.length.toString() +
+                                    ' Reviews')
+                              ]),
+                        ],
+                      ),
 //                        state.reviewlist.map()
-                      for ( var i in state.reviewlist )
-                        _buildReviwlist(),
-
-
+                      for (var i in state.reviewlist) _buildReviwlist(i),
 
 //                        Padding(
 //                          padding: EdgeInsets.only(
@@ -872,13 +1029,12 @@ class _ReviewInfoContinerState extends State<ReviewInfoContiner> {
 //                                this.rating = rating;
 //                              });
 //                            }, "assets/avatars/avatar-2.jpg"),
-                        Padding(
-                            padding: EdgeInsets.only(bottom: 20.0)),
-                      ],
-                    ),
+                      Padding(padding: EdgeInsets.only(bottom: 20.0)),
+                    ],
                   ),
                 ),
-              );
+              ),
+            );
 //            );
           }
           return Container();
@@ -905,7 +1061,7 @@ class _RadioButtonCustomState extends State<RadioButtonCustom> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
+      padding: const EdgeInsets.only(top: 15.0),
       child: InkWell(
         onTap: () {
           setState(() {
@@ -1101,10 +1257,10 @@ class FavoriteItem extends StatelessWidget {
   }
 }
 
-Widget _line() {
-  return Container(
-    height: 0.9,
-    width: double.infinity,
-    color: Colors.black12,
-  );
-}
+//Widget _line() {
+//  return Container(
+//    height: 0.9,
+//    width: double.infinity,
+//    color: Colors.black12,
+//  );
+//}

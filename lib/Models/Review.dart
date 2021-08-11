@@ -30,7 +30,7 @@ class Review extends Equatable {
   static Review fromJson(dynamic json) {
     DateTime dt=DateTime.now().subtract(Duration(days:1));
     if(json['review_time']!=null){
-      DateTime dt=DateTime.parse(json['review_time']);
+      dt=DateTime.parse(json['review_time']);
     }
     return Review(
         id: json['review_id'] as int,
