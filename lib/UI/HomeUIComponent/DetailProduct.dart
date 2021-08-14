@@ -63,6 +63,7 @@ class _ProductWrapperState extends State<ProductWrapper> {
 
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
   List<int?> aoptionList = [0,0,0,0,0,0,0,0,0,0,0];
+  List<dynamic> prolist=[];
   void initState() {
 //    for (var i = 0; i < 10; i++) {
 //      aoptionList[i] = 0;
@@ -148,6 +149,22 @@ class _ProductWrapperState extends State<ProductWrapper> {
     fontFamily: "Gotik",
     fontSize: 17.0,
     fontWeight: FontWeight.w800,
+  );
+
+  /// Custom Text black
+  static var _normalpriceStyle = TextStyle(
+    color: Colors.red,
+    fontFamily: "Gotik",
+    fontSize: 17.0,
+    fontWeight: FontWeight.w800,
+  );
+  /// Custom Text black
+  static var _nomalpricedisableStyle = TextStyle(
+    color: Colors.grey,
+    fontFamily: "Gotik",
+    fontSize: 16.0,
+    fontWeight: FontWeight.w800,
+    decoration: TextDecoration.lineThrough,
   );
 
   /// Custom Text for Header title
@@ -239,6 +256,79 @@ class _ProductWrapperState extends State<ProductWrapper> {
     ),
   );
 
+  Widget _productSpecialdiv(double product_price,double? product_specials_price){
+    List<Widget> oList = [];
+    oList.add(Text(
+      '\$'+product_price.toString(),
+      style: product_specials_price!=null&&product_specials_price>0?_nomalpricedisableStyle:_normalpriceStyle,
+    ));
+
+    if(product_specials_price!=null&&product_specials_price>0){
+      oList.add(Padding(padding: EdgeInsets.only(top: 10.0)));
+      oList.add(Text(
+        '\$'+product_specials_price.toString(),
+        style: _normalpriceStyle,
+      ));
+    }
+    return Column(
+      children:oList
+    );
+  }
+
+  Widget _imageRadio(ProductAtttibutes item, int changeKey){
+    return Hero(
+      tag: "hero-grid-${item.products_attributes_id}",
+      child: Material(
+        child: InkWell(
+          onTap: () {
+            aoptionList[changeKey] = item.products_attributes_id;
+            Navigator.of(context).push(PageRouteBuilder(
+                opaque: false,
+                pageBuilder: (BuildContext context, _, __) {
+                  return new Material(
+                    color: Colors.black54,
+                    child: Container(
+                      padding: EdgeInsets.all(30.0),
+                      child: InkWell(
+                        child: Hero(
+                            tag: "hero-grid-${item.products_attributes_id}",
+                            child: Image.network(
+                              item.products_options_images_url!,
+                              width: 300.0,
+                              height: 300.0,
+                              alignment: Alignment.center,
+                              fit: BoxFit.contain,
+                            )),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                  );
+                },
+                transitionDuration: Duration(milliseconds: 500)));
+          },
+          child: SizedBox(
+              height: 50,
+              width: 80,
+              child:
+//              GestureDetector(
+//                onTap: () {
+//                  setState(() => aoptionList[changeKey] = item.products_attributes_id);},
+//                child:
+                Container(
+                  height: 56,
+                  width: 56,
+                  color: Colors.transparent,
+                  child: Image.network(item.products_options_images_url!),
+                ),
+//              )
+          )
+        ),
+      ),
+    );
+  }
+
   List<Widget> _attributeslist(
       List<ProductAtttibutes>? productatttibutes, int changeKey) {
     List<Widget> wList = [];
@@ -251,26 +341,42 @@ class _ProductWrapperState extends State<ProductWrapper> {
     productatttibutes?.forEach((item) {
 //      print(item.products_options_type);
       if (item.products_options_type == 2) {
-//        wList.add(RadioButtonCustom(
-//          txt: item.products_options_values_name,
-//        ));
-//            SizedBox(
-//            Expanded(
-//          child:
-        wList.add(SizedBox(
-            height: 50,
-            width: 200,
-            child: RadioListTile<int>(
-              title: Text(item.products_options_values_name),
-              value: item.products_attributes_id,
-              groupValue: aoptionList[changeKey],
-              onChanged: (int? value) {
-                setState(() {
 
-                  aoptionList[changeKey] = value;
-                });
-              },
-            )));
+
+        if(item.products_options_images_style) {//图片radio
+          if(aoptionList[changeKey]==null){
+            aoptionList[changeKey]=0;
+          }
+          wList.add(_imageRadio(item,changeKey)
+//              SizedBox(
+//              height: 50,
+//              width: 100,
+//              child:GestureDetector(
+//            onTap: () {
+//              setState(() => aoptionList[changeKey] = item.products_attributes_id);},
+//            child: Container(
+//              height: 56,
+//              width: 56,
+//              color: Colors.transparent,
+//              child: Image.network(item.products_options_images_url!),
+//            ),
+//          ))
+          );
+        }else{
+          wList.add(SizedBox(
+              height: 50,
+              width: 130,
+              child: RadioListTile<int>(
+                title: Text(item.products_options_values_name),
+                value: item.products_attributes_id,
+                groupValue: aoptionList[changeKey],
+                onChanged: (int? value) {
+                  setState(() {
+                    aoptionList[changeKey] = value;
+                  });
+                },
+              )));
+        }
 //        ));
 //        wList.add(Padding(padding: EdgeInsets.only(left: 15.0)));
 
@@ -288,12 +394,17 @@ class _ProductWrapperState extends State<ProductWrapper> {
 //        style: _subHeaderCustomStyle));
     oList.add(Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 30),
-      child: Text(products_option.products_options_name,
+      child: Text(products_option.products_options_name+":",
           style: _subHeaderCustomStyle),
     ));
 //    oList.add(SizedBox(height: 30));
     List<Widget> attlist = _attributeslist(productatttibutes, changeKey);
-    Widget rowColumn = Column(
+    Widget rowColumn = Wrap(
+        alignment:WrapAlignment.center,
+        direction:Axis.horizontal,
+        spacing:2.0,
+        runSpacing:4.0,
+//        mainAxisAlignment: MainAxisAlignment.center,
 //        mainAxisAlignment: MainAxisAlignment.center,
 //        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: attlist);
@@ -365,10 +476,30 @@ class _ProductWrapperState extends State<ProductWrapper> {
 //
 //        ]);
   }
+Widget _productSalewidget(int? productSales){
+  if(productSales!=null&&productSales>0){
+    return Padding(
+      padding: const EdgeInsets.only(
+          right: 15.0),
+      child: Text(
+        productSales
+            .toString()+" Orders",
+        style: TextStyle(
+            color: Colors.black54,
+            fontSize: 13.0,
+            fontWeight: FontWeight.w500),
+      ),
+    );
+  }else{
+    return Container();
+  }
+
+}
+
 
   int? optionOne = 0;
   int? option1 = 0;
-  List<dynamic>? prolist=[];
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductsBloc, ProductsState>(
@@ -377,10 +508,13 @@ class _ProductWrapperState extends State<ProductWrapper> {
           if (state is ProductsLoadingState) {
             return Center(child: CircularProgressIndicator());
           } else if (state is ProductsloadedState) {
+
             prolist=[];
-            print(state.product.products_image_list);
+            state.product.products_image_list?.forEach((value) {
+              prolist.add(value);
+            });
 //            prolist = state.product.products_image_list;
-            prolist?.insert(0, state.product.products_image);
+            prolist.insert(0, state.product.products_image);
 //            print(prolist);
             List<Widget> productAtt = [];
 
@@ -482,7 +616,7 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                         (Colors.grey[800] != null)
                                             ? Colors.grey[800]
                                             : Colors.grey[800],
-                                    images: prolist!
+                                    images: prolist
                                         .map((s) => NetworkImage(s) as dynamic)
                                         .toList()),
                               ),
@@ -509,11 +643,12 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                     state.product.products_name,
                                     style: _customTextStyle,
                                   ),
-                                  Padding(padding: EdgeInsets.only(top: 5.0)),
-                                  Text(
-                                    state.product.products_price.toString(),
-                                    style: _customTextStyle,
-                                  ),
+                                  Padding(padding: EdgeInsets.only(top: 15.0)),
+//                                  Text(
+//                                    '\$'+state.product.products_price.toString(),
+//                                    style: _normalpriceStyle,
+//                                  ),
+                                  _productSpecialdiv(state.product.products_price,state.product.product_specials),
                                   Padding(padding: EdgeInsets.only(top: 10.0)),
                                   Divider(
                                     color: Colors.black12,
@@ -562,18 +697,19 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                             ),
                                           ],
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 15.0),
-                                          child: Text(
-                                            state.product.products_quantity
-                                                .toString(),
-                                            style: TextStyle(
-                                                color: Colors.black54,
-                                                fontSize: 13.0,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ),
+                                        _productSalewidget(state.product.product_sales)
+//                                        Padding(
+//                                          padding: const EdgeInsets.only(
+//                                              right: 15.0),
+//                                          child: Text(
+//                                            state.product.products_quantity
+//                                                .toString(),
+//                                            style: TextStyle(
+//                                                color: Colors.black54,
+//                                                fontSize: 13.0,
+//                                                fontWeight: FontWeight.w500),
+//                                          ),
+//                                        ),
                                       ],
                                     ),
                                   )

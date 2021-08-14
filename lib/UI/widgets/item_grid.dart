@@ -64,8 +64,8 @@ class ItemGrid extends StatelessWidget {
                                         tag: "hero-grid-${products.products_id}",
                                         child: Image.network(
                                           products.products_image,
-                                          width: 300.0,
-                                          height: 300.0,
+                                          width: 400.0,
+                                          height: 400.0,
                                           alignment: Alignment.center,
                                           fit: BoxFit.contain,
                                         )),
@@ -130,7 +130,7 @@ class ItemGrid extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Text(
-                            products.products_quantity.toString(),
+                            products.products_price.toString(),
                             style: TextStyle(
                                 fontFamily: "Sans",
                                 color: Colors.black26,

@@ -16,6 +16,8 @@ class Product extends Equatable {
   final String? products_shortdesc; //产品简要描述
   final Map<int, List<ProductAtttibutes>>? products_attributor;
   final Map<int, ProductOptions>? products_option;
+  final double? product_specials;
+  final int? product_sales;//how many product sale out
 
   const Product(
       {required this.products_id,
@@ -29,7 +31,10 @@ class Product extends Equatable {
       this.products_description,
       this.products_shortdesc,
       this.products_attributor,
-      this.products_option});
+      this.products_option,
+        this.product_specials,
+        this.product_sales,
+      });
   @override
   List<Object> get props => [
         products_id,
@@ -46,14 +51,16 @@ class Product extends Equatable {
     bool attrnull = json['attrlist'] == null || (json['attrlist'].length == 0)
         ? true
         : false;
+
     bool optionnull =
         json['optlist'] == null || (json['optlist'].length == 0) ? true : false;
     List<String> products_image_list = [];
     if (!imagenull) {
-      print(53);
-      json['image_list'].map((value) {
-        products_image_list.add(value.fullurl);
+      json['image_list'].forEach((value) {
+
+        products_image_list.add(value['fullurl']);
       });
+
     }
     Map<int, List<ProductAtttibutes>> productattributes = new Map();
     Map<int, ProductOptions> productoption = new Map();
@@ -78,6 +85,15 @@ class Product extends Equatable {
         productoption[int.parse(i)] = ProductOptions.fromJson(v);
       });
     }
+    double products_specials=0;
+    if(json['products_specials'] !=null){
+      products_specials=json['products_specials'].toDouble();
+    }
+    int product_sales=0;
+    if(json['products_sales'] !=null){
+      product_sales=json['products_sales'] as int;
+    }
+
     return Product(
         products_name: json['products_name'],
         products_id: json['products_id'] as int,
@@ -90,6 +106,9 @@ class Product extends Equatable {
         products_description: json['products_description'],
         products_shortdesc: json['products_shortdesc'],
         products_attributor: productattributes,
-        products_option: productoption);
+        products_option: productoption,
+        product_specials:products_specials,
+        product_sales:product_sales
+    );
   }
 }

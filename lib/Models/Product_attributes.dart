@@ -7,6 +7,8 @@ class ProductAtttibutes extends Equatable {
   final int products_options_type;
   final String products_options_values_name; //ex stand
   final String? products_attributes_image; // image url
+  final bool products_options_images_style;
+  final String? products_options_images_url;
 
   const ProductAtttibutes(
       {required this.products_attributes_id,
@@ -14,7 +16,10 @@ class ProductAtttibutes extends Equatable {
       required this.products_options_values_id,
         required this.products_options_type,
       required this.products_options_values_name,
-      this.products_attributes_image});
+      this.products_attributes_image,
+        required this.products_options_images_style,
+        this.products_options_images_url
+      });
 
   @override
   List<Object> get props => [
@@ -23,6 +28,7 @@ class ProductAtttibutes extends Equatable {
     products_options_values_id,
     products_options_type,
     products_options_values_name,
+    products_options_images_style,
       ];
   static ProductAtttibutes fromJson(dynamic json) {
 
@@ -33,6 +39,8 @@ class ProductAtttibutes extends Equatable {
       products_options_type:json['products_options_type'] as int,
       products_options_values_id: json['options_values_id'] as int,
       products_options_values_name: json['products_options_values_name'],
+      products_options_images_style:json['products_options_images_style'] as bool,
+      products_options_images_url:json['fullimage'],
     );
   }
 }
