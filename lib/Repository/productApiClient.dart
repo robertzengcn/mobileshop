@@ -92,4 +92,30 @@ class ProductApiClient{
     }
 
   }
+  ///通过产品id取相关的产品
+  Future<List<Product>> getRelativelist(int pid) async{
+    var url = Uri.parse('$appServerUrl/Related/'+pid.toString());
+    http.Response response = await http.get(
+      url,
+      headers: {
+        'Application-Id': '$appId',
+      },
+    );
+
+
+    if (response.statusCode != 200) {
+
+      throw Exception('Unable to fetch relative products from the REST API');
+    }
+    var responseJson = json.decode(response.body);
+    if(responseJson['status']==true){
+
+      return (responseJson['data'] as List)
+          .map((p) => Product.fromJson(p))
+          .toList();
+    }else{
+      throw Exception('get relative product data failure');
+    }
+
+  }
 }

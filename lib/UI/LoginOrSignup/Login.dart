@@ -5,10 +5,12 @@ import 'package:amigatoy/UI/LoginOrSignup/LoginAnimation.dart';
 import 'package:amigatoy/UI/LoginOrSignup/Signup.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
-import 'package:formz/formz.dart';
+//import 'package:formz/formz.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:amigatoy/Arguments/LoginArguments.dart';
 
 class loginScreen extends StatefulWidget {
+  static const routeName = '/logins';
   @override
   _loginScreenState createState() => _loginScreenState();
 }
@@ -22,6 +24,7 @@ class _loginScreenState extends State<loginScreen>
   final _passwordController = TextEditingController();
   var tap = 0;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
 
   /// set state animation controller
@@ -57,6 +60,11 @@ class _loginScreenState extends State<loginScreen>
   /// Component Widget layout UI
   @override
   Widget build(BuildContext context) {
+    var args;
+    if (ModalRoute.of(context)!.settings.arguments != null) {
+      args = ModalRoute.of(context)!.settings.arguments as LoginArguments;
+    }
+
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     // mediaQueryData.devicePixelRatio;
     mediaQueryData.size.width;
@@ -95,13 +103,20 @@ class _loginScreenState extends State<loginScreen>
           );
       } else if (state is LoginCompleted) {
         //用户登录成功
-            setState(() {
-    tap = 1;
-    });
-    new LoginAnimation(
-    animationController: sanimationController,
-    );
-    _PlayAnimation();
+        setState(() {
+          tap = 1;
+        });
+        if(args!=null){
+          if(args?.product!=null){
+
+          }
+        }else{//默认的处理方法
+          new LoginAnimation(
+            animationController: sanimationController,
+          );
+          _PlayAnimation();
+        }
+
       }
     }, child: BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
       return Scaffold(

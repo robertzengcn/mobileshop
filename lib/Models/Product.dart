@@ -18,6 +18,7 @@ class Product extends Equatable {
   final Map<int, ProductOptions>? products_option;
   final double? product_specials;
   final int? product_sales;//how many product sale out
+  final int? product_wish;// how many people add it to wish list
 
   const Product(
       {required this.products_id,
@@ -34,6 +35,7 @@ class Product extends Equatable {
       this.products_option,
         this.product_specials,
         this.product_sales,
+        this.product_wish,
       });
   @override
   List<Object> get props => [
@@ -93,6 +95,10 @@ class Product extends Equatable {
     if(json['products_sales'] !=null){
       product_sales=json['products_sales'] as int;
     }
+    int product_wish=0;
+    if(json['products_wish'] !=null){
+      product_wish=json['products_wish'] as int;
+    }
 
     return Product(
         products_name: json['products_name'],
@@ -108,7 +114,8 @@ class Product extends Equatable {
         products_attributor: productattributes,
         products_option: productoption,
         product_specials:products_specials,
-        product_sales:product_sales
+        product_sales:product_sales,
+        product_wish:product_wish
     );
   }
 }

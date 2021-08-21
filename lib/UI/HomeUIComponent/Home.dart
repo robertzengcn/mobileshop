@@ -16,6 +16,7 @@ import 'package:amigatoy/UI/widgets/home_recommend.dart';
 ///Homepage
 
 class Home extends StatefulWidget {
+  static const routeName = '/home';
   @override
   _HomeState createState() => _HomeState();
 }

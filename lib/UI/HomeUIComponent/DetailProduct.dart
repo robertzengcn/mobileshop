@@ -18,6 +18,8 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:amigatoy/Models/Product_options.dart';
 import 'package:amigatoy/Models/Product_attributes.dart';
+import 'package:amigatoy/UI/LoginOrSignup/Login.dart';
+import 'package:amigatoy/Arguments/LoginArguments.dart';
 
 class detailProduk extends StatefulWidget {
   Product gridItem;
@@ -45,6 +47,11 @@ class _detailProdukState extends State<detailProduk> {
         return ReviewsBloc(reviewRepository: ReviewRepository())
           ..add(FetchProReviewsEvent(pid: gridItem.products_id));
       }),
+      BlocProvider<RelativeProductBloc>(create: (context) {
+        //加载产品的评论
+        return RelativeProductBloc(productRepository: ProductRepository())
+          ..add(FetchRelativeProductEvent(productId: gridItem.products_id));
+      }),
     ], child: ProductWrapper());
   }
 }
@@ -62,8 +69,8 @@ class _ProductWrapperState extends State<ProductWrapper> {
   int valueItemChart = 0;
 
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-  List<int?> aoptionList = [0,0,0,0,0,0,0,0,0,0,0];
-  List<dynamic> prolist=[];
+  List<int?> aoptionList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  List<dynamic> prolist = [];
   void initState() {
 //    for (var i = 0; i < 10; i++) {
 //      aoptionList[i] = 0;
@@ -158,6 +165,7 @@ class _ProductWrapperState extends State<ProductWrapper> {
     fontSize: 17.0,
     fontWeight: FontWeight.w800,
   );
+
   /// Custom Text black
   static var _nomalpricedisableStyle = TextStyle(
     color: Colors.grey,
@@ -181,134 +189,141 @@ class _ProductWrapperState extends State<ProductWrapper> {
       letterSpacing: 0.3,
       wordSpacing: 0.5);
 
-  /// Variable Component UI use in bottom layout "Top Rated Products"
-  var _suggestedItem = Padding(
-    padding:
-        const EdgeInsets.only(left: 15.0, right: 20.0, top: 30.0, bottom: 20.0),
-    child: Container(
-      height: 280.0,
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                "Top Rated Products",
-                style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontFamily: "Gotik",
-                    fontSize: 15.0),
-              ),
-              InkWell(
-                onTap: () {},
-                child: Text(
-                  "See All",
-                  style: TextStyle(
-                      color: Colors.indigoAccent.withOpacity(0.8),
-                      fontFamily: "Gotik",
-                      fontWeight: FontWeight.w700),
-                ),
-              )
-            ],
-          ),
-          Expanded(
-            child: ListView(
-              padding: EdgeInsets.only(top: 20.0, bottom: 2.0),
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                FavoriteItem(
-                  image: "assets/imgItem/shoes1.jpg",
-                  title: "Firrona Skirt!",
-                  Salary: "\$ 10",
-                  Rating: "4.8",
-                  sale: "923 Sale",
-                ),
-                Padding(padding: EdgeInsets.only(left: 10.0)),
-                FavoriteItem(
-                  image: "assets/imgItem/acesoris1.jpg",
-                  title: "Arpenaz 4",
-                  Salary: "\$ 200",
-                  Rating: "4.2",
-                  sale: "892 Sale",
-                ),
-                Padding(padding: EdgeInsets.only(left: 10.0)),
-                FavoriteItem(
-                  image: "assets/imgItem/kids1.jpg",
-                  title: "Mon Cheri Pingun",
-                  Salary: "\$ 3",
-                  Rating: "4.8",
-                  sale: "110 Sale",
-                ),
-                Padding(padding: EdgeInsets.only(left: 10.0)),
-                FavoriteItem(
-                  image: "assets/imgItem/man1.jpg",
-                  title: "Polo T Shirt",
-                  Salary: "\$ 8",
-                  Rating: "4.4",
-                  sale: "210 Sale",
-                ),
-                Padding(padding: EdgeInsets.only(right: 10.0)),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
+  static ButtonStyle _addtoCartStyle = ElevatedButton.styleFrom(
+    textStyle: const TextStyle(fontSize: 13),
+    primary: Colors.red, // background
+    onPrimary: Colors.white, // foreground
   );
 
-  Widget _productSpecialdiv(double product_price,double? product_specials_price){
+  /// Variable Component UI use in bottom layout "Top Rated Products"
+//  var _suggestedItem = Padding(
+//    padding:
+//        const EdgeInsets.only(left: 15.0, right: 20.0, top: 30.0, bottom: 20.0),
+//    child: Container(
+//      height: 280.0,
+//      child: Column(
+//        children: <Widget>[
+//          Row(
+//            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//            children: <Widget>[
+//              Text(
+//                "Top Rated Products",
+//                style: TextStyle(
+//                    fontWeight: FontWeight.w600,
+//                    fontFamily: "Gotik",
+//                    fontSize: 15.0),
+//              ),
+//              InkWell(
+//                onTap: () {},
+//                child: Text(
+//                  "See All",
+//                  style: TextStyle(
+//                      color: Colors.indigoAccent.withOpacity(0.8),
+//                      fontFamily: "Gotik",
+//                      fontWeight: FontWeight.w700),
+//                ),
+//              )
+//            ],
+//          ),
+//          Expanded(
+//            child: ListView(
+//              padding: EdgeInsets.only(top: 20.0, bottom: 2.0),
+//              scrollDirection: Axis.horizontal,
+//              children: <Widget>[
+//                FavoriteItem(
+//                  image: "assets/imgItem/shoes1.jpg",
+//                  title: "Firrona Skirt!",
+//                  Salary: "\$ 10",
+//                  Rating: "4.8",
+//                  sale: "923 Sale",
+//                ),
+//                Padding(padding: EdgeInsets.only(left: 10.0)),
+//                FavoriteItem(
+//                  image: "assets/imgItem/acesoris1.jpg",
+//                  title: "Arpenaz 4",
+//                  Salary: "\$ 200",
+//                  Rating: "4.2",
+//                  sale: "892 Sale",
+//                ),
+//                Padding(padding: EdgeInsets.only(left: 10.0)),
+//                FavoriteItem(
+//                  image: "assets/imgItem/kids1.jpg",
+//                  title: "Mon Cheri Pingun",
+//                  Salary: "\$ 3",
+//                  Rating: "4.8",
+//                  sale: "110 Sale",
+//                ),
+//                Padding(padding: EdgeInsets.only(left: 10.0)),
+//                FavoriteItem(
+//                  image: "assets/imgItem/man1.jpg",
+//                  title: "Polo T Shirt",
+//                  Salary: "\$ 8",
+//                  Rating: "4.4",
+//                  sale: "210 Sale",
+//                ),
+//                Padding(padding: EdgeInsets.only(right: 10.0)),
+//              ],
+//            ),
+//          ),
+//        ],
+//      ),
+//    ),
+//  );
+
+  Widget _productSpecialdiv(
+      double product_price, double? product_specials_price) {
     List<Widget> oList = [];
     oList.add(Text(
-      '\$'+product_price.toString(),
-      style: product_specials_price!=null&&product_specials_price>0?_nomalpricedisableStyle:_normalpriceStyle,
+      '\$' + product_price.toString(),
+      style: product_specials_price != null && product_specials_price > 0
+          ? _nomalpricedisableStyle
+          : _normalpriceStyle,
     ));
 
-    if(product_specials_price!=null&&product_specials_price>0){
+    if (product_specials_price != null && product_specials_price > 0) {
       oList.add(Padding(padding: EdgeInsets.only(top: 10.0)));
       oList.add(Text(
-        '\$'+product_specials_price.toString(),
+        '\$' + product_specials_price.toString(),
         style: _normalpriceStyle,
       ));
     }
-    return Column(
-      children:oList
-    );
+    return Column(children: oList);
   }
 
-  Widget _imageRadio(ProductAtttibutes item, int changeKey){
+  Widget _imageRadio(ProductAtttibutes item, int changeKey) {
     return Hero(
       tag: "hero-grid-${item.products_attributes_id}",
       child: Material(
         child: InkWell(
-          onTap: () {
-            aoptionList[changeKey] = item.products_attributes_id;
-            Navigator.of(context).push(PageRouteBuilder(
-                opaque: false,
-                pageBuilder: (BuildContext context, _, __) {
-                  return new Material(
-                    color: Colors.black54,
-                    child: Container(
-                      padding: EdgeInsets.all(30.0),
-                      child: InkWell(
-                        child: Hero(
-                            tag: "hero-grid-${item.products_attributes_id}",
-                            child: Image.network(
-                              item.products_options_images_url!,
-                              width: 300.0,
-                              height: 300.0,
-                              alignment: Alignment.center,
-                              fit: BoxFit.contain,
-                            )),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
+            onTap: () {
+              aoptionList[changeKey] = item.products_attributes_id;
+              Navigator.of(context).push(PageRouteBuilder(
+                  opaque: false,
+                  pageBuilder: (BuildContext context, _, __) {
+                    return new Material(
+                      color: Colors.black54,
+                      child: Container(
+                        padding: EdgeInsets.all(30.0),
+                        child: InkWell(
+                          child: Hero(
+                              tag: "hero-grid-${item.products_attributes_id}",
+                              child: Image.network(
+                                item.products_options_images_url!,
+                                width: 300.0,
+                                height: 300.0,
+                                alignment: Alignment.center,
+                                fit: BoxFit.contain,
+                              )),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
                       ),
-                    ),
-                  );
-                },
-                transitionDuration: Duration(milliseconds: 500)));
-          },
-          child: SizedBox(
+                    );
+                  },
+                  transitionDuration: Duration(milliseconds: 500)));
+            },
+            child: SizedBox(
               height: 50,
               width: 80,
               child:
@@ -316,15 +331,14 @@ class _ProductWrapperState extends State<ProductWrapper> {
 //                onTap: () {
 //                  setState(() => aoptionList[changeKey] = item.products_attributes_id);},
 //                child:
-                Container(
-                  height: 56,
-                  width: 56,
-                  color: Colors.transparent,
-                  child: Image.network(item.products_options_images_url!),
-                ),
+                  Container(
+                height: 56,
+                width: 56,
+                color: Colors.transparent,
+                child: Image.network(item.products_options_images_url!),
+              ),
 //              )
-          )
-        ),
+            )),
       ),
     );
   }
@@ -341,13 +355,12 @@ class _ProductWrapperState extends State<ProductWrapper> {
     productatttibutes?.forEach((item) {
 //      print(item.products_options_type);
       if (item.products_options_type == 2) {
-
-
-        if(item.products_options_images_style) {//图片radio
-          if(aoptionList[changeKey]==null){
-            aoptionList[changeKey]=0;
+        if (item.products_options_images_style) {
+          //图片radio
+          if (aoptionList[changeKey] == null) {
+            aoptionList[changeKey] = 0;
           }
-          wList.add(_imageRadio(item,changeKey)
+          wList.add(_imageRadio(item, changeKey)
 //              SizedBox(
 //              height: 50,
 //              width: 100,
@@ -361,8 +374,8 @@ class _ProductWrapperState extends State<ProductWrapper> {
 //              child: Image.network(item.products_options_images_url!),
 //            ),
 //          ))
-          );
-        }else{
+              );
+        } else {
           wList.add(SizedBox(
               height: 50,
               width: 130,
@@ -394,16 +407,16 @@ class _ProductWrapperState extends State<ProductWrapper> {
 //        style: _subHeaderCustomStyle));
     oList.add(Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 30),
-      child: Text(products_option.products_options_name+":",
+      child: Text(products_option.products_options_name + ":",
           style: _subHeaderCustomStyle),
     ));
 //    oList.add(SizedBox(height: 30));
     List<Widget> attlist = _attributeslist(productatttibutes, changeKey);
     Widget rowColumn = Wrap(
-        alignment:WrapAlignment.center,
-        direction:Axis.horizontal,
-        spacing:2.0,
-        runSpacing:4.0,
+        alignment: WrapAlignment.center,
+        direction: Axis.horizontal,
+        spacing: 2.0,
+        runSpacing: 4.0,
 //        mainAxisAlignment: MainAxisAlignment.center,
 //        mainAxisAlignment: MainAxisAlignment.center,
 //        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -476,26 +489,59 @@ class _ProductWrapperState extends State<ProductWrapper> {
 //
 //        ]);
   }
-Widget _productSalewidget(int? productSales){
-  if(productSales!=null&&productSales>0){
-    return Padding(
-      padding: const EdgeInsets.only(
-          right: 15.0),
-      child: Text(
-        productSales
-            .toString()+" Orders",
-        style: TextStyle(
-            color: Colors.black54,
-            fontSize: 13.0,
-            fontWeight: FontWeight.w500),
-      ),
-    );
-  }else{
-    return Container();
+
+  Widget _productSalewidget(int? productSales) {
+    if (productSales != null && productSales > 0) {
+      return Padding(
+        padding: const EdgeInsets.only(right: 15.0),
+        child: Text(
+          productSales.toString() + " Orders",
+          style: TextStyle(
+              color: Colors.black54,
+              fontSize: 13.0,
+              fontWeight: FontWeight.w500),
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 
-}
+  ///返回wish list widget
+  Widget _getProductwish(int? productwishnum) {
+    if (productwishnum != null && productwishnum > 0) {
+      return Container(
+        height: 30.0,
+        width: 75.0,
+        decoration: BoxDecoration(
+          color: Colors.lightGreen,
+          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+//                                                children: _getProductwish(
+//                                                    state.product.product_wish),
 
+          children: <Widget>[
+            //product wish list
+            Text(
+              productwishnum.toString(),
+              style: TextStyle(color: Colors.white),
+            ),
+            Padding(padding: EdgeInsets.only(left: 8.0)),
+            Icon(
+              Icons.star,
+              color: Colors.white,
+              size: 19.0,
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Container(height: 30.0, width: 75.0);
+    }
+  }
 
   int? optionOne = 0;
   int? option1 = 0;
@@ -508,8 +554,8 @@ Widget _productSalewidget(int? productSales){
           if (state is ProductsLoadingState) {
             return Center(child: CircularProgressIndicator());
           } else if (state is ProductsloadedState) {
-
-            prolist=[];
+            final Product _pageProduct=state.product;
+            prolist = [];
             state.product.products_image_list?.forEach((value) {
               prolist.add(value);
             });
@@ -517,7 +563,6 @@ Widget _productSalewidget(int? productSales){
             prolist.insert(0, state.product.products_image);
 //            print(prolist);
             List<Widget> productAtt = [];
-
 
 //            var products_attributor_arr=state.product.products_attributor?.values.toList();
 //            state.product.products_option?.map((i,v){
@@ -528,7 +573,6 @@ Widget _productSalewidget(int? productSales){
               int i = 1;
               for (var key
                   in state.product.products_option?.values.toList() ?? []) {
-
                 Widget productAttri = _getAttributes(
                     key,
                     state.product.products_attributor?[key.products_option_id],
@@ -648,7 +692,9 @@ Widget _productSalewidget(int? productSales){
 //                                    '\$'+state.product.products_price.toString(),
 //                                    style: _normalpriceStyle,
 //                                  ),
-                                  _productSpecialdiv(state.product.products_price,state.product.product_specials),
+                                  _productSpecialdiv(
+                                      state.product.products_price,
+                                      state.product.product_specials),
                                   Padding(padding: EdgeInsets.only(top: 10.0)),
                                   Divider(
                                     color: Colors.black12,
@@ -663,41 +709,52 @@ Widget _productSalewidget(int? productSales){
                                       children: <Widget>[
                                         Row(
                                           children: <Widget>[
-                                            Container(
-                                              height: 30.0,
-                                              width: 75.0,
-                                              decoration: BoxDecoration(
-                                                color: Colors.lightGreen,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(20.0)),
-                                              ),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  Text(
-                                                    state.product
-                                                        .products_quantity
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                  Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 8.0)),
-                                                  Icon(
-                                                    Icons.star,
-                                                    color: Colors.white,
-                                                    size: 19.0,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+                                            _getProductwish(
+                                                state.product.product_wish),
+//                                            Container(
+//                                              height: 30.0,
+//                                              width: 75.0,
+//                                              decoration: BoxDecoration(
+//                                                color: Colors.lightGreen,
+//                                                borderRadius: BorderRadius.all(
+//                                                    Radius.circular(20.0)),
+//                                              ),
+//                                              child: Row(
+//                                                crossAxisAlignment:
+//                                                    CrossAxisAlignment.center,
+//                                                mainAxisAlignment:
+//                                                    MainAxisAlignment.center,
+////                                                children: _getProductwish(
+////                                                    state.product.product_wish),
+//
+//                                                children: <Widget>[//product wish list
+//                                                  Text(
+//                                                    state.product
+//                                                        .products_quantity
+//                                                        .toString(),
+//                                                    style: TextStyle(
+//                                                        color: Colors.white),
+//                                                  ),
+//                                                  Padding(
+//                                                      padding: EdgeInsets.only(
+//                                                          left: 8.0)),
+//                                                  Icon(
+//                                                    Icons.star,
+//                                                    color: Colors.white,
+//                                                    size: 19.0,
+//                                                  ),
+//                                                ],
+//                                              ),
+//                                            ),
                                           ],
                                         ),
-                                        _productSalewidget(state.product.product_sales)
+                                        _productSalewidget(
+                                            state.product.product_sales),
+                                        ElevatedButton(
+                                          style: _addtoCartStyle,
+                                          onPressed: () {},
+                                          child: const Text('Add to Cart'),
+                                        ),
 //                                        Padding(
 //                                          padding: const EdgeInsets.only(
 //                                              right: 15.0),
@@ -722,7 +779,7 @@ Widget _productSalewidget(int? productSales){
                           Padding(
                             padding: const EdgeInsets.only(top: 10.0),
                             child: Container(
-                              height: 220.0,
+//                              height: 120.0,
                               width: 600.0,
                               decoration: BoxDecoration(
                                   color: Colors.white,
@@ -868,7 +925,8 @@ Widget _productSalewidget(int? productSales){
 
                           ///review 出现位置
                           ReviewInfoContiner(),
-                          _suggestedItem
+                          RelativeProductContiner(),
+//                          _suggestedItem
                         ],
                       ),
                     ),
@@ -877,86 +935,113 @@ Widget _productSalewidget(int? productSales){
                   /// If user click icon chart SnackBar show
                   /// this code to show a SnackBar
                   /// and Increase a valueItemChart + 1
-                  InkWell(
-                    onTap: () {
-                      var snackbar = SnackBar(
-                        content: Text("Item Added"),
-                      );
-                      setState(() {
-                        valueItemChart++;
-                      });
-//              _key.currentState?.showSnackBar(snackbar);
-                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      child: Container(
-                        color: Colors.white,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Container(
-                              height: 40.0,
-                              width: 60.0,
-                              decoration: BoxDecoration(
-                                  color: Colors.white12.withOpacity(0.1),
-                                  border: Border.all(color: Colors.black12)),
-                              child: Center(
-                                child: Image.asset(
-                                  "assets/icon/shopping-cart.png",
-                                  height: 23.0,
-                                ),
-                              ),
-                            ),
+                  BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                      builder: (context, state) {
+                    return InkWell(
+                      onTap: () {
+                        if(state is AuthenticationAuthenticated){
+                          var snackbar = SnackBar(
+                            content: Text("Item Added"),
+                          );
+                          setState(() {
+                            valueItemChart++;
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                        }else{
+//                          Navigator.of(context).push(PageRouteBuilder(
+//                              pageBuilder: (_, __, ___) => new loginScreen()));
+                          Navigator.pushNamed(
+                            context,
+                              loginScreen.routeName,
+                              arguments:LoginArguments(
+                                  _pageProduct
+                              )
+//                            MaterialPageRoute(
+//                              builder: (context) => new loginScreen(),
+//                              // Pass the arguments as part of the RouteSettings. The
+//                              // DetailScreen reads the arguments from these settings.
+//                              settings: RouteSettings(
+//                                arguments: _pageProduct,
+//                              ),
+//                            ),
+                          );
+                        }
 
-                            /// Chat Icon
-                            InkWell(
-                              onTap: () {
-                                Navigator.of(context).push(PageRouteBuilder(
-                                    pageBuilder: (_, ___, ____) =>
-                                        new chatItem()));
-                              },
-                              child: Container(
+//              _key.currentState?.showSnackBar(snackbar);
+
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 5.0),
+                        child: Container(
+                          color: Colors.white,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Container(
                                 height: 40.0,
                                 width: 60.0,
                                 decoration: BoxDecoration(
                                     color: Colors.white12.withOpacity(0.1),
                                     border: Border.all(color: Colors.black12)),
                                 child: Center(
-                                  child: Image.asset("assets/icon/message.png",
-                                      height: 20.0),
-                                ),
-                              ),
-                            ),
-
-                            /// Button Pay
-                            InkWell(
-                              onTap: () {
-                                Navigator.of(context).push(PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) =>
-                                        new delivery()));
-                              },
-                              child: Container(
-                                height: 45.0,
-                                width: 200.0,
-                                decoration: BoxDecoration(
-                                  color: Colors.indigoAccent,
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "Pay",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700),
+                                  child: Image.asset(
+                                    "assets/icon/shopping-cart.png",
+                                    height: 23.0,
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+
+                              /// Chat Icon
+                              InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(PageRouteBuilder(
+                                      pageBuilder: (_, ___, ____) =>
+                                          new chatItem()));
+                                },
+                                child: Container(
+                                  height: 40.0,
+                                  width: 60.0,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white12.withOpacity(0.1),
+                                      border:
+                                          Border.all(color: Colors.black12)),
+                                  child: Center(
+                                    child: Image.asset(
+                                        "assets/icon/message.png",
+                                        height: 20.0),
+                                  ),
+                                ),
+                              ),
+
+                              /// Button Pay
+                              InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(PageRouteBuilder(
+                                      pageBuilder: (_, __, ___) =>
+                                          new delivery()));
+                                },
+                                child: Container(
+                                  height: 45.0,
+                                  width: 200.0,
+                                  decoration: BoxDecoration(
+                                    color: Colors.indigoAccent,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "Pay",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  )
+                    );
+                  })
                 ],
               ),
             );
@@ -1178,118 +1263,240 @@ class _ReviewInfoContinerState extends State<ReviewInfoContiner> {
   }
 }
 
-/// RadioButton for item choose in size
-class RadioButtonCustom extends StatefulWidget {
-  final String txt;
-
-  RadioButtonCustom({required this.txt});
-
+class RelativeProductContiner extends StatefulWidget {
   @override
-  _RadioButtonCustomState createState() => _RadioButtonCustomState(this.txt);
+  _RelativeProductContinerState createState() =>
+      _RelativeProductContinerState();
 }
 
-class _RadioButtonCustomState extends State<RadioButtonCustom> {
-  _RadioButtonCustomState(this.txt);
-
-  String txt;
-  bool itemSelected = true;
+class _RelativeProductContinerState extends State<RelativeProductContiner> {
+  List<Widget> _getRelativepro(List<Product>? productlist) {
+    List<Widget> relativelist = [];
+    productlist?.forEach((value) {
+      relativelist.add(FavoriteItem(
+        image: value.products_image,
+        title: value.products_name,
+        Salary: value.product_specials != null && value.product_specials! > 0
+            ? value.product_specials.toString()
+            : value.products_price.toString(),
+        Rating: value.product_wish != null && value.product_wish! > 0
+            ? value.product_wish
+            : 0,
+        sale: value.product_sales != null && value.product_sales! > 0
+            ? value.product_sales
+            : 0,
+        product: value,
+      ));
+      relativelist.add(Padding(padding: EdgeInsets.only(left: 10.0)));
+    });
+    return relativelist;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 15.0),
-      child: InkWell(
-        onTap: () {
-          setState(() {
-            if (itemSelected == false) {
-              setState(() {
-                itemSelected = true;
-              });
-            } else if (itemSelected == true) {
-              setState(() {
-                itemSelected = false;
-              });
-            }
-          });
-        },
-        child: Container(
-          height: 37.0,
-          width: 37.0,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                  color: itemSelected ? Colors.black54 : Colors.indigoAccent),
-              shape: BoxShape.circle),
-          child: Center(
-            child: Text(
-              txt,
-              style: TextStyle(
-                  color: itemSelected ? Colors.black54 : Colors.indigoAccent),
-            ),
-          ),
-        ),
-      ),
-    );
+    return BlocBuilder<RelativeProductBloc, RelativeProductState>(
+        bloc: BlocProvider.of<RelativeProductBloc>(context),
+        builder: (BuildContext context, RelativeProductState state) {
+          if (state is RelativeProductloading) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state is RelativeProductloadedState) {
+            return Padding(
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 20.0, top: 30.0, bottom: 20.0),
+              child: Container(
+                height: 280.0,
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          "Top Rated Products",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Gotik",
+                              fontSize: 15.0),
+                        ),
+//                        InkWell(
+//                          onTap: () {},
+//                          child: Text(
+//                            "See All",
+//                            style: TextStyle(
+//                                color: Colors.indigoAccent.withOpacity(0.8),
+//                                fontFamily: "Gotik",
+//                                fontWeight: FontWeight.w700),
+//                          ),
+//                        )
+                      ],
+                    ),
+                    Expanded(
+                      child: ListView(
+                          padding: EdgeInsets.only(top: 20.0, bottom: 2.0),
+                          scrollDirection: Axis.horizontal,
+                          children: _getRelativepro(state.lstRelative)
+//                        <Widget>[
+//                        FavoriteItem(
+//                          image: "assets/imgItem/shoes1.jpg",
+//                          title: "Firrona Skirt!",
+//                          Salary: "\$ 10",
+//                          Rating: "4.8",
+//                          sale: "923 Sale",
+//                        ),
+//                        Padding(padding: EdgeInsets.only(left: 10.0)),
+//                        FavoriteItem(
+//                          image: "assets/imgItem/acesoris1.jpg",
+//                          title: "Arpenaz 4",
+//                          Salary: "\$ 200",
+//                          Rating: "4.2",
+//                          sale: "892 Sale",
+//                        ),
+//                        Padding(padding: EdgeInsets.only(left: 10.0)),
+//                        FavoriteItem(
+//                          image: "assets/imgItem/kids1.jpg",
+//                          title: "Mon Cheri Pingun",
+//                          Salary: "\$ 3",
+//                          Rating: "4.8",
+//                          sale: "110 Sale",
+//                        ),
+//                        Padding(padding: EdgeInsets.only(left: 10.0)),
+//                        FavoriteItem(
+//                          image: "assets/imgItem/man1.jpg",
+//                          title: "Polo T Shirt",
+//                          Salary: "\$ 8",
+//                          Rating: "4.4",
+//                          sale: "210 Sale",
+//                        ),
+//                        Padding(padding: EdgeInsets.only(right: 10.0)),
+//                      ],
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return Container();
+          }
+        });
   }
 }
+
+///// RadioButton for item choose in size
+//class RadioButtonCustom extends StatefulWidget {
+//  final String txt;
+//
+//  RadioButtonCustom({required this.txt});
+//
+//  @override
+//  _RadioButtonCustomState createState() => _RadioButtonCustomState(this.txt);
+//}
+//
+//class _RadioButtonCustomState extends State<RadioButtonCustom> {
+//  _RadioButtonCustomState(this.txt);
+//
+//  String txt;
+//  bool itemSelected = true;
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return Padding(
+//      padding: const EdgeInsets.only(top: 15.0),
+//      child: InkWell(
+//        onTap: () {
+//          setState(() {
+//            if (itemSelected == false) {
+//              setState(() {
+//                itemSelected = true;
+//              });
+//            } else if (itemSelected == true) {
+//              setState(() {
+//                itemSelected = false;
+//              });
+//            }
+//          });
+//        },
+//        child: Container(
+//          height: 37.0,
+//          width: 37.0,
+//          decoration: BoxDecoration(
+//              color: Colors.white,
+//              border: Border.all(
+//                  color: itemSelected ? Colors.black54 : Colors.indigoAccent),
+//              shape: BoxShape.circle),
+//          child: Center(
+//            child: Text(
+//              txt,
+//              style: TextStyle(
+//                  color: itemSelected ? Colors.black54 : Colors.indigoAccent),
+//            ),
+//          ),
+//        ),
+//      ),
+//    );
+//  }
+//}
 
 /// RadioButton for item choose in color
-class RadioButtonColor extends StatefulWidget {
-  final Color clr;
-
-  RadioButtonColor(this.clr);
-
-  @override
-  _RadioButtonColorState createState() => _RadioButtonColorState(this.clr);
-}
-
-class _RadioButtonColorState extends State<RadioButtonColor> {
-  bool itemSelected = true;
-  Color clr;
-
-  _RadioButtonColorState(this.clr);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
-      child: InkWell(
-        onTap: () {
-          if (itemSelected == false) {
-            setState(() {
-              itemSelected = true;
-            });
-          } else if (itemSelected == true) {
-            setState(() {
-              itemSelected = false;
-            });
-          }
-        },
-        child: Container(
-          height: 37.0,
-          width: 37.0,
-          decoration: BoxDecoration(
-              color: clr,
-              border: Border.all(
-                  color: itemSelected ? Colors.black26 : Colors.indigoAccent,
-                  width: 2.0),
-              shape: BoxShape.circle),
-        ),
-      ),
-    );
-  }
-}
+//class RadioButtonColor extends StatefulWidget {
+//  final Color clr;
+//
+//  RadioButtonColor(this.clr);
+//
+//  @override
+//  _RadioButtonColorState createState() => _RadioButtonColorState(this.clr);
+//}
+//
+//class _RadioButtonColorState extends State<RadioButtonColor> {
+//  bool itemSelected = true;
+//  Color clr;
+//
+//  _RadioButtonColorState(this.clr);
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return Padding(
+//      padding: const EdgeInsets.only(top: 10.0),
+//      child: InkWell(
+//        onTap: () {
+//          if (itemSelected == false) {
+//            setState(() {
+//              itemSelected = true;
+//            });
+//          } else if (itemSelected == true) {
+//            setState(() {
+//              itemSelected = false;
+//            });
+//          }
+//        },
+//        child: Container(
+//          height: 37.0,
+//          width: 37.0,
+//          decoration: BoxDecoration(
+//              color: clr,
+//              border: Border.all(
+//                  color: itemSelected ? Colors.black26 : Colors.indigoAccent,
+//                  width: 2.0),
+//              shape: BoxShape.circle),
+//        ),
+//      ),
+//    );
+//  }
+//}
 
 /// Class for card product in "Top Rated Products"
 class FavoriteItem extends StatelessWidget {
-  String image, Rating, Salary, title, sale;
+  String image, Salary, title;
+  int? Rating;
+  int? sale;
+  Product product;
 
   FavoriteItem(
       {required this.image,
       required this.Rating,
       required this.Salary,
       required this.title,
-      required this.sale});
+      required this.sale,
+      required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -1310,82 +1517,106 @@ class FavoriteItem extends StatelessWidget {
             ]),
         child: Wrap(
           children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                  height: 150.0,
-                  width: 150.0,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(7.0),
-                          topRight: Radius.circular(7.0)),
-                      image: DecorationImage(
-                          image: AssetImage(image), fit: BoxFit.cover)),
-                ),
-                Padding(padding: EdgeInsets.only(top: 15.0)),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                        letterSpacing: 0.5,
-                        color: Colors.black54,
-                        fontFamily: "Sans",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13.0),
+            InkWell(
+              onTap: () {
+                Navigator.of(context).push(PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => new detailProduk(product),
+                    transitionDuration: Duration(milliseconds: 900),
+
+                    /// Set animation Opacity in route to detailProduk layout
+                    transitionsBuilder:
+                        (_, Animation<double> animation, __, Widget child) {
+                      return Opacity(
+                        opacity: animation.value,
+                        child: child,
+                      );
+                    }));
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Container(
+                    height: 150.0,
+                    width: 150.0,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(7.0),
+                            topRight: Radius.circular(7.0)),
+                        image: DecorationImage(
+                            image: AssetImage(image), fit: BoxFit.cover)),
                   ),
-                ),
-                Padding(padding: EdgeInsets.only(top: 1.0)),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                  child: Text(
-                    Salary,
-                    style: TextStyle(
-                        fontFamily: "Sans",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.0),
+                  Padding(padding: EdgeInsets.only(top: 15.0)),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    child: Container(
+                        width: 150.0,
+                        child: Text(
+                          title,
+                          style: TextStyle(
+                              letterSpacing: 0.5,
+                              color: Colors.black54,
+                              fontFamily: "Sans",
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13.0),
+                        )),
                   ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            Rating,
-                            style: TextStyle(
-                                fontFamily: "Sans",
-                                color: Colors.black26,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12.0),
-                          ),
-                          Icon(
-                            Icons.star,
-                            color: Colors.yellow,
-                            size: 14.0,
-                          )
-                        ],
-                      ),
-                      Text(
-                        sale,
-                        style: TextStyle(
-                            fontFamily: "Sans",
-                            color: Colors.black26,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12.0),
-                      )
-                    ],
+                  Padding(padding: EdgeInsets.only(top: 1.0)),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    child: Text(
+                      Salary,
+                      style: TextStyle(
+                          fontFamily: "Sans",
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14.0),
+                    ),
                   ),
-                ),
-              ],
-            ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 15.0, right: 15.0, top: 5.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Rating != null && Rating! > 0
+                                ? Text(
+                                    Rating.toString(),
+                                    style: TextStyle(
+                                        fontFamily: "Sans",
+                                        color: Colors.black26,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12.0),
+                                  )
+                                : Container(),
+                            Rating != null && Rating! > 0
+                                ? Icon(
+                                    Icons.star,
+                                    color: Colors.yellow,
+                                    size: 14.0,
+                                  )
+                                : Container(),
+                          ],
+                        ),
+                        sale != null && sale! > 0
+                            ? Text(
+                                sale.toString(),
+                                style: TextStyle(
+                                    fontFamily: "Sans",
+                                    color: Colors.black26,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12.0),
+                              )
+                            : Container()
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),

@@ -7,6 +7,7 @@ import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/database/database.dart';
+import 'package:amigatoy/UI/LoginOrSignup/Login.dart';
 //import 'package:http/http.dart' as http;
 //import 'dart:developer' as developer;
 
@@ -133,7 +134,8 @@ class myApp extends StatelessWidget {
           /// Routes
           routes: <String, WidgetBuilder>{
             //"login": (BuildContext context) => new Menu()
-            "home": (BuildContext context) => new Home()
+            Home.routeName: (BuildContext context) => new Home(),
+            loginScreen.routeName:(BuildContext context) =>new loginScreen(),
           }),
     );
   }
@@ -156,7 +158,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   /// To navigate layout change
   void NavigatorPage() {
-    Navigator.of(context).pushReplacementNamed("home");
+    Navigator.of(context).pushReplacementNamed(Home.routeName);
   }
 
   /// Declare startTime to InitState

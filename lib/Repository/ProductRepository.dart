@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+//import 'package:meta/meta.dart';
 import 'dart:async';
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/Repository/repository.dart';
@@ -20,6 +20,14 @@ class ProductRepository{
     Product product=await productApiClient.getProductbyid(id);
 
     return product;
+  }
+
+  Future<List<Product>> loadrelativeProductlist(int pid) async {
+
+
+    List<Product> lst =await productApiClient.getRelativelist(pid);
+
+    return lst;
   }
 
 }

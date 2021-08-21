@@ -34,7 +34,8 @@ class ProductScreenLoadedEvent extends ProductsEvent {
 
   ProductScreenLoadedEvent({
     required this.productId,
-  });}
+  });
+}
 
 
 @immutable

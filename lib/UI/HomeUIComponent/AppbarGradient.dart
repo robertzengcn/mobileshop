@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //import 'package:amigatoy/UI/AcountUIComponent/Notification.dart';
 import 'package:amigatoy/UI/HomeUIComponent/Search.dart';
 //import 'package:amigatoy/UI/AcountUIComponent/Message.dart';
-import 'package:amigatoy/UI/widgets/SideMenu.dart';
+//import 'package:amigatoy/UI/widgets/SideMenu.dart';
 //import 'package:amigatoy/UI/LoginOrSignup/LoginAnimation.dart';
 import 'package:amigatoy/UI/LoginOrSignup/Login.dart';
 import 'package:amigatoy/UI/AcountUIComponent/Profile.dart';
