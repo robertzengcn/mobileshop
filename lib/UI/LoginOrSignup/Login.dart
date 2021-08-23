@@ -8,6 +8,7 @@ import 'package:amigatoy/Blocs/blocs.dart';
 //import 'package:formz/formz.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:amigatoy/Arguments/LoginArguments.dart';
+import 'package:amigatoy/UI/HomeUIComponent/DetailProduct.dart';
 
 class loginScreen extends StatefulWidget {
   static const routeName = '/logins';
@@ -108,7 +109,18 @@ class _loginScreenState extends State<loginScreen>
         });
         if(args!=null){
           if(args?.product!=null){
+            Navigator.of(context).push(PageRouteBuilder(
+                pageBuilder: (_, __, ___) => new detailProduk(args.product),
+                transitionDuration: Duration(milliseconds: 900),
 
+                /// Set animation Opacity in route to detailProduk layout
+                transitionsBuilder:
+                    (_, Animation<double> animation, __, Widget child) {
+                  return Opacity(
+                    opacity: animation.value,
+                    child: child,
+                  );
+                }));
           }
         }else{//默认的处理方法
           new LoginAnimation(
