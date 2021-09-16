@@ -6,4 +6,5 @@ export 'Username.dart';
 export 'Password.dart';
 export 'User.dart';
 export 'Review.dart';
+export 'Cart.dart';
 

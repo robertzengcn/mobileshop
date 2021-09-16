@@ -30,7 +30,7 @@ class User extends Equatable {
 //    var expireObj = new DateTime.fromMicrosecondsSinceEpoch(expiretime);
     var format = new DateFormat('yyyy-MM-dd HH:mm ss');
     final String userexpire = format.format(expireObj);
-    print(userexpire);
+//    print(userexpire);
     return User(
       userid: json['id'] as int,
       username: json['username'],

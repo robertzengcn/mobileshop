@@ -1,8 +1,9 @@
+//import 'package:amigatoy/Blocs/Wishs/wishs_bloc.dart';
 import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 
 import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
-import 'package:amigatoy/UI/HomeUIComponent/ChatItem.dart';
+//import 'package:amigatoy/UI/HomeUIComponent/ChatItem.dart';
 import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 
 //import 'package:flutter_rating/flutter_rating.dart';
@@ -37,22 +38,55 @@ class _detailProdukState extends State<detailProduk> {
   _detailProdukState(this.gridItem);
 
   Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: [
-      BlocProvider<ProductsBloc>(create: (context) {
-        return ProductsBloc(productRepository: ProductRepository())
-          ..add(ProductScreenLoadedEvent(productId: gridItem.products_id));
-      }),
-      BlocProvider<ReviewsBloc>(create: (context) {
-        //加载产品的评论
-        return ReviewsBloc(reviewRepository: ReviewRepository())
-          ..add(FetchProReviewsEvent(pid: gridItem.products_id));
-      }),
-      BlocProvider<RelativeProductBloc>(create: (context) {
-        //加载产品的评论
-        return RelativeProductBloc(productRepository: ProductRepository())
-          ..add(FetchRelativeProductEvent(productId: gridItem.products_id));
-      }),
-    ], child: ProductWrapper());
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<ProductsBloc>(create: (context) {
+            return ProductsBloc(
+              productRepository: ProductRepository(),
+            )..add(ProductScreenLoadedEvent(productId: gridItem.products_id));
+          }),
+          BlocProvider<ReviewsBloc>(create: (context) {
+            //加载产品的评论
+            return ReviewsBloc(reviewRepository: ReviewRepository())
+              ..add(FetchProReviewsEvent(pid: gridItem.products_id));
+          }),
+          BlocProvider<RelativeProductBloc>(create: (context) {
+            //加载产品的评论
+            return RelativeProductBloc(productRepository: ProductRepository())
+              ..add(FetchRelativeProductEvent(productId: gridItem.products_id));
+          }),
+          BlocProvider<CartsBloc>(create: (context) {
+            //加载产品的评论
+            return CartsBloc(cartRepository: CartRepository());
+          }),
+          BlocProvider<WishsBloc>(create: (context) {
+            //加载产品的评论
+            return WishsBloc(wishRepository: WishRepository())..add(CheckWishsEvent(product_id: gridItem.products_id));
+          }),
+        ],
+        child: MultiBlocListener(
+          listeners: [
+            BlocListener<CartsBloc, CartsState>(listener: (context, state) {
+              if (state is CartsAddsuccessState) {
+                var snackbar = SnackBar(
+                  content: Text("Item Added"),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackbar);
+              } else if (state is CartsErrorState) {
+                var snackbar = SnackBar(
+                  content: Text("Item Added failure"),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackbar);
+              }
+            }),
+            BlocListener<WishsBloc, WishsState>(listener: (context, state) {
+              if (state is WishErrorState) {
+
+              }
+            }),
+          ],
+          child: ProductWrapper(),
+        ));
   }
 }
 
@@ -296,7 +330,7 @@ class _ProductWrapperState extends State<ProductWrapper> {
       child: Material(
         child: InkWell(
             onTap: () {
-              aoptionList[changeKey] = item.products_attributes_id;
+              aoptionList[changeKey] = item.products_options_values_id;
               Navigator.of(context).push(PageRouteBuilder(
                   opaque: false,
                   pageBuilder: (BuildContext context, _, __) {
@@ -349,7 +383,8 @@ class _ProductWrapperState extends State<ProductWrapper> {
 //    print(productatttibutes);
 //    int? _pcharacter = productatttibutes?.first.products_attributes_id;
     if (aoptionList[changeKey] == 0) {
-      aoptionList[changeKey] = productatttibutes?.first.products_attributes_id;
+      aoptionList[changeKey] =
+          productatttibutes?.first.products_options_values_id;
     }
 //    print(_character);
     productatttibutes?.forEach((item) {
@@ -381,7 +416,7 @@ class _ProductWrapperState extends State<ProductWrapper> {
               width: 130,
               child: RadioListTile<int>(
                 title: Text(item.products_options_values_name),
-                value: item.products_attributes_id,
+                value: item.products_options_values_id,
                 groupValue: aoptionList[changeKey],
                 onChanged: (int? value) {
                   setState(() {
@@ -542,6 +577,14 @@ class _ProductWrapperState extends State<ProductWrapper> {
       return Container(height: 30.0, width: 75.0);
     }
   }
+  ///return wish add success icon
+  Widget _addWishsuccessicon(){
+    return Center(
+      child: Image.asset(
+          "assets/icon/wishsuccess.png",
+          height: 20.0),
+    );
+  }
 
   int? optionOne = 0;
   int? option1 = 0;
@@ -554,7 +597,7 @@ class _ProductWrapperState extends State<ProductWrapper> {
           if (state is ProductsLoadingState) {
             return Center(child: CircularProgressIndicator());
           } else if (state is ProductsloadedState) {
-            final Product _pageProduct=state.product;
+            final Product _pageProduct = state.product;
             prolist = [];
             state.product.products_image_list?.forEach((value) {
               prolist.add(value);
@@ -601,25 +644,44 @@ class _ProductWrapperState extends State<ProductWrapper> {
                       Navigator.of(context).push(PageRouteBuilder(
                           pageBuilder: (_, __, ___) => new cart()));
                     },
-                    child: Stack(
-                      alignment: AlignmentDirectional(-1.0, -0.8),
-                      children: <Widget>[
-                        IconButton(
-                            onPressed: null,
-                            icon: Icon(
-                              Icons.shopping_cart,
-                              color: Colors.black26,
-                            )),
-                        CircleAvatar(
-                          radius: 10.0,
-                          backgroundColor: Colors.red,
-                          child: Text(
-                            valueItemChart.toString(),
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 13.0),
-                          ),
-                        ),
-                      ],
+                    child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                      builder: (context, authcatState) {
+                        if (authcatState is AuthenticationAuthenticated) {
+                          BlocProvider.of<CartsBloc>(context)
+                              .add(queryCartquantityEvent());
+
+                          return BlocBuilder<CartsBloc, CartsState>(
+                            builder: (context, cartState) {
+                              if (cartState is CartsQuantitygetsuccessState ||
+                                  cartState is CartsAddsuccessState) {
+                                valueItemChart = cartState.cartQuantity;
+                              }
+                              return Stack(
+                                alignment: AlignmentDirectional(-1.0, -0.8),
+                                children: <Widget>[
+                                  IconButton(
+                                      onPressed: null,
+                                      icon: Icon(
+                                        Icons.shopping_cart,
+                                        color: Colors.black26,
+                                      )),
+                                  CircleAvatar(
+                                    radius: 10.0,
+                                    backgroundColor: Colors.red,
+                                    child: Text(
+                                      valueItemChart.toString(),
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 13.0),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
                     ),
                   ),
                 ],
@@ -750,11 +812,11 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                         ),
                                         _productSalewidget(
                                             state.product.product_sales),
-                                        ElevatedButton(
-                                          style: _addtoCartStyle,
-                                          onPressed: () {},
-                                          child: const Text('Add to Cart'),
-                                        ),
+//                                        ElevatedButton(
+//                                          style: _addtoCartStyle,
+//                                          onPressed: () {},
+//                                          child: const Text('Add to Cart'),
+//                                        ),
 //                                        Padding(
 //                                          padding: const EdgeInsets.only(
 //                                              right: 15.0),
@@ -939,23 +1001,41 @@ class _ProductWrapperState extends State<ProductWrapper> {
                       builder: (context, state) {
                     return InkWell(
                       onTap: () {
-                        if(state is AuthenticationAuthenticated){
-                          var snackbar = SnackBar(
-                            content: Text("Item Added"),
-                          );
-                          setState(() {
-                            valueItemChart++;
-                          });
-                          ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                        }else{
+                        if (state is AuthenticationAuthenticated) {
+                          Map<int, int?> args = {};
+                          //获取属性
+                          int oi = 1;
+                          for (var okey in _pageProduct.products_option?.values
+                                  .toList() ??
+                              []) {
+                            if (aoptionList[oi] != null &&
+                                aoptionList[oi]! > 0) {
+                              args[okey.products_option_id] = aoptionList[oi];
+                            }
+                            oi++;
+                          }
+//
+                          BlocProvider.of<CartsBloc>(context).add(
+                              AddToCartEvent(
+                                  productId: _pageProduct.products_id,
+                                  quantity: 1,
+                                  args: args));
+
+//
+//                         var snackbar = SnackBar(
+//                            content: Text("Item Added"),
+//                          );
+//                          ScaffoldMessenger.of(context).showSnackBar(snackbar);
+//                          setState(() {
+//                            valueItemChart++;
+//                          });
+//
+
+                        } else {
 //                          Navigator.of(context).push(PageRouteBuilder(
 //                              pageBuilder: (_, __, ___) => new loginScreen()));
-                          Navigator.pushNamed(
-                            context,
-                              loginScreen.routeName,
-                              arguments:LoginArguments(
-                                  _pageProduct
-                              )
+                          Navigator.pushNamed(context, loginScreen.routeName,
+                              arguments: LoginArguments(_pageProduct)
 //                            MaterialPageRoute(
 //                              builder: (context) => new loginScreen(),
 //                              // Pass the arguments as part of the RouteSettings. The
@@ -964,11 +1044,10 @@ class _ProductWrapperState extends State<ProductWrapper> {
 //                                arguments: _pageProduct,
 //                              ),
 //                            ),
-                          );
+                              );
                         }
 
 //              _key.currentState?.showSnackBar(snackbar);
-
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 5.0),
@@ -994,9 +1073,16 @@ class _ProductWrapperState extends State<ProductWrapper> {
                               /// Chat Icon
                               InkWell(
                                 onTap: () {
-                                  Navigator.of(context).push(PageRouteBuilder(
-                                      pageBuilder: (_, ___, ____) =>
-                                          new chatItem()));
+
+                                  BlocProvider.of<WishsBloc>(context).add(
+                                      AddWishsEvent(
+                                          product_id:
+                                              _pageProduct.products_id));
+
+
+//                                  Navigator.of(context).push(PageRouteBuilder(
+//                                      pageBuilder: (_, ___, ____) =>
+//                                          new chatItem()));
                                 },
                                 child: Container(
                                   height: 40.0,
@@ -1005,10 +1091,33 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                       color: Colors.white12.withOpacity(0.1),
                                       border:
                                           Border.all(color: Colors.black12)),
-                                  child: Center(
-                                    child: Image.asset(
-                                        "assets/icon/message.png",
-                                        height: 20.0),
+                                  child: BlocBuilder<WishsBloc, WishsState>(
+                                    builder: (context, Wishstate) {
+                                      if (Wishstate is WishChecksuccessState) {
+                                        if(Wishstate.inWishlist){
+//                                          return Center(
+//                                            child: Image.asset(
+//                                                "assets/icon/wishsuccess.png",
+//                                                height: 20.0),
+//                                          );
+                                        return _addWishsuccessicon();
+                                        }else {
+                                          return Center(
+                                            child: Image.asset(
+                                                "assets/icon/addwish.png",
+                                                height: 20.0),
+                                          );
+                                        }
+                                      }else if(Wishstate is WishAddsuccessState){
+                                        return _addWishsuccessicon();
+                                      }else{
+                                        return Center(
+                                          child: Image.asset(
+                                              "assets/icon/addwish.png",
+                                              height: 20.0),
+                                        );
+                                      }
+                                    },
                                   ),
                                 ),
                               ),
@@ -1028,7 +1137,7 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      "Pay",
+                                      "Checkout",
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w700),

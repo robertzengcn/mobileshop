@@ -6,4 +6,6 @@ export './authentication/authentication.dart';
 export './login/login_bloc.dart';
 export './reviews/reviews_bloc.dart';
 export './relativeProduct/relative_product_bloc.dart';
+export './carts/carts_bloc.dart';
+export './wishs/wishs_bloc.dart';
 

@@ -1,3 +1,4 @@
+import 'package:flutter_html/shims/dart_ui.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
@@ -45,4 +46,14 @@ class ProductAddToFavoritesEvent extends ProductsEvent { }
 class ProductRemoveFromFavoritesEvent extends ProductsEvent {}
 
 @immutable
-class ProductAddToCartEvent extends ProductsEvent {}
+class ProductAddToCartEvent extends ProductsEvent {
+  final int productId;
+  final int quantity;//数量
+  final Map<int, int?>? args;
+
+  ProductAddToCartEvent({
+    required this.productId,
+    required this.quantity,
+    this.args
+  });
+}

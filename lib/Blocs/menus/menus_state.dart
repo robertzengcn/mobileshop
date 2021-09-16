@@ -11,15 +11,13 @@ abstract class MenusState extends Equatable {
  List<Object> get props => [];
 }
 class MenusEmpty extends MenusState {}
-/**
- * loading home images
- */
+
+///loading home images
 class MenusLoading extends MenusState {
 
 }
-/**
- * home images slider load completed
- */
+
+///home images slider load completed
 class Menusloaded extends MenusState {
   final List<Menu> lstMenu;
 

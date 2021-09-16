@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/ListItem/CartItemData.dart';
 import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:amigatoy/Blocs/blocs.dart';
+import 'package:amigatoy/Repository/repository.dart';
 
 class cart extends StatefulWidget {
   @override
@@ -10,36 +13,43 @@ class cart extends StatefulWidget {
 
 class _cartState extends State<cart> {
 
-  final  List<cartItem> items = [];
+final  List<cartItem> items = [];
 
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      items.add(
-        cartItem(
-          img:"assets/imgItem/flashsale3.jpg",
-          id: 1,
-          title:"Samsung Galaxy Note 9 8 GB RAM ",
-          desc: "Internal 1 TB",
-          price: "\$ 950",
-        ),
-        );
-    });
-  }
+//  @override
+//  void initState() {
+//    super.initState();
+//    setState(() {
+//      items.add(
+//        cartItem(
+//          img:"assets/imgItem/flashsale3.jpg",
+//          id: 1,
+//          title:"Samsung Galaxy Note 9 8 GB RAM ",
+//          desc: "Internal 1 TB",
+//          price: "\$ 950",
+//        ),
+//        );
+//    });
+//  }
   /// Declare price and value for chart
   int value = 1;
   int pay = 950;
 
   @override
-  Widget build(BuildContext context) {
-      return Scaffold(
+Widget build(BuildContext context) {
+    return MultiBlocProvider(
+        providers: [BlocProvider<CartsBloc>(create: (context) {
+          //加载产品的评论
+          return CartsBloc(cartRepository: CartRepository())..add(queryCartcontentEvent());
+        }),],
+        child:MultiBlocListener(
+            listeners: [],
+            child:Scaffold(
           appBar: AppBar(
             iconTheme: IconThemeData(color: Color(0xFF6991C7)),
             centerTitle: true,
             backgroundColor: Colors.white,
             title: Text(
-              "Chart",
+              "Shopping Cart",
               style: TextStyle(
                   fontFamily: "Gotik",
                   fontSize: 18.0,
@@ -296,7 +306,9 @@ class _cartState extends State<cart> {
             },
             scrollDirection: Axis.vertical,
           ): noItemCart()
-      );
+      )
+    )
+    );
     }
   }
 

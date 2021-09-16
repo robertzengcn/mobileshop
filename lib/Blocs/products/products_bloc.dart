@@ -8,6 +8,8 @@ import 'package:amigatoy/Models/models.dart';
 
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   final ProductRepository productRepository;
+
+
 //  StreamSubscription _carouselSubscription;
 
   ProductsBloc({required this.productRepository}):super(ProductsEmptyState());
@@ -20,10 +22,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
         yield ProductsLoadingState();
         Product loadproduct=await productRepository.getProductbyid(event.productId);
         yield ProductsloadedState(product:loadproduct);
-//      } catch (e) {
-//        print(e);
-//        yield ProductsErrorState();
-//      }
+
     }
   }
 
