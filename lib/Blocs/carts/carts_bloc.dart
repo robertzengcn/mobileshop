@@ -41,8 +41,8 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
       }
     }else if(event is queryCartcontentEvent){
       List<Cart> cartList=await cartRepository.getCartcontent();
-        
 
+      yield CartlistsuccessState(cartList:cartList);
     }
     // TODO: implement mapEventToState
   }

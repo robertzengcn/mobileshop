@@ -29,3 +29,8 @@ class CartsQuantitygetsuccessState extends CartsState {
   int cartQuantity;
   CartsQuantitygetsuccessState({required this.cartQuantity});
 }
+
+class CartlistsuccessState extends CartsState {
+  List<Cart> cartList;
+  CartlistsuccessState({required this.cartList});
+}

@@ -7,15 +7,15 @@ class Cart extends Equatable {
   final String model;
   final String image;
   final double price;
-  final int quantity;
-  final double? weight;
-  final double final_price;
+int quantity;
+double? weight;
+double final_price;
   final String option_name;
   final String option_value;
 
 
 
-  const Cart({
+  Cart({
     required this.id,
     required this.name,
     required this.model,
@@ -44,7 +44,7 @@ class Cart extends Equatable {
     double proWeight=0;
     bool weightnull = json['weight'] == null ? true : false;
     if (!weightnull) {
-      proWeight=json['weight'];
+      proWeight=json['weight'].toDouble();
     }
     return Cart(
         id: json['id'],
@@ -53,8 +53,8 @@ class Cart extends Equatable {
         image:json['image'],
         quantity:json['quantity'],
         weight:proWeight,
-        price:json['price'],
-        final_price:json['final_price'],
+        price:json['price'].toDouble(),
+        final_price:json['final_price'].toDouble(),
         option_name:json['option_name'],
         option_value:json['option_name'],
     );
