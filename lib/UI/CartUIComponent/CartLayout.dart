@@ -31,16 +31,20 @@ class _cartState extends State<cart> {
 //        );
 //    });
   }
+
   /// Declare price and value for chart
   int value = 1;
   int pay = 950;
 
-  Widget _optionWidget(String? optionname,String? optionvalue){
-    if(optionname!=null&&optionvalue!=null&&optionname.length>0&&optionvalue.length>0){
+  Widget _optionWidget(String? optionname, String? optionvalue) {
+    if (optionname != null &&
+        optionvalue != null &&
+        optionname.length > 0 &&
+        optionvalue.length > 0) {
       return Padding(
-          padding: const EdgeInsets.only(top:10),
-          child:Text(optionname+': '+optionvalue));
-    }else{
+          padding: const EdgeInsets.only(top: 10),
+          child: Text(optionname + ': ' + optionvalue));
+    } else {
       return Container();
     }
   }
@@ -78,25 +82,25 @@ class _cartState extends State<cart> {
                     actionPane: SlidableDrawerActionPane(),
 //                delegate: new SlidableDrawerDelegate(),
                     actionExtentRatio: 0.25,
-                    actions: <Widget>[
-                      new IconSlideAction(
-                        caption: 'Archive',
-                        color: Colors.blue,
-                        icon: Icons.archive,
-                        onTap: () {
-                          ///
-                          /// SnackBar show if cart Archive
-                          ///
-                        },
-                      ),
-//                        ld.of(context)
-//                            .showSnackBar(SnackBar(
-//                          content: Text("Items Cart Archive"),
-//                          duration: Duration(seconds: 2),
-//                          backgroundColor: Colors.blue,));
-//                      },
-//                    ),
-                    ],
+//                    actions: <Widget>[
+//                      new IconSlideAction(
+//                        caption: 'Archive',
+//                        color: Colors.blue,
+//                        icon: Icons.archive,
+//                        onTap: () {
+//                          ///
+//                          /// SnackBar show if cart Archive
+//                          ///
+//                        },
+//                      ),
+////                        ld.of(context)
+////                            .showSnackBar(SnackBar(
+////                          content: Text("Items Cart Archive"),
+////                          duration: Duration(seconds: 2),
+////                          backgroundColor: Colors.blue,));
+////                      },
+////                    ),
+//                    ],
                     secondaryActions: <Widget>[
                       new IconSlideAction(
                         key: Key(items[position].id.toString()),
@@ -111,11 +115,11 @@ class _cartState extends State<cart> {
                           ///
                           /// SnackBar show if cart delet
                           ///
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text("Items Cart Deleted"),
-                            duration: Duration(seconds: 2),
-                            backgroundColor: Colors.redAccent,
-                          ));
+//                          Scaffold.of(context).showSnackBar(SnackBar(
+//                            content: Text("Items Cart Deleted"),
+//                            duration: Duration(seconds: 2),
+//                            backgroundColor: Colors.redAccent,
+//                          ));
                         },
                       ),
                     ],
@@ -175,18 +179,18 @@ class _cartState extends State<cart> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: <Widget>[
-                                        Text(
-                                          '${items[position].name}',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: "Sans",
-                                            color: Colors.black87,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Padding(
-                                            padding:
-                                                EdgeInsets.only(top: 10.0)),
+//                                        Text(
+//                                          '${items[position].name}',
+//                                          style: TextStyle(
+//                                            fontWeight: FontWeight.w700,
+//                                            fontFamily: "Sans",
+//                                            color: Colors.black87,
+//                                          ),
+//                                          overflow: TextOverflow.ellipsis,
+//                                        ),
+//                                        Padding(
+//                                            padding:
+//                                                EdgeInsets.only(top: 10.0)),
                                         Text(
                                           '${items[position].name}',
                                           style: TextStyle(
@@ -198,8 +202,13 @@ class _cartState extends State<cart> {
                                         Padding(
                                             padding:
                                                 EdgeInsets.only(top: 10.0)),
-                                        Text('${items[position].final_price}'),
-                                        _optionWidget(items[position].option_name,items[position].option_value),
+                                        Text('Total: \$' +
+                                            items[position]
+                                                .final_price
+                                                .toString()),
+                                        _optionWidget(
+                                            items[position].option_name,
+                                            items[position].option_value),
 //                                        Padding(
 //                                            padding:
 //                                            EdgeInsets.only(top: 10.0)),
@@ -207,8 +216,10 @@ class _cartState extends State<cart> {
                                         Padding(
                                           padding: const EdgeInsets.only(
                                               top: 18.0, left: 0.0),
-                                          child: Container(
-                                            width: 112.0,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Container(
+                                            width: 118.0,
                                             decoration: BoxDecoration(
                                                 color: Colors.white70,
                                                 border: Border.all(
@@ -221,9 +232,15 @@ class _cartState extends State<cart> {
                                                 /// Decrease of value item
                                                 InkWell(
                                                   onTap: () {
+                                                    if(items[position].quantity<1){
+                                                      return;
+                                                    }
                                                     setState(() {
-                                                      value = value - 1;
-                                                      pay = 950 * value;
+                                                      items[position].quantity = items[position].quantity - 1;
+                                                      items[position]
+                                                          .final_price = items[position]
+                                                          .price * items[position]
+                                                          .quantity;
                                                     });
                                                   },
                                                   child: Container(
@@ -244,15 +261,25 @@ class _cartState extends State<cart> {
                                                   padding: const EdgeInsets
                                                           .symmetric(
                                                       horizontal: 18.0),
-                                                  child: Text(items[position].quantity.toString()),
+                                                  child: Text(items[position]
+                                                      .quantity
+                                                      .toString()),
                                                 ),
 
                                                 /// Increasing value of item
                                                 InkWell(
                                                   onTap: () {
                                                     setState(() {
-                                                      items[position].quantity = items[position].quantity + 1;
-                                                      items[position].final_price=items[position].price * items[position].quantity;
+                                                      items[position].quantity =
+                                                          items[position]
+                                                                  .quantity +
+                                                              1;
+                                                      items[position]
+                                                              .final_price =
+                                                          items[position]
+                                                                  .price *
+                                                              items[position]
+                                                                  .quantity;
                                                     });
                                                   },
                                                   child: Container(
@@ -272,7 +299,26 @@ class _cartState extends State<cart> {
                                               ],
                                             ),
                                           ),
+                                              InkWell(
+                                                  onTap: () {
+                                                    setState(() {});
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 2.0),
+                                                    child: IconButton(
+                                                      icon: const Icon(Icons.delete),
+                                                      tooltip: 'Delete the item',
+                                                      onPressed: () {
+                                                        setState(() {});
+                                                      },
+                                                    ),
+                                                  )),
+                                          ],
+                                          ),
                                         ),
+
                                       ],
                                     ),
                                   ),

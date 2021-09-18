@@ -113,5 +113,32 @@ class CartApiClient{
     }
   }
 
+  ///获取购物车种的商品
+  Future <void> updateCartquanity() async{
+    var url = Uri.parse('$appServerUrl/updateCart');
+    String token=await this.getToken();
+    http.Response response = await http.get(
+      url,
+      headers: {
+        'Application-Id': '$appId',
+        'Client-Key':token
+      },
+    );
+    var responseJson = json.decode(response.body);
+    if(responseJson['status']==true){
+      if(responseJson['data']['list']==null){
+        return [];
+      }
+
+      return (responseJson['data']['list'] as List)
+          .map((p) => Cart.fromJson(p))
+          .toList();
+
+    }else{
+      throw Exception(responseJson['msg']);
+    }
+  }
+
+
 
 }
