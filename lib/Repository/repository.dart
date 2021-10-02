@@ -12,5 +12,7 @@ export 'cartApiClient.dart';
 export 'CartRepository.dart';
 export 'wishApiClient.dart';
 export 'WishRepository.dart';
+export 'CustomerAddressApiClient.dart';
+export 'CustomerAddressRepository.dart';
 
 

@@ -23,7 +23,7 @@ class CartsErrorState extends CartsState {
   List<Object> get props => [error];
 
   @override
-  String toString() => 'LoginFailure { error: $error }';
+  String toString() => 'query cart error { error: $error }';
 }
 class CartsQuantitygetsuccessState extends CartsState {
   int cartQuantity;
@@ -31,6 +31,9 @@ class CartsQuantitygetsuccessState extends CartsState {
 }
 
 class CartlistsuccessState extends CartsState {
-  List<Cart> cartList;
-  CartlistsuccessState({required this.cartList});
+  List<Cart?> cartList;
+  CartTotal? cartTotal;
+  CartlistsuccessState({required this.cartList, this.cartTotal});
+}
+class CartRefreshingState extends CartsState {
 }

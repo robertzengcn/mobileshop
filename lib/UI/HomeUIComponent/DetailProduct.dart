@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
 //import 'package:amigatoy/UI/HomeUIComponent/ChatItem.dart';
-import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
+//import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 
 //import 'package:flutter_rating/flutter_rating.dart';
 //import 'package:amigatoy/UI/HomeUIComponent/ReviewLayout.dart';
@@ -21,6 +21,7 @@ import 'package:amigatoy/Models/Product_options.dart';
 import 'package:amigatoy/Models/Product_attributes.dart';
 import 'package:amigatoy/UI/LoginOrSignup/Login.dart';
 import 'package:amigatoy/Arguments/LoginArguments.dart';
+import 'package:amigatoy/UI/CartUIComponent/Payment.dart';
 
 class detailProduk extends StatefulWidget {
   Product gridItem;
@@ -223,11 +224,11 @@ class _ProductWrapperState extends State<ProductWrapper> {
       letterSpacing: 0.3,
       wordSpacing: 0.5);
 
-  static ButtonStyle _addtoCartStyle = ElevatedButton.styleFrom(
-    textStyle: const TextStyle(fontSize: 13),
-    primary: Colors.red, // background
-    onPrimary: Colors.white, // foreground
-  );
+//  static ButtonStyle _addtoCartStyle = ElevatedButton.styleFrom(
+////    textStyle: const TextStyle(fontSize: 13),
+////    primary: Colors.red, // background
+////    onPrimary: Colors.white, // foreground
+////  );
 
   /// Variable Component UI use in bottom layout "Top Rated Products"
 //  var _suggestedItem = Padding(
@@ -1127,7 +1128,7 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                 onTap: () {
                                   Navigator.of(context).push(PageRouteBuilder(
                                       pageBuilder: (_, __, ___) =>
-                                          new delivery()));
+                                          new payment()));
                                 },
                                 child: Container(
                                   height: 45.0,

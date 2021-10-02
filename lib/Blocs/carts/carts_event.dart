@@ -26,3 +26,22 @@ class queryCartquantityEvent extends CartsEvent {
 class queryCartcontentEvent extends CartsEvent {
 
 }
+
+@immutable
+class updateCartquantityEvent extends CartsEvent {
+  String cartId;
+  int quantity;//数量
+  updateCartquantityEvent({
+    required this.cartId,
+    required this.quantity
+  });
+}
+
+@immutable
+class deleteCartEvent extends CartsEvent {
+  String cartId;
+
+  deleteCartEvent({
+    required this.cartId
+  });
+}

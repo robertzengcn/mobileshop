@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+//import 'package:meta/meta.dart';
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/Repository/cartApiClient.dart';
 
@@ -19,9 +19,23 @@ class CartRepository{
     return quantity;
   }
   ///get cart content list
-  Future<List<Cart>> getCartcontent()async{
-    List<Cart> cartList=await cartApiClient.getCartcontent();
-    return cartList;
+  Future<CartInfo> getCartcontent()async{
+    CartInfo cartInfo=await cartApiClient.getCartcontent();
+    return cartInfo;
+  }
+
+  ///更新购物车产品数量
+  Future<bool> updateCartquanity(String product_id, int quantity) async {
+    bool res =
+    await cartApiClient.updateCartquanity(product_id, quantity);
+  return res;
+  }
+
+  ///更新购物车产品数量
+  Future<bool> deleteCart(String product_id) async {
+    bool res =
+    await cartApiClient.deleteCart(product_id);
+    return res;
   }
 
 }

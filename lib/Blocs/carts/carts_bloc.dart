@@ -17,32 +17,55 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
   Stream<CartsState> mapEventToState(
     CartsEvent event,
   ) async* {
-    if(event is AddToCartEvent){
+    if (event is AddToCartEvent) {
       try {
-
-         int cartQuantity=await cartRepository.addCart(event.productId, event.quantity, event.args);
-        if(cartQuantity>0){
-          yield CartsAddsuccessState(cartQuantity:cartQuantity);
-
-        }else{
-          yield CartsErrorState(error:"unknow error happened");
+        int cartQuantity = await cartRepository.addCart(
+            event.productId, event.quantity, event.args);
+        if (cartQuantity > 0) {
+          yield CartsAddsuccessState(cartQuantity: cartQuantity);
+        } else {
+          yield CartsErrorState(error: "unknow error happened");
         }
-
       } catch (error) {
         yield CartsErrorState(error: error.toString());
       }
-
-    }else if(event is queryCartquantityEvent){
+    } else if (event is queryCartquantityEvent) {
       try {
-        int quantity=await cartRepository.getCartquantity();
-        yield CartsQuantitygetsuccessState(cartQuantity:quantity);
-      }catch (error) {
-        yield CartsErrorState(error:error.toString());
+        int quantity = await cartRepository.getCartquantity();
+        yield CartsQuantitygetsuccessState(cartQuantity: quantity);
+      } catch (error,stacktrace) {
+        yield CartsErrorState(error: 'Exception: '+error.toString()+'Stacktrace: ' + stacktrace.toString());
       }
-    }else if(event is queryCartcontentEvent){
-      List<Cart> cartList=await cartRepository.getCartcontent();
+    } else if (event is queryCartcontentEvent) {
+      try {
+        CartInfo cartInfo= await cartRepository.getCartcontent();
 
-      yield CartlistsuccessState(cartList:cartList);
+        yield CartlistsuccessState(cartList: cartInfo.cartlist,cartTotal:cartInfo.carttotal);
+      } catch (error, stacktrace) {
+        yield CartsErrorState(error: 'Exception: '+error.toString()+'Stacktrace: ' + stacktrace.toString());
+      }
+    } else if (event is updateCartquantityEvent) {
+      try {
+        bool res = await cartRepository.updateCartquanity(
+            event.cartId, event.quantity);
+        CartInfo cartinfo = await cartRepository.getCartcontent();
+        yield CartRefreshingState();
+        yield CartlistsuccessState(cartList: cartinfo.cartlist,cartTotal: cartinfo.carttotal);
+      } catch (error,stacktrace) {
+        yield CartsErrorState(error: 'Exception: '+error.toString()+'Stacktrace: ' + stacktrace.toString());
+      }
+    }else if (event is deleteCartEvent) {
+      try {
+        await cartRepository.deleteCart(event.cartId);
+        CartInfo cartInfo = await cartRepository.getCartcontent();
+
+        yield CartRefreshingState();
+        yield CartlistsuccessState(cartList: cartInfo.cartlist,cartTotal: cartInfo.carttotal);
+      } on Exception catch (error,stacktrace) {
+
+        yield CartsErrorState(error: 'Exception: '+error.toString()+'Stacktrace: ' + stacktrace.toString());
+      }
+
     }
     // TODO: implement mapEventToState
   }

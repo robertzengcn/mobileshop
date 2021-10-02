@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:amigatoy/UI/BottomNavigationBar.dart';
-import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
-import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
-import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
+//import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
+//import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
+//import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 
 class payment extends StatefulWidget {
   @override
@@ -101,9 +101,9 @@ class _paymentState extends State<payment> {
                       Padding(
                         padding: const EdgeInsets.only(left: 40.0),
                         child: Image.asset(
-                          "assets/img/credit.png",
-                          height: 25.0,
-                        ),
+                        "assets/img/credit.png",
+                        height: 25.0,
+                      ),
                       )
                     ],
                   ),
@@ -246,20 +246,20 @@ class _paymentState extends State<payment> {
 }
 
 /// Custom Text Header for Dialog after user succes payment
-var _txtCustomHead = TextStyle(
-  color: Colors.black54,
-  fontSize: 23.0,
-  fontWeight: FontWeight.w600,
-  fontFamily: "Gotik",
-);
+//var _txtCustomHead = TextStyle(
+//  color: Colors.black54,
+//  fontSize: 23.0,
+//  fontWeight: FontWeight.w600,
+//  fontFamily: "Gotik",
+//);
 
 /// Custom Text Description for Dialog after user succes payment
-var _txtCustomSub = TextStyle(
-  color: Colors.black38,
-  fontSize: 15.0,
-  fontWeight: FontWeight.w500,
-  fontFamily: "Gotik",
-);
+//var _txtCustomSub = TextStyle(
+//  color: Colors.black38,
+//  fontSize: 15.0,
+//  fontWeight: FontWeight.w500,
+//  fontFamily: "Gotik",
+//);
 
 /// Card Popup if success payment
 //_showDialog(BuildContext ctx) {

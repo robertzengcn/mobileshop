@@ -1,17 +1,18 @@
 import 'dart:convert';
 import 'dart:async';
 
-import 'package:meta/meta.dart';
+//import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/constants/application_constants.dart';
-import 'package:amigatoy/dao/user_dao.dart';
+//import 'package:amigatoy/dao/user_dao.dart';
+import 'package:amigatoy/Repository/BaseApiClient.dart';
 
-class CartApiClient{
+class CartApiClient extends BaseApiClient{
 
 //  final http.Client httpClient;
   CartApiClient();
-  final userDao = UserDao();
+//  final userDao = UserDao();
 
   @override
   Future <int> addCart(int product_id,int quantity,Map<int, int?>? args) async{
@@ -59,11 +60,11 @@ class CartApiClient{
   }
 
   ///获取token
-  Future <String> getToken() async{
-    User? user=await userDao.getToken();
-    String token=user!=null?user.usertoken:"";
-    return token;
-  }
+//  Future <String> getToken() async{
+//    User? user=await userDao.getToken();
+//    String token=user!=null?user.usertoken:"";
+//    return token;
+//  }
   ///获取购物车种的商品数量
   Future <int> getCartquantity() async{
     var url = Uri.parse('$appServerUrl/getCartquantity');
@@ -88,7 +89,7 @@ class CartApiClient{
   }
 
   ///获取购物车种的商品
-  Future <List<Cart>> getCartcontent() async{
+  Future <CartInfo> getCartcontent() async{
     var url = Uri.parse('$appServerUrl/listCart');
     String token=await this.getToken();
     http.Response response = await http.get(
@@ -100,25 +101,38 @@ class CartApiClient{
     );
     var responseJson = json.decode(response.body);
     if(responseJson['status']==true){
+
       if(responseJson['data']['list']==null){
-        return [];
+        CartTotal carttotal=CartTotal(totalPrice: 0,totalWeight: 0);
+        List<Cart?> plist=[];
+        return CartInfo(cartlist:plist,carttotal:carttotal);
+      }else{
+        List<Cart> cartlist=(responseJson['data']['list'] as List)
+            .map((p) => Cart.fromJson(p))
+            .toList();
+//        CartTotal carttotal=CartTotal(totalPrice: responseJson['data']['total'],totalWeight: responseJson['data']['weight']);
+        CartTotal carttotal=CartTotal.fromJson(responseJson['data']);
+        return CartInfo(cartlist:cartlist,carttotal:carttotal);
       }
 
-      return (responseJson['data']['list'] as List)
-          .map((p) => Cart.fromJson(p))
-          .toList();
+
 
     }else{
       throw Exception(responseJson['msg']);
     }
   }
 
-  ///获取购物车种的商品
-  Future <void> updateCartquanity() async{
+  ///获取购物车中商品的数量
+  Future <bool> updateCartquanity(String product_id,int quantity) async{
     var url = Uri.parse('$appServerUrl/updateCart');
     String token=await this.getToken();
-    http.Response response = await http.get(
+    Map<String,String>data;
+    data={"products_id":product_id,
+      "cart_quantity":quantity.toString()
+    };
+    http.Response response = await http.post(
       url,
+      body: data,
       headers: {
         'Application-Id': '$appId',
         'Client-Key':token
@@ -126,13 +140,31 @@ class CartApiClient{
     );
     var responseJson = json.decode(response.body);
     if(responseJson['status']==true){
-      if(responseJson['data']['list']==null){
-        return [];
-      }
+      return true;
 
-      return (responseJson['data']['list'] as List)
-          .map((p) => Cart.fromJson(p))
-          .toList();
+    }else{
+      throw Exception(responseJson['msg']);
+    }
+  }
+
+  ///获取购物车中商品的数量
+  Future <bool> deleteCart(String product_id) async{
+    var url = Uri.parse('$appServerUrl/deleteCart');
+    String token=await this.getToken();
+    Map<String,String>data;
+    data={"products_id":product_id,
+    };
+    http.Response response = await http.post(
+      url,
+      body: data,
+      headers: {
+        'Application-Id': '$appId',
+        'Client-Key':token
+      },
+    );
+    var responseJson = json.decode(response.body);
+    if(responseJson['status']==true){
+      return true;
 
     }else{
       throw Exception(responseJson['msg']);

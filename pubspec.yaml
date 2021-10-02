@@ -224,6 +224,7 @@ flutter:
     - assets/avatars/avatar-5.jpg
     - assets/avatars/avatar-6.jpg
     - assets/imgIllustration/IlustrasiCart.png
+    - assets/img/error.png
 
 
   # To add assets to your application, add an assets section, like this:

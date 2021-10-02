@@ -49,39 +49,21 @@ class _cartState extends State<cart> {
     }
   }
 
-  Widget _scaffoldWidget(List<Cart> items) {
-    return Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(color: Color(0xFF6991C7)),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          title: Text(
-            "Shopping Cart",
-            style: TextStyle(
-                fontFamily: "Gotik",
-                fontSize: 18.0,
-                color: Colors.black54,
-                fontWeight: FontWeight.w700),
-          ),
-          elevation: 0.0,
-        ),
-
-        ///
-        ///
-        /// Checking item value of cart
-        ///
-        ///
-        body: items.length > 0
-            ? ListView.builder(
-                itemCount: items.length,
-                itemBuilder: (context, position) {
-                  ///
-                  /// Widget for list view slide delete
-                  ///
-                  return Slidable(
-                    actionPane: SlidableDrawerActionPane(),
+  Widget _buildList(List<Cart?> items) {
+    return items.length > 0
+        ? Expanded(
+            child: SizedBox(
+                height: 300.0,
+                child: new ListView.builder(
+                    itemCount: items.length,
+                    itemBuilder: (context, position) {
+                      ///
+                      /// Widget for list view slide delete
+                      ///
+                      return Slidable(
+                        actionPane: SlidableDrawerActionPane(),
 //                delegate: new SlidableDrawerDelegate(),
-                    actionExtentRatio: 0.25,
+                        actionExtentRatio: 0.25,
 //                    actions: <Widget>[
 //                      new IconSlideAction(
 //                        caption: 'Archive',
@@ -101,84 +83,93 @@ class _cartState extends State<cart> {
 ////                      },
 ////                    ),
 //                    ],
-                    secondaryActions: <Widget>[
-                      new IconSlideAction(
-                        key: Key(items[position].id.toString()),
-                        caption: 'Delete',
-                        color: Colors.red,
-                        icon: Icons.delete,
-                        onTap: () {
-                          setState(() {
-                            items.removeAt(position);
-                          });
+                        secondaryActions: <Widget>[
+                          new IconSlideAction(
+                            key: Key(items[position]!.id.toString()),
+                            caption: 'Delete',
+                            color: Colors.red,
+                            icon: Icons.delete,
+                            onTap: () {
+                              setState(() {
+                                items.removeAt(position);
+                              });
 
-                          ///
-                          /// SnackBar show if cart delet
-                          ///
+                              ///
+                              /// SnackBar show if cart delet
+                              ///
 //                          Scaffold.of(context).showSnackBar(SnackBar(
 //                            content: Text("Items Cart Deleted"),
 //                            duration: Duration(seconds: 2),
 //                            backgroundColor: Colors.redAccent,
 //                          ));
-                        },
-                      ),
-                    ],
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 1.0, left: 13.0, right: 13.0),
+                            },
+                          ),
+                        ],
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 1.0, left: 13.0, right: 13.0),
 
-                      /// Background Constructor for card
-                      child: Container(
-                        height: 265.0,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12.withOpacity(0.1),
-                              blurRadius: 3.5,
-                              spreadRadius: 0.4,
-                            )
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                          /// Background Constructor for card
+                          child: Container(
+                            height: 265.0,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12.withOpacity(0.1),
+                                  blurRadius: 3.5,
+                                  spreadRadius: 0.4,
+                                )
+                              ],
+                            ),
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Padding(
-                                    padding: EdgeInsets.all(10.0),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                        padding: EdgeInsets.all(10.0),
 
-                                    /// Image item
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                            color:
-                                                Colors.white.withOpacity(0.1),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  color: Colors.black12
-                                                      .withOpacity(0.1),
-                                                  blurRadius: 0.5,
-                                                  spreadRadius: 0.1)
-                                            ]),
-                                        child: new Image.network(
-                                          '${items[position].image}',
-                                          height: 130.0,
-                                          width: 120.0,
-                                          fit: BoxFit.cover,
-                                        ))),
-                                Flexible(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 25.0, left: 10.0, right: 5.0),
-                                    child: Column(
-                                      /// Text Information Item
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: <Widget>[
+                                        /// Image item
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Colors.white
+                                                    .withOpacity(0.1),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                      color: Colors.black12
+                                                          .withOpacity(0.1),
+                                                      blurRadius: 0.5,
+                                                      spreadRadius: 0.1)
+                                                ]),
+                                            child: new Image.network(
+                                                '${items[position]!.image}',
+                                                height: 130.0,
+                                                width: 120.0,
+                                                fit: BoxFit.cover, errorBuilder:
+                                                    (BuildContext context,
+                                                        Object exception,
+                                                        StackTrace?
+                                                            stackTrace) {
+                                              return Image.asset(
+                                                "assets/img/error.png",
+                                                height: 130.0,
+                                                width: 120.0,
+                                              );
+                                            }))),
+                                    Flexible(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 25.0, left: 10.0, right: 5.0),
+                                        child: Column(
+                                          /// Text Information Item
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: <Widget>[
 //                                        Text(
 //                                          '${items[position].name}',
 //                                          style: TextStyle(
@@ -191,141 +182,188 @@ class _cartState extends State<cart> {
 //                                        Padding(
 //                                            padding:
 //                                                EdgeInsets.only(top: 10.0)),
-                                        Text(
-                                          '${items[position].name}',
-                                          style: TextStyle(
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12.0,
-                                          ),
-                                        ),
-                                        Padding(
-                                            padding:
-                                                EdgeInsets.only(top: 10.0)),
-                                        Text('Total: \$' +
-                                            items[position]
-                                                .final_price
-                                                .toString()),
-                                        _optionWidget(
-                                            items[position].option_name,
-                                            items[position].option_value),
+                                            Text(
+                                              '${items[position]!.name}',
+                                              style: TextStyle(
+                                                color: Colors.black54,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 12.0,
+                                              ),
+                                            ),
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 10.0)),
+                                            Text('Total: \$' +
+                                                items[position]!
+                                                    .final_price
+                                                    .toString()),
+                                            _optionWidget(
+                                                items[position]!.option_name,
+                                                items[position]!.option_value),
 //                                        Padding(
 //                                            padding:
 //                                            EdgeInsets.only(top: 10.0)),
 //                                        Text('${items[position].option_name}:${items[position].option_value}'),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 18.0, left: 0.0),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Container(
-                                            width: 118.0,
-                                            decoration: BoxDecoration(
-                                                color: Colors.white70,
-                                                border: Border.all(
-                                                    color: Colors.black12
-                                                        .withOpacity(0.1))),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: <Widget>[
-                                                /// Decrease of value item
-                                                InkWell(
-                                                  onTap: () {
-                                                    if(items[position].quantity<1){
-                                                      return;
-                                                    }
-                                                    setState(() {
-                                                      items[position].quantity = items[position].quantity - 1;
-                                                      items[position]
-                                                          .final_price = items[position]
-                                                          .price * items[position]
-                                                          .quantity;
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                    height: 30.0,
-                                                    width: 30.0,
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 18.0, left: 0.0),
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Container(
+                                                    width: 118.0,
                                                     decoration: BoxDecoration(
-                                                        border: Border(
-                                                            right: BorderSide(
-                                                                color: Colors
-                                                                    .black12
-                                                                    .withOpacity(
-                                                                        0.1)))),
-                                                    child: Center(
-                                                        child: Text("-")),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 18.0),
-                                                  child: Text(items[position]
-                                                      .quantity
-                                                      .toString()),
-                                                ),
+                                                        color: Colors.white70,
+                                                        border: Border.all(
+                                                            color: Colors
+                                                                .black12
+                                                                .withOpacity(
+                                                                    0.1))),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceAround,
+                                                      children: <Widget>[
+                                                        /// Decrease of value item
+                                                        InkWell(
+                                                          onTap: () {
+                                                            if (items[position]!
+                                                                    .quantity <
+                                                                1) {
+                                                              return;
+                                                            }
+                                                            setState(() {
+                                                              items[position]!
+                                                                      .quantity =
+                                                                  items[position]!
+                                                                          .quantity -
+                                                                      1;
+                                                              items[position]!
+                                                                  .final_price = items[
+                                                                          position]!
+                                                                      .price *
+                                                                  items[position]!
+                                                                      .quantity;
+                                                              BlocProvider.of<
+                                                                          CartsBloc>(
+                                                                      context)
+                                                                  .add(updateCartquantityEvent(
+                                                                      cartId:
+                                                                          items[position]!
+                                                                              .id,
+                                                                      quantity:
+                                                                          items[position]!
+                                                                              .quantity));
+                                                            });
+                                                          },
+                                                          child: Container(
+                                                            height: 30.0,
+                                                            width: 30.0,
+                                                            decoration: BoxDecoration(
+                                                                border: Border(
+                                                                    right: BorderSide(
+                                                                        color: Colors
+                                                                            .black12
+                                                                            .withOpacity(0.1)))),
+                                                            child: Center(
+                                                                child:
+                                                                    Text("-")),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      18.0),
+                                                          child: Text(
+                                                              items[position]!
+                                                                  .quantity
+                                                                  .toString()),
+                                                        ),
 
-                                                /// Increasing value of item
-                                                InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      items[position].quantity =
-                                                          items[position]
-                                                                  .quantity +
-                                                              1;
-                                                      items[position]
-                                                              .final_price =
-                                                          items[position]
-                                                                  .price *
-                                                              items[position]
-                                                                  .quantity;
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                    height: 30.0,
-                                                    width: 28.0,
-                                                    decoration: BoxDecoration(
-                                                        border: Border(
-                                                            left: BorderSide(
-                                                                color: Colors
-                                                                    .black12
-                                                                    .withOpacity(
-                                                                        0.1)))),
-                                                    child: Center(
-                                                        child: Text("+")),
+                                                        /// Increasing value of item
+                                                        InkWell(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              items[position]!
+                                                                      .quantity =
+                                                                  items[position]!
+                                                                          .quantity +
+                                                                      1;
+                                                              items[position]!
+                                                                  .final_price = items[
+                                                                          position]!
+                                                                      .price *
+                                                                  items[position]!
+                                                                      .quantity;
+
+                                                              BlocProvider.of<
+                                                                          CartsBloc>(
+                                                                      context)
+                                                                  .add(updateCartquantityEvent(
+                                                                      cartId:
+                                                                          items[position]!
+                                                                              .id,
+                                                                      quantity:
+                                                                          items[position]!
+                                                                              .quantity));
+                                                            });
+                                                          },
+                                                          child: Container(
+                                                            height: 30.0,
+                                                            width: 28.0,
+                                                            decoration: BoxDecoration(
+                                                                border: Border(
+                                                                    left: BorderSide(
+                                                                        color: Colors
+                                                                            .black12
+                                                                            .withOpacity(0.1)))),
+                                                            child: Center(
+                                                                child:
+                                                                    Text("+")),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                              InkWell(
-                                                  onTap: () {
-                                                    setState(() {});
-                                                  },
-                                                  child: Padding(
-                                                    padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 2.0),
-                                                    child: IconButton(
-                                                      icon: const Icon(Icons.delete),
-                                                      tooltip: 'Delete the item',
-                                                      onPressed: () {
+                                                  InkWell(
+                                                      onTap: () {
                                                         setState(() {});
                                                       },
-                                                    ),
-                                                  )),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal:
+                                                                    2.0),
+                                                        child: IconButton(
+                                                          icon: const Icon(
+                                                              Icons.delete),
+                                                          tooltip:
+                                                              'Delete the item',
+                                                          onPressed: () {
+                                                            setState(() {
+                                                              BlocProvider.of<
+                                                                          CartsBloc>(
+                                                                      context)
+                                                                  .add(deleteCartEvent(
+                                                                      cartId: items[
+                                                                              position]!
+                                                                          .id));
+                                                            });
+                                                          },
+                                                        ),
+                                                      )),
+                                                ],
+                                              ),
+                                            ),
                                           ],
-                                          ),
                                         ),
-
-                                      ],
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            Padding(padding: EdgeInsets.only(top: 8.0)),
+                                Padding(padding: EdgeInsets.only(top: 8.0)),
 //                            Divider(
 //                              height: 2.0,
 //                              color: Colors.black12,
@@ -381,13 +419,110 @@ class _cartState extends State<cart> {
 //                                ],
 //                              ),
 //                            ),
-                          ],
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  );
-                })
-            : Container());
+                      );
+                    })))
+        : Container();
+  }
+
+  ///show customer address container
+  Widget _customerAddress(List<CustomerAddress?> customerAddlist) {
+    List<Widget> custlistWidget = [];
+    if (customerAddlist.length > 0) {
+      customerAddlist.forEach((value) {
+        custlistWidget.add(
+          Card(
+            child: ListTile(
+              title: Text('Two-line ListTile'),
+              subtitle: Text('Here is a second line'),
+            ),
+          ),
+        );
+      });
+
+      return ListView(
+        children: custlistWidget,
+      );
+    } else {
+      return Card(
+          child: OutlinedButton(
+            onPressed: () {
+              print('Received click');
+            },
+            child: const Text('Add Shipping address'),
+          )
+      );
+    }
+  }
+
+  Widget _scaffoldWidget(List<Cart?> items, CartTotal? cartTotal,
+      List<CustomerAddress?> customerAddlist) {
+    /// Custom Text
+    var _customStyle = TextStyle(
+        fontFamily: "Gotik",
+        fontWeight: FontWeight.w800,
+        color: Colors.black,
+        fontSize: 20.0);
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Color(0xFF6991C7)),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: Text(
+          "Shopping Cart",
+          style: TextStyle(
+              fontFamily: "Gotik",
+              fontSize: 18.0,
+              color: Colors.black54,
+              fontWeight: FontWeight.w700),
+        ),
+        elevation: 0.0,
+      ),
+      body: Column(children: <Widget>[
+        new Container(
+          height: 80.0,
+          color: Colors.transparent,
+          child: new Container(
+//                    decoration: new BoxDecoration(
+//                        color: Colors.white,
+//                        borderRadius: new BorderRadius.only(
+//                          topLeft: const Radius.circular(40.0),
+//                          topRight: const Radius.circular(40.0),
+//                        )
+//                    ),
+            child: _customerAddress(customerAddlist),
+          ),
+        ),
+        _buildList(items),
+        Padding(padding: EdgeInsets.only(top: 15.0)),
+        Divider(
+          height: 1.0,
+          color: Colors.black26,
+        ),
+        cartTotal != null
+            ? Column(
+
+                /// Add this
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                    Text(
+                      "Cart Subtotal:" + cartTotal.totalPrice.toString(),
+                      style: _customStyle,
+                      textAlign: TextAlign.right,
+                    )
+                  ])
+            : Container(),
+      ]),
+
+      ///
+      ///
+      /// Checking item value of cart
+      ///
+      ///
+    );
   }
 
   @override
@@ -398,6 +533,12 @@ class _cartState extends State<cart> {
             //加载产品的评论
             return CartsBloc(cartRepository: CartRepository())
               ..add(queryCartcontentEvent());
+          }),
+          BlocProvider<CustomerAddressBloc>(create: (context) {
+            //加载产品的评论
+            return CustomerAddressBloc(
+                customerAddressRepository: CustomerAddressRepository())
+              ..add(QueryCustomerAddressEvent());
           }),
         ],
         child: MultiBlocListener(
@@ -414,11 +555,25 @@ class _cartState extends State<cart> {
             child: BlocBuilder<CartsBloc, CartsState>(
                 builder: (context, cartstate) {
               if (cartstate is CartlistsuccessState) {
-                if (cartstate.cartList.length > 0) {
-                  return _scaffoldWidget(cartstate.cartList);
+                if ((cartstate.cartList.length > 0)) {
+                  BlocBuilder<CustomerAddressBloc, CustomerAddressState>(
+                      builder: (context, customerAddstate) {
+                    List<CustomerAddress?> customerList = [];
+                    if (customerAddstate is QueryCustomerAddressSuccess) {
+                      customerList = customerAddstate.customerAddressList;
+                    }
+                    return _scaffoldWidget(
+                        cartstate.cartList, cartstate.cartTotal, customerList);
+                  });
+
+                  return Container();
                 } else {
                   return noItemCart();
                 }
+              } else if (cartstate is CartRefreshingState) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               } else {
                 return Container();
               }
