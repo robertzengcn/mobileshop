@@ -32,6 +32,6 @@ class CustomerAddressBloc
                 stacktrace.toString());
       }
     }
-   
+
   }
 }
