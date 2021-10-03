@@ -516,7 +516,35 @@ class _cartState extends State<cart> {
                   ])
             : Container(),
       ]),
-
+        bottomNavigationBar:BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Color(0xFF6200EE),
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white.withOpacity(.60),
+          selectedFontSize: 14,
+          unselectedFontSize: 14,
+          onTap: (value) {
+            // Respond to item press.
+          },
+          items: [
+            BottomNavigationBarItem(
+              title: Text('Favorites'),
+              icon: Icon(Icons.favorite),
+            ),
+            BottomNavigationBarItem(
+              title: Text('Music'),
+              icon: Icon(Icons.music_note),
+            ),
+            BottomNavigationBarItem(
+              title: Text('Places'),
+              icon: Icon(Icons.location_on),
+            ),
+            BottomNavigationBarItem(
+              title: Text('News'),
+              icon: Icon(Icons.library_books),
+            ),
+          ],
+        )
       ///
       ///
       /// Checking item value of cart
@@ -559,8 +587,10 @@ class _cartState extends State<cart> {
                   BlocBuilder<CustomerAddressBloc, CustomerAddressState>(
                       builder: (context, customerAddstate) {
                     List<CustomerAddress?> customerList = [];
+                    print('590');
                     if (customerAddstate is QueryCustomerAddressSuccess) {
                       customerList = customerAddstate.customerAddressList;
+
                     }
                     return _scaffoldWidget(
                         cartstate.cartList, cartstate.cartTotal, customerList);
