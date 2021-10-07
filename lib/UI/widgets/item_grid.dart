@@ -11,6 +11,8 @@ class ItemGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
+
+    var imgVariable = NetworkImage(products.products_image);
     return InkWell(
       onTap: () {
         Navigator.of(context).push(PageRouteBuilder(
@@ -68,7 +70,19 @@ class ItemGrid extends StatelessWidget {
                                           height: 400.0,
                                           alignment: Alignment.center,
                                           fit: BoxFit.contain,
-                                        )),
+                                            errorBuilder:
+                                                (BuildContext context,
+                                                Object exception,
+                                                StackTrace?
+                                                stackTrace) {
+                                              return Image.asset(
+                                                "assets/img/error.png",
+                                                height: 400.0,
+                                                width: 400.0,
+                                              );
+                                            }
+                                        )
+                                    ),
                                     onTap: () {
                                       Navigator.pop(context);
                                     },
@@ -85,9 +99,30 @@ class ItemGrid extends StatelessWidget {
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(7.0),
                                 topRight: Radius.circular(7.0)),
-                            image: DecorationImage(
-                                image: new NetworkImage(products.products_image),
-                                fit: BoxFit.cover)),
+                            // image:
+                            // DecorationImage(
+                            //     image: imgVariable,
+                            //   onError: (Object exception,stackTrace){
+                            //
+                            //   },
+                            //   fit: BoxFit.cover,
+                            //
+                            // )
+                        ),
+                        child: Image.network(
+                            products.products_image,
+                            alignment: Alignment.center,
+                            fit: BoxFit.contain,
+                            errorBuilder:
+                                (BuildContext context,
+                                Object exception,
+                                StackTrace?
+                                stackTrace) {
+                              return Image.asset(
+                                "assets/img/error.png",
+                              );
+                            }
+                        ),
                       ),
                     ),
                   ),

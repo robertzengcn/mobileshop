@@ -9,4 +9,5 @@ export './relativeProduct/relative_product_bloc.dart';
 export './carts/carts_bloc.dart';
 export './wishs/wishs_bloc.dart';
 export './customer_address/customer_address_bloc.dart';
-
+export './countries/countries_bloc.dart';
+export './zones/zones_bloc.dart';

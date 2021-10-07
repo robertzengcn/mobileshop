@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 //import 'package:amigatoy/ListItem/CartItemData.dart';
-//import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
+import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/Repository/repository.dart';
@@ -35,6 +35,7 @@ class _cartState extends State<cart> {
   /// Declare price and value for chart
   int value = 1;
   int pay = 950;
+  final _formKey = GlobalKey<FormState>();
 
   Widget _optionWidget(String? optionname, String? optionvalue) {
     if (optionname != null &&
@@ -428,8 +429,157 @@ class _cartState extends State<cart> {
         : Container();
   }
 
+  InputDecoration _getInputdect(String inputName) {
+    return InputDecoration(
+        border: UnderlineInputBorder(), labelText: inputName);
+  }
+
+  Widget _countrieslist(List<Countries> countrieslist) {
+    int dropdownValue = 223;
+    return DropdownButton<int>(
+
+      value: dropdownValue,
+      icon: const Icon(Icons.arrow_downward),
+      iconSize: 24,
+      elevation: 16,
+      hint: Container(
+        //and here
+        child: Text(
+          "Countries",
+          style: TextStyle(color: Colors.grey),
+          textAlign: TextAlign.end,
+        ),
+      ),
+      style: const TextStyle(color: Colors.deepPurple),
+      underline: Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
+      ),
+      onChanged: (int? newValue) {
+        setState(() {
+          dropdownValue = newValue!;
+        });
+      },
+      items: countrieslist.map<DropdownMenuItem<int>>((map) {
+        return DropdownMenuItem<int>(
+          value: map.countriesId,
+          child: Text(map.countriesName),
+        );
+      }).toList(),
+    );
+  }
+
+  ///add customer address btn widget
+  Widget _addCustomeraddressbtn(List<Countries> counties) {
+    return Container(
+        child: OutlinedButton(
+      onPressed: () {
+        Navigator.of(context).push(PageRouteBuilder(
+            pageBuilder: (_, __, ___) => new delivery()));
+        // showDialog(
+        //     context: context,
+        //     builder: (BuildContext context) {
+        //       return AlertDialog(
+        //         content: Stack(
+        //           children: <Widget>[
+        //             Positioned(
+        //               right: -40.0,
+        //               top: -40.0,
+        //               child: InkResponse(
+        //                 onTap: () {
+        //                   Navigator.of(context).pop();
+        //                 },
+        //                 child: CircleAvatar(
+        //                   child: Icon(Icons.close),
+        //                   backgroundColor: Colors.red,
+        //                 ),
+        //               ),
+        //             ),
+        //             Form(
+        //               key: _formKey,
+        //               child: new SingleChildScrollView(
+        //                 child: Column(
+        //                   mainAxisSize: MainAxisSize.min,
+        //                   children: <Widget>[
+        //                     Padding(
+        //                       padding: EdgeInsets.all(8.0),
+        //                       child: TextFormField(
+        //                           decoration: _getInputdect('First Name *')),
+        //                     ),
+        //                     Padding(
+        //                       padding: EdgeInsets.all(8.0),
+        //                       child: TextFormField(
+        //                         decoration: _getInputdect('Last name *'),
+        //                       ),
+        //                     ),
+        //                     Padding(
+        //                       padding: EdgeInsets.all(8.0),
+        //                       child: _countrieslist(counties),
+        //                     ),
+        //                     Padding(
+        //                       padding: EdgeInsets.all(8.0),
+        //                       child: TextFormField(
+        //                         decoration: _getInputdect('Company(option)'),
+        //                       ),
+        //                     ),
+        //                     Padding(
+        //                       padding: EdgeInsets.all(8.0),
+        //                       child: TextFormField(
+        //                         decoration: _getInputdect('Street Address *'),
+        //                       ),
+        //                     ),
+        //                     Padding(
+        //                       padding: EdgeInsets.all(8.0),
+        //                       child: TextFormField(
+        //                         decoration: _getInputdect('Post code'),
+        //                       ),
+        //                     ),
+        //                     Padding(
+        //                       padding: EdgeInsets.all(8.0),
+        //                       child: TextFormField(
+        //                         decoration: _getInputdect('City'),
+        //                       ),
+        //                     ),
+        //                     Padding(
+        //                       padding: EdgeInsets.all(8.0),
+        //                       child: TextFormField(
+        //                         decoration: _getInputdect('State'),
+        //                       ),
+        //                     ),
+        //                     Padding(
+        //                       padding: EdgeInsets.all(8.0),
+        //                       child: TextFormField(
+        //                         decoration: _getInputdect('Telephone'),
+        //                       ),
+        //                     ),
+        //                     Padding(
+        //                       padding: const EdgeInsets.all(8.0),
+        //                       child: RaisedButton(
+        //                         child: Text("Submitß"),
+        //                         onPressed: () {
+        //                           if ((_formKey.currentState != null) &&
+        //                               _formKey.currentState!.validate()) {
+        //                             _formKey.currentState!.save();
+        //                           }
+        //                         },
+        //                       ),
+        //                     )
+        //                   ],
+        //                 ),
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       );
+        //     });
+      },
+      child: const Text('Add Shipping address'),
+    ));
+  }
+
   ///show customer address container
-  Widget _customerAddress(List<CustomerAddress?> customerAddlist) {
+  Widget _customerAddress(
+      List<CustomerAddress?> customerAddlist, List<Countries> countriesList) {
     List<Widget> custlistWidget = [];
     if (customerAddlist.length > 0) {
       customerAddlist.forEach((value) {
@@ -447,19 +597,11 @@ class _cartState extends State<cart> {
         children: custlistWidget,
       );
     } else {
-      return Card(
-          child: OutlinedButton(
-            onPressed: () {
-              print('Received click');
-            },
-            child: const Text('Add Shipping address'),
-          )
-      );
+      return _addCustomeraddressbtn(countriesList);
     }
   }
 
-  Widget _scaffoldWidget(List<Cart?> items, CartTotal? cartTotal,
-      List<CustomerAddress?> customerAddlist) {
+  Widget _scaffoldWidget(List<Cart?> items, CartTotal? cartTotal) {
     /// Custom Text
     var _customStyle = TextStyle(
         fontFamily: "Gotik",
@@ -467,25 +609,25 @@ class _cartState extends State<cart> {
         color: Colors.black,
         fontSize: 20.0);
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Color(0xFF6991C7)),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        title: Text(
-          "Shopping Cart",
-          style: TextStyle(
-              fontFamily: "Gotik",
-              fontSize: 18.0,
-              color: Colors.black54,
-              fontWeight: FontWeight.w700),
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Color(0xFF6991C7)),
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          title: Text(
+            "Shopping Cart",
+            style: TextStyle(
+                fontFamily: "Gotik",
+                fontSize: 18.0,
+                color: Colors.black54,
+                fontWeight: FontWeight.w700),
+          ),
+          elevation: 0.0,
         ),
-        elevation: 0.0,
-      ),
-      body: Column(children: <Widget>[
-        new Container(
-          height: 80.0,
-          color: Colors.transparent,
-          child: new Container(
+        body: Column(children: <Widget>[
+          new Container(
+            // height: 80.0,
+            color: Colors.transparent,
+            child: new Container(
 //                    decoration: new BoxDecoration(
 //                        color: Colors.white,
 //                        borderRadius: new BorderRadius.only(
@@ -493,30 +635,38 @@ class _cartState extends State<cart> {
 //                          topRight: const Radius.circular(40.0),
 //                        )
 //                    ),
-            child: _customerAddress(customerAddlist),
+              child: BlocBuilder<CustomerAddressBloc, CustomerAddressState>(
+                  builder: (BuildContext context, customeraddState) {
+                if (customeraddState is QueryCustomerAddressSuccess) {
+                  return _customerAddress(customeraddState.customerAddressList,
+                      customeraddState.countries);
+                } else {
+                  return Container();
+                }
+              }),
+            ),
           ),
-        ),
-        _buildList(items),
-        Padding(padding: EdgeInsets.only(top: 15.0)),
-        Divider(
-          height: 1.0,
-          color: Colors.black26,
-        ),
-        cartTotal != null
-            ? Column(
+          _buildList(items),
+          Padding(padding: EdgeInsets.only(top: 15.0)),
+          Divider(
+            height: 1.0,
+            color: Colors.black26,
+          ),
+          cartTotal != null
+              ? Column(
 
-                /// Add this
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                    Text(
-                      "Cart Subtotal:" + cartTotal.totalPrice.toString(),
-                      style: _customStyle,
-                      textAlign: TextAlign.right,
-                    )
-                  ])
-            : Container(),
-      ]),
-        bottomNavigationBar:BottomNavigationBar(
+                  /// Add this
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                      Text(
+                        "Cart Subtotal:" + cartTotal.totalPrice.toString(),
+                        style: _customStyle,
+                        textAlign: TextAlign.right,
+                      )
+                    ])
+              : Container(),
+        ]),
+        bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Color(0xFF6200EE),
           selectedItemColor: Colors.white,
@@ -545,12 +695,13 @@ class _cartState extends State<cart> {
             ),
           ],
         )
-      ///
-      ///
-      /// Checking item value of cart
-      ///
-      ///
-    );
+
+        ///
+        ///
+        /// Checking item value of cart
+        ///
+        ///
+        );
   }
 
   @override
@@ -584,19 +735,20 @@ class _cartState extends State<cart> {
                 builder: (context, cartstate) {
               if (cartstate is CartlistsuccessState) {
                 if ((cartstate.cartList.length > 0)) {
-                  BlocBuilder<CustomerAddressBloc, CustomerAddressState>(
-                      builder: (context, customerAddstate) {
-                    List<CustomerAddress?> customerList = [];
-                    print('590');
-                    if (customerAddstate is QueryCustomerAddressSuccess) {
-                      customerList = customerAddstate.customerAddressList;
+                  print(cartstate.cartList);
+                  // BlocBuilder<CustomerAddressBloc, CustomerAddressState>(
+                  //     builder: (context, customerAddstate) {
+                  //   List<CustomerAddress?> customerList = [];
+                  //
+                  //   if (customerAddstate is QueryCustomerAddressSuccess) {
+                  //     customerList = customerAddstate.customerAddressList;
+                  //
+                  //   }
+                  return _scaffoldWidget(
+                      cartstate.cartList, cartstate.cartTotal);
+                  // });
 
-                    }
-                    return _scaffoldWidget(
-                        cartstate.cartList, cartstate.cartTotal, customerList);
-                  });
-
-                  return Container();
+                  // return Container();
                 } else {
                   return noItemCart();
                 }

@@ -1074,13 +1074,15 @@ class _ProductWrapperState extends State<ProductWrapper> {
                               /// Chat Icon
                               InkWell(
                                 onTap: () {
-
+                                if(state is AuthenticationAuthenticated) {
                                   BlocProvider.of<WishsBloc>(context).add(
                                       AddWishsEvent(
                                           product_id:
-                                              _pageProduct.products_id));
-
-
+                                          _pageProduct.products_id));
+                                }else{
+                                  Navigator.pushNamed(context, loginScreen.routeName,
+                                      arguments: LoginArguments(_pageProduct));
+                                }
 //                                  Navigator.of(context).push(PageRouteBuilder(
 //                                      pageBuilder: (_, ___, ____) =>
 //                                          new chatItem()));
@@ -1251,7 +1253,7 @@ class _ReviewInfoContinerState extends State<ReviewInfoContiner> {
             return Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Container(
-                height: 415.0,
+                // height: 415.0,
                 width: 600.0,
                 decoration: BoxDecoration(color: Colors.white, boxShadow: [
                   BoxShadow(

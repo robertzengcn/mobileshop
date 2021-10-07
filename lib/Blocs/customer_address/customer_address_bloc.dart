@@ -19,18 +19,22 @@ class CustomerAddressBloc
     CustomerAddressEvent event,
   ) async* {
     if (event is QueryCustomerAddressEvent) {
-      try {
+       try {
         List<CustomerAddress?> customerAddresslist =
             await customerAddressRepository.queryCustomeraddress();
+        List<Countries> countriesList=await customerAddressRepository.getCountrylist();
         yield QueryCustomerAddressSuccess(
-            customerAddressList: customerAddresslist);
+            customerAddressList: customerAddresslist,countries: countriesList);
       } catch (error, stacktrace) {
         yield CustomerAddressErrorState(
+
             error: 'Exception: ' +
                 error.toString() +
                 'Stacktrace: ' +
                 stacktrace.toString());
       }
+    }else if(event is CustomerAddressInitial){
+      print('customer bloc start');
     }
 
   }

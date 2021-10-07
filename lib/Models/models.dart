@@ -10,4 +10,6 @@ export 'Cart.dart';
 export 'CartTotal.dart';
 export 'CartInfo.dart';
 export 'CustomerAddress.dart';
+export 'Countries.dart';
+export 'Zones.dart';
 

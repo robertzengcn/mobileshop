@@ -47,7 +47,7 @@ double final_price;
       proWeight=json['weight'].toDouble();
     }
     return Cart(
-        id: json['id'],
+        id: json['id'].toString(),
         name:json['name'],
         model: json['model'],
         image:json['image'],
