@@ -62,7 +62,10 @@ class CustomerAddressApiClient extends BaseApiClient {
   }
 
   ///get zones
-  Future<List<Zones?>> getZoneslist(int id) async {
+  Future<List<Zones?>> getZoneslist(int? id) async {
+    if(id==null){
+      return [];
+    }
     String url = '$appServerUrl/zonelist/'+id.toString();
     String token = await this.getToken();
     Map<String, String> headers;

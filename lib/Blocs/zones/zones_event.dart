@@ -7,11 +7,11 @@ abstract class ZonesEvent extends Equatable {
 
 ///add product to wish list
 class QueryZoneEvent extends ZonesEvent {
-  final int countId;
+  final int? countId;
 
-  const QueryZoneEvent({required this.countId});
+  const QueryZoneEvent({this.countId});
 
   @override
-  List<Object> get props => [countId];
+  List<Object> get props => [];
 }
 

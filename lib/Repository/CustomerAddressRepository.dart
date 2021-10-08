@@ -21,7 +21,7 @@ class CustomerAddressRepository {
   }
 
   ///get zones list
-  Future<List<Zones?>> getZoneslist(int id) async {
+  Future<List<Zones?>> getZoneslist(int? id) async {
     Future<List<Zones?>> lst = customerApiClient.getZoneslist(id);
     return lst;
   }

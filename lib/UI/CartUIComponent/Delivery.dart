@@ -12,6 +12,57 @@ class delivery extends StatefulWidget {
 }
 
 class _deliveryState extends State<delivery> {
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<CountriesBloc>(create: (context) {
+            //加载产品的评论
+            return CountriesBloc(
+                customerAddressRepository: CustomerAddressRepository())
+              ..add(QueryCountriesEvent());
+          }),
+          BlocProvider<ZonesBloc>(create: (context) {
+            return ZonesBloc(
+                customerAddressRepository: CustomerAddressRepository());
+          }),
+        ],
+        child: MultiBlocListener(
+            listeners: [
+              BlocListener<CountriesBloc, CountriesState>(
+                  listener: (context, state) {
+                if (state is QueryCountriesErrorState) {
+                  var snackbar = SnackBar(
+                    content: Text("query countries list failure"),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                }
+              }),
+              BlocListener<ZonesBloc, ZonesState>(
+                  listener: (context, state) {
+                    if (state is Zonesloadedstate) {
+
+//                      _zoneList=state.zones;
+//                      if(_zoneList.length>0){
+//                        _showState=true;
+//                      }
+                    }
+                  }),
+
+            ],
+            child: DeliveryWrapper(),
+        ));
+  }
+}
+class DeliveryWrapper extends StatefulWidget {
+  @override
+  _DeliveryWrapperState createState() => _DeliveryWrapperState();
+}
+class _DeliveryWrapperState extends State<DeliveryWrapper> {
+  void initState() {
+    super.initState();
+  }
   final _formKey = GlobalKey<FormState>();
   InputDecoration _getInputdect(String inputName) {
     return InputDecoration(
@@ -21,11 +72,10 @@ class _deliveryState extends State<delivery> {
     );
   }
 
-  Widget _countrieslist(List<Countries> countrieslist) {
-    int dropdownValue = 223;
-    return DropdownButton<int>(
+  Widget _countrieslist() {
 
-      value: dropdownValue,
+    return DropdownButton<int>(
+      value: _countriesId,
       icon: const Icon(Icons.arrow_downward),
       iconSize: 24,
       elevation: 16,
@@ -44,10 +94,14 @@ class _deliveryState extends State<delivery> {
       ),
       onChanged: (int? newValue) {
         setState(() {
-          dropdownValue = newValue!;
+          _countriesId=newValue;
+          BlocProvider.of<ZonesBloc>(context)
+              .add(QueryZoneEvent(countId: _countriesId));
+//          dropdownValue = newValue!;
+
         });
       },
-      items: countrieslist.map<DropdownMenuItem<int>>((map) {
+      items: _countriesList.map<DropdownMenuItem<int>>((map) {
         return DropdownMenuItem<int>(
           value: map.countriesId,
           child: Text(map.countriesName),
@@ -55,10 +109,10 @@ class _deliveryState extends State<delivery> {
       }).toList(),
     );
   }
-  Widget _getZonelist(List<Zones?> zonesList){
+  Widget _getZonelist(){
 
     return DropdownButton<int>(
-
+      value: _zoneId,
       icon: const Icon(Icons.arrow_downward),
       iconSize: 24,
       elevation: 16,
@@ -76,9 +130,12 @@ class _deliveryState extends State<delivery> {
         color: Colors.deepPurpleAccent,
       ),
       onChanged: (int? newValue) {
-
+        setState(() {
+//          dropdownValue = newValue!;
+          _zoneId=newValue;
+        });
       },
-      items: zonesList.map<DropdownMenuItem<int>>((map) {
+      items: _zoneList.map<DropdownMenuItem<int>>((map) {
         if (map != null) {
           return DropdownMenuItem<int>(
             value: map.zone_id,
@@ -94,7 +151,8 @@ class _deliveryState extends State<delivery> {
     );
   }
   ///delivery app page
-  Widget _scaffoldDiv(List<Countries> countriesList,bool showState,List<Zones?> zoneList) {
+  Widget _scaffoldDiv() {
+
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
@@ -140,7 +198,7 @@ class _deliveryState extends State<delivery> {
                   decoration: _getInputdect('Last Name'),
                 ),
                 Padding(padding: EdgeInsets.only(top: 20.0)),
-                _countrieslist(countriesList),
+                _countrieslist(),
                 Padding(padding: EdgeInsets.only(top: 20.0)),
                 //                     Padding(
                 //                       padding: EdgeInsets.all(8.0),
@@ -155,19 +213,19 @@ class _deliveryState extends State<delivery> {
                 ),
                 Padding(padding: EdgeInsets.only(top: 20.0)),
 
-                if(!showState)TextFormField(
-                    decoration: _getInputdect('State'),
-                  ),
-                if(showState)_getZonelist(zoneList),
+                if(!_showState)TextFormField(
+                  decoration: _getInputdect('State'),
+                ),
+                if(_showState)_getZonelist(),
                 Padding(padding: EdgeInsets.only(top: 20.0)),
                 TextFormField(
                   decoration: _getInputdect('Street Address'),
                 ),
                 Padding(padding: EdgeInsets.only(top: 20.0)),
                 TextFormField(
-                  decoration: _getInputdect('Street Address'),
+                  decoration: _getInputdect('postal code'),
                 ),
-                Padding(padding: EdgeInsets.only(top: 80.0)),
+                Padding(padding: EdgeInsets.only(top: 50.0)),
                 InkWell(
                   onTap: () {
                     Navigator.of(context).pushReplacement(PageRouteBuilder(
@@ -201,51 +259,29 @@ class _deliveryState extends State<delivery> {
       ),
     );
   }
-  bool showState=false;
-  List<Zones?> zoneList=[];
+  bool _showState=false;
+  List<Zones?> _zoneList=[];
+  int? _zoneId;
+  int? _countriesId;
+  List<Countries> _countriesList=[];
+
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-        providers: [
-          BlocProvider<CountriesBloc>(create: (context) {
-            //加载产品的评论
-            return CountriesBloc(
-                customerAddressRepository: CustomerAddressRepository())
-              ..add(QueryCountriesEvent());
-          }),
-          BlocProvider<ZonesBloc>(create: (context) {
-            //加载产品的评论
-            return ZonesBloc(
-                customerAddressRepository: CustomerAddressRepository())
-              ..add(QueryZoneEvent(countId: 223));
-          }),
-        ],
-        child: MultiBlocListener(
-            listeners: [
-              BlocListener<CountriesBloc, CountriesState>(
-                  listener: (context, state) {
-                if (state is QueryCountriesErrorState) {
-                  var snackbar = SnackBar(
-                    content: Text("query countries list failure"),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                }
-              }),
-              BlocListener<ZonesBloc, ZonesState>(
-                  listener: (context, state) {
-                    if (state is Zonesloadedstate) {
-                      zoneList=state.zones;
-                    }
-                  }),
-
-            ],
-            child: BlocBuilder<CountriesBloc, CountriesState>(
-                builder: (context, countriesstate) {
-              if (countriesstate is QueryCountriesSuccessState) {
-             return _scaffoldDiv(countriesstate.countries,showState,zoneList);
-              } else {
-                return Container();
-              }
-            })));
+    return BlocBuilder<CountriesBloc, CountriesState>(
+        builder: (context, countriesstate) {
+          if (countriesstate is QueryCountriesSuccessState) {
+            _countriesList=countriesstate.countries;
+//            BlocBuilder<ZonesBloc, ZonesState>(
+//              builder: (context, zonesstate) {
+//              if(zonesstate is Zonesloadedstate){
+//                _zoneList=zonesstate.zones;
+//              }
+              return _scaffoldDiv();
+//            }
+//            );
+          }
+          return Container();
+        });
   }
+
 }

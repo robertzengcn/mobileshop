@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:amigatoy/ListItem/Product.dart';
 //import 'package:amigatoy/Services/CRUDModel.dart';
 import 'package:amigatoy/UI/HomeUIComponent/ModifyProduct.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 
 class ProductDetails extends StatelessWidget {
   final Product product;
