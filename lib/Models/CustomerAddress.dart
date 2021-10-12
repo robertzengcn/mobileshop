@@ -3,38 +3,44 @@ import 'package:equatable/equatable.dart';
 
 class CustomerAddress extends Equatable {
 
-  final int addressBookId;
+  final int? addressBookId;
   final String? company;
   final String firstName;
   final String lastName;
   final String streetAddress;
-  final String postcode;
+  final String? postcode;
   final String city;
   final String state;
-  final String countryId;
+  final int countryId;
   final int? zoneId;
   final String telephone;
+  final String? countriesName;
 
 
 
   CustomerAddress({
-    required this.addressBookId,
+    this.addressBookId,
     this.company,
     required this.firstName,
     required this.lastName,
     required this.streetAddress,
-    required this.postcode,
+    this.postcode,
     required this.city,
     required this.state,
     required this.countryId,
     this.zoneId,
-    required this.telephone
+    required this.telephone,
+    this.countriesName
   });
   @override
   List<Object> get props => [
-    addressBookId,firstName,lastName,streetAddress,postcode,city,state,countryId,telephone
+    firstName,lastName,streetAddress,city,state,countryId,telephone
   ];
   static CustomerAddress fromJson(dynamic json) {
+    String countries_name="";
+    if(json['countries_name']!=null){
+      countries_name=json['countries_name'].toString();
+    }
 
     return CustomerAddress(
       addressBookId: json['address_book_id'],
@@ -42,12 +48,13 @@ class CustomerAddress extends Equatable {
       firstName:json['entry_firstname'],
       lastName:json['entry_lastname'],
       streetAddress:json['entry_street_address'],
-      postcode:json['entry_postcode'],
+      postcode:json['entry_postcode'].toString(),
       city:json['entry_city'],
       state:json['entry_state'],
       countryId:json['entry_country_id'],
       zoneId:json['entry_zone_id'],
-      telephone:json['entry_telephone'],
+      telephone:json['entry_telephone'].toString(),
+      countriesName:countries_name,
     );
   }
 }

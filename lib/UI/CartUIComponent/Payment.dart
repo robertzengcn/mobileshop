@@ -2,9 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:amigatoy/UI/BottomNavigationBar.dart';
-//import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
-//import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
-//import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 
 class payment extends StatefulWidget {
   @override

@@ -21,9 +21,6 @@ class CartApiClient extends BaseApiClient{
     data={"products_id":product_id.toString(),
       "cart_quantity":quantity.toString()
     };
-//    for(int i=0;i<args.length;i++){
-//      data.addAll({"attriarr[$i]":id[i]});
-//    }
     args?.forEach((key, value){
       if(value!=null&&value>0){
         data.addAll({"attriarr[$key]":value.toString()});

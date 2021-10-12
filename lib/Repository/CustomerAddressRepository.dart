@@ -25,4 +25,9 @@ class CustomerAddressRepository {
     Future<List<Zones?>> lst = customerApiClient.getZoneslist(id);
     return lst;
   }
+  ///save customer address
+  Future <int> saveAddress(CustomerAddress customerAddress) async{
+    Future<int> res=customerApiClient.saveAddress(customerAddress);
+  return res;
+  }
 }

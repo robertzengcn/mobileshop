@@ -29,4 +29,11 @@ class CustomerAddressErrorState extends CustomerAddressState {
   String toString() => 'query customer address error { error: $error }';
 }
 
+class AddCustomerAddsuccessState extends CustomerAddressState {
+  AddCustomerAddsuccessState();
+
+  @override
+  List<Object> get props => [];
+}
+
 

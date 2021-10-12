@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-//import 'package:amigatoy/ListItem/CartItemData.dart';
 import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
+import 'package:amigatoy/UI/CartUIComponent/AddressList.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
+import 'package:amigatoy/UI/widgets/customer_address_card.dart';
 
 class cart extends StatefulWidget {
   @override
@@ -14,28 +15,15 @@ class cart extends StatefulWidget {
 }
 
 class _cartState extends State<cart> {
-//  final List<Cart> items = [];
 
   @override
   void initState() {
     super.initState();
-//    setState(() {
-//      items.add(
-//        cartItem(
-//          img:"assets/imgItem/flashsale3.jpg",
-//          id: 1,
-//          title:"Samsung Galaxy Note 9 8 GB RAM ",
-//          desc: "Internal 1 TB",
-//          price: "\$ 950",
-//        ),
-//        );
-//    });
   }
 
   /// Declare price and value for chart
   int value = 1;
   int pay = 950;
-  final _formKey = GlobalKey<FormState>();
 
   Widget _optionWidget(String? optionname, String? optionvalue) {
     if (optionname != null &&
@@ -98,11 +86,7 @@ class _cartState extends State<cart> {
                               ///
                               /// SnackBar show if cart delet
                               ///
-//                          Scaffold.of(context).showSnackBar(SnackBar(
-//                            content: Text("Items Cart Deleted"),
-//                            duration: Duration(seconds: 2),
-//                            backgroundColor: Colors.redAccent,
-//                          ));
+
                             },
                           ),
                         ],
@@ -365,61 +349,6 @@ class _cartState extends State<cart> {
                                   ],
                                 ),
                                 Padding(padding: EdgeInsets.only(top: 8.0)),
-//                            Divider(
-//                              height: 2.0,
-//                              color: Colors.black12,
-//                            ),
-//                            Padding(
-//                              padding: const EdgeInsets.only(
-//                                  top: 9.0, left: 10.0, right: 10.0),
-//                              child: Row(
-//                                mainAxisAlignment:
-//                                    MainAxisAlignment.spaceBetween,
-//                                children: <Widget>[
-//                                  Padding(
-//                                    padding: const EdgeInsets.only(left: 10.0),
-//
-//                                    /// Total price of item buy
-//                                    child: Text(
-//                                      "Total : \$ " + pay.toString(),
-//                                      style: TextStyle(
-//                                          color: Colors.black,
-//                                          fontWeight: FontWeight.w500,
-//                                          fontSize: 15.5,
-//                                          fontFamily: "Sans"),
-//                                    ),
-//                                  ),
-//                                  InkWell(
-//                                    onTap: () {
-//                                      Navigator.of(context).push(
-//                                          PageRouteBuilder(
-//                                              pageBuilder: (_, __, ___) =>
-//                                                  delivery()));
-//                                    },
-//                                    child: Padding(
-//                                      padding:
-//                                          const EdgeInsets.only(right: 10.0),
-//                                      child: Container(
-//                                        height: 40.0,
-//                                        width: 120.0,
-//                                        decoration: BoxDecoration(
-//                                          color: Color(0xFFA3BDED),
-//                                        ),
-//                                        child: Center(
-//                                          child: Text(
-//                                            "Pay",
-//                                            style: TextStyle(
-//                                                color: Colors.white,
-//                                                fontFamily: "Sans",
-//                                                fontWeight: FontWeight.w600),
-//                                          ),
-//                                        ),
-//                                      ),
-//                                    ),
-//                                  ),
-//                                ],
-//                              ),
-//                            ),
                               ],
                             ),
                           ),
@@ -429,45 +358,6 @@ class _cartState extends State<cart> {
         : Container();
   }
 
-  InputDecoration _getInputdect(String inputName) {
-    return InputDecoration(
-        border: UnderlineInputBorder(), labelText: inputName);
-  }
-
-  Widget _countrieslist(List<Countries> countrieslist) {
-    int dropdownValue = 223;
-    return DropdownButton<int>(
-
-      value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      hint: Container(
-        //and here
-        child: Text(
-          "Countries",
-          style: TextStyle(color: Colors.grey),
-          textAlign: TextAlign.end,
-        ),
-      ),
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      onChanged: (int? newValue) {
-        setState(() {
-          dropdownValue = newValue!;
-        });
-      },
-      items: countrieslist.map<DropdownMenuItem<int>>((map) {
-        return DropdownMenuItem<int>(
-          value: map.countriesId,
-          child: Text(map.countriesName),
-        );
-      }).toList(),
-    );
-  }
 
   ///add customer address btn widget
   Widget _addCustomeraddressbtn(List<Countries> counties) {
@@ -476,102 +366,6 @@ class _cartState extends State<cart> {
       onPressed: () {
         Navigator.of(context).push(PageRouteBuilder(
             pageBuilder: (_, __, ___) => new delivery()));
-        // showDialog(
-        //     context: context,
-        //     builder: (BuildContext context) {
-        //       return AlertDialog(
-        //         content: Stack(
-        //           children: <Widget>[
-        //             Positioned(
-        //               right: -40.0,
-        //               top: -40.0,
-        //               child: InkResponse(
-        //                 onTap: () {
-        //                   Navigator.of(context).pop();
-        //                 },
-        //                 child: CircleAvatar(
-        //                   child: Icon(Icons.close),
-        //                   backgroundColor: Colors.red,
-        //                 ),
-        //               ),
-        //             ),
-        //             Form(
-        //               key: _formKey,
-        //               child: new SingleChildScrollView(
-        //                 child: Column(
-        //                   mainAxisSize: MainAxisSize.min,
-        //                   children: <Widget>[
-        //                     Padding(
-        //                       padding: EdgeInsets.all(8.0),
-        //                       child: TextFormField(
-        //                           decoration: _getInputdect('First Name *')),
-        //                     ),
-        //                     Padding(
-        //                       padding: EdgeInsets.all(8.0),
-        //                       child: TextFormField(
-        //                         decoration: _getInputdect('Last name *'),
-        //                       ),
-        //                     ),
-        //                     Padding(
-        //                       padding: EdgeInsets.all(8.0),
-        //                       child: _countrieslist(counties),
-        //                     ),
-        //                     Padding(
-        //                       padding: EdgeInsets.all(8.0),
-        //                       child: TextFormField(
-        //                         decoration: _getInputdect('Company(option)'),
-        //                       ),
-        //                     ),
-        //                     Padding(
-        //                       padding: EdgeInsets.all(8.0),
-        //                       child: TextFormField(
-        //                         decoration: _getInputdect('Street Address *'),
-        //                       ),
-        //                     ),
-        //                     Padding(
-        //                       padding: EdgeInsets.all(8.0),
-        //                       child: TextFormField(
-        //                         decoration: _getInputdect('Post code'),
-        //                       ),
-        //                     ),
-        //                     Padding(
-        //                       padding: EdgeInsets.all(8.0),
-        //                       child: TextFormField(
-        //                         decoration: _getInputdect('City'),
-        //                       ),
-        //                     ),
-        //                     Padding(
-        //                       padding: EdgeInsets.all(8.0),
-        //                       child: TextFormField(
-        //                         decoration: _getInputdect('State'),
-        //                       ),
-        //                     ),
-        //                     Padding(
-        //                       padding: EdgeInsets.all(8.0),
-        //                       child: TextFormField(
-        //                         decoration: _getInputdect('Telephone'),
-        //                       ),
-        //                     ),
-        //                     Padding(
-        //                       padding: const EdgeInsets.all(8.0),
-        //                       child: RaisedButton(
-        //                         child: Text("Submitß"),
-        //                         onPressed: () {
-        //                           if ((_formKey.currentState != null) &&
-        //                               _formKey.currentState!.validate()) {
-        //                             _formKey.currentState!.save();
-        //                           }
-        //                         },
-        //                       ),
-        //                     )
-        //                   ],
-        //                 ),
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        //       );
-        //     });
       },
       child: const Text('Add Shipping address'),
     ));
@@ -582,20 +376,38 @@ class _cartState extends State<cart> {
       List<CustomerAddress?> customerAddlist, List<Countries> countriesList) {
     List<Widget> custlistWidget = [];
     if (customerAddlist.length > 0) {
-      customerAddlist.forEach((value) {
-        custlistWidget.add(
-          Card(
-            child: ListTile(
-              title: Text('Two-line ListTile'),
-              subtitle: Text('Here is a second line'),
-            ),
-          ),
-        );
-      });
 
-      return ListView(
+        custlistWidget.add(
+            getCusterAdd(customerAddlist.first!,true)
+//          Card(
+//            child: ListTile(
+//              title: Text('shipping to: '+customerAddlist.first!.firstName+customerAddlist.first!.lastName),
+//              subtitle: Text(customerAddlist.first!.streetAddress+' '+customerAddlist.first!.city+' '+customerAddlist.first!.state+' '+customerAddlist.first!.telephone,overflow: TextOverflow.ellipsis),
+//            ),
+//          ),
+        );
+
+
+      return Column(
+          children:[
+            Container(
+        height: 75,
+          child:ListView(
         children: custlistWidget,
-      );
+      )),
+      Padding(padding: EdgeInsets.only(top: 10.0)),
+      Container(
+                child:OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(PageRouteBuilder(
+                        pageBuilder: (_, __, ___) => new AddressList()));
+                  },
+                  child: const Text('Use other address'),
+                )
+            ),
+
+
+         ]);
     } else {
       return _addCustomeraddressbtn(countriesList);
     }
@@ -666,35 +478,6 @@ class _cartState extends State<cart> {
                     ])
               : Container(),
         ]),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Color(0xFF6200EE),
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white.withOpacity(.60),
-          selectedFontSize: 14,
-          unselectedFontSize: 14,
-          onTap: (value) {
-            // Respond to item press.
-          },
-          items: [
-            BottomNavigationBarItem(
-              title: Text('Favorites'),
-              icon: Icon(Icons.favorite),
-            ),
-            BottomNavigationBarItem(
-              title: Text('Music'),
-              icon: Icon(Icons.music_note),
-            ),
-            BottomNavigationBarItem(
-              title: Text('Places'),
-              icon: Icon(Icons.location_on),
-            ),
-            BottomNavigationBarItem(
-              title: Text('News'),
-              icon: Icon(Icons.library_books),
-            ),
-          ],
-        )
 
         ///
         ///

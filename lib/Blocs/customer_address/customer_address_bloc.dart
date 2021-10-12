@@ -33,8 +33,18 @@ class CustomerAddressBloc
                 'Stacktrace: ' +
                 stacktrace.toString());
       }
-    }else if(event is CustomerAddressInitial){
-      print('customer bloc start');
+
+    }else if(event is AddCustomerAddressEvent){
+      try {
+        await customerAddressRepository.saveAddress(event.customerAddress);
+      yield AddCustomerAddsuccessState();
+      } catch (error) {
+        yield CustomerAddressErrorState(
+
+            error: 'Exception: ' +
+                error.toString());
+      }
+
     }
 
   }
