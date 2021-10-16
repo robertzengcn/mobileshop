@@ -9,12 +9,12 @@ import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/UI/widgets/customer_address_card.dart';
 
-class cart extends StatefulWidget {
+class Cartpage extends StatefulWidget {
   @override
   _cartState createState() => _cartState();
 }
 
-class _cartState extends State<cart> {
+class _cartState extends State<Cartpage> {
 
   @override
   void initState() {
@@ -365,7 +365,7 @@ class _cartState extends State<cart> {
         child: OutlinedButton(
       onPressed: () {
         Navigator.of(context).push(PageRouteBuilder(
-            pageBuilder: (_, __, ___) => new delivery()));
+            pageBuilder: (_, __, ___) => new Delivery()));
       },
       child: const Text('Add Shipping address'),
     ));
@@ -378,7 +378,7 @@ class _cartState extends State<cart> {
     if (customerAddlist.length > 0) {
 
         custlistWidget.add(
-            getCusterAdd(customerAddlist.first!,true)
+            getCusterAdd(customerAddlist.first!,true,context,false)
 //          Card(
 //            child: ListTile(
 //              title: Text('shipping to: '+customerAddlist.first!.firstName+customerAddlist.first!.lastName),
@@ -391,7 +391,7 @@ class _cartState extends State<cart> {
       return Column(
           children:[
             Container(
-        height: 75,
+        height: 65,
           child:ListView(
         children: custlistWidget,
       )),

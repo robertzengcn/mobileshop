@@ -28,6 +28,12 @@ class CustomerAddressRepository {
   ///save customer address
   Future <int> saveAddress(CustomerAddress customerAddress) async{
     Future<int> res=customerApiClient.saveAddress(customerAddress);
-  return res;
+    return res;
   }
+  ///set default customer address
+  Future <bool> setdefaultAddress(int addressId){
+    Future<bool> res=customerApiClient.setdefaultAddress(addressId);
+    return res;
+  }
+
 }

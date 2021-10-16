@@ -169,7 +169,7 @@ class _flashSaleDetailState extends State<flashSaleDetail> {
           InkWell(
             onTap: () {
               Navigator.of(context).push(
-                  PageRouteBuilder(pageBuilder: (_, __, ___) => new cart()));
+                  PageRouteBuilder(pageBuilder: (_, __, ___) => new Cartpage()));
             },
             child: Stack(
               alignment: AlignmentDirectional(-1.0, -0.8),
@@ -524,7 +524,7 @@ class _flashSaleDetailState extends State<flashSaleDetail> {
                     InkWell(
                       onTap: () {
                         Navigator.of(context).push(PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => new delivery()));
+                            pageBuilder: (_, __, ___) => new Delivery()));
                       },
                       child: Container(
                         height: 45.0,

@@ -15,6 +15,7 @@ class CustomerAddress extends Equatable {
   final int? zoneId;
   final String telephone;
   final String? countriesName;
+  final String? zoneName;
 
 
 
@@ -30,7 +31,8 @@ class CustomerAddress extends Equatable {
     required this.countryId,
     this.zoneId,
     required this.telephone,
-    this.countriesName
+    this.countriesName,
+    this.zoneName
   });
   @override
   List<Object> get props => [
@@ -41,7 +43,14 @@ class CustomerAddress extends Equatable {
     if(json['countries_name']!=null){
       countries_name=json['countries_name'].toString();
     }
-
+    String zone_name="";
+    if(json['zone_name']!=null){
+      zone_name=json['zone_name'].toString();
+    }
+    int zoneId=0;
+    if(json['entry_zone_id']!=null&&json['entry_zone_id']>0){
+      zoneId=json['entry_zone_id'];
+    }
     return CustomerAddress(
       addressBookId: json['address_book_id'],
       company:json['entry_company'],
@@ -52,9 +61,10 @@ class CustomerAddress extends Equatable {
       city:json['entry_city'],
       state:json['entry_state'],
       countryId:json['entry_country_id'],
-      zoneId:json['entry_zone_id'],
+      zoneId:zoneId,
       telephone:json['entry_telephone'].toString(),
       countriesName:countries_name,
+      zoneName:zone_name,
     );
   }
 }

@@ -35,5 +35,11 @@ class AddCustomerAddsuccessState extends CustomerAddressState {
   @override
   List<Object> get props => [];
 }
+class SetCustomersuccessState extends CustomerAddressState {
+  SetCustomersuccessState();
+
+  @override
+  List<Object> get props => [];
+}
 
 

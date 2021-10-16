@@ -19,7 +19,7 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
    case 1:
     return new brand();
    case 2:
-    return new cart();
+    return new Cartpage();
    case 3:
     return new profil();
     // break;

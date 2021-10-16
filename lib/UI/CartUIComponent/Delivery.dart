@@ -4,15 +4,32 @@ import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
+import 'package:amigatoy/Arguments/AddressArguments.dart';
 
-class delivery extends StatefulWidget {
+class Delivery extends StatefulWidget {
+  static const routeName = '/delivery';
   @override
   _deliveryState createState() => _deliveryState();
 }
 
-class _deliveryState extends State<delivery> {
+class _deliveryState extends State<Delivery> {
+
   @override
   Widget build(BuildContext context) {
+    var args;
+    if (ModalRoute.of(context)!.settings.arguments != null) {
+      args = ModalRoute.of(context)!.settings.arguments as AddressArguments;
+    }
+    int _defaultCountid=223;
+    if(args!=null&&args?.customerAddress!=null){
+//      if(args?.customerAddress!=null){
+          if(args?.customerAddress.addressBookId!=null){
+            _defaultCountid=args?.customerAddress.countryId;
+          }
+
+//      }
+    }
+
     return MultiBlocProvider(
         providers: [
           BlocProvider<CountriesBloc>(create: (context) {
@@ -24,8 +41,9 @@ class _deliveryState extends State<delivery> {
           BlocProvider<ZonesBloc>(create: (context) {
             return ZonesBloc(
                 customerAddressRepository: CustomerAddressRepository())
-              ..add(QueryZoneEvent(countId: 223));
+              ..add(QueryZoneEvent(countId: _defaultCountid));
           }),
+
           BlocProvider<CustomerAddressBloc>(create: (context) {
             //加载产品的评论
             return CustomerAddressBloc(
@@ -47,7 +65,7 @@ class _deliveryState extends State<delivery> {
                 listener: (context, state) {
               if (state is AddCustomerAddsuccessState) {
                 Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => new cart()));
+                    pageBuilder: (_, __, ___) => new Cartpage()));
               }else if(state is CustomerAddressErrorState){
                 var snackbar = SnackBar(
                   content: Text(state.error),
@@ -56,12 +74,15 @@ class _deliveryState extends State<delivery> {
               }
             }),
           ],
-          child: DeliveryWrapper(),
+          child: DeliveryWrapper(customeraddObject: args?.customerAddress),
         ));
   }
 }
 
 class DeliveryWrapper extends StatefulWidget {
+  final CustomerAddress? customeraddObject;
+
+  DeliveryWrapper({Key? key, this.customeraddObject}) : super(key: key);
   @override
   _DeliveryWrapperState createState() => _DeliveryWrapperState();
 }
@@ -73,6 +94,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
 
   final _formKey = GlobalKey<FormState>();
   bool _showState = false;
+  int? _addressId;
   List<Zones?> _zoneList = [];
   int? _zoneId;
   int _countriesId = 223;
@@ -85,6 +107,8 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
   String _city = "";
   String _state = "";
   String _telephone = "";
+  String _btnText="Add Shipping Address";
+  bool _reUpdate=false;//update the value after data load
 
   InputDecoration _getInputdect(String inputName) {
     return InputDecoration(
@@ -116,8 +140,10 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
       ),
       onChanged: (int? newValue) {
         setState(() {
-          if (newValue != null) {
+          if (newValue != null&&newValue !=0) {
+
             setState(() {
+              _reUpdate=true;
               _countriesId = newValue;
             });
             BlocProvider.of<ZonesBloc>(context)
@@ -156,10 +182,12 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
         color: Colors.deepPurpleAccent,
       ),
       onChanged: (int? newValue) {
-        setState(() {
-//          dropdownValue = newValue!;
-          _zoneId = newValue;
-        });
+        if(newValue!=null&&newValue!=0){
+          setState(() {
+            _reUpdate=true;
+            _zoneId = newValue;
+          });
+        }
       },
       items: _zoneList.map<DropdownMenuItem<int>>((map) {
         if (map != null) {
@@ -178,7 +206,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
   }
 
   ///delivery app page
-  Widget _scaffoldDiv() {
+  Widget _scaffoldDiv(String btnText) {
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
@@ -210,6 +238,10 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
                     setState(() {
                       _zoneList = state.zones;
                       if (_zoneList.length > 0) {
+                        if(_reUpdate){
+                          _zoneId=_zoneList.first?.zone_id;
+                        }
+
                         _showState = true;
                       } else {
                         _showState = false;
@@ -232,6 +264,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
                       ),
                       Padding(padding: EdgeInsets.only(top: 50.0)),
                       TextFormField(
+                        initialValue: _firstName,
                         decoration: _getInputdect('First Name'),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
@@ -249,6 +282,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
                       ),
                       Padding(padding: EdgeInsets.only(top: 20.0)),
                       TextFormField(
+                        initialValue: _lastName,
                         decoration: _getInputdect('Last Name'),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -274,6 +308,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
                       if (_showState) _getZonelist(),
                       Padding(padding: EdgeInsets.only(top: 20.0)),
                       TextFormField(
+                        initialValue: _telephone,
                         decoration: _getInputdect('Phone'),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -292,6 +327,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
                       ),
                       Padding(padding: EdgeInsets.only(top: 20.0)),
                       TextFormField(
+                        initialValue: _city,
                         decoration: _getInputdect('City'),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -309,6 +345,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
                       ),
                       Padding(padding: EdgeInsets.only(top: 20.0)),
                       TextFormField(
+                        initialValue: _streetAddress,
                         decoration: _getInputdect('Street Address'),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -326,6 +363,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
                       ),
                       Padding(padding: EdgeInsets.only(top: 20.0)),
                       TextFormField(
+                        initialValue: _postcode,
                         decoration: _getInputdect('postal code'),
                         onSaved: (String? value) {
                           if (value != null) {
@@ -343,8 +381,8 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Processing Data')),
                             );
-
                             CustomerAddress customerAdd=CustomerAddress(
+                                addressBookId: _addressId,
                                 city: _city,
                                 company: _company,
                                 firstName: _firstName,
@@ -353,7 +391,8 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
                                 state: _state,
                                 streetAddress: _streetAddress,
                                 telephone: _telephone,
-                              postcode: _postcode
+                              postcode: _postcode,
+                                zoneId: _zoneId,
                             );
 
                             BlocProvider.of<CustomerAddressBloc>(context).add(
@@ -376,7 +415,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
                                   BorderRadius.all(Radius.circular(40.0))),
                           child: Center(
                             child: Text(
-                              "Save Address",
+                              btnText,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
@@ -400,18 +439,42 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
 
   @override
   Widget build(BuildContext context) {
+    if(widget.customeraddObject!=null&&!_reUpdate){
+      setState(() {
+        _addressId = widget.customeraddObject?.addressBookId;
+        print(widget.customeraddObject?.zoneId);
+        if(widget.customeraddObject!.zoneId!>0){
+          _zoneId = widget.customeraddObject?.zoneId;
+        }
+        _countriesId = widget.customeraddObject!.countryId;
+        _firstName = widget.customeraddObject!.firstName;
+        _lastName = widget.customeraddObject!.lastName;
+        _company = widget.customeraddObject!.company;
+        _streetAddress = widget.customeraddObject!.streetAddress;
+        _postcode = widget.customeraddObject!.postcode;
+        _city = widget.customeraddObject!.city;
+        _state = widget.customeraddObject!.state;
+//        if (_zoneId! > 0) {
+//          BlocProvider.of<ZonesBloc>(context)
+//              .add(QueryZoneEvent(countId: _countriesId));
+//          _showState = true;
+//        } else {
+//          _showState = false;
+//        }
+        _telephone = widget.customeraddObject!.telephone;
+      });
+      _btnText="Save Address";
+//      print(_zoneId);
+//      print(_showState);
+
+    }
     return BlocBuilder<CountriesBloc, CountriesState>(
         builder: (context, countriesstate) {
       if (countriesstate is QueryCountriesSuccessState) {
         _countriesList = countriesstate.countries;
-//            BlocBuilder<ZonesBloc, ZonesState>(
-//              builder: (context, zonesstate) {
-//              if(zonesstate is Zonesloadedstate){
-//                _zoneList=zonesstate.zones;
-//              }
-        return _scaffoldDiv();
-//            }
-//            );
+
+        return _scaffoldDiv(_btnText);
+
       }
       return Container();
     });

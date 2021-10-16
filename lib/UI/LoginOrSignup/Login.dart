@@ -5,7 +5,6 @@ import 'package:amigatoy/UI/LoginOrSignup/LoginAnimation.dart';
 import 'package:amigatoy/UI/LoginOrSignup/Signup.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
-//import 'package:formz/formz.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:amigatoy/Arguments/LoginArguments.dart';
 import 'package:amigatoy/UI/HomeUIComponent/DetailProduct.dart';

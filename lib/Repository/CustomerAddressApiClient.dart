@@ -93,54 +93,8 @@ class CustomerAddressApiClient extends BaseApiClient {
   Future <int> saveAddress(CustomerAddress customerAddress) async{
     var url = Uri.parse('$appServerUrl/addAddress');
     Map<String,String>data={};
-    if(customerAddress.company!=null){
-      data["entry_company"]=customerAddress.company.toString();
-    }
-    data["entry_firstname"]=customerAddress.firstName;
-    data["entry_lastname"]=customerAddress.lastName;
-    data["entry_street_address"]=customerAddress.streetAddress;
-    if(customerAddress.postcode!=null){
-    data["entry_postcode"]=customerAddress.postcode.toString();
-    }
-    data["entry_city"]=customerAddress.city;
-    data["entry_state"]=customerAddress.state;
-    data["entry_country_id"]=customerAddress.countryId.toString();
-    if(customerAddress.zoneId!=null){
-    data["entry_zone_id"]=customerAddress.zoneId.toString();
-    }
-    data["entry_telephone"]=customerAddress.telephone;
-
-    String token=await this.getToken();
-
-    http.Response response = await http.post(
-      url,
-      body: data,
-      headers: {
-        'Application-Id': '$appId',
-        'Client-Key':token
-      },
-    );
-
-    if (response.statusCode != 200) {
-
-      throw Exception('Unable to fetch data from the REST API');
-    }
-    var responseJson = json.decode(response.body);
-    if(responseJson['status']==true){
-      return responseJson['data']['address_id'] as int;
-    }else{
-      throw Exception(responseJson['msg']);
-    }
-
-  }
-
-  @override
-  ///edit customer address
-  Future <int> editAddress(CustomerAddress customerAddress) async{
-    var url = Uri.parse('$appServerUrl/editAddress');
-    Map<String,String>data={};
     if(customerAddress.addressBookId!=null){
-      data["entry_company"]=customerAddress.addressBookId.toString();
+      data["address_book_id"]=customerAddress.addressBookId.toString();
     }
     if(customerAddress.company!=null){
       data["entry_company"]=customerAddress.company.toString();
@@ -182,5 +136,39 @@ class CustomerAddressApiClient extends BaseApiClient {
     }
 
   }
+
+  @override
+  ///set customer default address
+  Future <bool> setdefaultAddress(int customerAddressid) async{
+    var url = Uri.parse('$appServerUrl/setDefaultadd');
+    Map<String,String>data={};
+
+    data["addressid"]=customerAddressid.toString();
+
+    String token=await this.getToken();
+
+    http.Response response = await http.post(
+      url,
+      body: data,
+      headers: {
+        'Application-Id': '$appId',
+        'Client-Key':token
+      },
+    );
+
+    if (response.statusCode != 200) {
+
+      throw Exception('Unable to set default customer address for the REST API');
+    }
+    var responseJson = json.decode(response.body);
+    if(responseJson['status']==true){
+      return true;
+    }else{
+      throw Exception(responseJson['msg']);
+    }
+
+  }
+
+
 
 }

@@ -6,6 +6,7 @@ import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/UI/widgets/customer_address_card.dart';
 import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
+import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
 
 class AddressList extends StatefulWidget {
   @override
@@ -24,7 +25,10 @@ class _addressListState extends State<AddressList> {
         child: MultiBlocListener(listeners: [
           BlocListener<CustomerAddressBloc, CustomerAddressState>(
               listener: (context, state) {
-
+                if(state is SetCustomersuccessState){
+                  Navigator.of(context).push(PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => new Cartpage()));
+                }
           }),
         ], child: AddressWrapper()));
   }
@@ -46,15 +50,19 @@ class _AddressWrapperState extends State<AddressWrapper> {
     List<Widget> custlistWidget = [];
     if (_customerAddlist.length > 0) {
       for (var i = 0; i < _customerAddlist.length; i++) {
+        bool asDefault=true;
+        if(i==0){
+          asDefault=false;
+        }
         custlistWidget.add(
-            getCusterAdd(_customerAddlist[i]!,true)
+            getCusterAdd(_customerAddlist[i]!,true,context,asDefault)
         );
       }
     }
       return Column(
           children:[
             Container(
-                height: 400,
+                height: 460,
                 child:ListView(
                   children: custlistWidget,
                 )),
@@ -101,7 +109,7 @@ class _AddressWrapperState extends State<AddressWrapper> {
                 child:OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).push(PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => new delivery()));
+                        pageBuilder: (_, __, ___) => new Delivery()));
                   },
                   child: const Text('Add Shipping Address'),
                 )

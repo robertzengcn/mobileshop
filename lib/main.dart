@@ -8,6 +8,7 @@ import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/database/database.dart';
 import 'package:amigatoy/UI/LoginOrSignup/Login.dart';
+import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 //import 'package:http/http.dart' as http;
 //import 'dart:developer' as developer;
 
@@ -136,6 +137,7 @@ class myApp extends StatelessWidget {
             //"login": (BuildContext context) => new Menu()
             Home.routeName: (BuildContext context) => new Home(),
             loginScreen.routeName:(BuildContext context) =>new loginScreen(),
+            Delivery.routeName:(BuildContext context) =>new Delivery(),
           }),
     );
   }

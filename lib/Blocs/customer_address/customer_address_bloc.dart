@@ -19,33 +19,36 @@ class CustomerAddressBloc
     CustomerAddressEvent event,
   ) async* {
     if (event is QueryCustomerAddressEvent) {
-       try {
+      try {
         List<CustomerAddress?> customerAddresslist =
             await customerAddressRepository.queryCustomeraddress();
-        List<Countries> countriesList=await customerAddressRepository.getCountrylist();
+        List<Countries> countriesList =
+            await customerAddressRepository.getCountrylist();
         yield QueryCustomerAddressSuccess(
-            customerAddressList: customerAddresslist,countries: countriesList);
+            customerAddressList: customerAddresslist, countries: countriesList);
       } catch (error, stacktrace) {
         yield CustomerAddressErrorState(
-
             error: 'Exception: ' +
                 error.toString() +
                 'Stacktrace: ' +
                 stacktrace.toString());
       }
-
-    }else if(event is AddCustomerAddressEvent){
+    } else if (event is AddCustomerAddressEvent) {
       try {
         await customerAddressRepository.saveAddress(event.customerAddress);
-      yield AddCustomerAddsuccessState();
+        yield AddCustomerAddsuccessState();
       } catch (error) {
         yield CustomerAddressErrorState(
-
-            error: 'Exception: ' +
-                error.toString());
+            error: 'Exception: ' + error.toString());
       }
-
+    } else if (event is SetdefaultAddressEvent) {
+      try {
+        await customerAddressRepository.setdefaultAddress(event.customerAddid);
+        yield SetCustomersuccessState();
+      } catch (error) {
+        yield CustomerAddressErrorState(
+            error: 'Exception: ' + error.toString());
+      }
     }
-
   }
 }

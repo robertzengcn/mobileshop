@@ -643,7 +643,7 @@ class _ProductWrapperState extends State<ProductWrapper> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context).push(PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => new cart()));
+                          pageBuilder: (_, __, ___) => new Cartpage()));
                     },
                     child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
                       builder: (context, authcatState) {
@@ -1037,14 +1037,6 @@ class _ProductWrapperState extends State<ProductWrapper> {
 //                              pageBuilder: (_, __, ___) => new loginScreen()));
                           Navigator.pushNamed(context, loginScreen.routeName,
                               arguments: LoginArguments(_pageProduct)
-//                            MaterialPageRoute(
-//                              builder: (context) => new loginScreen(),
-//                              // Pass the arguments as part of the RouteSettings. The
-//                              // DetailScreen reads the arguments from these settings.
-//                              settings: RouteSettings(
-//                                arguments: _pageProduct,
-//                              ),
-//                            ),
                               );
                         }
 
