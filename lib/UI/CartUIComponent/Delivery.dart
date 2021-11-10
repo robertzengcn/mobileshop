@@ -241,7 +241,6 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
                         if(_reUpdate){
                           _zoneId=_zoneList.first?.zone_id;
                         }
-
                         _showState = true;
                       } else {
                         _showState = false;

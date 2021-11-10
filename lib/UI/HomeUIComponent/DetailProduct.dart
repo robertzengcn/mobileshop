@@ -156,26 +156,26 @@ class _ProductWrapperState extends State<ProductWrapper> {
 //                            style: _detailText),
                         child: _productDesc(productDesc),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: Text(
-                          "Spesifications :",
-                          style: TextStyle(
-                              fontFamily: "Gotik",
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15.0,
-                              color: Colors.black,
-                              letterSpacing: 0.3,
-                              wordSpacing: 0.5),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20.0, left: 20.0),
-                        child: Text(
-                          " - Lorem ipsum is simply dummy  ",
-                          style: _detailText,
-                        ),
-                      )
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 20.0),
+                      //   child: Text(
+                      //     "Spesifications :",
+                      //     style: TextStyle(
+                      //         fontFamily: "Gotik",
+                      //         fontWeight: FontWeight.w600,
+                      //         fontSize: 15.0,
+                      //         color: Colors.black,
+                      //         letterSpacing: 0.3,
+                      //         wordSpacing: 0.5),
+                      //   ),
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 20.0, left: 20.0),
+                      //   child: Text(
+                      //     " - Lorem ipsum is simply dummy  ",
+                      //     style: _detailText,
+                      //   ),
+                      // )
                     ],
                   ),
                 ),
@@ -218,11 +218,11 @@ class _ProductWrapperState extends State<ProductWrapper> {
       fontSize: 16.0);
 
   /// Custom Text for Detail title
-  static var _detailText = TextStyle(
-      fontFamily: "Gotik",
-      color: Colors.black54,
-      letterSpacing: 0.3,
-      wordSpacing: 0.5);
+  // static var _detailText = TextStyle(
+  //     fontFamily: "Gotik",
+  //     color: Colors.black54,
+  //     letterSpacing: 0.3,
+  //     wordSpacing: 0.5);
 
 //  static ButtonStyle _addtoCartStyle = ElevatedButton.styleFrom(
 ////    textStyle: const TextStyle(fontSize: 13),

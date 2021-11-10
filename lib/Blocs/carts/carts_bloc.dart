@@ -1,11 +1,9 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
-
 part 'carts_event.dart';
 part 'carts_state.dart';
 
@@ -40,17 +38,25 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
       try {
         CartInfo cartInfo= await cartRepository.getCartcontent();
 
-        yield CartlistsuccessState(cartList: cartInfo.cartlist,cartTotal:cartInfo.carttotal);
+        yield CartlistsuccessState(
+            cartList: cartInfo.cartlist,
+            cartTotal:cartInfo.carttotal,
+          shippingMelist: cartInfo.shippingMethod
+        );
       } catch (error, stacktrace) {
         yield CartsErrorState(error: 'Exception: '+error.toString()+'Stacktrace: ' + stacktrace.toString());
       }
     } else if (event is updateCartquantityEvent) {
       try {
-        bool res = await cartRepository.updateCartquanity(
+        await cartRepository.updateCartquanity(
             event.cartId, event.quantity);
         CartInfo cartinfo = await cartRepository.getCartcontent();
         yield CartRefreshingState();
-        yield CartlistsuccessState(cartList: cartinfo.cartlist,cartTotal: cartinfo.carttotal);
+        yield CartlistsuccessState(
+            cartList: cartinfo.cartlist,
+            cartTotal: cartinfo.carttotal,
+          shippingMelist: cartinfo.shippingMethod
+        );
       } catch (error,stacktrace) {
         yield CartsErrorState(error: 'Exception: '+error.toString()+'Stacktrace: ' + stacktrace.toString());
       }
@@ -60,7 +66,10 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
         CartInfo cartInfo = await cartRepository.getCartcontent();
 
         yield CartRefreshingState();
-        yield CartlistsuccessState(cartList: cartInfo.cartlist,cartTotal: cartInfo.carttotal);
+        yield CartlistsuccessState(
+            cartList: cartInfo.cartlist,
+            cartTotal: cartInfo.carttotal,
+            shippingMelist:cartInfo.shippingMethod);
       } on Exception catch (error,stacktrace) {
 
         yield CartsErrorState(error: 'Exception: '+error.toString()+'Stacktrace: ' + stacktrace.toString());

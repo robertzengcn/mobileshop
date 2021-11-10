@@ -12,4 +12,5 @@ export 'CartInfo.dart';
 export 'CustomerAddress.dart';
 export 'Countries.dart';
 export 'Zones.dart';
+export 'Shipping_method.dart';
 

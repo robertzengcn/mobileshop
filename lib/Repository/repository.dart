@@ -14,5 +14,8 @@ export 'wishApiClient.dart';
 export 'WishRepository.dart';
 export 'CustomerAddressApiClient.dart';
 export 'CustomerAddressRepository.dart';
+export 'PaypalServices.dart';
+export 'orderApiClient.dart';
+export 'OrderRepository.dart';
 
 

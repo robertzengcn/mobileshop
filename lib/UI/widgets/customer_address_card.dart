@@ -21,7 +21,7 @@ Widget getCusterAdd(CustomerAddress customeradd, bool editor,context,bool asDefu
   showText=showText+' '+customeradd.telephone;
 
   return Card(
-    color: asDefult?Colors.white:Colors.deepOrangeAccent,
+    color: asDefult?Colors.white:Colors.deepOrangeAccent.withOpacity(0.3),
       child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
     ListTile(
       leading: Icon(Icons.album),

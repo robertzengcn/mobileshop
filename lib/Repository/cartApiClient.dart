@@ -102,14 +102,26 @@ class CartApiClient extends BaseApiClient{
       if(responseJson['data']['list']==null){
         CartTotal carttotal=CartTotal(totalPrice: 0,totalWeight: 0);
         List<Cart?> plist=[];
-        return CartInfo(cartlist:plist,carttotal:carttotal);
+        List<ShippingMethod?> slist=[];
+        return CartInfo(cartlist:plist,
+            carttotal:carttotal,
+          shippingMethod: slist
+        );
       }else{
         List<Cart> cartlist=(responseJson['data']['list'] as List)
             .map((p) => Cart.fromJson(p))
             .toList();
 //        CartTotal carttotal=CartTotal(totalPrice: responseJson['data']['total'],totalWeight: responseJson['data']['weight']);
+
+        List<ShippingMethod> shipMelist=(responseJson['data']['shipping'] as List)
+            .map((p) => ShippingMethod.fromJson(p))
+            .toList();
         CartTotal carttotal=CartTotal.fromJson(responseJson['data']);
-        return CartInfo(cartlist:cartlist,carttotal:carttotal);
+
+        return CartInfo(cartlist:cartlist,
+            carttotal:carttotal,
+          shippingMethod:shipMelist
+        );
       }
 
 

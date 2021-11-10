@@ -33,7 +33,8 @@ class CartsQuantitygetsuccessState extends CartsState {
 class CartlistsuccessState extends CartsState {
   List<Cart?> cartList;
   CartTotal? cartTotal;
-  CartlistsuccessState({required this.cartList, this.cartTotal});
+  List<ShippingMethod?> shippingMelist;
+  CartlistsuccessState({required this.cartList, this.cartTotal,required this.shippingMelist});
 }
 class CartRefreshingState extends CartsState {
 }

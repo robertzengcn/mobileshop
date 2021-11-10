@@ -5,3 +5,8 @@
 //const bool keyDebug = true;
 const String appServerUrl='http://10.203.16.189';
 const String appId='DnV17C2j1Tj6saBfvxIOIA1z0curBG';
+const String paypalDomain='https://api.sandbox.paypal.com';
+const String paypalClientId='';
+const String paypalSecret='';
+
+
