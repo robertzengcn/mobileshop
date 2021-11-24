@@ -41,7 +41,9 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
         yield CartlistsuccessState(
             cartList: cartInfo.cartlist,
             cartTotal:cartInfo.carttotal,
-          shippingMelist: cartInfo.shippingMethod
+          shippingMelist: cartInfo.shippingMethod,
+          paymentList: cartInfo.payment,
+          symbol: cartInfo.symbol
         );
       } catch (error, stacktrace) {
         yield CartsErrorState(error: 'Exception: '+error.toString()+'Stacktrace: ' + stacktrace.toString());
@@ -55,7 +57,9 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
         yield CartlistsuccessState(
             cartList: cartinfo.cartlist,
             cartTotal: cartinfo.carttotal,
-          shippingMelist: cartinfo.shippingMethod
+          shippingMelist: cartinfo.shippingMethod,
+            paymentList: cartinfo.payment,
+          symbol: cartinfo.symbol
         );
       } catch (error,stacktrace) {
         yield CartsErrorState(error: 'Exception: '+error.toString()+'Stacktrace: ' + stacktrace.toString());
@@ -69,7 +73,10 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
         yield CartlistsuccessState(
             cartList: cartInfo.cartlist,
             cartTotal: cartInfo.carttotal,
-            shippingMelist:cartInfo.shippingMethod);
+            shippingMelist:cartInfo.shippingMethod,
+          paymentList: cartInfo.payment,
+          symbol: cartInfo.symbol
+        );
       } on Exception catch (error,stacktrace) {
 
         yield CartsErrorState(error: 'Exception: '+error.toString()+'Stacktrace: ' + stacktrace.toString());

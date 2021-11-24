@@ -103,9 +103,13 @@ class CartApiClient extends BaseApiClient{
         CartTotal carttotal=CartTotal(totalPrice: 0,totalWeight: 0);
         List<Cart?> plist=[];
         List<ShippingMethod?> slist=[];
+        List<Payment?> spayment=[];
+        String symbol='\$';
         return CartInfo(cartlist:plist,
             carttotal:carttotal,
-          shippingMethod: slist
+          shippingMethod: slist,
+            payment:spayment,
+          symbol: symbol,
         );
       }else{
         List<Cart> cartlist=(responseJson['data']['list'] as List)
@@ -117,10 +121,14 @@ class CartApiClient extends BaseApiClient{
             .map((p) => ShippingMethod.fromJson(p))
             .toList();
         CartTotal carttotal=CartTotal.fromJson(responseJson['data']);
-
+        List<Payment> paymentlist=(responseJson['data']['payment'] as List)
+            .map((p) => Payment.fromJson(p))
+            .toList();
         return CartInfo(cartlist:cartlist,
             carttotal:carttotal,
-          shippingMethod:shipMelist
+          shippingMethod:shipMelist,
+          payment: paymentlist,
+          symbol: responseJson['data']['symbol']??'\$',
         );
       }
 

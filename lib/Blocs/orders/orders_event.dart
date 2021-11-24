@@ -4,13 +4,13 @@ abstract class OrdersEvent extends Equatable {
   const OrdersEvent();
 }
 @immutable
-class CreateCartEvent extends OrdersEvent {
+class CreateOrderEvent extends OrdersEvent {
 final String payment;
 final String? comment;
 final String shipping;
 final String? currency;
 
-CreateCartEvent({
+CreateOrderEvent({
   required this.payment,
   this.comment,
   required this.shipping,

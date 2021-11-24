@@ -9,8 +9,8 @@ import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/database/database.dart';
 import 'package:amigatoy/UI/LoginOrSignup/Login.dart';
 import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
-//import 'package:http/http.dart' as http;
-//import 'dart:developer' as developer;
+import 'package:amigatoy/UI/CartUIComponent/PaypalPayment.dart';
+import 'package:amigatoy/Arguments/PaypalArguments.dart';
 
 
 
@@ -104,13 +104,6 @@ class myApp extends StatelessWidget {
             )..add(AppStarted());
           },
         ),
-//        BlocProvider<ProductsBloc>(
-//          create: (context) {
-//            return ProductsBloc(
-//                productRepository: productRepository
-//            )..add(AppStarted());
-//          },
-//        ),
         BlocProvider<LoginBloc>(
           create: (context) {
             return LoginBloc(
@@ -119,8 +112,40 @@ class myApp extends StatelessWidget {
             );
           },
         ),
+        BlocProvider<OrdersBloc>(create: (context) {
+          //加载产品的评论
+          return OrdersBloc(orderRepository: OrderRepository());
+        }),
+        BlocProvider<PaypalBloc>(create: (context) {
+          //加载产品的评论
+          return PaypalBloc();
+        }),
       ],
-      child: MaterialApp(
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<OrdersBloc, OrdersState>(listener: (context, state) {
+            if (state is OrderErrorState) {
+              var snackbar = SnackBar(
+                content: Text("create order failure"),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackbar);
+            }else if(state is OrderCreatesuccessState){
+              print("133");
+              switch(state.payment){
+                case 'paypal':
+                default:
+                Navigator.pushNamed(context, PaypalPayment.routeName,
+                    arguments: PaypalArguments(state.invoice)
+                );
+                // BlocProvider.of<PaypalBloc>(context)
+                //     .add(createPayment(invoice:state.invoice));
+
+                break;
+              }
+            }
+          }),
+        ],
+        child:MaterialApp(
           title: "Amiga Toy",
           theme: ThemeData(
               brightness: Brightness.light,
@@ -138,7 +163,8 @@ class myApp extends StatelessWidget {
             Home.routeName: (BuildContext context) => new Home(),
             loginScreen.routeName:(BuildContext context) =>new loginScreen(),
             Delivery.routeName:(BuildContext context) =>new Delivery(),
-          }),
+            PaypalPayment.routeName:(BuildContext context) =>new PaypalPayment(),
+          }),)
     );
   }
 }

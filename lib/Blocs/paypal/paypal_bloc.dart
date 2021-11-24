@@ -10,6 +10,7 @@ part 'paypal_event.dart';
 part 'paypal_state.dart';
 
 class PaypalBloc extends Bloc<PaypalEvent, PaypalState> {
+  final PaypalServices services = PaypalServices();
   PaypalBloc() : super(PaypalInitial());
 
   @override
@@ -17,21 +18,23 @@ class PaypalBloc extends Bloc<PaypalEvent, PaypalState> {
     PaypalEvent event,
   ) async* {
     if (event is createPayment) {
-      PaypalServices services = PaypalServices();
-      // Future.delayed(Duration.zero, () async* {
+      yield PaypalpenddingState();
+
         try {
           String accessToken = await services.getAccessToken();
 
           final res = await services.createPaypalPayment(event.invoice, accessToken);
 
-
-          yield Paypalcreatesuccess(checkoutUrl:res["approvalUrl"]!,executeUrl:res["executeUrl"]!);
+          yield PaypalcreatesuccessState(checkoutUrl:res["approvalUrl"]!,executeUrl:res["executeUrl"]!,accessToken:accessToken);
 
         } catch (e) {
 
         }
-      // });
+
+    }else if(event is executePayment){
+      yield PaypalpenddingState();
+      String paymentId=await services.executePayment(event.url,event.payerId,event.accessToken);
+      yield PaypalFinishState(paymentId: paymentId);
     }
-    // TODO: implement mapEventToState
   }
 }

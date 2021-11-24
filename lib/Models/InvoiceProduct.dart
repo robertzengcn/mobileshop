@@ -13,6 +13,15 @@ class InvoiceProduct extends Equatable {
     required this.currency
   });
 
+  static InvoiceProduct fromJson(dynamic json) {
+      return InvoiceProduct(
+          productName:json['name'],
+          quantity:json['qty'],
+          price:json['price'].toDouble(),
+        currency:json['currency'],
+      );
+  }
+
   @override
   List<Object> get props => [
 

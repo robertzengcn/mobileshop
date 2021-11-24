@@ -2,10 +2,11 @@ import 'package:equatable/equatable.dart';
 import './InvoiceProduct.dart';
 
 class Invoice extends Equatable {
+  final String orderNumber;
   final double totalAmount;
   final double subTotalAmount;
   final double shippingCost;
-  final double shippingDiscountCost;
+  // final double shippingDiscountCost;
   final String userFirstName;
   final String userLastName;
   final String addressCity;
@@ -17,10 +18,11 @@ class Invoice extends Equatable {
   final List<InvoiceProduct> product;
 
   const Invoice({
+    required this.orderNumber,
     required this.totalAmount,
     required this.subTotalAmount,
     required this.shippingCost,
-    required this.shippingDiscountCost,
+    // required this.shippingDiscountCost,
     required this.userFirstName,
     required this.userLastName,
     required this.addressCity,
@@ -36,7 +38,7 @@ class Invoice extends Equatable {
     totalAmount,
     subTotalAmount,
     shippingCost,
-    shippingDiscountCost,
+    // shippingDiscountCost,
     userFirstName,
     userLastName,
     addressCity,
@@ -52,7 +54,7 @@ class Invoice extends Equatable {
     'totalAmount': totalAmount,
     'subTotalAmount': subTotalAmount,
     'shippingCost':shippingCost,
-    'shippingDiscountCost':shippingDiscountCost,
+    // 'shippingDiscountCost':shippingDiscountCost,
     'userFirstName':userFirstName,
     'userLastName':userLastName,
     'addressCity':addressCity,
@@ -63,4 +65,33 @@ class Invoice extends Equatable {
     'addressPhoneNumber':addressPhoneNumber,
     'product':product
   };
+  static Invoice fromJson(dynamic json) {
+    bool productNull =
+    json['product'] == null || (json['product'].length == 0) ? true : false;
+    List<InvoiceProduct> productsList = [];
+    if(!productNull){
+      json['product'].forEach((value) {
+        productsList.add(InvoiceProduct.fromJson(value));
+      });
+    }
+    String addressState="";
+    if(json['addressState']!=null){
+      addressState=json['addressState'];
+    }
+    return Invoice(
+      orderNumber: json['order_number'].toString(),
+        totalAmount:json['totalAmount'] .toDouble(),
+        subTotalAmount:json['totalAmount'] .toDouble(),
+        shippingCost:json['shippingCost'] .toDouble(),
+        userFirstName:json['userFirstName'],
+        userLastName:json['userLastName'],
+        addressCity:json['addressCity'],
+      addressStreet:json['addressStreet'],
+        addressZipCode:json['addressZipCode'],
+        addressCountry:json['addressCountry'],
+        addressState:addressState.toString(),
+      addressPhoneNumber:json['addressPhoneNumber'].toString(),
+       product:productsList,
+    );
+  }
 }

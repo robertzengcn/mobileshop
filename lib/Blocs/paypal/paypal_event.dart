@@ -10,3 +10,17 @@ class createPayment extends PaypalEvent {
   @override
   List<Object> get props => [];
 }
+
+class executePayment extends PaypalEvent {
+  String url;
+  String payerId;
+  String accessToken;
+  executePayment({
+    required this.url,
+    required this.payerId,
+    required this.accessToken
+  });
+
+  @override
+  List<Object> get props => [url,payerId,accessToken];
+}

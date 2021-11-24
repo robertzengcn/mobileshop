@@ -30,6 +30,11 @@ class _cartState extends State<Cartpage> {
   double _shippingCost = 0;
   CartTotal? _cartTotal;
   List<Cart?> _cartList = [];
+  List<Payment?> _paymentList = [];
+  String? _selectPaymentcode;
+  String _symbol = '\$';
+  String? _orderComment;
+  String _orderCurrency = 'USD';
 
   Widget _optionWidget(String? optionname, String? optionvalue) {
     if (optionname != null &&
@@ -87,6 +92,9 @@ class _cartState extends State<Cartpage> {
                         icon: Icons.delete,
                         onTap: () {
                           setState(() {
+                            BlocProvider.of<CartsBloc>(context).add(
+                                deleteCartEvent(
+                                    cartId: _cartList[position]!.id));
                             _cartList.removeAt(position);
                           });
 
@@ -183,7 +191,8 @@ class _cartState extends State<Cartpage> {
                                         Padding(
                                             padding:
                                                 EdgeInsets.only(top: 10.0)),
-                                        Text('Total: \$' +
+                                        Text('Total: ' +
+                                            _symbol +
                                             _cartList[position]!
                                                 .final_price
                                                 .toString()),
@@ -372,31 +381,13 @@ class _cartState extends State<Cartpage> {
     ));
   }
 
-  Widget _shippingWidget(ShippingMethod shippingMe) {
-    return RadioListTile<String>(
-      dense: true,
-      title: Text(shippingMe.title + ' ' + shippingMe.cost.toString()),
-      value: shippingMe.id,
-      groupValue: _selectShipping,
-      onChanged: (String? value) {
-        setState(() {
-          _selectShipping = value;
-        });
-      },
-    );
-  }
-
   ///show customer address container
   Widget _customerAddress() {
     List<Widget> custlistWidget = [];
-    List<Widget> shippingWidget = [];
+    // List<Widget> shippingWidget = [];
     if (_customerAddlist.length > 0) {
       custlistWidget
           .add(getCusterAdd(_customerAddlist.first!, false, context, false));
-      if (_shippingMelist.isNotEmpty) {
-        _shippingMelist.forEach(
-            (element) => shippingWidget.add(_shippingWidget(element!)));
-      }
 
       return Column(children: [
         Container(
@@ -405,9 +396,9 @@ class _cartState extends State<Cartpage> {
               physics: const ScrollPhysics(),
               children: custlistWidget,
             )),
-        Column(
-          children: shippingWidget,
-        ),
+        // Column(
+        //   children: shippingWidget,
+        // ),
         Padding(padding: EdgeInsets.only(top: 10.0)),
         Container(
             child: OutlinedButton(
@@ -423,50 +414,234 @@ class _cartState extends State<Cartpage> {
     }
   }
 
+  // Widget _shiplistWidget(){
+  //   List<Widget> shippingWidget = [];
+  //   if (_shippingMelist.isNotEmpty) {
+  //     _shippingMelist.forEach(
+  //             (element) => shippingWidget.add(_shippingWidget(element!)));
+  //   }
+  //   return Column(
+  //       children:shippingWidget
+  //   );
+  // }
+  /// create order function
+  void _createOrder(String paymentcode,String selectshipping,String? orderComment,String orderCurrency){
+    BlocProvider.of<OrdersBloc>(context)
+        .add(CreateOrderEvent(
+      payment: paymentcode,
+      shipping: selectshipping,
+      comment: orderComment,
+      currency: orderCurrency,
+    ));
+  }
+
   /// BottomSheet for show make payment
-  void _bottomSheet(Widget makePaywidget) {
+  void _bottomSheet(BuildContext context) {
+    // final ordersbloc = BlocProvider.of<OrdersBloc>(context);
     showModalBottomSheet(
         context: context,
-        builder: (builder) {
-          return SingleChildScrollView(
-            child: Container(
-              color: Colors.black26,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 2.0),
-                child: Container(
-                  height: 1500.0,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20.0),
-                          topRight: Radius.circular(20.0))),
-                  child: new Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(padding: EdgeInsets.only(top: 20.0)),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20.0, left: 20.0, right: 20.0, bottom: 20.0),
-                        child: makePaywidget,
+        isScrollControlled: true,
+        builder: (BuildContext _) {
+          return FractionallySizedBox(
+            heightFactor: 0.85,
+            child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setshipState) {
+              Widget _totalWidget() {
+                /// Custom Text
+                var _customStyle = TextStyle(
+                    // fontFamily: "Gotik",
+                    // fontWeight: FontWeight.w800,
+                    color: Colors.black,
+                    fontSize: 20.0);
+                if (_cartTotal != null) {
+                  return Container(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Column(
+                        /// Add this
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Cart Subtotal: " +
+                                _symbol +
+                                _cartTotal!.totalPrice.toString(),
+                            style: _customStyle,
+                            textAlign: TextAlign.right,
+                          ),
+                          _shippingMelist.isNotEmpty
+                              ? Text(
+                                  "Shiping Cost: " +
+                                      _symbol +
+                                      _shippingCost.toString(),
+                                  style: _customStyle,
+                                  textAlign: TextAlign.right,
+                                )
+                              : Container(),
+                          Text(
+                            "Total: " +
+                                _symbol +
+                                (_cartTotal!.totalPrice + _shippingCost)
+                                    .toString(),
+                            style: _customStyle,
+                            textAlign: TextAlign.right,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              }
+
+              Widget _shippingWidget(ShippingMethod shippingMe) {
+                return RadioListTile<String>(
+                  dense: true,
+                  title:
+                      Text(shippingMe.title + ' ' + shippingMe.cost.toString()),
+                  value: shippingMe.id,
+                  groupValue: _selectShipping,
+                  onChanged: (String? value) {
+                    setshipState(() => _selectShipping = value);
+                  },
+                );
+              }
+
+              List<Widget> shippingWidget = [];
+              if (_shippingMelist.isNotEmpty) {
+                _shippingMelist.forEach(
+                    (element) => shippingWidget.add(_shippingWidget(element!)));
+              }
+              Widget _paymentlistWidget() {
+                if (_paymentList.isNotEmpty) {
+                  List<Widget> paymentList = [];
+                  _paymentList.forEach(
+                      (element) => paymentList.add(RadioListTile<String>(
+                            dense: true,
+                            title: Text(element?.name ?? ""),
+                            value: element?.code ?? "",
+                            groupValue: _selectPaymentcode,
+                            onChanged: (String? value) {
+                              setshipState(() => _selectPaymentcode = value);
+                            },
+                          )));
+                  return Column(
+                    children: paymentList,
+                  );
+                } else {
+                  return Container();
+                }
+              }
+
+              return  SingleChildScrollView(
+                        child: Container(
+                          color: Colors.black26,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 2.0),
+                            child: Container(
+                              // height: 1600.0,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20.0),
+                                      topRight: Radius.circular(20.0))),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Padding(padding: EdgeInsets.only(top: 10.0)),
+                                  ListTile(title: Text('Shipping Method')),
+                                  Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 5.0,
+                                          left: 10.0,
+                                          right: 10.0,
+                                          bottom: 5.0),
+                                      child: Column(
+                                        children: shippingWidget,
+                                      )),
+                                  // Padding(padding: EdgeInsets.only(top: 20.0)),
+                                  ListTile(title: Text('Payment Method')),
+                                  Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 1.0,
+                                          left: 10.0,
+                                          right: 10.0,
+                                          bottom: 5.0),
+                                      child: Column(
+                                        children: [
+                                          _paymentlistWidget(),
+                                        ],
+                                      )),
+                                  // Padding(padding: EdgeInsets.only(top: 10.0)),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10.0,
+                                        left: 10.0,
+                                        right: 10.0,
+                                        bottom: 5.0),
+                                    child: TextField(
+                                        maxLength: 1000,
+                                        keyboardType: TextInputType.multiline,
+                                        maxLines: null,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          labelText: 'Order comment',
+                                        ),
+                                        onSubmitted: (String? value) {
+                                          setshipState(
+                                              () => _orderComment = value);
+                                        }),
+                                  ),
+                                  Padding(padding: EdgeInsets.only(top: 10.0)),
+                                  _totalWidget(),
+                                  Padding(padding: EdgeInsets.only(top: 10.0)),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Container(
+                                      child: OutlinedButton(
+                                        onPressed: () {
+                                          // print('Received click');
+                                          if (_selectPaymentcode != null &&
+                                              _selectShipping != null) {
+                                            // BlocProvider.of<OrdersBloc>(context)
+                                            //     .add(CreateOrderEvent(
+                                            //   payment: _selectPaymentcode!,
+                                            //   shipping: _selectShipping!,
+                                            //   comment: _orderComment,
+                                            //   currency: _orderCurrency,
+                                            // ));
+                                            _createOrder(_selectPaymentcode!,_selectShipping!,_orderComment,_orderCurrency);
+                                          }
+                                        },
+                                        child: const Text(
+                                          'Make payment',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ),
+                                        style: OutlinedButton.styleFrom(
+//                      primary: Colors.deepOrange.withOpacity(0.9),
+                                          backgroundColor: Colors.deepOrange
+                                              .withOpacity(0.95),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+            }),
           );
+          // );
+          // );
         });
   }
 
   Widget _scaffoldWidget() {
-//    print(_cartTotal);
-    /// Custom Text
-    var _customStyle = TextStyle(
-        fontFamily: "Gotik",
-        fontWeight: FontWeight.w800,
-        color: Colors.black,
-        fontSize: 20.0);
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Color(0xFF6991C7)),
@@ -493,6 +668,7 @@ class _cartState extends State<Cartpage> {
               if (customeraddState is QueryCustomerAddressSuccess) {
                 _countriesList = customeraddState.countries;
                 _customerAddlist = customeraddState.customerAddressList;
+
                 return _customerAddress();
               } else {
                 return Container();
@@ -507,50 +683,30 @@ class _cartState extends State<Cartpage> {
         ),
         _cartTotal != null
             ? Column(children: <Widget>[
-                Container(
-                  child: Column(
-                    /// Add this
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Cart Subtotal:" + _cartTotal!.totalPrice.toString(),
-                        style: _customStyle,
-                        textAlign: TextAlign.right,
-                      ),
-                      _shippingMelist.isNotEmpty
-                          ? Text(
-                              "Shiping Cost:" + _shippingCost.toString(),
-                              style: _customStyle,
-                              textAlign: TextAlign.right,
-                            )
-                          : Container(),
-                      Text(
-                        "Total:" +
-                            (_cartTotal!.totalPrice + _shippingCost).toString(),
-                        style: _customStyle,
-                        textAlign: TextAlign.right,
-                      ),
-                    ],
-                  ),
-                ),
+                // BlocBuilder<OrdersBloc, OrdersState>(
+                //   builder: (context, ordersState) {
                 Container(
                   child: OutlinedButton(
-                      onPressed: () {
-                        print('Received click');
-                      },
-                      child: const Text(
-                        'Make payment',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.white),
-                      ),
+                    onPressed: () {
+                      // print('Received click');
+                      _bottomSheet(context);
+                    },
+                    child: const Text(
+                      'Submit Order',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
                     style: OutlinedButton.styleFrom(
 //                      primary: Colors.deepOrange.withOpacity(0.9),
                       backgroundColor: Colors.deepOrange.withOpacity(0.95),
                     ),
                   ),
-                ),
+                )
+                // },
               ])
             : Container(),
+        // ])
+        // : Container(),
       ]),
 
       ///
@@ -576,6 +732,10 @@ class _cartState extends State<Cartpage> {
                 customerAddressRepository: CustomerAddressRepository())
               ..add(QueryCustomerAddressEvent());
           }),
+          BlocProvider<OrdersBloc>(create: (context) {
+            //加载产品的评论
+            return OrdersBloc(orderRepository: OrderRepository());
+          }),
         ],
         child: MultiBlocListener(
             listeners: [
@@ -583,6 +743,20 @@ class _cartState extends State<Cartpage> {
                 if (state is CartsErrorState) {
                   var snackbar = SnackBar(
                     content: Text("query cart failure"),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                }
+              }),
+              BlocListener<OrdersBloc, OrdersState>(listener: (context, state) {
+                if (state is OrderErrorState) {
+                  var snackbar = SnackBar(
+                    content: Text("create order failure"),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                }else if(state is OrderCreatesuccessState){
+                  // print(757);
+                  var snackbar = SnackBar(
+                    content: Text("create order success"),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
                 }
@@ -600,6 +774,11 @@ class _cartState extends State<Cartpage> {
                   });
                   _cartList = cartstate.cartList;
                   _cartTotal = cartstate.cartTotal;
+                  _paymentList = cartstate.paymentList;
+                  if (cartstate.paymentList.length > 0) {
+                    _selectPaymentcode = cartstate.paymentList.first!.code;
+                  }
+                  _symbol = cartstate.symbol;
                   return _scaffoldWidget();
                 } else {
                   return noItemCart();

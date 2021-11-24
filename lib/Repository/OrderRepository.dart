@@ -1,4 +1,4 @@
-// import 'package:amigatoy/Models/models.dart';
+import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/Repository/repository.dart';
 
 
@@ -8,10 +8,10 @@ class OrderRepository{
   OrderRepository();
 
   ///create order
-  Future<int> createOrder(String payment,String? currency,String? comment,String? shipping) async {
+  Future<Invoice> createOrder(String payment,String? currency,String? comment,String? shipping) async {
 
-    int order_number=await orderApiClient.createOrder(payment,currency,comment,shipping);
-    return order_number;
+    Invoice invoice=await orderApiClient.createOrder(payment,currency,comment,shipping);
+    return invoice;
   }
 
 }

@@ -3,13 +3,14 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:amigatoy/constants/application_constants.dart';
 import 'package:amigatoy/Repository/BaseApiClient.dart';
+import 'package:amigatoy/Models/models.dart';
 
 class OrderApiClient extends BaseApiClient{
 
   OrderApiClient();
 
   @override
-  Future <int> createOrder(String payment,String? currency,String? comment,String? shipping) async{
+  Future <Invoice> createOrder(String payment,String? currency,String? comment,String? shipping) async{
     var url = Uri.parse('$appServerUrl/createOrder');
     Map<String,String?>data;
     data={"payment":payment,
@@ -37,7 +38,7 @@ class OrderApiClient extends BaseApiClient{
     }
       var responseJson = json.decode(response.body);
       if(responseJson['status']==true){
-        return responseJson['data']['order_number'];
+        return Invoice.fromJson(responseJson['data']);
       }else{
         throw Exception(responseJson['msg']);
       }

@@ -14,7 +14,7 @@ class PaypalServices {
 //  String clientId = 'Ab4vS4vmfQFgUuQMH49F9Uy3L1FdNHtfGrASCyjNijm_EkHWCFM96ex0la-YFbwavw41R3rTKU3k_Bbm';
 //  String secret = 'EDjvPfYgTYqdYWR2BfOiBW4dz_jeeuadqH7Z98pZMDvY33PcViiooqYFWVPFSGbfKBfNOb3LnroSI1hv';
 
-  // for getting the access token from Paypal
+  /// for getting the access token from Paypal
   Future<String> getAccessToken() async {
     try {
       var client = BasicAuthClient(paypalClientId, paypalSecret);
@@ -26,19 +26,22 @@ class PaypalServices {
       }else{
         throw Exception('get paypal AccessToken error');
       }
-
     } catch (e) {
       rethrow;
     }
   }
 
-  // for creating the payment request with Paypal
+  /// for creating the payment request with Paypal
   Future<Map<String, String>> createPaypalPayment(
       Invoice transactions, accessToken) async {
     try {
+      Map<String, dynamic> invoiceJson=transactions.toJson();
+
+      invoiceJson['redirect_urls']['return_url']=paypalReturnUrl;
+      invoiceJson['redirect_urls']['cancel']=paypalCancelUrl;
       var url = Uri.parse("$paypalDomain/v1/payments/payment");
       var response = await http.post(url,
-          body: transactions.toJson(),
+          body: invoiceJson,
           headers: {
             "content-type": "application/json",
             'Authorization': 'Bearer ' + accessToken

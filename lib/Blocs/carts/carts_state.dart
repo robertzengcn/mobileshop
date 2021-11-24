@@ -34,7 +34,15 @@ class CartlistsuccessState extends CartsState {
   List<Cart?> cartList;
   CartTotal? cartTotal;
   List<ShippingMethod?> shippingMelist;
-  CartlistsuccessState({required this.cartList, this.cartTotal,required this.shippingMelist});
+  List<Payment?> paymentList;
+  String symbol;
+  CartlistsuccessState({
+    required this.cartList,
+    this.cartTotal,
+    required this.shippingMelist,
+    required this.paymentList,
+    required this.symbol,
+  });
 }
 class CartRefreshingState extends CartsState {
 }
