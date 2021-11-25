@@ -21,8 +21,8 @@ class _cartState extends State<Cartpage> {
   }
 
   /// Declare price and value for chart
-  int value = 1;
-  int pay = 950;
+  // int value = 1;
+  // int pay = 950;
   String? _selectShipping = 'dhlzones';
   List<ShippingMethod?> _shippingMelist = [];
   List<Countries> _countriesList = [];
@@ -370,7 +370,7 @@ class _cartState extends State<Cartpage> {
   }
 
   ///add customer address btn widget
-  Widget _addCustomeraddressbtn(List<Countries> counties) {
+  Widget _addCustomeraddressbtn() {
     return Container(
         child: OutlinedButton(
       onPressed: () {
@@ -410,7 +410,7 @@ class _cartState extends State<Cartpage> {
         )),
       ]);
     } else {
-      return _addCustomeraddressbtn(_countriesList);
+      return _addCustomeraddressbtn();
     }
   }
 
@@ -604,13 +604,7 @@ class _cartState extends State<Cartpage> {
                                           // print('Received click');
                                           if (_selectPaymentcode != null &&
                                               _selectShipping != null) {
-                                            // BlocProvider.of<OrdersBloc>(context)
-                                            //     .add(CreateOrderEvent(
-                                            //   payment: _selectPaymentcode!,
-                                            //   shipping: _selectShipping!,
-                                            //   comment: _orderComment,
-                                            //   currency: _orderCurrency,
-                                            // ));
+
                                             _createOrder(_selectPaymentcode!,_selectShipping!,_orderComment,_orderCurrency);
                                           }
                                         },
@@ -708,12 +702,6 @@ class _cartState extends State<Cartpage> {
         // ])
         // : Container(),
       ]),
-
-      ///
-      ///
-      /// Checking item value of cart
-      ///
-      ///
     );
   }
 
@@ -733,7 +721,6 @@ class _cartState extends State<Cartpage> {
               ..add(QueryCustomerAddressEvent());
           }),
           BlocProvider<OrdersBloc>(create: (context) {
-            //加载产品的评论
             return OrdersBloc(orderRepository: OrderRepository());
           }),
         ],

@@ -6,8 +6,6 @@ class CartTotal extends Equatable {
   final double totalWeight;
 
 
-
-
   CartTotal({
     required this.totalPrice,
     required this.totalWeight,

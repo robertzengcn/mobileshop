@@ -441,7 +441,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
     if(widget.customeraddObject!=null&&!_reUpdate){
       setState(() {
         _addressId = widget.customeraddObject?.addressBookId;
-        print(widget.customeraddObject?.zoneId);
+        // print(widget.customeraddObject?.zoneId);
         if(widget.customeraddObject!.zoneId!>0){
           _zoneId = widget.customeraddObject?.zoneId;
         }
