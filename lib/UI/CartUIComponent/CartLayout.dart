@@ -8,7 +8,8 @@ import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/UI/widgets/customer_address_card.dart';
-
+import 'package:amigatoy/UI/CartUIComponent/Checkout.dart';
+import 'package:amigatoy/Arguments/CheckoutArguments.dart';
 class Cartpage extends StatefulWidget {
   @override
   _cartState createState() => _cartState();
@@ -683,7 +684,10 @@ class _cartState extends State<Cartpage> {
                   child: OutlinedButton(
                     onPressed: () {
                       // print('Received click');
-                      _bottomSheet(context);
+                      // _bottomSheet(context);
+                              Navigator.pushNamed(context, Checkout.routeName,
+                                  arguments: CheckoutArguments(_cartTotal,_paymentList)
+                              );
                     },
                     child: const Text(
                       'Submit Order',

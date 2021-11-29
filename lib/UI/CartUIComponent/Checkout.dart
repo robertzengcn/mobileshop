@@ -7,7 +7,7 @@ import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/UI/widgets/customer_address_card.dart';
 import 'package:amigatoy/UI/CartUIComponent/AddressList.dart';
 import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
-
+import 'package:amigatoy/Arguments/CheckoutArguments.dart';
 class Checkout extends StatefulWidget {
   static const routeName = '/checkout';
 
@@ -80,7 +80,7 @@ class _checkoutState extends State<Checkout> {
       value: shippingMe.id,
       groupValue: _selectShipping,
       onChanged: (String? value) {
-        // setshipState(() => _selectShipping = value);
+         setState(() => _selectShipping = value);
       },
     );
   }
@@ -250,8 +250,14 @@ class _checkoutState extends State<Checkout> {
 
   @override
   Widget build(BuildContext context) {
-     var args;
-
+    var args;
+    if (ModalRoute.of(context)!.settings.arguments != null) {
+      args = ModalRoute.of(context)!.settings.arguments as CheckoutArguments;
+    }
+     if(args!=null&&args?.paymentList!=null){
+       _paymentList=args.paymentList;
+       _cartTotal=args.cartTotal;
+     }
     return MultiBlocProvider(
         providers: [
           BlocProvider<CustomerAddressBloc>(create: (context) {
@@ -260,6 +266,10 @@ class _checkoutState extends State<Checkout> {
                 customerAddressRepository: CustomerAddressRepository())
               ..add(QueryCustomerAddressEvent());
           }),
+          BlocProvider<OrdersBloc>(create: (context) {
+            //加载产品的评论
+            return OrdersBloc(orderRepository: OrderRepository());
+          }),
         ],
         child: MultiBlocListener(
             listeners: [
@@ -267,6 +277,10 @@ class _checkoutState extends State<Checkout> {
                   listener: (context, state) {
 
                   }),
+        BlocListener<OrdersBloc, OrdersState>(
+            listener: (context, state) {
+
+        }),
             ],
             child: _scaffoldWidget()
         ));
