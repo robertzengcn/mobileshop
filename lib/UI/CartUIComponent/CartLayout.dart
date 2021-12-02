@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
-import 'package:amigatoy/UI/CartUIComponent/AddressList.dart';
+// import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
+// import 'package:amigatoy/UI/CartUIComponent/AddressList.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
-import 'package:amigatoy/UI/widgets/customer_address_card.dart';
+// import 'package:amigatoy/UI/widgets/customer_address_card.dart';
 import 'package:amigatoy/UI/CartUIComponent/Checkout.dart';
 import 'package:amigatoy/Arguments/CheckoutArguments.dart';
 class Cartpage extends StatefulWidget {
@@ -26,13 +26,13 @@ class _cartState extends State<Cartpage> {
   // int pay = 950;
   String? _selectShipping = 'dhlzones';
   List<ShippingMethod?> _shippingMelist = [];
-  List<Countries> _countriesList = [];
-  List<CustomerAddress?> _customerAddlist = [];
+  // List<Countries> _countriesList = [];
+  // List<CustomerAddress?> _customerAddlist = [];
   double _shippingCost = 0;
   CartTotal? _cartTotal;
   List<Cart?> _cartList = [];
   List<Payment?> _paymentList = [];
-  String? _selectPaymentcode;
+  // String? _selectPaymentcode;
   String _symbol = '\$';
   String? _orderComment;
   String _orderCurrency = 'USD';
@@ -371,49 +371,49 @@ class _cartState extends State<Cartpage> {
   }
 
   ///add customer address btn widget
-  Widget _addCustomeraddressbtn() {
-    return Container(
-        child: OutlinedButton(
-      onPressed: () {
-        Navigator.of(context).push(
-            PageRouteBuilder(pageBuilder: (_, __, ___) => new Delivery()));
-      },
-      child: const Text('Add Shipping address'),
-    ));
-  }
+  // Widget _addCustomeraddressbtn() {
+  //   return Container(
+  //       child: OutlinedButton(
+  //     onPressed: () {
+  //       Navigator.of(context).push(
+  //           PageRouteBuilder(pageBuilder: (_, __, ___) => new Delivery()));
+  //     },
+  //     child: const Text('Add Shipping address'),
+  //   ));
+  // }
 
   ///show customer address container
-  Widget _customerAddress() {
-    List<Widget> custlistWidget = [];
-    // List<Widget> shippingWidget = [];
-    if (_customerAddlist.length > 0) {
-      custlistWidget
-          .add(getCusterAdd(_customerAddlist.first!, false, context, false));
-
-      return Column(children: [
-        Container(
-            height: 65,
-            child: ListView(
-              physics: const ScrollPhysics(),
-              children: custlistWidget,
-            )),
-        // Column(
-        //   children: shippingWidget,
-        // ),
-        Padding(padding: EdgeInsets.only(top: 10.0)),
-        Container(
-            child: OutlinedButton(
-          onPressed: () {
-            Navigator.of(context).push(PageRouteBuilder(
-                pageBuilder: (_, __, ___) => new AddressList()));
-          },
-          child: const Text('Use other address'),
-        )),
-      ]);
-    } else {
-      return _addCustomeraddressbtn();
-    }
-  }
+  // Widget _customerAddress() {
+  //   List<Widget> custlistWidget = [];
+  //   // List<Widget> shippingWidget = [];
+  //   if (_customerAddlist.length > 0) {
+  //     custlistWidget
+  //         .add(getCusterAdd(_customerAddlist.first!, false, context, false));
+  //
+  //     return Column(children: [
+  //       Container(
+  //           height: 65,
+  //           child: ListView(
+  //             physics: const ScrollPhysics(),
+  //             children: custlistWidget,
+  //           )),
+  //       // Column(
+  //       //   children: shippingWidget,
+  //       // ),
+  //       Padding(padding: EdgeInsets.only(top: 10.0)),
+  //       Container(
+  //           child: OutlinedButton(
+  //         onPressed: () {
+  //           Navigator.of(context).push(PageRouteBuilder(
+  //               pageBuilder: (_, __, ___) => new AddressList()));
+  //         },
+  //         child: const Text('Use other address'),
+  //       )),
+  //     ]);
+  //   } else {
+  //     return _addCustomeraddressbtn();
+  //   }
+  // }
 
   // Widget _shiplistWidget(){
   //   List<Widget> shippingWidget = [];
@@ -425,216 +425,207 @@ class _cartState extends State<Cartpage> {
   //       children:shippingWidget
   //   );
   // }
-  /// create order function
-  void _createOrder(String paymentcode,String selectshipping,String? orderComment,String orderCurrency){
-    BlocProvider.of<OrdersBloc>(context)
-        .add(CreateOrderEvent(
-      payment: paymentcode,
-      shipping: selectshipping,
-      comment: orderComment,
-      currency: orderCurrency,
-    ));
-  }
+
 
   /// BottomSheet for show make payment
-  void _bottomSheet(BuildContext context) {
-    // final ordersbloc = BlocProvider.of<OrdersBloc>(context);
-    showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (BuildContext _) {
-          return FractionallySizedBox(
-            heightFactor: 0.85,
-            child: StatefulBuilder(
-                builder: (BuildContext context, StateSetter setshipState) {
-              Widget _totalWidget() {
-                /// Custom Text
-                var _customStyle = TextStyle(
-                    // fontFamily: "Gotik",
-                    // fontWeight: FontWeight.w800,
-                    color: Colors.black,
-                    fontSize: 20.0);
-                if (_cartTotal != null) {
-                  return Container(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Column(
-                        /// Add this
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Cart Subtotal: " +
-                                _symbol +
-                                _cartTotal!.totalPrice.toString(),
-                            style: _customStyle,
-                            textAlign: TextAlign.right,
-                          ),
-                          _shippingMelist.isNotEmpty
-                              ? Text(
-                                  "Shiping Cost: " +
-                                      _symbol +
-                                      _shippingCost.toString(),
-                                  style: _customStyle,
-                                  textAlign: TextAlign.right,
-                                )
-                              : Container(),
-                          Text(
-                            "Total: " +
-                                _symbol +
-                                (_cartTotal!.totalPrice + _shippingCost)
-                                    .toString(),
-                            style: _customStyle,
-                            textAlign: TextAlign.right,
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                } else {
-                  return Container();
-                }
-              }
-
-              Widget _shippingWidget(ShippingMethod shippingMe) {
-                return RadioListTile<String>(
-                  dense: true,
-                  title:
-                      Text(shippingMe.title + ' ' + shippingMe.cost.toString()),
-                  value: shippingMe.id,
-                  groupValue: _selectShipping,
-                  onChanged: (String? value) {
-                    setshipState(() => _selectShipping = value);
-                  },
-                );
-              }
-
-              List<Widget> shippingWidget = [];
-              if (_shippingMelist.isNotEmpty) {
-                _shippingMelist.forEach(
-                    (element) => shippingWidget.add(_shippingWidget(element!)));
-              }
-              Widget _paymentlistWidget() {
-                if (_paymentList.isNotEmpty) {
-                  List<Widget> paymentList = [];
-                  _paymentList.forEach(
-                      (element) => paymentList.add(RadioListTile<String>(
-                            dense: true,
-                            title: Text(element?.name ?? ""),
-                            value: element?.code ?? "",
-                            groupValue: _selectPaymentcode,
-                            onChanged: (String? value) {
-                              setshipState(() => _selectPaymentcode = value);
-                            },
-                          )));
-                  return Column(
-                    children: paymentList,
-                  );
-                } else {
-                  return Container();
-                }
-              }
-
-              return  SingleChildScrollView(
-                        child: Container(
-                          color: Colors.black26,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 2.0),
-                            child: Container(
-                              // height: 1600.0,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20.0),
-                                      topRight: Radius.circular(20.0))),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Padding(padding: EdgeInsets.only(top: 10.0)),
-                                  ListTile(title: Text('Shipping Method')),
-                                  Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 5.0,
-                                          left: 10.0,
-                                          right: 10.0,
-                                          bottom: 5.0),
-                                      child: Column(
-                                        children: shippingWidget,
-                                      )),
-                                  // Padding(padding: EdgeInsets.only(top: 20.0)),
-                                  ListTile(title: Text('Payment Method')),
-                                  Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 1.0,
-                                          left: 10.0,
-                                          right: 10.0,
-                                          bottom: 5.0),
-                                      child: Column(
-                                        children: [
-                                          _paymentlistWidget(),
-                                        ],
-                                      )),
-                                  // Padding(padding: EdgeInsets.only(top: 10.0)),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0,
-                                        left: 10.0,
-                                        right: 10.0,
-                                        bottom: 5.0),
-                                    child: TextField(
-                                        maxLength: 1000,
-                                        keyboardType: TextInputType.multiline,
-                                        maxLines: null,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          labelText: 'Order comment',
-                                        ),
-                                        onSubmitted: (String? value) {
-                                          setshipState(
-                                              () => _orderComment = value);
-                                        }),
-                                  ),
-                                  Padding(padding: EdgeInsets.only(top: 10.0)),
-                                  _totalWidget(),
-                                  Padding(padding: EdgeInsets.only(top: 10.0)),
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: Container(
-                                      child: OutlinedButton(
-                                        onPressed: () {
-                                          // print('Received click');
-                                          if (_selectPaymentcode != null &&
-                                              _selectShipping != null) {
-
-                                            _createOrder(_selectPaymentcode!,_selectShipping!,_orderComment,_orderCurrency);
-                                          }
-                                        },
-                                        child: const Text(
-                                          'Make payment',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white),
-                                        ),
-                                        style: OutlinedButton.styleFrom(
-//                      primary: Colors.deepOrange.withOpacity(0.9),
-                                          backgroundColor: Colors.deepOrange
-                                              .withOpacity(0.95),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-            }),
-          );
-          // );
-          // );
-        });
-  }
+//   void _bottomSheet(BuildContext context) {
+//     // final ordersbloc = BlocProvider.of<OrdersBloc>(context);
+//     showModalBottomSheet(
+//         context: context,
+//         isScrollControlled: true,
+//         builder: (BuildContext _) {
+//           return FractionallySizedBox(
+//             heightFactor: 0.85,
+//             child: StatefulBuilder(
+//                 builder: (BuildContext context, StateSetter setshipState) {
+//               Widget _totalWidget() {
+//                 /// Custom Text
+//                 var _customStyle = TextStyle(
+//                     // fontFamily: "Gotik",
+//                     // fontWeight: FontWeight.w800,
+//                     color: Colors.black,
+//                     fontSize: 20.0);
+//                 if (_cartTotal != null) {
+//                   return Container(
+//                     child: Align(
+//                       alignment: Alignment.center,
+//                       child: Column(
+//                         /// Add this
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         children: <Widget>[
+//                           Text(
+//                             "Cart Subtotal: " +
+//                                 _symbol +
+//                                 _cartTotal!.totalPrice.toString(),
+//                             style: _customStyle,
+//                             textAlign: TextAlign.right,
+//                           ),
+//                           _shippingMelist.isNotEmpty
+//                               ? Text(
+//                                   "Shiping Cost: " +
+//                                       _symbol +
+//                                       _shippingCost.toString(),
+//                                   style: _customStyle,
+//                                   textAlign: TextAlign.right,
+//                                 )
+//                               : Container(),
+//                           Text(
+//                             "Total: " +
+//                                 _symbol +
+//                                 (_cartTotal!.totalPrice + _shippingCost)
+//                                     .toString(),
+//                             style: _customStyle,
+//                             textAlign: TextAlign.right,
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                   );
+//                 } else {
+//                   return Container();
+//                 }
+//               }
+//
+//               Widget _shippingWidget(ShippingMethod shippingMe) {
+//                 return RadioListTile<String>(
+//                   dense: true,
+//                   title:
+//                       Text(shippingMe.title + ' ' + shippingMe.cost.toString()),
+//                   value: shippingMe.id,
+//                   groupValue: _selectShipping,
+//                   onChanged: (String? value) {
+//                     setshipState(() => _selectShipping = value);
+//                   },
+//                 );
+//               }
+//
+//               List<Widget> shippingWidget = [];
+//               if (_shippingMelist.isNotEmpty) {
+//                 _shippingMelist.forEach(
+//                     (element) => shippingWidget.add(_shippingWidget(element!)));
+//               }
+//               Widget _paymentlistWidget() {
+//                 if (_paymentList.isNotEmpty) {
+//                   List<Widget> paymentList = [];
+//                   _paymentList.forEach(
+//                       (element) => paymentList.add(RadioListTile<String>(
+//                             dense: true,
+//                             title: Text(element?.name ?? ""),
+//                             value: element?.code ?? "",
+//                             groupValue: _selectPaymentcode,
+//                             onChanged: (String? value) {
+//                               setshipState(() => _selectPaymentcode = value);
+//                             },
+//                           )));
+//                   return Column(
+//                     children: paymentList,
+//                   );
+//                 } else {
+//                   return Container();
+//                 }
+//               }
+//
+//               return  SingleChildScrollView(
+//                         child: Container(
+//                           color: Colors.black26,
+//                           child: Padding(
+//                             padding: const EdgeInsets.only(top: 2.0),
+//                             child: Container(
+//                               // height: 1600.0,
+//                               decoration: BoxDecoration(
+//                                   color: Colors.white,
+//                                   borderRadius: BorderRadius.only(
+//                                       topLeft: Radius.circular(20.0),
+//                                       topRight: Radius.circular(20.0))),
+//                               child: Column(
+//                                 mainAxisAlignment: MainAxisAlignment.start,
+//                                 crossAxisAlignment: CrossAxisAlignment.start,
+//                                 children: <Widget>[
+//                                   Padding(padding: EdgeInsets.only(top: 10.0)),
+//                                   ListTile(title: Text('Shipping Method')),
+//                                   Padding(
+//                                       padding: const EdgeInsets.only(
+//                                           top: 5.0,
+//                                           left: 10.0,
+//                                           right: 10.0,
+//                                           bottom: 5.0),
+//                                       child: Column(
+//                                         children: shippingWidget,
+//                                       )),
+//                                   // Padding(padding: EdgeInsets.only(top: 20.0)),
+//                                   ListTile(title: Text('Payment Method')),
+//                                   Padding(
+//                                       padding: const EdgeInsets.only(
+//                                           top: 1.0,
+//                                           left: 10.0,
+//                                           right: 10.0,
+//                                           bottom: 5.0),
+//                                       child: Column(
+//                                         children: [
+//                                           _paymentlistWidget(),
+//                                         ],
+//                                       )),
+//                                   // Padding(padding: EdgeInsets.only(top: 10.0)),
+//                                   Padding(
+//                                     padding: const EdgeInsets.only(
+//                                         top: 10.0,
+//                                         left: 10.0,
+//                                         right: 10.0,
+//                                         bottom: 5.0),
+//                                     child: TextField(
+//                                         maxLength: 1000,
+//                                         keyboardType: TextInputType.multiline,
+//                                         maxLines: null,
+//                                         decoration: InputDecoration(
+//                                           border: OutlineInputBorder(),
+//                                           labelText: 'Order comment',
+//                                         ),
+//                                         onSubmitted: (String? value) {
+//                                           setshipState(
+//                                               () => _orderComment = value);
+//                                         }),
+//                                   ),
+//                                   Padding(padding: EdgeInsets.only(top: 10.0)),
+//                                   _totalWidget(),
+//                                   Padding(padding: EdgeInsets.only(top: 10.0)),
+//                                   Align(
+//                                     alignment: Alignment.center,
+//                                     child: Container(
+//                                       child: OutlinedButton(
+//                                         onPressed: () {
+//                                           // print('Received click');
+//                                           if (_selectPaymentcode != null &&
+//                                               _selectShipping != null) {
+//
+//                                             _createOrder(_selectPaymentcode!,_selectShipping!,_orderComment,_orderCurrency);
+//                                           }
+//                                         },
+//                                         child: const Text(
+//                                           'Make payment',
+//                                           style: TextStyle(
+//                                               fontWeight: FontWeight.bold,
+//                                               color: Colors.white),
+//                                         ),
+//                                         style: OutlinedButton.styleFrom(
+// //                      primary: Colors.deepOrange.withOpacity(0.9),
+//                                           backgroundColor: Colors.deepOrange
+//                                               .withOpacity(0.95),
+//                                         ),
+//                                       ),
+//                                     ),
+//                                   ),
+//                                 ],
+//                               ),
+//                             ),
+//                           ),
+//                         ),
+//                       );
+//             }),
+//           );
+//           // );
+//           // );
+//         });
+//   }
 
   Widget _scaffoldWidget() {
     return Scaffold(
@@ -654,23 +645,23 @@ class _cartState extends State<Cartpage> {
       ),
       body: Column(children: <Widget>[
         _buildList(),
-        Container(
-          // height: 80.0,
-          color: Colors.transparent,
-          child: new Container(
-            child: BlocBuilder<CustomerAddressBloc, CustomerAddressState>(
-                builder: (BuildContext context, customeraddState) {
-              if (customeraddState is QueryCustomerAddressSuccess) {
-                _countriesList = customeraddState.countries;
-                _customerAddlist = customeraddState.customerAddressList;
-
-                return _customerAddress();
-              } else {
-                return Container();
-              }
-            }),
-          ),
-        ),
+        // Container(
+        //   // height: 80.0,
+        //   color: Colors.transparent,
+        //   child: new Container(
+        //     child: BlocBuilder<CustomerAddressBloc, CustomerAddressState>(
+        //         builder: (BuildContext context, customeraddState) {
+        //       if (customeraddState is QueryCustomerAddressSuccess) {
+        //         _countriesList = customeraddState.countries;
+        //         _customerAddlist = customeraddState.customerAddressList;
+        //
+        //         return _customerAddress();
+        //       } else {
+        //         return Container();
+        //       }
+        //     }),
+        //   ),
+        // ),
         Padding(padding: EdgeInsets.only(top: 15.0)),
         Divider(
           height: 1.0,
@@ -686,7 +677,7 @@ class _cartState extends State<Cartpage> {
                       // print('Received click');
                       // _bottomSheet(context);
                               Navigator.pushNamed(context, Checkout.routeName,
-                                  arguments: CheckoutArguments(_cartTotal,_paymentList)
+                                  arguments: CheckoutArguments(_cartTotal,_paymentList,_symbol,_shippingMelist)
                               );
                     },
                     child: const Text(
@@ -758,17 +749,17 @@ class _cartState extends State<Cartpage> {
               if (cartstate is CartlistsuccessState) {
                 if ((cartstate.cartList.length > 0)) {
                   _shippingMelist = cartstate.shippingMelist;
-                  _shippingMelist.forEach((element) {
-                    if (element != null && element.id == _selectShipping) {
-                      _shippingCost = element.cost;
-                    }
-                  });
+                  // _shippingMelist.forEach((element) {
+                  //   if (element != null && element.id == _selectShipping) {
+                  //     _shippingCost = element.cost;
+                  //   }
+                  // });
                   _cartList = cartstate.cartList;
                   _cartTotal = cartstate.cartTotal;
                   _paymentList = cartstate.paymentList;
-                  if (cartstate.paymentList.length > 0) {
-                    _selectPaymentcode = cartstate.paymentList.first!.code;
-                  }
+                  // if (cartstate.paymentList.length > 0) {
+                  //   _selectPaymentcode = cartstate.paymentList.first!.code;
+                  // }
                   _symbol = cartstate.symbol;
                   return _scaffoldWidget();
                 } else {

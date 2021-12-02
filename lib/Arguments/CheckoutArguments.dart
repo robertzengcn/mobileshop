@@ -7,5 +7,7 @@ import 'package:amigatoy/Models/models.dart';
 class CheckoutArguments {
   final CartTotal? cartTotal;
   final List<Payment?> paymentList;
-  CheckoutArguments(this.cartTotal,this.paymentList);
+  final String symbol;
+  final List<ShippingMethod?> shippingMelist;
+  CheckoutArguments(this.cartTotal,this.paymentList,this.symbol,this.shippingMelist);
 }

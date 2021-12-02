@@ -20,16 +20,16 @@ class PaypalBloc extends Bloc<PaypalEvent, PaypalState> {
     if (event is createPayment) {
       yield PaypalpenddingState();
 
-        try {
+        // try {
           String accessToken = await services.getAccessToken();
 
           final res = await services.createPaypalPayment(event.invoice, accessToken);
 
           yield PaypalcreatesuccessState(checkoutUrl:res["approvalUrl"]!,executeUrl:res["executeUrl"]!,accessToken:accessToken);
 
-        } catch (e) {
-
-        }
+        // } catch (e) {
+        //
+        // }
 
     }else if(event is executePayment){
       yield PaypalpenddingState();

@@ -11,6 +11,7 @@ import 'package:amigatoy/UI/LoginOrSignup/Login.dart';
 import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 import 'package:amigatoy/UI/CartUIComponent/PaypalPayment.dart';
 // import 'package:amigatoy/Arguments/PaypalArguments.dart';
+import 'package:amigatoy/UI/CartUIComponent/Checkout.dart';
 
 
 
@@ -112,10 +113,10 @@ class myApp extends StatelessWidget {
             );
           },
         ),
-        BlocProvider<OrdersBloc>(create: (context) {
-          //加载产品的评论
-          return OrdersBloc(orderRepository: OrderRepository());
-        }),
+        // BlocProvider<OrdersBloc>(create: (context) {
+        //   //加载产品的评论
+        //   return OrdersBloc(orderRepository: OrderRepository());
+        // }),
         BlocProvider<PaypalBloc>(create: (context) {
           //加载产品的评论
           return PaypalBloc();
@@ -164,6 +165,7 @@ class myApp extends StatelessWidget {
             loginScreen.routeName:(BuildContext context) =>new loginScreen(),
             Delivery.routeName:(BuildContext context) =>new Delivery(),
             PaypalPayment.routeName:(BuildContext context) =>new PaypalPayment(),
+            Checkout.routeName:(BuildContext context) =>new Checkout(),
           }),
       // )
     );

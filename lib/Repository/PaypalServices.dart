@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:async';
-import 'dart:convert' as convert;
+import 'dart:convert';
 import 'package:http_auth/http_auth.dart';
 import 'package:amigatoy/constants/application_constants.dart';
 import 'package:amigatoy/Models/Invoice.dart';
@@ -21,7 +21,7 @@ class PaypalServices {
       var url = Uri.parse('$paypalDomain/v1/oauth2/token?grant_type=client_credentials');
       var response = await client.post(url);
       if (response.statusCode == 200) {
-        final body = convert.jsonDecode(response.body);
+        final body = jsonDecode(response.body);
         return body["access_token"];
       }else{
         throw Exception('get paypal AccessToken error');
@@ -35,19 +35,20 @@ class PaypalServices {
   Future<Map<String, String>> createPaypalPayment(
       Invoice transactions, accessToken) async {
     try {
-      Map<String, dynamic> invoiceJson=transactions.toJson();
+       Map<String, dynamic> invoiceJson=transactions.toJson();
 
-      invoiceJson['redirect_urls']['return_url']=paypalReturnUrl;
-      invoiceJson['redirect_urls']['cancel']=paypalCancelUrl;
+
+      // invoiceJson['redirect_urls']['return_url']=paypalReturnUrl;
+      // invoiceJson['redirect_urls']['cancel']=Uri.parse(paypalCancelUrl);
       var url = Uri.parse("$paypalDomain/v1/payments/payment");
       var response = await http.post(url,
-          body: invoiceJson,
+          body: jsonEncode(invoiceJson),
           headers: {
             "content-type": "application/json",
             'Authorization': 'Bearer ' + accessToken
           });
 
-      final body = convert.jsonDecode(response.body);
+      final body = jsonDecode(response.body);
       if (response.statusCode == 201) {
         if (body["links"] != null && body["links"].length > 0) {
           List links = body["links"];
@@ -81,13 +82,13 @@ class PaypalServices {
   Future<String> executePayment(url, payerId, accessToken) async {
     try {
       var response = await http.post(url,
-          body: convert.jsonEncode({"payer_id": payerId}),
+          body: jsonEncode({"payer_id": payerId}),
           headers: {
             "content-type": "application/json",
             'Authorization': 'Bearer ' + accessToken
           });
 
-      final body = convert.jsonDecode(response.body);
+      final body = jsonDecode(response.body);
       if (response.statusCode == 200) {
         return body["id"];
       }else{

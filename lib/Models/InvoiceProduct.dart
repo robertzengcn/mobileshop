@@ -24,6 +24,6 @@ class InvoiceProduct extends Equatable {
 
   @override
   List<Object> get props => [
-
+    productName,quantity,price,currency
   ];
 }

@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 import './InvoiceProduct.dart';
+import './RedirectUrls.dart';
+import 'package:amigatoy/constants/application_constants.dart';
 
 class Invoice extends Equatable {
   final String orderNumber;
@@ -16,7 +18,7 @@ class Invoice extends Equatable {
   final String addressState;
   final String addressPhoneNumber;
   final List<InvoiceProduct> product;
-
+  final RedirectUrls? redirectUrls;
   const Invoice({
     required this.orderNumber,
     required this.totalAmount,
@@ -31,7 +33,8 @@ class Invoice extends Equatable {
     required this.addressCountry,
     required this.addressState,
     required this.addressPhoneNumber,
-    required this.product
+    required this.product,
+    this.redirectUrls
   });
   @override
   List<Object> get props => [
@@ -50,7 +53,8 @@ class Invoice extends Equatable {
     product,
   ];
 
-  Map<String, dynamic> toJson() => {
+  toJson() {
+    return {
     'totalAmount': totalAmount,
     'subTotalAmount': subTotalAmount,
     'shippingCost':shippingCost,
@@ -63,8 +67,10 @@ class Invoice extends Equatable {
     'addressCountry':addressCountry,
     'addressState':addressState,
     'addressPhoneNumber':addressPhoneNumber,
-    'product':product
+    'product':product,
+    'redirectUrls': RedirectUrls(return_url:paypalReturnUrl,cancel_url: paypalCancelUrl ).toJson()
   };
+  }
   static Invoice fromJson(dynamic json) {
     bool productNull =
     json['product'] == null || (json['product'].length == 0) ? true : false;
@@ -78,6 +84,7 @@ class Invoice extends Equatable {
     if(json['addressState']!=null){
       addressState=json['addressState'];
     }
+
     return Invoice(
       orderNumber: json['order_number'].toString(),
         totalAmount:json['totalAmount'] .toDouble(),
@@ -92,6 +99,7 @@ class Invoice extends Equatable {
         addressState:addressState.toString(),
       addressPhoneNumber:json['addressPhoneNumber'].toString(),
        product:productsList,
+
     );
   }
 }
