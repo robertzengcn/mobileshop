@@ -15,7 +15,6 @@ dependencies:
   equatable: ^1.0.0
   firebase_core: ^0.4.5
   parse_server_sdk: ^1.0.26
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
