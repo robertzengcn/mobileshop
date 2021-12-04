@@ -26,4 +26,12 @@ class InvoiceProduct extends Equatable {
   List<Object> get props => [
     productName,quantity,price,currency
   ];
+  toJson(){
+    return {
+      'productName':productName,
+      'quantity':quantity,
+      'price':price,
+      'currency':currency,
+    };
+  }
 }

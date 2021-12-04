@@ -36,7 +36,7 @@ class PaypalServices {
       Invoice transactions, accessToken) async {
     try {
        Map<String, dynamic> invoiceJson=transactions.toJson();
-
+       print(invoiceJson);
 
       // invoiceJson['redirect_urls']['return_url']=paypalReturnUrl;
       // invoiceJson['redirect_urls']['cancel']=Uri.parse(paypalCancelUrl);
