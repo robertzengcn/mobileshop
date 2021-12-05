@@ -36,11 +36,13 @@ class PaypalServices {
       Invoice transactions, accessToken) async {
     try {
        Map<String, dynamic> invoiceJson=transactions.toJson();
-       print(invoiceJson);
+       print(jsonEncode(invoiceJson));
 
       // invoiceJson['redirect_urls']['return_url']=paypalReturnUrl;
       // invoiceJson['redirect_urls']['cancel']=Uri.parse(paypalCancelUrl);
       var url = Uri.parse("$paypalDomain/v1/payments/payment");
+      print(url);
+      print(accessToken);
       var response = await http.post(url,
           body: jsonEncode(invoiceJson),
           headers: {
@@ -49,6 +51,7 @@ class PaypalServices {
           });
 
       final body = jsonDecode(response.body);
+      print(body);
       if (response.statusCode == 201) {
         if (body["links"] != null && body["links"].length > 0) {
           List links = body["links"];
