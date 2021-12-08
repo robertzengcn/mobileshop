@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import './InvoiceProduct.dart';
 import './RedirectUrls.dart';
-import 'dart:convert';
+// import 'dart:convert';
 import 'package:amigatoy/constants/application_constants.dart';
 
 class Invoice extends Equatable {
@@ -68,7 +68,7 @@ class Invoice extends Equatable {
     'addressCountry':addressCountry,
     'addressState':addressState,
     'addressPhoneNumber':addressPhoneNumber,
-    'product':jsonEncode(product.map((e) =>e.toJson()).toList()),
+    'product':product.map((e) =>e.toJson()).toList(),
     'redirectUrls': RedirectUrls(return_url:paypalReturnUrl,cancel_url: paypalCancelUrl ).toJson()
   };
   }
