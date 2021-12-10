@@ -11,14 +11,14 @@ class OrdersInitial extends OrdersState {
 
 class OrderCreatesuccessState extends OrdersState {
   final String payment;
+  final PaypalRequest paypalRequest;
 
-  final Invoice invoice;
   OrderCreatesuccessState({
     required this.payment,
-    required this.invoice
+    required this.paypalRequest
   });
   @override
-  List<Object> get props => [payment,invoice];
+  List<Object> get props => [payment,paypalRequest];
 }
 /// create order failure
 class OrderErrorState extends OrdersState {

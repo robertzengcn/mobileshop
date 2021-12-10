@@ -3,7 +3,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http_auth/http_auth.dart';
 import 'package:amigatoy/constants/application_constants.dart';
-import 'package:amigatoy/Models/Invoice.dart';
+// import 'package:amigatoy/Models/Invoice.dart';
+import 'package:amigatoy/Models/PaypalRequest.dart';
 
 class PaypalServices {
 
@@ -33,16 +34,16 @@ class PaypalServices {
 
   /// for creating the payment request with Paypal
   Future<Map<String, String>> createPaypalPayment(
-      Invoice transactions, accessToken) async {
+      PaypalRequest paypalrequest, accessToken) async {
     try {
-       Map<String, dynamic> invoiceJson=transactions.toJson();
-       print(jsonEncode(invoiceJson));
+       Map<String, dynamic> invoiceJson=paypalrequest.toJson();
+       // print(jsonEncode(invoiceJson));
 
       // invoiceJson['redirect_urls']['return_url']=paypalReturnUrl;
       // invoiceJson['redirect_urls']['cancel']=Uri.parse(paypalCancelUrl);
       var url = Uri.parse("$paypalDomain/v1/payments/payment");
-      print(url);
-      print(accessToken);
+      // print(url);
+      // print(accessToken);
       var response = await http.post(url,
           body: jsonEncode(invoiceJson),
           headers: {

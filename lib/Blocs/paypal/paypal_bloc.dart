@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:amigatoy/Models/Invoice.dart';
+import 'package:amigatoy/Models/models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
@@ -23,7 +23,7 @@ class PaypalBloc extends Bloc<PaypalEvent, PaypalState> {
         // try {
           String accessToken = await services.getAccessToken();
 
-          final res = await services.createPaypalPayment(event.invoice, accessToken);
+          final res = await services.createPaypalPayment(event.paypalrequest, accessToken);
 
           yield PaypalcreatesuccessState(checkoutUrl:res["approvalUrl"]!,executeUrl:res["executeUrl"]!,accessToken:accessToken);
 

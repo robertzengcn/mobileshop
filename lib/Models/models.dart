@@ -15,4 +15,5 @@ export 'Zones.dart';
 export 'Shipping_method.dart';
 export 'Payment.dart';
 export 'Invoice.dart';
+export './PaypalRequest.dart';
 

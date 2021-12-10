@@ -8,10 +8,11 @@ class OrderRepository{
   OrderRepository();
 
   ///create order
-  Future<Invoice> createOrder(String payment,String? currency,String? comment,String? shipping) async {
+  Future<PaypalRequest> createOrder(String payment,String? currency,String? comment,String? shipping) async {
 
-    Invoice invoice=await orderApiClient.createOrder(payment,currency,comment,shipping);
-    return invoice;
+    PaypalRequest paypalRequest=await orderApiClient.createOrder(payment,currency,comment,shipping);
+
+    return paypalRequest;
   }
 
 }

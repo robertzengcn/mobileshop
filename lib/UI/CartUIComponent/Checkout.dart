@@ -349,7 +349,7 @@ class _checkoutState extends State<Checkout> {
                     case 'paypal':
                     default:
                     Navigator.pushNamed(context, PaypalPayment.routeName,
-                        arguments: PaypalArguments(state.invoice)
+                        arguments: PaypalArguments(state.paypalRequest)
                     );
                     // BlocProvider.of<PaypalBloc>(context)
                     //     .add(createPayment(invoice:state.invoice));

@@ -5,6 +5,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 // import 'package:amigatoy/Repository/PaypalServices.dart';
 import 'package:amigatoy/Arguments/PaypalArguments.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
+// import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/constants/application_constants.dart';
 
 class PaypalPayment extends StatefulWidget {
@@ -103,7 +104,7 @@ class PaypalPaymentState extends State<PaypalPayment> {
           BlocProvider<PaypalBloc>(create: (context) {
             //create paypal checkout
             if(args!=null){
-              return PaypalBloc()..add(createPayment(invoice:args.invoice));
+              return PaypalBloc()..add(createPayment(paypalrequest:args.invoice));
             }else{
               return PaypalBloc();
             }

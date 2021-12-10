@@ -33,4 +33,13 @@ class Payer extends Equatable {
     );
   }
 
+  toJson() {
+    return {
+      "email_address": emailAddress,
+      "name": name.toJson(),
+      "phone":payerPhone.toJson(),
+      "address":payerAddress.toJson()
+    };
+  }
+
 }

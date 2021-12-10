@@ -10,7 +10,7 @@ class OrderApiClient extends BaseApiClient{
   OrderApiClient();
 
   @override
-  Future <Invoice> createOrder(String payment,String? currency,String? comment,String? shipping) async{
+  Future <PaypalRequest> createOrder(String payment,String? currency,String? comment,String? shipping) async{
     var url = Uri.parse('$appServerUrl/createOrder');
     Map<String,String?>data;
     data={"payment":payment,
@@ -38,7 +38,7 @@ class OrderApiClient extends BaseApiClient{
     }
       var responseJson = json.decode(response.body);
       if(responseJson['status']==true){
-        return Invoice.fromJson(responseJson['data']);
+        return PaypalRequest.fromJson(responseJson['data']);
       }else{
         throw Exception(responseJson['msg']);
       }
