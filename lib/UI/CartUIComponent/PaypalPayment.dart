@@ -23,10 +23,11 @@ class PaypalPaymentState extends State<PaypalPayment> {
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String? _checkoutUrl;
-  String? _executeUrl;
-  String? _accessToken;
+  // String? _executeUrl;
+  // String? _accessToken;
   // String _cancelURL="";
   String _returnURL="";
+  String _cancelUrl="";
   // PaypalServices services = PaypalServices();
 
   // you can change default currency according to your need
@@ -52,11 +53,12 @@ class PaypalPaymentState extends State<PaypalPayment> {
             final uri = Uri.parse(request.url);
             final payerID = uri.queryParameters['PayerID'];
             if (payerID != null) {
-              BlocProvider.of<PaypalBloc>(context)
-                  .add(executePayment(url:_executeUrl!,
-                  payerId:payerID,
-                accessToken:_accessToken!
-              ));
+              print(payerID);
+              // BlocProvider.of<PaypalBloc>(context)
+              //     .add(executePayment(url:_executeUrl!,
+              //     payerId:payerID,
+              //   accessToken:_accessToken!
+              // ));
 
               // services
               //     .executePayment(executeUrl, payerID, accessToken)
@@ -68,8 +70,7 @@ class PaypalPaymentState extends State<PaypalPayment> {
               Navigator.of(context).pop();
             }
             Navigator.of(context).pop();
-          }
-          if (request.url.contains(paypalCancelUrl)) {
+          }else if (request.url.contains(paypalCancelUrl)) {
             Navigator.of(context).pop();
           }
           return NavigationDecision.navigate;
@@ -98,16 +99,21 @@ class PaypalPaymentState extends State<PaypalPayment> {
     var args;
     if (ModalRoute.of(context)!.settings.arguments != null) {
       args = ModalRoute.of(context)!.settings.arguments as PaypalArguments;
+      _checkoutUrl=args.checkoutUrl;
+      _returnURL=args.returnUrl;
+      _cancelUrl=args.cancelUrl;
+      print(args);
+      // _accessToken=payPalstate.accessToken;
     }
     return MultiBlocProvider(
         providers: [
           BlocProvider<PaypalBloc>(create: (context) {
             //create paypal checkout
-            if(args!=null){
-              return PaypalBloc()..add(createPayment(paypalrequest:args.invoice));
-            }else{
-              return PaypalBloc();
-            }
+            // if(args!=null){
+            //   return PaypalBloc()..add(createPayment(paypalrequest:args.invoice));
+            // }else{
+              return PaypalBloc()..add(createPayment());
+            // }
 
           }),
         ],
@@ -120,10 +126,7 @@ class PaypalPaymentState extends State<PaypalPayment> {
           ],
           child: BlocBuilder<PaypalBloc, PaypalState>(
             builder: (context, payPalstate) {
-              if(payPalstate is PaypalcreatesuccessState){
-                _checkoutUrl=payPalstate.checkoutUrl;
-                _executeUrl=payPalstate.executeUrl;
-                _accessToken=payPalstate.accessToken;
+              if(payPalstate is PaypalCreateState){
                 return _checkoutScaffold();
               }else if(payPalstate is PaypalcreatesuccessState){
                 return _loaddingPagescaff();

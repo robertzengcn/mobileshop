@@ -43,3 +43,11 @@ class PaypalFinishState extends PaypalState {
   @override
   List<Object> get props => [paymentId];
 }
+///start to open paypal payment page
+class PaypalCreateState extends PaypalState {
+
+  PaypalCreateState();
+
+  @override
+  List<Object> get props => [];
+}

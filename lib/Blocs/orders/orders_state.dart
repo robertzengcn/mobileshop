@@ -38,3 +38,12 @@ class OrderPenddingState extends OrdersState {
   @override
   List<Object> get props => [];
 }
+/// order created,waiting for customer make payment on paypal
+class OrderPaypalwaitingState extends OrdersState {
+  final String paypalUrl;
+  final String returnUrl;
+  final String cancelUrl;
+  OrderPaypalwaitingState({required this.paypalUrl,required this.returnUrl,required this.cancelUrl});
+  @override
+  List<Object> get props => [];
+}

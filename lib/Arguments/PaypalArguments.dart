@@ -5,6 +5,8 @@ import 'package:amigatoy/Models/models.dart';
 // import 'package:amigatoy/Models/Product.dart';
 
 class PaypalArguments {
-  final Object? invoice;
-  PaypalArguments(this.invoice);
+  final String checkoutUrl;
+  final String returnUrl;
+  final String cancelUrl;
+  PaypalArguments(this.checkoutUrl,this.returnUrl,this.cancelUrl);
 }

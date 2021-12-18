@@ -8,9 +8,9 @@ class OrderRepository{
   OrderRepository();
 
   ///create order
-  Future<Object> createOrder(String payment,String? currency,String? comment,String? shipping) async {
+  Future<Map<String, dynamic>> createOrder(String payment,String? currency,String? comment,String? shipping) async {
 
-    Object paypalRequest=await orderApiClient.createOrder(payment,currency,comment,shipping);
+    Map<String, dynamic> paypalRequest=await orderApiClient.createOrder(payment,currency,comment,shipping);
 
     return paypalRequest;
   }

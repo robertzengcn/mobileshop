@@ -343,19 +343,12 @@ class _checkoutState extends State<Checkout> {
                     content: Text("create order failure"),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                }else if(state is OrderCreatesuccessState){
-                 // print(state.payment);
-                  switch(state.payment){
-                    case 'paypal':
-                    default:
-                    Navigator.pushNamed(context, PaypalPayment.routeName,
-                        arguments: PaypalArguments(state.paypalRequest)
-                    );
-                    // BlocProvider.of<PaypalBloc>(context)
-                    //     .add(createPayment(invoice:state.invoice));
+                }else if(state is OrderPaypalwaitingState){
 
-                    break;
-                  }
+                    Navigator.pushNamed(context, PaypalPayment.routeName,
+                        arguments: PaypalArguments(state.paypalUrl,state.returnUrl,state.cancelUrl)
+                    );
+
                 }
           }),
         ], child: _scaffoldWidget()));

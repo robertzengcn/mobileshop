@@ -5,10 +5,10 @@ part of 'paypal_bloc.dart';
 abstract class PaypalEvent extends Equatable{}
 
 class createPayment extends PaypalEvent {
-  final Object paypalrequest;
-  createPayment({required this.paypalrequest});
+
+  createPayment();
   @override
-  List<Object> get props => [paypalrequest];
+  List<Object> get props => [];
 }
 
 class executePayment extends PaypalEvent {
@@ -24,3 +24,5 @@ class executePayment extends PaypalEvent {
   @override
   List<Object> get props => [url,payerId,accessToken];
 }
+
+

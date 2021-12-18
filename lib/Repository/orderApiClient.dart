@@ -10,7 +10,7 @@ class OrderApiClient extends BaseApiClient{
   OrderApiClient();
 
   @override
-  Future <Object> createOrder(String payment,String? currency,String? comment,String? shipping) async{
+  Future <Map<String, dynamic>> createOrder(String payment,String? currency,String? comment,String? shipping) async{
     var url = Uri.parse('$appServerUrl/createOrder');
     Map<String,String?>data;
     data={"payment":payment,
