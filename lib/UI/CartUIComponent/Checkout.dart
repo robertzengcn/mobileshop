@@ -156,15 +156,15 @@ class _checkoutState extends State<Checkout> {
   }
 
   /// create order function
-  void _createOrder(String paymentcode,String selectshipping,String? orderComment,String orderCurrency){
-    BlocProvider.of<OrdersBloc>(context)
-        .add(CreateOrderEvent(
-      payment: paymentcode,
-      shipping: selectshipping,
-      comment: orderComment,
-      currency: orderCurrency,
-    ));
-  }
+  // void _createOrder(String paymentcode,String selectshipping,String? orderComment,String orderCurrency){
+  //   BlocProvider.of<OrdersBloc>(context)
+  //       .add(CreateOrderEvent(
+  //     payment: paymentcode,
+  //     shipping: selectshipping,
+  //     comment: orderComment,
+  //     currency: orderCurrency,
+  //   ));
+  // }
 
   /// get scaffold for checkout page
   Widget _scaffoldWidget() {
@@ -349,6 +349,22 @@ class _checkoutState extends State<Checkout> {
                         arguments: PaypalArguments(state.paypalUrl,state.returnUrl,state.cancelUrl)
                     );
 
+                }else if(state is OrderPenddingState){
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return Dialog(
+                        child: new Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            new CircularProgressIndicator(),
+                            new Text("Loading payment page, please wait..."),
+                          ],
+                        ),
+                      );
+                    },
+                  );
                 }
           }),
         ], child: _scaffoldWidget()));

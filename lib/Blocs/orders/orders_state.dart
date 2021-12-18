@@ -32,7 +32,7 @@ class OrderErrorState extends OrdersState {
   @override
   String toString() => 'create error { error: $error }';
 }
-/// create order failure
+/// create order pendding
 class OrderPenddingState extends OrdersState {
   OrderPenddingState();
   @override
