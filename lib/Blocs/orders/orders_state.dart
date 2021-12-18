@@ -11,7 +11,7 @@ class OrdersInitial extends OrdersState {
 
 class OrderCreatesuccessState extends OrdersState {
   final String payment;
-  final PaypalRequest paypalRequest;
+  final Object paypalRequest;
 
   OrderCreatesuccessState({
     required this.payment,

@@ -34,18 +34,18 @@ class PaypalServices {
 
   /// for creating the payment request with Paypal
   Future<Map<String, String>> createPaypalPayment(
-      PaypalRequest paypalrequest, accessToken) async {
+      Object paypalrequest, accessToken) async {
     try {
-       Map<String, dynamic> invoiceJson=paypalrequest.toJson();
+       // Map<String, dynamic> invoiceJson=paypalrequest.toJson();
        // print(jsonEncode(invoiceJson));
 
       // invoiceJson['redirect_urls']['return_url']=paypalReturnUrl;
       // invoiceJson['redirect_urls']['cancel']=Uri.parse(paypalCancelUrl);
-      var url = Uri.parse("$paypalDomain/v1/payments/payment");
+      var url = Uri.parse("$paypalDomain/v2/checkout/orders");
       // print(url);
-      // print(accessToken);
+      print(jsonEncode(paypalrequest));
       var response = await http.post(url,
-          body: jsonEncode(invoiceJson),
+          body: jsonEncode(paypalrequest),
           headers: {
             "content-type": "application/json",
             'Authorization': 'Bearer ' + accessToken
@@ -59,7 +59,7 @@ class PaypalServices {
 
           String executeUrl = "";
           String approvalUrl = "";
-          final item = links.firstWhere((o) => o["rel"] == "approval_url",
+          final item = links.firstWhere((o) => o["rel"] == "approve",
               orElse: () => null);
           if (item != null) {
             approvalUrl = item["href"];

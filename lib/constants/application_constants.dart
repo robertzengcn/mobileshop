@@ -6,7 +6,7 @@
 const String appServerUrl='http://10.203.16.189';
 // const String appServerUrl='http://192.168.0.111';
 const String appId='DnV17C2j1Tj6saBfvxIOIA1z0curBG';
-const String paypalDomain='https://api.sandbox.paypal.com';//change to production if online
+const String paypalDomain='https://api-m.sandbox.paypal.com';//change to production if online
 // const String paypalDomain = "https://api.paypal.com";
 const String paypalClientId='AciueUgm9sr1Z8IaGvFeNE5rOmdTuf9phAXtMMjWXRvvQpIYYHZGqH3RxCcph210p8TzRVqE08dBYbWL';
 const String paypalSecret='ECFqsfKrrhUG4iPi5vhlMmE3G1IhbwXKi9a1akKh4-dgeAVIaoqFgDvgHNAbm2qZfxxXCw2PiiYQWkvb';

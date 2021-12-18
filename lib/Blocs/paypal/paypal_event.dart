@@ -5,7 +5,7 @@ part of 'paypal_bloc.dart';
 abstract class PaypalEvent extends Equatable{}
 
 class createPayment extends PaypalEvent {
-  final PaypalRequest paypalrequest;
+  final Object paypalrequest;
   createPayment({required this.paypalrequest});
   @override
   List<Object> get props => [paypalrequest];

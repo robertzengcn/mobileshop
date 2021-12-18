@@ -20,7 +20,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     if (event is CreateOrderEvent) {
       // try {
         yield OrderPenddingState();
-            PaypalRequest paypalRequest=await orderRepository.createOrder(event.payment, event.currency, event.comment, event.shipping);
+              Object paypalRequest=await orderRepository.createOrder(event.payment, event.currency, event.comment, event.shipping);
             print("create order success");
             yield OrderCreatesuccessState(payment:event.payment,paypalRequest:paypalRequest);
       // }catch (error) {

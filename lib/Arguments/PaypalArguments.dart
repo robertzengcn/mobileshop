@@ -5,6 +5,6 @@ import 'package:amigatoy/Models/models.dart';
 // import 'package:amigatoy/Models/Product.dart';
 
 class PaypalArguments {
-  final PaypalRequest? invoice;
+  final Object? invoice;
   PaypalArguments(this.invoice);
 }
