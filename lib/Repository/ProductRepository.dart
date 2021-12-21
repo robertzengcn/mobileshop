@@ -29,5 +29,12 @@ class ProductRepository{
 
     return lst;
   }
+  Future<List<Product>> loadspecialProductlist(int start,int length) async {
+
+
+    List<Product> lst =await productApiClient.getSpeciallist(start,length);
+
+    return lst;
+  }
 
 }

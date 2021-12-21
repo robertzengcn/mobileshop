@@ -43,7 +43,8 @@ class OrderPaypalwaitingState extends OrdersState {
   final String paypalUrl;
   final String returnUrl;
   final String cancelUrl;
-  OrderPaypalwaitingState({required this.paypalUrl,required this.returnUrl,required this.cancelUrl});
+  final String orderId;
+  OrderPaypalwaitingState({required this.paypalUrl,required this.returnUrl,required this.cancelUrl,required this.orderId});
   @override
   List<Object> get props => [];
 }

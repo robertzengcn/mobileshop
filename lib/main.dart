@@ -9,9 +9,10 @@ import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/database/database.dart';
 import 'package:amigatoy/UI/LoginOrSignup/Login.dart';
 import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
-import 'package:amigatoy/UI/CartUIComponent/PaypalPayment.dart';
+import 'package:amigatoy/UI/Payment/PaypalPayment.dart';
 // import 'package:amigatoy/Arguments/PaypalArguments.dart';
 import 'package:amigatoy/UI/CartUIComponent/Checkout.dart';
+import 'package:amigatoy/UI/Payment/PaymentSuccess.dart';
 
 
 
@@ -166,6 +167,7 @@ class myApp extends StatelessWidget {
             Delivery.routeName:(BuildContext context) =>new Delivery(),
             PaypalPayment.routeName:(BuildContext context) =>new PaypalPayment(),
             Checkout.routeName:(BuildContext context) =>new Checkout(),
+            PaymentSuccess.routeName:(BuildContext context) =>new PaymentSuccess(),
           }),
       // )
     );

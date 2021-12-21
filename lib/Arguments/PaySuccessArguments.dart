@@ -4,10 +4,9 @@
 import 'package:amigatoy/Models/models.dart';
 // import 'package:amigatoy/Models/Product.dart';
 
-class PaypalArguments {
-  final String checkoutUrl;
-  final String returnUrl;
-  final String cancelUrl;
+class PaySucessArguments {
+  final String payId;
   final String orderId;
-  PaypalArguments(this.checkoutUrl,this.returnUrl,this.cancelUrl,this.orderId);
+
+  PaySucessArguments(this.payId,this.orderId);
 }

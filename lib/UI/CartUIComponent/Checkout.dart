@@ -8,7 +8,7 @@ import 'package:amigatoy/UI/widgets/customer_address_card.dart';
 import 'package:amigatoy/UI/CartUIComponent/AddressList.dart';
 import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 import 'package:amigatoy/Arguments/CheckoutArguments.dart';
-import 'package:amigatoy/UI/CartUIComponent/PaypalPayment.dart';
+import 'package:amigatoy/UI/Payment/PaypalPayment.dart';
 import 'package:amigatoy/Arguments/PaypalArguments.dart';
 
 class Checkout extends StatefulWidget {
@@ -346,7 +346,11 @@ class _checkoutState extends State<Checkout> {
                 }else if(state is OrderPaypalwaitingState){
 
                     Navigator.pushNamed(context, PaypalPayment.routeName,
-                        arguments: PaypalArguments(state.paypalUrl,state.returnUrl,state.cancelUrl)
+                        arguments: PaypalArguments(state.paypalUrl,
+                            state.returnUrl,
+                            state.cancelUrl,
+                          state.orderId
+                        )
                     );
 
                 }else if(state is OrderPenddingState){

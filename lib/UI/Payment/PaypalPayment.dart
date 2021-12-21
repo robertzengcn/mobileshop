@@ -7,6 +7,8 @@ import 'package:amigatoy/Arguments/PaypalArguments.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 // import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/constants/application_constants.dart';
+import 'package:amigatoy/Arguments/PaySuccessArguments.dart';
+import 'package:amigatoy/UI/Payment/PaymentSuccess.dart';
 
 class PaypalPayment extends StatefulWidget {
   final Function? onFinish;
@@ -28,6 +30,8 @@ class PaypalPaymentState extends State<PaypalPayment> {
   // String _cancelURL="";
   String _returnURL="";
   String _cancelUrl="";
+  String _orderId="";
+  // late WebViewController _controller;
   // PaypalServices services = PaypalServices();
 
   // you can change default currency according to your need
@@ -38,22 +42,29 @@ class PaypalPaymentState extends State<PaypalPayment> {
 
   Widget _checkoutScaffold(){
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).backgroundColor,
-        leading: GestureDetector(
-          child: Icon(Icons.arrow_back_ios),
-          onTap: () => Navigator.pop(context),
-        ),
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Theme.of(context).backgroundColor,
+      //   leading: GestureDetector(
+      //     child: Icon(Icons.arrow_back_ios),
+      //     onTap: () => Navigator.pop(context),
+      //   ),
+      // ),
       body: WebView(
         initialUrl: _checkoutUrl,
         javascriptMode: JavascriptMode.unrestricted,
+        onProgress: (int progress) {
+          print("paypal payment page is loading (progress : $progress%)");
+        },
         navigationDelegate: (NavigationRequest request) {
           if (request.url.contains(_returnURL)) {
             final uri = Uri.parse(request.url);
+            print(uri);
             final payerID = uri.queryParameters['PayerID'];
             if (payerID != null) {
-              print(payerID);
+              Navigator.pushNamed(context, PaymentSuccess.routeName,
+                  arguments: PaySucessArguments(payerID,_orderId)
+              );
+
               // BlocProvider.of<PaypalBloc>(context)
               //     .add(executePayment(url:_executeUrl!,
               //     payerId:payerID,
@@ -66,11 +77,12 @@ class PaypalPaymentState extends State<PaypalPayment> {
               //   // widget.onFinish(id);
               //   Navigator.of(context).pop();
               // });
+
             } else {
               Navigator.of(context).pop();
             }
             Navigator.of(context).pop();
-          }else if (request.url.contains(paypalCancelUrl)) {
+          }else if (request.url.contains(_cancelUrl)) {
             Navigator.of(context).pop();
           }
           return NavigationDecision.navigate;
@@ -102,7 +114,8 @@ class PaypalPaymentState extends State<PaypalPayment> {
       _checkoutUrl=args.checkoutUrl;
       _returnURL=args.returnUrl;
       _cancelUrl=args.cancelUrl;
-      print(args);
+      _orderId=args.orderId;
+      // print(args);
       // _accessToken=payPalstate.accessToken;
     }
     return MultiBlocProvider(
@@ -138,18 +151,3 @@ class PaypalPaymentState extends State<PaypalPayment> {
 
   }
 }
-// class PaypalWrapper extends StatefulWidget {
-//   PaypalWrapper({Key? key}) : super(key: key);
-//   @override
-//   _PaypalWrapperState createState() => _PaypalWrapperState();
-// }
-// class _PaypalWrapperState extends State<PaypalWrapper> {
-//   void initState() {
-//     super.initState();
-//   }
-//   String returnURL = 'return.example.com';
-//   String cancelURL= 'cancel.example.com';
-//
-//
-//
-// }

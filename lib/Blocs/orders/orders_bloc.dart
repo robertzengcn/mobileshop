@@ -28,7 +28,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         default:
           if (data['approveurl'] != null) {
 
-            yield OrderPaypalwaitingState(paypalUrl: data['approveurl'],returnUrl: data['returnurl'],cancelUrl: data['cancelurl']);
+            yield OrderPaypalwaitingState(paypalUrl: data['approveurl'],returnUrl: data['returnurl'],cancelUrl: data['cancelurl'],orderId: data['orderId']);
           } else {
             yield OrderErrorState(error: "create paypal payment link failure");
           }

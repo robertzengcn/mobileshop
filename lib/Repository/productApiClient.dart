@@ -92,7 +92,7 @@ class ProductApiClient{
     }
 
   }
-  ///通过产品id取相关的产品
+  ///get relative product by product pid
   Future<List<Product>> getRelativelist(int pid) async{
     var url = Uri.parse('$appServerUrl/Related/'+pid.toString());
     http.Response response = await http.get(
@@ -115,6 +115,33 @@ class ProductApiClient{
           .toList();
     }else{
       throw Exception('get relative product data failure');
+    }
+
+  }
+
+  ///get special product list
+  Future<List<Product>> getSpeciallist(int start, int length) async{
+    var url = Uri.parse('$appServerUrl/Special/start/'+start.toString()+'/length/'+length.toString());
+    http.Response response = await http.get(
+      url,
+      headers: {
+        'Application-Id': '$appId',
+      },
+    );
+
+
+    if (response.statusCode != 200) {
+
+      throw Exception('Unable to fetch special products list from the REST API');
+    }
+    var responseJson = json.decode(response.body);
+    if(responseJson['status']==true){
+
+      return (responseJson['data'] as List)
+          .map((p) => Product.fromJson(p))
+          .toList();
+    }else{
+      throw Exception('get special product list failure');
     }
 
   }
