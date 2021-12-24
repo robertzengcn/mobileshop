@@ -18,7 +18,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   ) async* {
     // TODO: implement mapEventToState
     if (event is CreateOrderEvent) {
-      // try {
+       // try {
       yield OrderPenddingState();
       var data = await orderRepository.createOrder(
           event.payment, event.currency, event.comment, event.shipping);
@@ -28,17 +28,18 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         default:
           if (data['approveurl'] != null) {
 
-            yield OrderPaypalwaitingState(paypalUrl: data['approveurl'],returnUrl: data['returnurl'],cancelUrl: data['cancelurl'],orderId: data['orderId']);
+            yield OrderPaypalwaitingState(paypalUrl: data['approveurl'],returnUrl: data['returnurl'],cancelUrl: data['cancelurl'],orderId: data['orderId'].toString());
           } else {
             yield OrderErrorState(error: "create paypal payment link failure");
           }
           break;
       }
-    }
+
 
     // yield OrderCreatesuccessState(payment:event.payment,paypalRequest:paypalRequest);
     // }catch (error) {
     //   yield OrderErrorState(error: error.toString());
     // }
   }
+}
 }

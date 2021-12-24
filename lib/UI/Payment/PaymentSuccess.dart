@@ -1,10 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-
 import 'package:amigatoy/Arguments/PaySuccessArguments.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
+import 'package:amigatoy/Repository/repository.dart';
+import 'package:amigatoy/UI/widgets/product_list.dart';
 
 class PaymentSuccess extends StatefulWidget {
   static const routeName = '/paymentsuccess';
@@ -63,11 +63,16 @@ class _paymentsuccessState extends State<PaymentSuccess> {
                   color: Colors.black26,
                 ),
                 Padding(padding: EdgeInsets.only(top: 15.0)),
-
-
-
-                /// Button pay
-
+                BlocBuilder<SpecialsBloc, SpecialsState>(
+                    builder: (context, specialstate) {
+                      if(specialstate is SpecialsLoading){
+                        return Center(child: CircularProgressIndicator());
+                      }else if(specialstate is Specialsloaded){
+                        return productListWidget(specialstate.lstSpecials);
+                      }
+                        return Container();
+                    }
+                ),
               ],
             ),
           ),
@@ -86,20 +91,16 @@ class _paymentsuccessState extends State<PaymentSuccess> {
     return MultiBlocProvider(
         providers: [
           BlocProvider<PaypalBloc>(create: (context) {
-            //create paypal checkout
-            // if(args!=null){
-            //   return PaypalBloc()..add(createPayment(paypalrequest:args.invoice));
-            // }else{
             return PaypalBloc()..add(createPayment());
-            // }
-
+          }),
+          BlocProvider<SpecialsBloc>(create: (context) {
+            return SpecialsBloc(productRepository: ProductRepository())..add(FetchSpecials(start:0,length: 10));
           }),
         ],
         child: MultiBlocListener(
             listeners: [
               BlocListener<PaypalBloc, PaypalState>(
                   listener: (context, state) {
-
                   }),
             ],
             child: _paysuccessScaffold(),
