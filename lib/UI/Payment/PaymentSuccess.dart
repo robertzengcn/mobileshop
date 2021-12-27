@@ -8,6 +8,9 @@ import 'package:amigatoy/UI/widgets/product_list.dart';
 
 class PaymentSuccess extends StatefulWidget {
   static const routeName = '/paymentsuccess';
+  final String _orderId;
+  final String _paymentId;
+
   @override
   _paymentsuccessState createState() => _paymentsuccessState();
 }

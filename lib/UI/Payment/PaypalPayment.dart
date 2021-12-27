@@ -63,8 +63,12 @@ class PaypalPaymentState extends State<PaypalPayment> {
             print(payerID);
             if (payerID != null) {
               print(64);
-              Navigator.pushNamed(context, PaymentSuccess.routeName,
-                  arguments: PaySucessArguments(payerID,_orderId)
+              // Navigator.pushNamed(context, PaymentSuccess.routeName,
+              //     arguments: PaySucessArguments(payerID,_orderId)
+              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PaymentSuccess()),
               );
 
               // BlocProvider.of<PaypalBloc>(context)
