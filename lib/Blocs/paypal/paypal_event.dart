@@ -25,4 +25,24 @@ class executePayment extends PaypalEvent {
   List<Object> get props => [url,payerId,accessToken];
 }
 
+class successPayment extends PaypalEvent {
+  String paymentId;
+  String orderId;
+  successPayment({required this.orderId,required this.paymentId});
+  @override
+  List<Object> get props => [orderId,paymentId];
+}
+class cancelPayment extends PaypalEvent {
+
+  cancelPayment();
+  @override
+  List<Object> get props => [];
+}
+///unknow what is the payment status
+class unkonwPayment extends PaypalEvent {
+
+  unkonwPayment();
+  @override
+  List<Object> get props => [];
+}
 

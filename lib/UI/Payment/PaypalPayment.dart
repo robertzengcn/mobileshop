@@ -9,6 +9,9 @@ import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/constants/application_constants.dart';
 import 'package:amigatoy/Arguments/PaySuccessArguments.dart';
 import 'package:amigatoy/UI/Payment/PaymentSuccess.dart';
+import 'dart:io';
+import 'dart:async';
+import 'package:flutter/scheduler.dart';
 
 class PaypalPayment extends StatefulWidget {
   final Function? onFinish;
@@ -21,7 +24,16 @@ class PaypalPayment extends StatefulWidget {
   }
 }
 
+
 class PaypalPaymentState extends State<PaypalPayment> {
+
+  @override
+  void initState() {
+    super.initState();
+    if (Platform.isAndroid) {
+      WebView.platform = SurfaceAndroidWebView();
+    }
+  }
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String? _checkoutUrl;
@@ -31,6 +43,12 @@ class PaypalPaymentState extends State<PaypalPayment> {
   String _returnURL="";
   String _cancelUrl="";
   String _orderId="";
+  String _payerID="";
+  String _paymentStatus="waiting";
+ //does the customer finish the payment
+
+
+
   // late WebViewController _controller;
   // PaypalServices services = PaypalServices();
 
@@ -55,47 +73,38 @@ class PaypalPaymentState extends State<PaypalPayment> {
         onProgress: (int progress) {
           print("paypal payment page is loading (progress : $progress%)");
         },
-        navigationDelegate: (NavigationRequest request) {
-          if (request.url.contains(_returnURL)) {
-            final uri = Uri.parse(request.url);
-            print(uri);
-            final payerID = uri.queryParameters['PayerID'];
-            print(payerID);
-            if (payerID != null) {
-              print(64);
-              // Navigator.pushNamed(context, PaymentSuccess.routeName,
-              //     arguments: PaySucessArguments(payerID,_orderId)
-              // );
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => PaymentSuccess()),
-              );
-
-              // BlocProvider.of<PaypalBloc>(context)
-              //     .add(executePayment(url:_executeUrl!,
-              //     payerId:payerID,
-              //   accessToken:_accessToken!
-              // ));
-
-              // services
-              //     .executePayment(executeUrl, payerID, accessToken)
-              //     .then((id) {
-              //   // widget.onFinish(id);
-              //   Navigator.of(context).pop();
-              // });
-
-            } else {
-              Navigator.of(context).pop();
-            }
-            Navigator.of(context).pop();
-          }else if (request.url.contains(_cancelUrl)) {
-            Navigator.of(context).pop();
-          }
-          print(90);
-          return NavigationDecision.navigate;
-        },
+        navigationDelegate: getNavigationDelegate,
       ),
     );
+  }
+/// navigation
+  Future<NavigationDecision> getNavigationDelegate(
+      NavigationRequest request) async {
+    if (request.url.contains(_returnURL)) {
+      final uri = Uri.parse(request.url);
+      print(uri);
+      final payerID = uri.queryParameters['PayerID'];
+      print(payerID);
+      if (payerID != null) {
+        _payerID=payerID;
+        BlocProvider.of<PaypalBloc>(context)
+            .add(successPayment(orderId: _orderId,paymentId: _payerID));
+        setState(() {
+          _paymentStatus="finish";
+        });
+        return NavigationDecision.prevent;
+      } else {
+        Navigator.of(context).pop();
+      }
+
+    }else if (request.url.contains(_cancelUrl)) {
+      setState(() {
+      _paymentStatus="cancel";
+      });
+      return NavigationDecision.prevent;
+    }
+
+    return NavigationDecision.navigate;
   }
   Widget _loaddingPagescaff(){
     return Scaffold(
@@ -146,10 +155,20 @@ class PaypalPaymentState extends State<PaypalPayment> {
           ],
           child: BlocBuilder<PaypalBloc, PaypalState>(
             builder: (context, payPalstate) {
+              switch(_paymentStatus){
+                case 'finish':
+                SchedulerBinding.instance?.addPostFrameCallback((_) {
+                  Navigator.pushNamed(context, PaymentSuccess.routeName,
+                      arguments: PaySucessArguments(_payerID, _orderId)
+                  );
+                });
+                break;
+                case 'cancel':
+
+                  break;
+              }
               if(payPalstate is PaypalCreateState){
                 return _checkoutScaffold();
-              }else if(payPalstate is PaypalcreatesuccessState){
-                return _loaddingPagescaff();
               }
               return Container();
             }

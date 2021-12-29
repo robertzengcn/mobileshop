@@ -35,10 +35,11 @@ class PaypalErrorState extends PaypalState {
   String toString() => 'create error { error: $error }';
 }
 
-///make paypal payment error
+///make paypal payment finish
 class PaypalFinishState extends PaypalState {
   String paymentId;
-  PaypalFinishState({required this.paymentId});
+  String orderId;
+  PaypalFinishState({required this.paymentId,required this.orderId});
 
   @override
   List<Object> get props => [paymentId];
