@@ -1,7 +1,6 @@
 name: amigatoy
 description: Amigatoy Flutter project.
 
-
 version: 1.0.0+1
 
 environment:
@@ -48,8 +47,6 @@ dependencies:
   webview_flutter: ^2.8.0
 #  flutter_webview_plugin: ^0.4.0
 #  formz: ^0.4.0
-
-
 
 dev_dependencies:
   flutter_test:

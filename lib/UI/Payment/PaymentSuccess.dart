@@ -18,9 +18,10 @@ class _paymentsuccessState extends State<PaymentSuccess> {
 
   String _orderId="";
   String _paymentId="";
-  double _screenHeight=0;
+
 
   Widget _paysuccessScaffold(){
+    double _screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       /// Appbar
       appBar: AppBar(
@@ -42,10 +43,12 @@ class _paymentsuccessState extends State<PaymentSuccess> {
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Color(0xFF6991C7)),
       ),
-      body: Container(
-        height:_screenHeight,
-        child: SingleChildScrollView(
-          child: Container(
+      body:
+    // Container(
+        // child: SingleChildScrollView(
+        //   child:
+          Container(
+            height:_screenHeight,
             color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
@@ -53,7 +56,7 @@ class _paymentsuccessState extends State<PaymentSuccess> {
 
                 children: <Widget>[
                   Text(
-                    "Thank you for your Order, your Order id is"+_orderId+", your payment id is"+_paymentId,
+                    "Thank you for your Order, your Order id is: "+_orderId+", your payment id is: "+_paymentId,
                     style: TextStyle(
                         letterSpacing: 0.1,
                         fontWeight: FontWeight.w600,
@@ -74,9 +77,11 @@ class _paymentsuccessState extends State<PaymentSuccess> {
                         if(specialstate is SpecialsLoading){
                           return Center(child: CircularProgressIndicator());
                         }else if(specialstate is Specialsloaded){
+                          if(specialstate.lstSpecials.length>0){
                           return Expanded(
                               child:SizedBox(
                               child: productListWidget(specialstate.lstSpecials)));
+                          }
                         }
                           return Container();
                       }
@@ -85,8 +90,8 @@ class _paymentsuccessState extends State<PaymentSuccess> {
               ),
             ),
           ),
-        ),
-      ),
+        // ),
+      // ),
     );
   }
 
@@ -97,7 +102,7 @@ class _paymentsuccessState extends State<PaymentSuccess> {
       _orderId=args.orderId;
       _paymentId=args.payId;
     }
-    double _screenHeight = MediaQuery.of(context).size.height;
+
     return MultiBlocProvider(
         providers: [
           BlocProvider<PaypalBloc>(create: (context) {

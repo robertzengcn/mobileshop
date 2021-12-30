@@ -190,6 +190,7 @@ class _checkoutState extends State<Checkout> {
           elevation: 0.0,
         ),
         body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
           Container(
             height: _deviceHeight,
