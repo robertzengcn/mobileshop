@@ -14,5 +14,10 @@ class OrderRepository{
 
     return paypalRequest;
   }
+  ///fetch order list
+  Future<List<Order?>>featchOrderlist(int start, int length) async{
+    List<Order?> orderlst =await orderApiClient.fetchOrderlist(start,length);
+    return orderlst;
+  }
 
 }

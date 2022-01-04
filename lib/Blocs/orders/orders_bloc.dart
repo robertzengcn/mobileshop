@@ -18,7 +18,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   ) async* {
     // TODO: implement mapEventToState
     if (event is CreateOrderEvent) {
-       // try {
+      // try {
       yield OrderPenddingState();
       var data = await orderRepository.createOrder(
           event.payment, event.currency, event.comment, event.shipping);
@@ -27,19 +27,26 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         case 'paypal':
         default:
           if (data['approveurl'] != null) {
-
-            yield OrderPaypalwaitingState(paypalUrl: data['approveurl'],returnUrl: data['returnurl'],cancelUrl: data['cancelurl'],orderId: data['orderId'].toString());
+            yield OrderPaypalwaitingState(
+                paypalUrl: data['approveurl'],
+                returnUrl: data['returnurl'],
+                cancelUrl: data['cancelurl'],
+                orderId: data['orderId'].toString());
           } else {
             yield OrderErrorState(error: "create paypal payment link failure");
           }
           break;
       }
 
+      // yield OrderCreatesuccessState(payment:event.payment,paypalRequest:paypalRequest);
+      // }catch (error) {
+      //   yield OrderErrorState(error: error.toString());
+      // }
+    } else if (event is FeatchOrderlistEvent) {
+      yield OrderPenddingState();
+      List<Order?> lorders=await orderRepository.featchOrderlist(event.start, event.length);
+      yield OrderlistFeatchedState(orderlst:lorders);
 
-    // yield OrderCreatesuccessState(payment:event.payment,paypalRequest:paypalRequest);
-    // }catch (error) {
-    //   yield OrderErrorState(error: error.toString());
-    // }
+    }
   }
-}
 }

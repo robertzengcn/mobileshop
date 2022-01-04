@@ -48,3 +48,11 @@ class OrderPaypalwaitingState extends OrdersState {
   @override
   List<Object> get props => [];
 }
+
+/// featch order list success
+class OrderlistFeatchedState extends OrdersState {
+  final List<Order?> orderlst;
+  OrderlistFeatchedState({required this.orderlst});
+  @override
+  List<Object> get props => [];
+}

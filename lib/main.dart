@@ -13,6 +13,7 @@ import 'package:amigatoy/UI/Payment/PaypalPayment.dart';
 // import 'package:amigatoy/Arguments/PaypalArguments.dart';
 import 'package:amigatoy/UI/CartUIComponent/Checkout.dart';
 import 'package:amigatoy/UI/Payment/PaymentSuccess.dart';
+import 'package:amigatoy/Arguments/PaySuccessArguments.dart';
 
 
 
@@ -191,7 +192,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   /// To navigate layout change
   void NavigatorPage() {
-    Navigator.of(context).pushReplacementNamed(Home.routeName);
+    // Navigator.of(context).pushReplacementNamed(Home.routeName);
+    Navigator.pushNamed(context, PaymentSuccess.routeName,
+        arguments: PaySucessArguments("_payerID", "_orderId")
+    );
   }
 
   /// Declare startTime to InitState

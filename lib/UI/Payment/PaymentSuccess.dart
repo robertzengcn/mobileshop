@@ -71,16 +71,31 @@ class _paymentsuccessState extends State<PaymentSuccess> {
                     height: 1.0,
                     color: Colors.black26,
                   ),
-                  Padding(padding: EdgeInsets.only(top: 15.0)),
+                  Padding(padding: EdgeInsets.only(top: 5.0)),
                   BlocBuilder<SpecialsBloc, SpecialsState>(
                       builder: (context, specialstate) {
                         if(specialstate is SpecialsLoading){
                           return Center(child: CircularProgressIndicator());
                         }else if(specialstate is Specialsloaded){
                           if(specialstate.lstSpecials.length>0){
-                          return Expanded(
-                              child:SizedBox(
-                              child: productListWidget(specialstate.lstSpecials)));
+                          return Container(
+                              height:_screenHeight*0.6,
+                              child: Column(
+                                children: [
+
+                                  Container(
+                                      height:40,
+                                      alignment: Alignment.center,
+                                      child: Text('Special item sale', style: TextStyle(height: 3.0, fontSize: 15.2, fontWeight: FontWeight.bold,))),
+
+                                  Expanded(
+
+                                    child: SizedBox(
+                                      child: productListWidget(specialstate.lstSpecials)),
+                                  ),
+
+                              ]),
+                            );
                           }
                         }
                           return Container();
