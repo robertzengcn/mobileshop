@@ -148,7 +148,8 @@ class _cartState extends State<Cartpage> {
                                             '${_cartList[position]!.image}',
                                             height: 130.0,
                                             width: 120.0,
-                                            fit: BoxFit.cover, errorBuilder:
+                                            fit: BoxFit.cover,
+                                            errorBuilder:
                                                 (BuildContext context,
                                                     Object exception,
                                                     StackTrace? stackTrace) {

@@ -2,16 +2,16 @@ import 'package:equatable/equatable.dart';
 import 'package:amigatoy/Models/models.dart';
 
 class Order extends Equatable {
-  final String ordersId;
+  final int ordersId;
   final String datePurchasedtime;
   final String deliveryName;
   final String deliveryCountry;
   final String billingName;
   final String billingCountry;
-  final double orderTotal;
+  final String orderTotal;
   final String ordersStatusName;
   final String? trackNumber;
-  final List<Product> lproduct;
+  final List<OrderProduct> lproduct;
 
   Order({
     required this.ordersId,
@@ -31,14 +31,14 @@ class Order extends Equatable {
   static Order fromJson(dynamic json) {
     bool productNull =
     json['order_product'] == null || (json['order_product'].length == 0) ? true : false;
-    List<Product> productsList = [];
+    List<OrderProduct> productsList = [];
     if(!productNull){
       json['order_product'].forEach((value) {
-        productsList.add(Product.fromJson(value));
+        productsList.add(OrderProduct.fromJson(value));
       });
     }
 
-      return Order(ordersId: json['orders_id'],
+      return Order(ordersId: json['orders_id'] as int,
           datePurchasedtime: json['date_purchased'],
           deliveryName: json['delivery_name'],
           deliveryCountry: json['delivery_country'],

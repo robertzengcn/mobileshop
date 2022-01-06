@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:amigatoy/UI/AcountUIComponent/AboutApps.dart';
 import 'package:amigatoy/UI/AcountUIComponent/CallCenter.dart';
-import 'package:amigatoy/UI/AcountUIComponent/Message.dart';
-import 'package:amigatoy/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
-import 'package:amigatoy/UI/AcountUIComponent/CreditCardSetting.dart';
-import 'package:amigatoy/UI/AcountUIComponent/MyOrders.dart';
-import 'package:amigatoy/UI/AcountUIComponent/Notification.dart';
+// import 'package:amigatoy/UI/AcountUIComponent/Message.dart';
+// import 'package:amigatoy/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
+// import 'package:amigatoy/UI/AcountUIComponent/CreditCardSetting.dart';
+// import 'package:amigatoy/UI/AcountUIComponent/MyOrders.dart';
+// import 'package:amigatoy/UI/AcountUIComponent/Notification.dart';
 import 'package:amigatoy/UI/AcountUIComponent/SettingAcount.dart';
-import 'package:amigatoy/UI/LoginOrSignup/Signup.dart';
+// import 'package:amigatoy/UI/LoginOrSignup/Signup.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
+import 'package:amigatoy/UI/Order/OrderList.dart';
 
 class profil extends StatefulWidget {
   @override
@@ -114,33 +115,33 @@ class _profilState extends State<profil> {
                   /// Setting Category List
                   children: <Widget>[
                     /// Call category class
-                    category(
-                      txt: "Notification",
-                      padding: 35.0,
-                      image: "assets/icon/notification.png",
-                      tap: () {
-                        Navigator.of(context).push(PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => new notification()));
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: 20.0, left: 85.0, right: 30.0),
-                      child: Divider(
-                        color: Colors.black12,
-                        height: 2.0,
-                      ),
-                    ),
-                    category(
-                      txt: "Payments",
-                      padding: 35.0,
-                      image: "assets/icon/creditAcount.png",
-                      tap: () {
-                        Navigator.of(context).push(PageRouteBuilder(
-                            pageBuilder: (_, __, ___) =>
-                                new creditCardSetting()));
-                      },
-                    ),
+                    // category(
+                    //   txt: "Notification",
+                    //   padding: 35.0,
+                    //   image: "assets/icon/notification.png",
+                    //   tap: () {
+                    //     Navigator.of(context).push(PageRouteBuilder(
+                    //         pageBuilder: (_, __, ___) => new notification()));
+                    //   },
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(
+                    //       top: 20.0, left: 85.0, right: 30.0),
+                    //   child: Divider(
+                    //     color: Colors.black12,
+                    //     height: 2.0,
+                    //   ),
+                    // ),
+                    // category(
+                    //   txt: "Payments",
+                    //   padding: 35.0,
+                    //   image: "assets/icon/creditAcount.png",
+                    //   tap: () {
+                    //     Navigator.of(context).push(PageRouteBuilder(
+                    //         pageBuilder: (_, __, ___) =>
+                    //             new creditCardSetting()));
+                    //   },
+                    // ),
                     Padding(
                       padding: const EdgeInsets.only(
                           top: 20.0, left: 85.0, right: 30.0),
@@ -172,7 +173,7 @@ class _profilState extends State<profil> {
                       image: "assets/icon/truck.png",
                       tap: () {
                         Navigator.of(context).push(PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => new order()));
+                            pageBuilder: (_, __, ___) => new OrderList()));
                       },
                     ),
                     Padding(

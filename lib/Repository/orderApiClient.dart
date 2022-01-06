@@ -46,7 +46,7 @@ class OrderApiClient extends BaseApiClient{
   }
   ///fetch order list
   Future <List<Order?>> fetchOrderlist(int start, int length)async{
-    var url = Uri.parse('$appServerUrl/OrderList/start'+start.toString()+'/length/'+length.toString());
+    var url = Uri.parse('$appServerUrl/OrderList/start/'+start.toString()+'/length/'+length.toString());
     String token=await this.getToken();
     http.Response response = await http.get(
       url,

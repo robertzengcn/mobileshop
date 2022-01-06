@@ -1,21 +1,21 @@
-import 'dart:async';
+// import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:amigatoy/Arguments/PaySuccessArguments.dart';
+// import 'package:amigatoy/Arguments/PaySuccessArguments.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
+import 'package:amigatoy/UI/widgets/order_list.dart';
 
 class OrderList extends StatefulWidget {
   static const routeName = '/orderlist';
-
 
   @override
   _orderlistState createState() => _orderlistState();
 }
 
 class _orderlistState extends State<OrderList> {
-  List<Order?> lorder=[];
+  List<Order> lorder=[];
   int startPage=0;
   bool isLoading = false;
   int pageLength=25;
@@ -69,7 +69,7 @@ class _orderlistState extends State<OrderList> {
                         if(orderstate is OrderPenddingState&&(lorder.length==0)){
                           return Center(child: CircularProgressIndicator());
                         }else if(orderstate is OrderlistFeatchedState){
-                          if(orderstate.orderlst.length>0){
+                          if(lorder.length>0){
                               return Column(
                                 children: <Widget>[
                                   Expanded(
@@ -77,24 +77,21 @@ class _orderlistState extends State<OrderList> {
                                       onNotification: (ScrollNotification scrollInfo) {
                                         if (!isLoading && scrollInfo.metrics.pixels ==
                                             scrollInfo.metrics.maxScrollExtent) {
-                                          BlocProvider<OrdersBloc>(create: (context) {
-                                            return OrdersBloc(orderRepository: OrderRepository())..add(FeatchOrderlistEvent(start:startPage,length: pageLength));
-                                          });
+                                          print("80");
                                           // start loading data
-                                          setState(() {
-                                            isLoading = true;
+
                                             startPage=startPage+pageLength;
-                                          });
+                                          // });
+                                          BlocProvider.of<OrdersBloc>(context)
+                                              .add(FeatchOrderlistEvent(start:startPage,length: pageLength));
+                                          // BlocProvider<OrdersBloc>(create: (context) {
+                                          //   return OrdersBloc(orderRepository: OrderRepository())..add(FeatchOrderlistEvent(start:startPage,length: pageLength));
+                                          // });
+
                                         }
+                                        return false;
                                       },
-                                      child: ListView.builder(
-                                        itemCount: items.length,
-                                        itemBuilder: (context, index) {
-                                          return ListTile(
-                                            title: Text('${items[index]}'),
-                                          );
-                                        },
-                                      ),
+                                      child: orderListWidget(lorder),
                                     ),
                                   ),
                                   Container(
@@ -139,9 +136,15 @@ class _orderlistState extends State<OrderList> {
                     if(state is OrderlistFeatchedState){
                       if(state.orderlst.length>0){
                         state.orderlst.forEach((value){
-                          lorder.add(value);
+                          if(value!=null){
+                            lorder.add(value);
+                          }
                         });
                       }
+                      setState(() {
+                        isLoading = false;
+                      });
+                      // print(isLoading);
                     }
                   }),
             ],

@@ -1,58 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:amigatoy/Models/models.dart';
 
-Widget orderListWidget(List<Product> productList) {
+Widget orderListWidget(List<Order> orderList) {
   return ListView(
       padding: const EdgeInsets.all(8.0),
-      itemExtent: 106.0,
-      children: ItemList(productList));
+      // itemExtent: 116.0,
+      children: orderMaininfo(orderList)
+  );
 }
 
 ///
-List<CustomListItem> ItemList(List<Product> productList) {
-  List<CustomListItem> prolist = [];
-  productList.forEach((value) {
-    prolist.add(CustomListItem(
-      itemImage: value.products_image,
-      itemName: value.products_name,
-      itemPrice: value.products_price,
-      itemSpecial: value.product_specials,
-    ));
-  });
-  return prolist;
-}
-
-Widget orderMaininfo(List<Order> lorders) {
-  List<CustomListItem> orderList = [];
+// List<CustomListItem> ItemList(List<Product> productList) {
+//   List<CustomListItem> prolist = [];
+//   productList.forEach((value) {
+//     prolist.add(CustomListItem(
+//       itemImage: value.products_image,
+//       itemName: value.products_name,
+//       itemPrice: value.products_price,
+//       itemSpecial: value.product_specials,
+//     ));
+//   });
+//   return prolist;
+// }
+///return list of order
+List<CustomOrderItem> orderMaininfo(List<Order> lorders) {
+  List<CustomOrderItem> orderList = [];
   lorders.forEach((value) {
-    orderList.add();
+    orderList.add(CustomOrderItem(orderId: value.ordersId,ordersStatusName: value.ordersStatusName,lproduct: value.lproduct));
   });
+  return orderList;
 }
-
+/// an item widget include single custom order item
 class CustomOrderItem extends StatelessWidget {
 
   const CustomOrderItem({
     Key? key,
     required this.orderId,
     required this.ordersStatusName,
+  required this.lproduct,
   }) : super(key: key);
 
-  final String orderId;
+  final int orderId;
   final String ordersStatusName;
-  final List<Product> lproduct;
-
+  final List<OrderProduct> lproduct;
 
   Widget build(BuildContext context) {
-    return Column(children: [
+    List<CustomListItem> litems=[];
+    lproduct.forEach((value){
+      litems.add(
+          CustomListItem(itemPrice: value.finalPrice,itemName: value.productsName,itemImage: value.productsImage));
+    });
+    return Column(
+        children: [
       Padding(
           padding: const EdgeInsets.symmetric(vertical: 5.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Expanded(
-                  flex: 2,
+                  flex: 4,
                   child: Text(
-                    "Order Number:"+orderId,
+                    "Order Number:"+orderId.toString(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -63,20 +71,31 @@ class CustomOrderItem extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 3,
-                  child: Text(
-                    "Status:"+ordersStatusName,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14.0,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      "Status:"+ordersStatusName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14.0,
+                      ),
                     ),
                   ),
                 ),
               ]
           )
       ),
-
+    Column(
+        children:litems
+    ),
+          Padding(padding: EdgeInsets.only(top: 5.0)),
+          Divider(
+            height: 1.0,
+            color: Colors.black26,
+          ),
+          Padding(padding: EdgeInsets.only(top: 10.0)),
     ]);
   }
 }
@@ -87,13 +106,11 @@ class CustomListItem extends StatelessWidget {
     required this.itemImage,
     required this.itemName,
     required this.itemPrice,
-    this.itemSpecial,
   }) : super(key: key);
 
   final String itemImage;
   final String itemName;
   final double itemPrice;
-  final double? itemSpecial;
 
   @override
   Widget build(BuildContext context) {
@@ -106,8 +123,18 @@ class CustomListItem extends StatelessWidget {
             flex: 2,
             child: new Image.network(
               itemImage,
-              height: 200,
-              width: 200,
+              height: 80,
+              width: 80,
+                errorBuilder:
+                    (BuildContext context,
+                    Object exception,
+                    StackTrace? stackTrace) {
+                  return Image.asset(
+                    "assets/img/error.png",
+                    height: 80.0,
+                    width: 80.0,
+                  );
+                }
             ),
           ),
           Expanded(
@@ -115,7 +142,6 @@ class CustomListItem extends StatelessWidget {
             child: _ItemDescription(
               title: itemName,
               itemPrice: itemPrice,
-              specialPrice: itemSpecial,
             ),
           ),
           const Icon(
@@ -133,12 +159,10 @@ class _ItemDescription extends StatelessWidget {
     Key? key,
     required this.title,
     required this.itemPrice,
-    this.specialPrice,
   }) : super(key: key);
 
   final String title;
   final double itemPrice;
-  final double? specialPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -157,39 +181,13 @@ class _ItemDescription extends StatelessWidget {
             ),
           ),
           const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          productPriceWidget(itemPrice, specialPrice),
+          Text(
+            itemPrice.toString(),
+            style: const TextStyle(fontSize: 10.0),
+          )
         ],
       ),
     );
   }
 }
 
-Widget productPriceWidget(double price, double? special) {
-  if (special != null && special > 0) {
-    return new RichText(
-      text: new TextSpan(
-        text: 'Price: ',
-        children: <TextSpan>[
-          new TextSpan(
-            text: price.toString(),
-            style: new TextStyle(
-              fontSize: 10.0,
-              color: Colors.grey,
-              decoration: TextDecoration.lineThrough,
-            ),
-          ),
-          new TextSpan(
-              text: special.toString(),
-              style: new TextStyle(
-                fontSize: 10.0,
-              )),
-        ],
-      ),
-    );
-  } else {
-    return Text(
-      price.toString(),
-      style: const TextStyle(fontSize: 10.0),
-    );
-  }
-}

@@ -1,4 +1,4 @@
-import 'dart:async';
+// import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:amigatoy/Arguments/PaySuccessArguments.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,7 +64,7 @@ class _paymentsuccessState extends State<PaymentSuccess> {
                         color: Colors.black54,
                         fontFamily: "Gotik"),
                   ),
-                  Padding(padding: EdgeInsets.only(top: 60.0)),
+                  Padding(padding: EdgeInsets.only(top: 40.0)),
                   /// For RadioButton if selected or not selected
 
                   Divider(
@@ -79,7 +79,7 @@ class _paymentsuccessState extends State<PaymentSuccess> {
                         }else if(specialstate is Specialsloaded){
                           if(specialstate.lstSpecials.length>0){
                           return Container(
-                              height:_screenHeight*0.6,
+                              height:_screenHeight*0.55,
                               child: Column(
                                 children: [
 

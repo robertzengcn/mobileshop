@@ -17,4 +17,5 @@ export 'Payment.dart';
 export 'Invoice.dart';
 export './PaypalRequest.dart';
 export './Order.dart';
+export './OrderProduct.dart';
 
