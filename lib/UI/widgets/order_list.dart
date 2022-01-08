@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:amigatoy/Models/models.dart';
 
-Widget orderListWidget(List<Order> orderList) {
+Widget orderListWidget(List<Order?> orderList,ScrollController? controller) {
   return ListView(
+
       padding: const EdgeInsets.all(8.0),
+      controller:controller,
       // itemExtent: 116.0,
       children: orderMaininfo(orderList)
   );
@@ -23,10 +25,12 @@ Widget orderListWidget(List<Order> orderList) {
 //   return prolist;
 // }
 ///return list of order
-List<CustomOrderItem> orderMaininfo(List<Order> lorders) {
+List<CustomOrderItem> orderMaininfo(List<Order?> lorders) {
   List<CustomOrderItem> orderList = [];
   lorders.forEach((value) {
+    if(value!=null){
     orderList.add(CustomOrderItem(orderId: value.ordersId,ordersStatusName: value.ordersStatusName,lproduct: value.lproduct));
+    }
   });
   return orderList;
 }

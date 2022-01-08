@@ -6,6 +6,7 @@ import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/UI/widgets/order_list.dart';
+import 'package:flutter/scheduler.dart';
 
 class OrderList extends StatefulWidget {
   static const routeName = '/orderlist';
@@ -15,11 +16,33 @@ class OrderList extends StatefulWidget {
 }
 
 class _orderlistState extends State<OrderList> {
-  List<Order> lorder=[];
-  int startPage=0;
+  List<Order?> lorder=[];
+  int _startPage=0;
   bool isLoading = false;
-  int pageLength=25;
+  int _pageLength=5;
+  bool _initPage=true;//first time load page
 
+
+  final ScrollController _controller = ScrollController();
+
+  void initState() {
+    super.initState();
+    // if(!_initPage){
+    // WidgetsBinding.instance
+    //     ?.addPostFrameCallback((_) => _scrollDown());
+  // }
+  }
+
+  void _scrollDown() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    SchedulerBinding.instance?.addPostFrameCallback((_) {
+      _controller.animateTo(
+          _controller.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.fastOutSlowIn);
+    });
+    // _controller.jumpTo(_controller.position.maxScrollExtent);
+  }
 
   Widget _orderlistScaffold(){
     double _screenHeight = MediaQuery.of(context).size.height;
@@ -66,7 +89,7 @@ class _orderlistState extends State<OrderList> {
 
                   BlocBuilder<OrdersBloc, OrdersState>(
                       builder: (context, orderstate) {
-                        if(orderstate is OrderPenddingState&&(lorder.length==0)){
+                        if(orderstate is OrderPenddingState){
                           return Center(child: CircularProgressIndicator());
                         }else if(orderstate is OrderlistFeatchedState){
                           if(lorder.length>0){
@@ -77,13 +100,15 @@ class _orderlistState extends State<OrderList> {
                                       onNotification: (ScrollNotification scrollInfo) {
                                         if (!isLoading && scrollInfo.metrics.pixels ==
                                             scrollInfo.metrics.maxScrollExtent) {
-                                          print("80");
+                                          // print("80");
                                           // start loading data
-
-                                            startPage=startPage+pageLength;
+                                          // setState(() {
+                                            _startPage=_startPage+_pageLength;
+                                            _initPage=false;
+                                          // });
                                           // });
                                           BlocProvider.of<OrdersBloc>(context)
-                                              .add(FeatchOrderlistEvent(start:startPage,length: pageLength));
+                                              .add(FeatchOrderlistEvent(start:_startPage,length: _pageLength));
                                           // BlocProvider<OrdersBloc>(create: (context) {
                                           //   return OrdersBloc(orderRepository: OrderRepository())..add(FeatchOrderlistEvent(start:startPage,length: pageLength));
                                           // });
@@ -91,7 +116,7 @@ class _orderlistState extends State<OrderList> {
                                         }
                                         return false;
                                       },
-                                      child: orderListWidget(lorder),
+                                      child: orderListWidget(lorder,_controller),
                                     ),
                                   ),
                                   Container(
@@ -125,7 +150,7 @@ class _orderlistState extends State<OrderList> {
     return MultiBlocProvider(
         providers: [
           BlocProvider<OrdersBloc>(create: (context) {
-            return OrdersBloc(orderRepository: OrderRepository())..add(FeatchOrderlistEvent(start:0,length: 25));
+            return OrdersBloc(orderRepository: OrderRepository())..add(FeatchOrderlistEvent(start:_startPage,length: _pageLength));
           }),
 
         ],
@@ -134,16 +159,24 @@ class _orderlistState extends State<OrderList> {
               BlocListener<OrdersBloc, OrdersState>(
                   listener: (context, state) {
                     if(state is OrderlistFeatchedState){
-                      if(state.orderlst.length>0){
-                        state.orderlst.forEach((value){
-                          if(value!=null){
-                            lorder.add(value);
-                          }
-                        });
-                      }
+                      // if(state.orderlst.length>0){
                       setState(() {
+                        lorder.addAll(state.orderlst);
                         isLoading = false;
-                      });
+                        });
+
+                      // if(!_initPage){
+                      //   _scrollDown();
+                      // }
+                        // state.orderlst.forEach((value){
+                        //   if(value!=null){
+                        //     lorder.add(value);
+                        //   }
+                        // });
+                      // }
+                      // setState(() {
+                      //   isLoading = false;
+                      // });
                       // print(isLoading);
                     }
                   }),
