@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:async';
+import 'package:amigatoy/Models/ListOrder.dart';
 import 'package:http/http.dart' as http;
 import 'package:amigatoy/constants/application_constants.dart';
 import 'package:amigatoy/Repository/BaseApiClient.dart';
@@ -45,7 +46,7 @@ class OrderApiClient extends BaseApiClient{
 
   }
   ///fetch order list
-  Future <List<Order?>> fetchOrderlist(int start, int length)async{
+  Future <ListOrder> fetchOrderlist(int start, int length)async{
     var url = Uri.parse('$appServerUrl/OrderList/start/'+start.toString()+'/length/'+length.toString());
     String token=await this.getToken();
     http.Response response = await http.get(
@@ -61,9 +62,13 @@ class OrderApiClient extends BaseApiClient{
     }
     var responseJson = json.decode(response.body);
     if(responseJson['status']==true){
-      return (responseJson['data']['list'] as List)
+      List<Order?> lorderst=[];
+      lorderst=(responseJson['data']['list'] as List)
           .map((p) => Order.fromJson(p))
           .toList();
+      int orderNum=responseJson['data']['num'];
+      return new ListOrder(lorder:lorderst,totalNum: orderNum);
+
     }else{
       throw Exception('get product data failure');
     }

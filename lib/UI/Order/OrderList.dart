@@ -6,7 +6,7 @@ import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/UI/widgets/order_list.dart';
-import 'package:flutter/scheduler.dart';
+// import 'package:flutter/scheduler.dart';
 
 class OrderList extends StatefulWidget {
   static const routeName = '/orderlist';
@@ -23,7 +23,9 @@ class _orderlistState extends State<OrderList> {
   bool _initPage=true;//first time load page
 
 
-  final ScrollController _controller = ScrollController();
+  // final ScrollController _controller = ScrollController();
+
+  OrderRepository orderRepository=new OrderRepository();
 
   void initState() {
     super.initState();
@@ -33,16 +35,26 @@ class _orderlistState extends State<OrderList> {
   // }
   }
 
-  void _scrollDown() async {
-    await Future.delayed(const Duration(milliseconds: 300));
-    SchedulerBinding.instance?.addPostFrameCallback((_) {
-      _controller.animateTo(
-          _controller.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 400),
-          curve: Curves.fastOutSlowIn);
+  // void _scrollDown() async {
+  //   await Future.delayed(const Duration(milliseconds: 300));
+  //   SchedulerBinding.instance?.addPostFrameCallback((_) {
+  //     _controller.animateTo(
+  //         _controller.position.maxScrollExtent,
+  //         duration: const Duration(milliseconds: 400),
+  //         curve: Curves.fastOutSlowIn);
+  //   });
+  //   // _controller.jumpTo(_controller.position.maxScrollExtent);
+  // }
+  _loadMore()async{
+
+    _startPage=_startPage+_pageLength;
+    ListOrder lorders=await orderRepository.featchOrderlist(_startPage, _pageLength);
+    setState(() {
+      lorder.addAll(lorders.lorder);
+      isLoading = false;
     });
-    // _controller.jumpTo(_controller.position.maxScrollExtent);
   }
+
 
   Widget _orderlistScaffold(){
     double _screenHeight = MediaQuery.of(context).size.height;
@@ -92,23 +104,28 @@ class _orderlistState extends State<OrderList> {
                         if(orderstate is OrderPenddingState){
                           return Center(child: CircularProgressIndicator());
                         }else if(orderstate is OrderlistFeatchedState){
-                          if(lorder.length>0){
+                          if(orderstate.totolNum>0){
                               return Column(
                                 children: <Widget>[
                                   Expanded(
                                     child: NotificationListener<ScrollNotification>(
                                       onNotification: (ScrollNotification scrollInfo) {
                                         if (!isLoading && scrollInfo.metrics.pixels ==
-                                            scrollInfo.metrics.maxScrollExtent) {
-                                          // print("80");
+                                            scrollInfo.metrics.maxScrollExtent&&(_startPage<=orderstate.totolNum)) {
+
                                           // start loading data
                                           // setState(() {
-                                            _startPage=_startPage+_pageLength;
-                                            _initPage=false;
+                                           isLoading=true;
+                                           _initPage=false;
+                                            _loadMore();
+
+
+                                            // List<Order?> lorders=await orderRepository.featchOrderlist(_startPage, _pageLength);
                                           // });
                                           // });
-                                          BlocProvider.of<OrdersBloc>(context)
-                                              .add(FeatchOrderlistEvent(start:_startPage,length: _pageLength));
+
+                                          // BlocProvider.of<OrdersBloc>(context)
+                                          //     .add(FeatchOrderlistEvent(start:_startPage,length: _pageLength));
                                           // BlocProvider<OrdersBloc>(create: (context) {
                                           //   return OrdersBloc(orderRepository: OrderRepository())..add(FeatchOrderlistEvent(start:startPage,length: pageLength));
                                           // });
@@ -116,9 +133,22 @@ class _orderlistState extends State<OrderList> {
                                         }
                                         return false;
                                       },
-                                      child: orderListWidget(lorder,_controller),
+                                      child: orderListWidget(lorder),
                                     ),
                                   ),
+                                  // Container(
+                                  //   height: !isLoading&&(_startPage<=orderstate.totolNum) ? 50.0 : 0,
+                                  //   color: Colors.transparent,
+                                  //   child: Text(
+                                  //     "pull to get more",
+                                  //     maxLines: 1,
+                                  //     overflow: TextOverflow.ellipsis,
+                                  //     style: const TextStyle(
+                                  //       fontWeight: FontWeight.w500,
+                                  //       fontSize: 14.0,
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   Container(
                                     height: isLoading ? 50.0 : 0,
                                     color: Colors.transparent,
@@ -126,10 +156,19 @@ class _orderlistState extends State<OrderList> {
                                       child: new CircularProgressIndicator(),
                                     ),
                                   ),
+
                                 ],
                               );
                           }else{
-
+                            return Container(child: Text(
+                              "No order found",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.0,
+                              ),
+                            ));
                           }
                         }
                           return Container();

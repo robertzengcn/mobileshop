@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:amigatoy/Models/models.dart';
 
-Widget orderListWidget(List<Order?> orderList,ScrollController? controller) {
+Widget orderListWidget(List<Order?> orderList) {
   return ListView(
-
+      physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.all(8.0),
-      controller:controller,
+      // controller:controller,
       // itemExtent: 116.0,
       children: orderMaininfo(orderList)
   );
@@ -29,7 +29,12 @@ List<CustomOrderItem> orderMaininfo(List<Order?> lorders) {
   List<CustomOrderItem> orderList = [];
   lorders.forEach((value) {
     if(value!=null){
-    orderList.add(CustomOrderItem(orderId: value.ordersId,ordersStatusName: value.ordersStatusName,lproduct: value.lproduct));
+    orderList.add(CustomOrderItem(
+        orderId: value.ordersId,
+        ordersStatusName: value.ordersStatusName,
+        lproduct: value.lproduct,
+        orderTotal:value.orderTotal
+    ));
     }
   });
   return orderList;
@@ -42,17 +47,19 @@ class CustomOrderItem extends StatelessWidget {
     required this.orderId,
     required this.ordersStatusName,
   required this.lproduct,
+    required this.orderTotal,
   }) : super(key: key);
 
   final int orderId;
   final String ordersStatusName;
   final List<OrderProduct> lproduct;
+  final String orderTotal;
 
   Widget build(BuildContext context) {
     List<CustomListItem> litems=[];
     lproduct.forEach((value){
       litems.add(
-          CustomListItem(itemPrice: value.finalPrice,itemName: value.productsName,itemImage: value.productsImage));
+          CustomListItem(itemPrice: value.finalPrice,itemName: value.productsName,itemImage: value.productsImage,itemQuantity: value.productsQuantity,));
     });
     return Column(
         children: [
@@ -94,12 +101,29 @@ class CustomOrderItem extends StatelessWidget {
     Column(
         children:litems
     ),
+          // Padding(padding: EdgeInsets.only(top: 5.0)),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5.0),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                "Total:"+orderTotal,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.0,
+                ),
+              ),
+            ),
+          ),
           Padding(padding: EdgeInsets.only(top: 5.0)),
           Divider(
             height: 1.0,
             color: Colors.black26,
           ),
           Padding(padding: EdgeInsets.only(top: 10.0)),
+
     ]);
   }
 }
@@ -110,11 +134,13 @@ class CustomListItem extends StatelessWidget {
     required this.itemImage,
     required this.itemName,
     required this.itemPrice,
+    required this.itemQuantity
   }) : super(key: key);
 
   final String itemImage;
   final String itemName;
   final double itemPrice;
+  final int itemQuantity;
 
   @override
   Widget build(BuildContext context) {
@@ -146,6 +172,7 @@ class CustomListItem extends StatelessWidget {
             child: _ItemDescription(
               title: itemName,
               itemPrice: itemPrice,
+              itemQuantity: itemQuantity,
             ),
           ),
           const Icon(
@@ -163,10 +190,12 @@ class _ItemDescription extends StatelessWidget {
     Key? key,
     required this.title,
     required this.itemPrice,
+    required this.itemQuantity,
   }) : super(key: key);
 
   final String title;
   final double itemPrice;
+  final int itemQuantity;
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +215,7 @@ class _ItemDescription extends StatelessWidget {
           ),
           const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
           Text(
-            itemPrice.toString(),
+            itemQuantity.toString()+'*'+itemPrice.toString(),
             style: const TextStyle(fontSize: 10.0),
           )
         ],
