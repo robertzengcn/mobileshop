@@ -33,7 +33,9 @@ List<CustomOrderItem> orderMaininfo(List<Order?> lorders) {
         orderId: value.ordersId,
         ordersStatusName: value.ordersStatusName,
         lproduct: value.lproduct,
-        orderTotal:value.orderTotal
+        orderTotal:value.orderTotal,
+        subTotaltext:value.subtotalText,
+        shippingText:value.shipingText
     ));
     }
   });
@@ -48,12 +50,16 @@ class CustomOrderItem extends StatelessWidget {
     required this.ordersStatusName,
   required this.lproduct,
     required this.orderTotal,
+    required this.subTotaltext,
+    required this.shippingText,
   }) : super(key: key);
 
   final int orderId;
   final String ordersStatusName;
   final List<OrderProduct> lproduct;
   final String orderTotal;
+  final String subTotaltext;
+  final String shippingText;
 
   Widget build(BuildContext context) {
     List<CustomListItem> litems=[];
@@ -102,6 +108,37 @@ class CustomOrderItem extends StatelessWidget {
         children:litems
     ),
           // Padding(padding: EdgeInsets.only(top: 5.0)),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5.0),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                "Sub total:"+subTotaltext,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.0,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5.0),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                "Shipping fee:"+shippingText,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.0,
+                ),
+              ),
+            ),
+          ),
+
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5.0),
             child: Align(

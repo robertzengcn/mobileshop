@@ -9,6 +9,7 @@ import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/constants/application_constants.dart';
 import 'package:amigatoy/Arguments/PaySuccessArguments.dart';
 import 'package:amigatoy/UI/Payment/PaymentSuccess.dart';
+import 'package:amigatoy/UI/Order/OrderList.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter/scheduler.dart';
@@ -94,7 +95,10 @@ class PaypalPaymentState extends State<PaypalPayment> {
         });
         return NavigationDecision.prevent;
       } else {
-        Navigator.of(context).pop();
+        setState(() {
+          _paymentStatus="finish";
+        });
+        return NavigationDecision.prevent;
       }
 
     }else if (request.url.contains(_cancelUrl)) {
@@ -164,11 +168,15 @@ class PaypalPaymentState extends State<PaypalPayment> {
                 });
                 break;
                 case 'cancel':
-
+                  SchedulerBinding.instance?.addPostFrameCallback((_) {
+                    Navigator.of(context).pushReplacementNamed(OrderList.routeName);
+                  });
                   break;
               }
               if(payPalstate is PaypalCreateState){
                 return _checkoutScaffold();
+              }else if(payPalstate is PaypalpenddingState){
+                return _loaddingPagescaff();
               }
               return Container();
             }

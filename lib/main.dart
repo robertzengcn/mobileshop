@@ -14,7 +14,7 @@ import 'package:amigatoy/UI/Payment/PaypalPayment.dart';
 import 'package:amigatoy/UI/CartUIComponent/Checkout.dart';
 import 'package:amigatoy/UI/Payment/PaymentSuccess.dart';
 // import 'package:amigatoy/Arguments/PaySuccessArguments.dart';
-
+import 'package:amigatoy/UI/Order/OrderList.dart';
 
 
 class SimpleBlocObserver extends BlocObserver {
@@ -169,6 +169,7 @@ class myApp extends StatelessWidget {
             PaypalPayment.routeName:(BuildContext context) =>new PaypalPayment(),
             Checkout.routeName:(BuildContext context) =>new Checkout(),
             PaymentSuccess.routeName:(BuildContext context) =>new PaymentSuccess(),
+            OrderList.routeName:(BuildContext context) =>new OrderList(),
           }),
       // )
     );

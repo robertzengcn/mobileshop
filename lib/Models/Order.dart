@@ -12,6 +12,10 @@ class Order extends Equatable {
   final String ordersStatusName;
   final String? trackNumber;
   final List<OrderProduct> lproduct;
+  final double shipingValue;
+  final String shipingText;
+  final double subtotalValue;
+  final String subtotalText;
 
   Order({
     required this.ordersId,
@@ -24,9 +28,13 @@ class Order extends Equatable {
     required this.ordersStatusName,
     this.trackNumber,
     required this.lproduct,
+    required this.shipingText,
+    required this.shipingValue,
+    required this.subtotalText,
+    required this.subtotalValue,
     });
   @override
-  List<Object> get props => [ordersId,datePurchasedtime,deliveryName,deliveryCountry,billingName,billingCountry,orderTotal,ordersStatusName];
+  List<Object> get props => [ordersId,datePurchasedtime,deliveryName,deliveryCountry,billingName,billingCountry,orderTotal,ordersStatusName,lproduct,shipingText,shipingValue,subtotalText,subtotalValue];
 
   static Order fromJson(dynamic json) {
     bool productNull =
@@ -48,6 +56,10 @@ class Order extends Equatable {
           ordersStatusName: json['orders_status_name'],
         trackNumber: json['track_number'],
        lproduct:productsList,
+          shipingText:json['shiping_text'].toString(),
+        shipingValue:json['shiping_value'] .toDouble() as double,
+          subtotalText:json['subtotal_text'].toString(),
+        subtotalValue:json['subtotal_value'] .toDouble() as double,
       );
   }
 }

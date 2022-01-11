@@ -5,10 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/UI/widgets/product_list.dart';
+import 'package:amigatoy/UI/Order/OrderList.dart';
 
 class PaymentSuccess extends StatefulWidget {
   static const routeName = '/paymentsuccess';
-
 
   @override
   _paymentsuccessState createState() => _paymentsuccessState();
@@ -27,7 +27,8 @@ class _paymentsuccessState extends State<PaymentSuccess> {
       appBar: AppBar(
         leading: InkWell(
             onTap: () {
-              Navigator.of(context).pop(false);
+              // Navigator.of(context).pop(false);
+              Navigator.of(context).pushReplacementNamed(OrderList.routeName);
             },
             child: Icon(Icons.arrow_back)),
         elevation: 0.0,
