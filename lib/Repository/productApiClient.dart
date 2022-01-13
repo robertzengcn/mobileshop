@@ -41,8 +41,8 @@ class ProductApiClient{
   }
 
 
-  Future<List<Product>> getFeaturelist() async{
-    var url = Uri.parse('$appServerUrl/Featurelist');
+  Future<ListProduct> getFeaturelist(int start, int length) async{
+    var url = Uri.parse('$appServerUrl/Featurelist/start/$start/length/$length');
     http.Response response = await http.get(
       url,
       headers: {
@@ -57,10 +57,10 @@ class ProductApiClient{
     }
       var responseJson = json.decode(response.body);
       if(responseJson['status']==true){
-
-        return (responseJson['data'] as List)
+        List<Product?> lproduct=(responseJson['data']['list'] as List)
             .map((p) => Product.fromJson(p))
             .toList();
+        return new ListProduct(lproduct:lproduct,totalNum: responseJson['data']['num']);
       }else{
         throw Exception('get product data failure');
       }

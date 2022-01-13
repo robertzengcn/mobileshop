@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 //import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/UI/BrandUIComponent/BrandLayout.dart';
+import 'package:amigatoy/UI/BottomNavigationBar.dart';
 
 class AppbarGradient extends StatefulWidget {
   @override
@@ -113,6 +114,11 @@ class _AppbarGradientState extends State<AppbarGradient> {
                     }else if(state is AuthenticationAuthenticated){
                       Navigator.of(context).push(PageRouteBuilder(
                           pageBuilder: (_, __, ___) => new profil()));
+                      // Navigator.of(context).push(PageRouteBuilder(
+                      //     pageBuilder: (_, __, ___) => new bottomNavigationBar(pageIndex: 0)));
+
+                      // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      //     builder: (BuildContext context) => new bottomNavigationBar(pageIndex: 0,)));
                     }else{
                      Center(child: CircularProgressIndicator());
                     }

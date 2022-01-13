@@ -18,7 +18,7 @@ class FeaturedLoading extends FeaturedState {
 }
 ///home images slider load completed
 class Featuredloaded extends FeaturedState {
-  final List<Product> lstFeatureds;
+  final ListProduct lstFeatureds;
 
 
   const Featuredloaded({required this.lstFeatureds}) : assert(lstFeatureds != null);

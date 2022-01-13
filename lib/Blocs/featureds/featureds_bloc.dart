@@ -4,11 +4,11 @@ import 'package:meta/meta.dart';
 import 'package:amigatoy/Blocs/featureds/featureds.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
-//import 'dart:developer' as developer;
+
 
 class FeaturedsBloc extends Bloc<FeaturedEvent, FeaturedState> {
 late FeaturedRepository _featuredRepository;
-//  StreamSubscription _carouselSubscription;
+
 
   FeaturedsBloc({required FeaturedRepository featuredRepository}): super(FeaturedEmpty()){
     _featuredRepository=FeaturedRepository();
@@ -28,7 +28,7 @@ late FeaturedRepository _featuredRepository;
 //          name: 'my.app.category',
 //
 //        );
-        List<Product> result = await _featuredRepository.loadFeaturedlist();
+        ListProduct result = await _featuredRepository.loadFeaturedlist(event.start,event.length);
 
         yield Featuredloaded(lstFeatureds:result);
 

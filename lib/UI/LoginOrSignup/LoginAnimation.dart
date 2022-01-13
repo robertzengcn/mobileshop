@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:amigatoy/UI/BottomNavigationBar.dart';
 //import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 
@@ -42,7 +41,7 @@ class _LoginAnimationState extends State<LoginAnimation> {
     widget.animationController.addListener(() {
       if (widget.animation.isCompleted) {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => new bottomNavigationBar()));
+            builder: (BuildContext context) => new bottomNavigationBar(pageIndex: 0,)));
       }
     });
 

@@ -27,11 +27,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   late GridItem gridItem;
 
   bool isStarted = false;
-  var hourssub, minutesub, secondsub;
+  // var hourssub, minutesub, secondsub;
 
   /// CountDown for timer
-  late CountDown hours, minutes, seconds;
-  late int hourstime, minute, second = 0;
+  // late CountDown hours, minutes, seconds;
+  // late int hourstime, minute, second = 0;
 
   late List<Product> products;
   late List<ImageSlider> imagesliders;
@@ -39,45 +39,45 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   late Map<int, Category> categorymap;
 
   /// Set for StartStopPress CountDown
-  onStartStopPress() {
-    if (!mounted) return;
-    if (this.secondsub == null) {
-      secondsub = seconds.stream.listen(null);
-      secondsub.onData((Duration d) {
-        // print(d);
-        setState(() {
-          second = d.inSeconds;
-        });
-      });
-    }
-    if (this.minutesub == null) {
-      minutesub = minutes.stream.listen(null);
-      minutesub.onData((Duration d) {
-        // print(d);
-        setState(() {
-          minute = d.inMinutes;
-        });
-      });
-    }
-    if (this.hourssub == null) {
-      hourssub = hours.stream.listen(null);
-      hourssub.onData((Duration d) {
-        // print(d);
-        setState(() {
-          hourstime = d.inHours;
-        });
-      });
-    }
-  }
+  // onStartStopPress() {
+  //   if (!mounted) return;
+  //   if (this.secondsub == null) {
+  //     secondsub = seconds.stream.listen(null);
+  //     secondsub.onData((Duration d) {
+  //       // print(d);
+  //       setState(() {
+  //         second = d.inSeconds;
+  //       });
+  //     });
+  //   }
+  //   if (this.minutesub == null) {
+  //     minutesub = minutes.stream.listen(null);
+  //     minutesub.onData((Duration d) {
+  //       // print(d);
+  //       setState(() {
+  //         minute = d.inMinutes;
+  //       });
+  //     });
+  //   }
+  //   if (this.hourssub == null) {
+  //     hourssub = hours.stream.listen(null);
+  //     hourssub.onData((Duration d) {
+  //       // print(d);
+  //       setState(() {
+  //         hourstime = d.inHours;
+  //       });
+  //     });
+  //   }
+  // }
 
   /// To set duration initState auto start if FlashSale Layout open
   @override
   void initState() {
-    hours = new CountDown(new Duration(hours: 24));
-    minutes = new CountDown(new Duration(hours: 1));
-    seconds = new CountDown(new Duration(minutes: 1));
+    // hours = new CountDown(new Duration(hours: 24));
+    // minutes = new CountDown(new Duration(hours: 1));
+    // seconds = new CountDown(new Duration(minutes: 1));
 
-    onStartStopPress();
+    // onStartStopPress();
     // TODO: implement initState
     super.initState();
 

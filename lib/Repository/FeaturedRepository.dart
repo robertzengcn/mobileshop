@@ -13,8 +13,8 @@ class FeaturedRepository{
   FeaturedRepository();
 //      : assert(productApiClient != null);
 
-  Future<List<Product>> loadFeaturedlist() async {
-    Future<List<Product>> lst = productApiClient.getFeaturelist();
+  Future<ListProduct> loadFeaturedlist(int start, int length) async {
+    ListProduct lst = await productApiClient.getFeaturelist(start,length);
 
     return lst;
   }

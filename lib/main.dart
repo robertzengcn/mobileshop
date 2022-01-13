@@ -93,13 +93,7 @@ class myApp extends StatelessWidget {
             )..add(FetchMenutype(type: 'home'));
           },
         ),
-        BlocProvider<FeaturedsBloc>(
-          create: (context) {
-            return FeaturedsBloc(
-              featuredRepository: FeaturedRepository(),
-            )..add(FetchFeatureds());
-          },
-        ),
+
         BlocProvider<AuthenticationBloc>(
           create: (context) {
             return AuthenticationBloc(

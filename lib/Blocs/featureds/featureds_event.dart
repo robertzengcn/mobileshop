@@ -11,11 +11,12 @@ abstract class FeaturedEvent extends Equatable {
 
 class FetchFeatureds extends FeaturedEvent {
 
-
-  const FetchFeatureds();
+  final int start;
+  final int length;
+  const FetchFeatureds({required this.start,required this.length});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [start,length];
 }
 
 class FetchFeaturedtype extends FeaturedEvent {

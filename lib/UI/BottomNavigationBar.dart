@@ -5,12 +5,15 @@ import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 import 'package:amigatoy/UI/AcountUIComponent/Profile.dart';
 
 class bottomNavigationBar extends StatefulWidget {
+  final int pageIndex;
+  bottomNavigationBar ({ Key? key, required this.pageIndex }): super(key: key);
  @override
  _bottomNavigationBarState createState() => _bottomNavigationBarState();
 }
 
 class _bottomNavigationBarState extends State<bottomNavigationBar> {
  int currentIndex = 0;
+ //  late int currentIndex;
  /// Set a type current number a layout class
  Widget callPage(int current) {
   switch (current) {
@@ -31,6 +34,7 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
  /// Build BottomNavigationBar Widget
  @override
  Widget build(BuildContext context) {
+   currentIndex=widget.pageIndex;
   return Scaffold(
    body: callPage(currentIndex),
    bottomNavigationBar: Theme(

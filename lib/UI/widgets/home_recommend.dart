@@ -7,6 +7,7 @@ import 'package:amigatoy/Models/models.dart';
 //import 'package:amigatoy/UI/HomeUIComponent/productCard.dart';
 //import 'dart:developer' as developer;
 import 'package:amigatoy/UI/widgets/item_grid.dart';
+import 'package:amigatoy/Repository/repository.dart';
 
 class HomeRecommend extends StatefulWidget {
   @override
@@ -14,31 +15,112 @@ class HomeRecommend extends StatefulWidget {
 }
 
 class HomeRecommendstate extends State<HomeRecommend> {
-  @override
-  Widget build(BuildContext context) {
+  List<Product?> _lproduct=[];
+  bool isLoading =true;
+  late double _containHeight;
+
+  ///get feature product list
+  List<ItemGrid> _listFeaturegrid(){
+    List<ItemGrid> resGrid=[];
+    _lproduct.forEach((value) {
+      if(value!=null){
+      resGrid.add(ItemGrid(value));
+      }
+    });
+    return resGrid;
+  }
+
+
+  //feature list widget
+  Widget _listFeatureProduct(){
     return BlocBuilder<FeaturedsBloc, FeaturedState>(builder: (context, state) {
-      if (state is FeaturedEmpty) {
+      if (state is FeaturedLoading) {
         // is loading
         return Center(child: CircularProgressIndicator());
-      }
-      if (state is Featuredloaded) {
-        final featurelist = state.lstFeatureds;
+      }else if(state is Featuredloaded) {
+
+        // final featurelist = state.lstFeatureds.lproduct;
+      return Container(
+          height: _containHeight,
+          // height: 1000,
+          padding: EdgeInsets.all(2.0),
+          child: GridView.count(
+              primary: false,
+              padding: const EdgeInsets.all(10),
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              crossAxisCount: 2,
+              children: _listFeaturegrid()
+          )
+
+          // GridView.builder(
+            // itemCount: _lproduct.length,
+            // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //     crossAxisCount: 2,
+            //     crossAxisSpacing: 4.0,
+            //     mainAxisSpacing: 4.0
+            // ),
+            // itemBuilder: (BuildContext context, int index){
+            //   if(_lproduct[index]!=null){
+            //     return ItemGrid(_lproduct[index]!);
+            //   }else{
+            //     return Container();
+            //   }
+            // },
+
+          // )
+      );
+
 //        developer.log('feature list all load',
 //            name: 'my.app.category', error: featurelist);
 
-        return Container(
+//         return Container(
+// //                  color: Color(0xFF6991C7),
+// //            height: 600.0,
+//         height:MediaQuery
+//             .of(context)
+//             .size
+//             .height * 0.5,
+//             margin: EdgeInsets.symmetric(vertical: 1.0),
+//             child: Row(children: getWidgets(featurelist)));
 
-//                  color: Color(0xFF6991C7),
-//            height: 600.0,
-        height:MediaQuery
-            .of(context)
-            .size
-            .height * 0.5,
-            margin: EdgeInsets.symmetric(vertical: 1.0),
-            child: Row(children: getWidgets(featurelist)));
+
       }
-      return Center(child: CircularProgressIndicator());
+      return Container();
+      // return Center(child: CircularProgressIndicator());
     });
+  }
+  @override
+  Widget build(BuildContext context) {
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
+     _containHeight=mediaQueryData.size.height;
+    return MultiBlocProvider(providers: [
+      BlocProvider<FeaturedsBloc>(
+        create: (context) {
+          return FeaturedsBloc(
+            featuredRepository: FeaturedRepository(),
+          )..add(FetchFeatureds(start:0,length: 25));
+        },
+      ),
+    ],
+        child: MultiBlocListener(
+            listeners: [
+              BlocListener<FeaturedsBloc, FeaturedState>(
+                  listener: (context, state) {
+                    if(state is Featuredloaded){
+                      // if(state.orderlst.length>0){
+                      setState(() {
+                        _lproduct.addAll(state.lstFeatureds.lproduct);
+                        isLoading = false;
+                      });
+
+                    }
+                  }),
+            ],
+            child:_listFeatureProduct(),
+    ));
+
+
   }
 
   List<Widget> getWidgets(List<Product> lstFeatureds) {
@@ -54,24 +136,26 @@ class HomeRecommendstate extends State<HomeRecommend> {
     for (int i = 0; i < rownumbe; i++) {
 //      developer.log('feature item render', name: 'my.app.category', error: i);
       widgetlist.add(
-       Row(children: [
-        Column(
-          children: <Widget>[
-            Expanded(
+          Expanded(
+         child: Row(children: [
+          Column(
+            children: <Widget>[
+              Expanded(
 //              flex: 5,
-              child: ItemGrid(lstFeatureds[i]),
-            ),
-          ],
-        ),
-        Column(
-          children: <Widget>[
-            Expanded(
+                child: ItemGrid(lstFeatureds[i]),
+              ),
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              Expanded(
 //              flex: 5,
-              child: ItemGrid(lstFeatureds[i+1]),
-            ),
-          ],
-        ),
-      ]));
+                child: ItemGrid(lstFeatureds[i+1]),
+              ),
+            ],
+          ),
+      ]),
+       ));
     }
 
     return widgetlist;
