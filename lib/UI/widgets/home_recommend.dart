@@ -18,6 +18,8 @@ class HomeRecommendstate extends State<HomeRecommend> {
   List<Product?> _lproduct=[];
   bool isLoading =true;
   late double _containHeight;
+  double itemHeight =0;
+  double itemWidth =0;
 
   ///get feature product list
   List<ItemGrid> _listFeaturegrid(){
@@ -40,36 +42,44 @@ class HomeRecommendstate extends State<HomeRecommend> {
       }else if(state is Featuredloaded) {
 
         // final featurelist = state.lstFeatureds.lproduct;
-      return Container(
-          height: _containHeight,
-          // height: 1000,
-          padding: EdgeInsets.all(2.0),
-          child: GridView.count(
-              primary: false,
-              padding: const EdgeInsets.all(10),
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              crossAxisCount: 2,
-              children: _listFeaturegrid()
-          )
+      // return Container(
+      //     height: _containHeight,
+      //     // height: 1000,
+      //     padding: EdgeInsets.all(2.0),
+      //     child: GridView.count(
+      //         physics: ScrollPhysics(),
+      //         primary: false,
+      //         padding: const EdgeInsets.all(10),
+      //         crossAxisSpacing: 10,
+      //         mainAxisSpacing: 10,
+      //         crossAxisCount: 2,
+      //
+      //        // childAspectRatio: (itemWidth / itemHeight),
+      //         children: _listFeaturegrid()
+      //     )
 
-          // GridView.builder(
-            // itemCount: _lproduct.length,
-            // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //     crossAxisCount: 2,
-            //     crossAxisSpacing: 4.0,
-            //     mainAxisSpacing: 4.0
-            // ),
-            // itemBuilder: (BuildContext context, int index){
-            //   if(_lproduct[index]!=null){
-            //     return ItemGrid(_lproduct[index]!);
-            //   }else{
-            //     return Container();
-            //   }
-            // },
+          return Container(
+            height: 1000,
+            child: GridView.builder(
+              itemCount: _lproduct.length,
+              physics: ScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 4.0,
+                  mainAxisSpacing: 4.0,
+                  mainAxisExtent: 285
+              ),
+              itemBuilder: (BuildContext context, int index){
+                if(_lproduct[index]!=null){
+                  return ItemGrid(_lproduct[index]!);
+                }else{
+                  return Container();
+                }
+              },
 
-          // )
-      );
+            ),
+          );
+      // );
 
 //        developer.log('feature list all load',
 //            name: 'my.app.category', error: featurelist);
@@ -94,6 +104,12 @@ class HomeRecommendstate extends State<HomeRecommend> {
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
      _containHeight=mediaQueryData.size.height;
+
+    var size = MediaQuery.of(context).size;
+    /*24 is for notification bar on Android*/
+   itemHeight = (size.height - kToolbarHeight - 24) / 1.6;
+   itemWidth = size.width / 2;
+
     return MultiBlocProvider(providers: [
       BlocProvider<FeaturedsBloc>(
         create: (context) {
@@ -123,41 +139,41 @@ class HomeRecommendstate extends State<HomeRecommend> {
 
   }
 
-  List<Widget> getWidgets(List<Product> lstFeatureds) {
-    List<Widget> widgetlist = [];
-    int plength = lstFeatureds.length; //总数量
-    if (plength == 0) {
-      return widgetlist;
-    }
-
-//    developer.log('feature list render',
-//        name: 'my.app.category', error: plength);
-    int rownumbe = (plength / 2).round();
-    for (int i = 0; i < rownumbe; i++) {
-//      developer.log('feature item render', name: 'my.app.category', error: i);
-      widgetlist.add(
-          Expanded(
-         child: Row(children: [
-          Column(
-            children: <Widget>[
-              Expanded(
-//              flex: 5,
-                child: ItemGrid(lstFeatureds[i]),
-              ),
-            ],
-          ),
-          Column(
-            children: <Widget>[
-              Expanded(
-//              flex: 5,
-                child: ItemGrid(lstFeatureds[i+1]),
-              ),
-            ],
-          ),
-      ]),
-       ));
-    }
-
-    return widgetlist;
-  }
+//   List<Widget> getWidgets(List<Product> lstFeatureds) {
+//     List<Widget> widgetlist = [];
+//     int plength = lstFeatureds.length; //总数量
+//     if (plength == 0) {
+//       return widgetlist;
+//     }
+//
+// //    developer.log('feature list render',
+// //        name: 'my.app.category', error: plength);
+//     int rownumbe = (plength / 2).round();
+//     for (int i = 0; i < rownumbe; i++) {
+// //      developer.log('feature item render', name: 'my.app.category', error: i);
+//       widgetlist.add(
+//           Expanded(
+//          child: Row(children: [
+//           Column(
+//             children: <Widget>[
+//               Expanded(
+// //              flex: 5,
+//                 child: ItemGrid(lstFeatureds[i]),
+//               ),
+//             ],
+//           ),
+//           Column(
+//             children: <Widget>[
+//               Expanded(
+// //              flex: 5,
+//                 child: ItemGrid(lstFeatureds[i+1]),
+//               ),
+//             ],
+//           ),
+//       ]),
+//        ));
+//     }
+//
+//     return widgetlist;
+//   }
 }
