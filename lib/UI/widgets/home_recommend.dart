@@ -32,6 +32,10 @@ class HomeRecommendstate extends State<HomeRecommend> {
     return resGrid;
   }
 
+  void _loadMore async(){
+    BlocProvider.of<FeaturedsBloc>(context)
+        .add(FeaturedloadMore(start:_startPage,length: _pageLength));
+  }
 
   //feature list widget
   Widget _listFeatureProduct(){
@@ -60,23 +64,26 @@ class HomeRecommendstate extends State<HomeRecommend> {
 
           return Container(
             height: 1000,
-            child: GridView.builder(
-              itemCount: _lproduct.length,
-              physics: ScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 4.0,
-                  mainAxisSpacing: 4.0,
-                  mainAxisExtent: 285
-              ),
-              itemBuilder: (BuildContext context, int index){
-                if(_lproduct[index]!=null){
-                  return ItemGrid(_lproduct[index]!);
-                }else{
-                  return Container();
-                }
-              },
+            child: RefreshIndicator(
+              onRefresh:_loadMore(),
+              child: GridView.builder(
+                itemCount: _lproduct.length,
+                physics: ScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 4.0,
+                    mainAxisSpacing: 4.0,
+                    mainAxisExtent: 285
+                ),
+                itemBuilder: (BuildContext context, int index){
+                  if(_lproduct[index]!=null){
+                    return ItemGrid(_lproduct[index]!);
+                  }else{
+                    return Container();
+                  }
+                },
 
+              ),
             ),
           );
       // );

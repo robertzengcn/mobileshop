@@ -28,3 +28,13 @@ class FetchFeaturedtype extends FeaturedEvent {
   List<Object> get props => [type];
 }
 
+class FeaturedloadMore extends FeaturedEvent {
+
+  final int start;
+  final int length;
+  const FeaturedloadMore({required this.start,required this.length});
+
+  @override
+  List<Object> get props => [start,length];
+}
+

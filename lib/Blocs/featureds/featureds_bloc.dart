@@ -36,6 +36,10 @@ late FeaturedRepository _featuredRepository;
 //        print('error caught: $e');
 //        yield FeaturedError();
 //      }
+    }else if(event is FeaturedloadMore){
+      ListProduct result = await _featuredRepository.loadFeaturedlist(event.start,event.length);
+
+      yield Featuredloaded(lstFeatureds:result);
     }
   }
 
