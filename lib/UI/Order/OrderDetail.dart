@@ -8,14 +8,14 @@ import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/UI/widgets/order_list.dart';
 // import 'package:flutter/scheduler.dart';
 
-class OrderList extends StatefulWidget {
-  static const routeName = '/orderlist';
+class OrderDetail extends StatefulWidget {
+  static const routeName = '/orderdetail';
 
   @override
-  _orderlistState createState() => _orderlistState();
+  _orderlistState createState() => _orderdetailState();
 }
 
-class _orderlistState extends State<OrderList> {
+class _orderdetailState extends State<OrderDetail> {
   List<Order?> lorder=[];
   int _startPage=0;
   bool isLoading = false;
@@ -25,7 +25,7 @@ class _orderlistState extends State<OrderList> {
 
   // final ScrollController _controller = ScrollController();
 
-  OrderRepository orderRepository=new OrderRepository();
+  // OrderRepository orderRepository=new OrderRepository();
 
   void initState() {
     super.initState();
@@ -48,14 +48,11 @@ class _orderlistState extends State<OrderList> {
   _loadMore()async{
 
     _startPage=_startPage+_pageLength;
-    // ListOrder lorders=await orderRepository.featchOrderlist(_startPage, _pageLength);
-
-    BlocProvider.of<OrdersBloc>(context)
-        .add(FeatchMoreEvent(start:_startPage,length: _pageLength));
-    // setState(() {
-    //   lorder.addAll(lorders.lorder);
-    //   isLoading = false;
-    // });
+    ListOrder lorders=await orderRepository.featchOrderlist(_startPage, _pageLength);
+    setState(() {
+      lorder.addAll(lorders.lorder);
+      isLoading = false;
+    });
   }
 
 

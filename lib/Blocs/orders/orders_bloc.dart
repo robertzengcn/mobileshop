@@ -47,6 +47,13 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       ListOrder lorders=await orderRepository.featchOrderlist(event.start, event.length);
       yield OrderlistFeatchedState(orderlst:lorders.lorder,totolNum:lorders.totalNum);
 
+    }else if(event is FeatchMoreEvent){
+      ListOrder lorders=await orderRepository.featchOrderlist(event.start, event.length);
+      yield OrderlistFeatchedState(orderlst:lorders.lorder,totolNum:lorders.totalNum);
+    }else if(event is FeatchOrderDetailEvent){
+      yield OrderPenddingState();
+      OrderDetail orderdetail=await orderRepository.featchOrderdetail(event.orderId);
+      yield OrderdetailFeatchedState(orderdetail:orderdetail);
     }
   }
 }

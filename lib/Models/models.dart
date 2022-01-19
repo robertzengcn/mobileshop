@@ -20,4 +20,8 @@ export './Order.dart';
 export './OrderProduct.dart';
 export './ListOrder.dart';
 export './ListProduct.dart';
+export './OrderInfo.dart';
+export './OrderDelivery.dart';
+export './OrderBill.dart';
+export './OrderDetail.dart';
 

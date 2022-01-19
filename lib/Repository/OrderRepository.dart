@@ -20,4 +20,10 @@ class OrderRepository{
     return orderlst;
   }
 
+  ///fetch order detail
+  Future<OrderDetail>featchOrderdetail(int orderId) async{
+    OrderDetail orderdetail =await orderApiClient.getOrderDetail(orderId);
+    return orderdetail;
+  }
+
 }

@@ -57,3 +57,12 @@ class OrderlistFeatchedState extends OrdersState {
   @override
   List<Object> get props => [];
 }
+
+/// featch order list success
+class OrderdetailFeatchedState extends OrdersState {
+  final OrderDetail orderdetail;
+  OrderdetailFeatchedState({
+    required this.orderdetail});
+  @override
+  List<Object> get props => [orderdetail];
+}

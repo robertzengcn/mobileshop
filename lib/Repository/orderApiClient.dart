@@ -75,4 +75,34 @@ class OrderApiClient extends BaseApiClient{
 
   }
 
+  ///fetch order detail
+  Future <OrderDetail> getOrderDetail(int orderId)async{
+    var url = Uri.parse('$appServerUrl/OrderDetail/'+orderId.toString());
+    String token=await this.getToken();
+    http.Response response = await http.get(
+      url,
+      headers: {
+        'Application-Id': '$appId',
+        'Client-Key':token
+      },
+    );
+    if (response.statusCode != 200) {
+
+      throw Exception('Unable to fetch order detail from the REST API');
+    }
+    var responseJson = json.decode(response.body);
+    if(responseJson['status']==true){
+      // List<Order?> lorderst=[];
+      // lorderst=(responseJson['data']['list'] as List)
+      //     .map((p) => Order.fromJson(p))
+      //     .toList();
+      // int orderNum=responseJson['data']['num'];
+      return OrderDetail.fromJson(responseJson['data']);
+
+    }else{
+      throw Exception('get get order detail failure');
+    }
+
+  }
+
 }

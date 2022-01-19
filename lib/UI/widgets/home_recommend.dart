@@ -20,22 +20,26 @@ class HomeRecommendstate extends State<HomeRecommend> {
   late double _containHeight;
   double itemHeight =0;
   double itemWidth =0;
+  int _startPage=0;
+  int _pageLength=25;
 
   ///get feature product list
-  List<ItemGrid> _listFeaturegrid(){
-    List<ItemGrid> resGrid=[];
-    _lproduct.forEach((value) {
-      if(value!=null){
-      resGrid.add(ItemGrid(value));
-      }
-    });
-    return resGrid;
-  }
+  // List<ItemGrid> _listFeaturegrid(){
+  //   List<ItemGrid> resGrid=[];
+  //   _lproduct.forEach((value) {
+  //     if(value!=null){
+  //     resGrid.add(ItemGrid(value));
+  //     }
+  //   });
+  //   return resGrid;
+  // }
 
-  void _loadMore async(){
-    BlocProvider.of<FeaturedsBloc>(context)
-        .add(FeaturedloadMore(start:_startPage,length: _pageLength));
-  }
+  // Future<void> _loadMore() async {
+  //   _startPage=_startPage+_pageLength;
+  //   BlocProvider.of<FeaturedsBloc>(context)
+  //       .add(FeaturedloadMore(start:_startPage,length: _pageLength));
+  //   // return true;
+  // }
 
   //feature list widget
   Widget _listFeatureProduct(){
@@ -65,7 +69,11 @@ class HomeRecommendstate extends State<HomeRecommend> {
           return Container(
             height: 1000,
             child: RefreshIndicator(
-              onRefresh:_loadMore(),
+              onRefresh:() async {
+                _startPage=_startPage+_pageLength;
+                BlocProvider.of<FeaturedsBloc>(context)
+                    .add(FeaturedloadMore(start:_startPage,length: _pageLength));
+              },
               child: GridView.builder(
                 itemCount: _lproduct.length,
                 physics: ScrollPhysics(),
