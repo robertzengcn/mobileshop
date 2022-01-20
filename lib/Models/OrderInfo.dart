@@ -12,6 +12,8 @@ class OrderInfo extends Equatable {
   final String ordersStatusName;
   final String? trackNumber;
   final double? tax;
+  final String shipingText;
+  final String subtotalText;
 
   OrderInfo({
     required this.ordersId,
@@ -24,6 +26,8 @@ class OrderInfo extends Equatable {
     required this.ordersStatusName,
     this.trackNumber,
     this.tax,
+    required this.shipingText,
+    required this.subtotalText,
     });
   @override
   List<Object> get props => [ordersId,datePurchasedtime,currency,paymentMethod,shippingMethod,couponCode,orderTotal,ordersStatusName];
@@ -41,6 +45,8 @@ class OrderInfo extends Equatable {
         ordersStatusName: json['orders_status'],
         trackNumber: json['track_number'],
         tax:json['tax'].toDouble() as double,
+          shipingText:json['shiping_text'],
+          subtotalText:json['subtotal_text'],
       );
   }
 }
