@@ -226,7 +226,7 @@ class _ItemDescription extends StatelessWidget {
             itemQuantity.toString()+'*'+itemPrice.toString(),
             style: const TextStyle(fontSize: 10.0),
           ),
-          ...?attrWidlist
+          ...attrWidlist
         ],
       ),
     );

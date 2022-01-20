@@ -720,9 +720,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 //                  padding: EdgeInsets.only(bottom: 2),
 //                ),
                 HomeImageSlide(),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 2.0),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.only(bottom: 1.0),
+                // ),
 
                 /// Call a Grid variable, this is item list in Recomended item
                 //Grid,

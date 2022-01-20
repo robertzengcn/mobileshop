@@ -100,7 +100,7 @@ class OrderApiClient extends BaseApiClient{
       return OrderDetail.fromJson(responseJson['data']);
 
     }else{
-      throw Exception('get get order detail failure');
+      throw Exception(responseJson['msg']);
     }
 
   }

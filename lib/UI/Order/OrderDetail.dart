@@ -11,17 +11,17 @@ import 'package:amigatoy/UI/widgets/order_detail.dart';
 // import 'package:amigatoy/UI/widgets/order_list.dart';
 // import 'package:flutter/scheduler.dart';
 
-class OrderDetail extends StatefulWidget {
+class OrderDetailPage extends StatefulWidget {
   static const routeName = '/orderdetail';
   final int orderId;
 
-  OrderDetail({ Key? key, required this.orderId }) : super(key: key);
+  OrderDetailPage({ Key? key, required this.orderId }) : super(key: key);
 
   @override
   _orderdetailState createState() => _orderdetailState();
 }
 
-class _orderdetailState extends State<OrderDetail> {
+class _orderdetailState extends State<OrderDetailPage> {
 
   void initState() {
     super.initState();
