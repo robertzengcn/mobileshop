@@ -18,7 +18,7 @@ class OrderDetail extends Equatable {
 
   static OrderDetail fromJson(dynamic json) {
     bool productNull =
-    json['order_products'] == null || (json['order_product'].length == 0) ? true : false;
+    json['order_products'] == null || (json['order_products'].length == 0) ? true : false;
     List<OrderProduct> productsList = [];
     if(!productNull){
       json['order_products'].forEach((value) {

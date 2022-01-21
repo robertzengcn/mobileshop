@@ -53,7 +53,7 @@ class OrderProduct extends Equatable {
     }
     double? productTax;
     if(json['products_tax']!=null){
-      productTax=json['products_tax'];
+      productTax=json['products_tax'].toDouble() as double;
     }
 
     return OrderProduct(

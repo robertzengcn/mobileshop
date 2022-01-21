@@ -8,8 +8,8 @@ class OrderBill extends Equatable {
   final String? suburb;
   final String city;
   final String postcode;
-  final double state;
-  final String countryCode;
+  final String state;
+  // final String countryCode;
   final String streetAddress;
 
   OrderBill({
@@ -20,11 +20,11 @@ class OrderBill extends Equatable {
     required this.city,
     required this.postcode,
     required this.state,
-    required this.countryCode,
+    // required this.countryCode,
     required this.streetAddress
     });
   @override
-  List<Object> get props => [name,country,city,postcode,state,countryCode,streetAddress];
+  List<Object> get props => [name,country,city,postcode,state,streetAddress];
 
   static OrderBill fromJson(dynamic json) {
       return OrderBill(
@@ -35,7 +35,7 @@ class OrderBill extends Equatable {
         city: json['city'],
         postcode: json['postcode'],
         state: json['state'],
-        countryCode: json['country_code'],
+        // countryCode: json['country_code'],
         streetAddress:json['street_address'],
       );
   }

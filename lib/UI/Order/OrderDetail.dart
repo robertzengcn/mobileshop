@@ -74,13 +74,13 @@ class _orderdetailState extends State<OrderDetailPage> {
                 if (orderstate is OrderPenddingState) {
                   return Center(child: CircularProgressIndicator());
                 } else if (orderstate is OrderdetailFeatchedState) {
-                  SingleChildScrollView(
+                  return SingleChildScrollView(
                       child: Column(
                           children: <Widget>[
                       Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
+                          padding: const EdgeInsets.only(top: 2.0),
                             child:Container(
-                              color: Colors.white,
+                              // color: Colors.white,
                               child: CustomOrderDetail(
                                   orderId:orderstate.orderdetail.orderinfo.ordersId,
                                   ordersStatusName:orderstate.orderdetail.orderinfo.ordersStatusName,
@@ -88,6 +88,8 @@ class _orderdetailState extends State<OrderDetailPage> {
                                   orderTotal: orderstate.orderdetail.orderinfo.orderTotal.toString(),
                                   shippingText: orderstate.orderdetail.orderinfo.shipingText,
                                 subTotaltext: orderstate.orderdetail.orderinfo.subtotalText,
+                                datePurchased: orderstate.orderdetail.orderinfo.datePurchasedtime,
+                                orderBill: orderstate.orderdetail.orderBill,
                               ),
                             )
                       ),

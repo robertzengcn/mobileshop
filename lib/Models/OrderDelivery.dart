@@ -8,7 +8,7 @@ class OrderDelivery extends Equatable {
   final String? suburb;
   final String city;
   final String postcode;
-  final double state;
+  final String state;
   final String countryCode;
   final String streetAddress;
 
