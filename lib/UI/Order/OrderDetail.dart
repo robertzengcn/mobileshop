@@ -90,6 +90,7 @@ class _orderdetailState extends State<OrderDetailPage> {
                                 subTotaltext: orderstate.orderdetail.orderinfo.subtotalText,
                                 datePurchased: orderstate.orderdetail.orderinfo.datePurchasedtime,
                                 orderBill: orderstate.orderdetail.orderBill,
+                                orderShipping: orderstate.orderdetail.orderDelivery,
                               ),
                             )
                       ),

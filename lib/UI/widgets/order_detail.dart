@@ -17,6 +17,7 @@ class CustomOrderDetail extends StatelessWidget {
   final String datePurchased;
   final String? trackNum;
   final OrderBill orderBill;
+  final OrderDelivery orderShipping;
 
   const CustomOrderDetail({
     Key? key,
@@ -29,6 +30,7 @@ class CustomOrderDetail extends StatelessWidget {
     required this.datePurchased,
     this.trackNum,
     required this.orderBill,
+    required this.orderShipping,
   }) : super(key: key);
 
   Widget build(BuildContext context) {
@@ -144,7 +146,20 @@ class CustomOrderDetail extends StatelessWidget {
                 ),
               )
             : Container(),
-        _billWidget(orderBill: orderBill)
+        Padding(padding: EdgeInsets.only(top: 5.0)),
+        Divider(
+          height: 1.0,
+          color: Colors.black26,
+        ),
+        Padding(padding: EdgeInsets.only(top: 5.0)),
+        _billWidget(orderBill: orderBill),
+        Padding(padding: EdgeInsets.only(bottom: 5.0)),
+        Divider(
+          height: 1.0,
+          color: Colors.black26,
+        ),
+        Padding(padding: EdgeInsets.only(top: 5.0)),
+        _shippingWidget(orderShipping: orderShipping),
       ]),
     );
   }
@@ -469,6 +484,218 @@ class _billWidget extends StatelessWidget {
               flex: 3,
               child: Text(
                 orderBill.postcode,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textStyles,
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _shippingWidget extends StatelessWidget {
+  final OrderDelivery orderShipping;
+
+  const _shippingWidget({
+    Key? key,
+    required this.orderShipping,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0,bottom: 10),
+              child: Text(
+                'Shipping Information:',
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+              ),
+            )
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Text(
+                "Receiver name: ",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textStyles,
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Text(
+                orderShipping.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textStyles,
+              ),
+            )
+          ],
+        ),
+        const Padding(padding: EdgeInsets.symmetric(vertical: 3.0)),
+        (orderShipping.company != null) && orderShipping.company!.length > 0
+            ? Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Text(
+                "Receiver Company: ",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textStyles,
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Text(
+                orderShipping.company!,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textStyles,
+              ),
+            )
+          ],
+        )
+            : Container(),
+        (orderShipping.company != null) && orderShipping.company!.length > 0?const Padding(padding: EdgeInsets.symmetric(vertical: 3.0)):Container(),
+        Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Text(
+                "Shipping Street Address: ",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textStyles,
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Text(
+                orderShipping.streetAddress,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textStyles,
+              ),
+            )
+          ],
+        ),
+        (orderShipping.suburb!=null)&&orderShipping.suburb!.length>0?Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Text(
+                "Shipping Suburb: ",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textStyles,
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Text(
+                orderShipping.suburb!,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textStyles,
+              ),
+            )
+          ],
+        ):Container(),
+        (orderShipping.suburb!=null)&&orderShipping.suburb!.length>0?const Padding(padding: EdgeInsets.symmetric(vertical: 3.0)):Container(),
+        const Padding(padding: EdgeInsets.symmetric(vertical: 3.0)),
+        Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Text(
+                "Shipping City: ",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textStyles,
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Text(
+                orderShipping.city,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textStyles,
+              ),
+            )
+          ],
+        ),
+        const Padding(padding: EdgeInsets.symmetric(vertical: 3.0)),
+        Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Text(
+                "Shipping State: ",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textStyles,
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Text(
+                orderShipping.state,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textStyles,
+              ),
+            )
+          ],
+        ),
+        const Padding(padding: EdgeInsets.symmetric(vertical: 3.0)),
+        Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Text(
+                "Shipping Country: ",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textStyles,
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Text(
+                orderShipping.country,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textStyles,
+              ),
+            )
+          ],
+        ),
+        const Padding(padding: EdgeInsets.symmetric(vertical: 3.0)),
+        Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Text(
+                "Shipping Postcode: ",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textStyles,
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Text(
+                orderShipping.postcode,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: textStyles,
