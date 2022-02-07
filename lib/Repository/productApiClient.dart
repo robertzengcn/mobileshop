@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 
-import 'package:meta/meta.dart';
+// import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/constants/application_constants.dart';
@@ -10,35 +10,33 @@ import 'package:amigatoy/constants/application_constants.dart';
 class ProductApiClient{
 
 //  final http.Client httpClient;
-
   ProductApiClient();
 
-
-  Future<List<Product>> getProductlist() async{
-    var url = Uri.parse('$appServerUrl/ProductList');
-    http.Response response = await http.get(
-      url,
-      headers: {
-        'Application-Id': '$appId',
-      },
-    );
-//    developer.log('product api list',
-//      name: 'my.app.category',
-//      error: response.body,
-//    );
-    if (response.statusCode == 200) {
-      var responseJson = json.decode(response.body);
-      if(responseJson['status']==true){
-        return (responseJson['data'] as List)
-            .map((p) => Product.fromJson(p))
-            .toList();
-      }else{
-        throw Exception('get product data failure');
-      }
-    } else {
-      throw Exception('Unable to fetch products from the REST API');
-    }
-  }
+//   Future<List<Product>> getProductlist() async{
+//     var url = Uri.parse('$appServerUrl/ProductList');
+//     http.Response response = await http.get(
+//       url,
+//       headers: {
+//         'Application-Id': '$appId',
+//       },
+//     );
+// //    developer.log('product api list',
+// //      name: 'my.app.category',
+// //      error: response.body,
+// //    );
+//     if (response.statusCode == 200) {
+//       var responseJson = json.decode(response.body);
+//       if(responseJson['status']==true){
+//         return (responseJson['data'] as List)
+//             .map((p) => Product.fromJson(p))
+//             .toList();
+//       }else{
+//         throw Exception('get product data failure');
+//       }
+//     } else {
+//       throw Exception('Unable to fetch products from the REST API');
+//     }
+//   }
 
 
   Future<ListProduct> getFeaturelist(int start, int length) async{
@@ -49,7 +47,6 @@ class ProductApiClient{
         'Application-Id': '$appId',
       },
     );
-
 
     if (response.statusCode != 200) {
 
@@ -102,7 +99,6 @@ class ProductApiClient{
       },
     );
 
-
     if (response.statusCode != 200) {
 
       throw Exception('Unable to fetch relative products from the REST API');
@@ -129,7 +125,6 @@ class ProductApiClient{
       },
     );
 
-
     if (response.statusCode != 200) {
 
       throw Exception('Unable to fetch special products list from the REST API');
@@ -142,6 +137,32 @@ class ProductApiClient{
           .toList();
     }else{
       throw Exception('get special product list failure');
+    }
+
+  }
+
+  ///get product list from catalogue failure
+  Future<List<Product>> getProductlist(int catalogueId,int start, int length) async{
+    var url = Uri.parse('$appServerUrl/ProductList?catalogue='+catalogueId.toString()+'&start'+start.toString()+'&length'+length.toString());
+    http.Response response = await http.get(
+      url,
+      headers: {
+        'Application-Id': '$appId',
+      },
+    );
+
+    if (response.statusCode != 200) {
+
+      throw Exception('Unable to fetch products list in catalogue from the REST API');
+    }
+    var responseJson = json.decode(response.body);
+    if(responseJson['status']==true){
+
+      return (responseJson['data'] as List)
+          .map((p) => Product.fromJson(p))
+          .toList();
+    }else{
+      throw Exception('get product list in catalogue failure');
     }
 
   }
