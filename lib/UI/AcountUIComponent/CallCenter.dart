@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:amigatoy/UI/BrandUIComponent/Chat.dart';
+import 'package:amigatoy/UI/CatelogueUIComponent/Chat.dart';
 import 'package:amigatoy/UI/HomeUIComponent/ChatItem.dart';
 import 'package:amigatoy/UI/AcountUIComponent/Message.dart';
 

@@ -12,7 +12,6 @@ abstract class ProductsEvent extends Equatable {
 
 class FetchProductsEvent extends ProductsEvent {
 
-
   const FetchProductsEvent();
 
   @override
@@ -28,6 +27,26 @@ class FetchProducttypeEvent extends ProductsEvent {
   List<Object> get props => [type];
 }
 
+class FetchProductcatEvent extends ProductsEvent {
+  final int cateId;//catelogue id
+  final int start;
+  final int length;
+
+  const FetchProductcatEvent({required this.cateId,required this.length,required this.start}) ;
+
+  @override
+  List<Object> get props => [cateId,start,length];
+}
+class FetchMoreProductcatEvent extends ProductsEvent {
+  final int cateId;//catelogue id
+  final int start;
+  final int length;
+
+  const FetchMoreProductcatEvent({required this.cateId,required this.length,required this.start}) ;
+
+  @override
+  List<Object> get props => [cateId,start,length];
+}
 ///产品详情页面打开
 @immutable
 class ProductScreenLoadedEvent extends ProductsEvent {

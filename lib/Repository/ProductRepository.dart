@@ -8,10 +8,11 @@ class ProductRepository{
 
   ProductRepository();
 
-  Future<List<Product>> loadProductlist() async {
+  ///load product list from api
+  Future<List<Product>> loadProductlist(int catalogueId,int start, int length) async {
 
 
-    List<Product> lst =await productApiClient.getProductlist();
+    List<Product> lst =await productApiClient.getProductlist(catalogueId,start,length);
 
     return lst;
   }

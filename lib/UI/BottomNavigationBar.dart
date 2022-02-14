@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:amigatoy/UI/BrandUIComponent/BrandLayout.dart';
+import 'package:amigatoy/UI/CatelogueUIComponent/BrandLayout.dart';
 import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
 import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 import 'package:amigatoy/UI/AcountUIComponent/Profile.dart';

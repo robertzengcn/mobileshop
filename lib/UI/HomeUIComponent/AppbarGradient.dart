@@ -9,7 +9,7 @@ import 'package:amigatoy/UI/AcountUIComponent/Profile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 //import 'package:amigatoy/Models/models.dart';
-import 'package:amigatoy/UI/BrandUIComponent/BrandLayout.dart';
+import 'package:amigatoy/UI/CatelogueUIComponent/BrandLayout.dart';
 import 'package:amigatoy/UI/BottomNavigationBar.dart';
 
 class AppbarGradient extends StatefulWidget {

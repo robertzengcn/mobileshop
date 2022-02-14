@@ -1,0 +1,126 @@
+import 'package:amigatoy/Models/Product.dart';
+import 'package:flutter/material.dart';
+import 'package:amigatoy/Models/Categories.dart';
+import 'package:amigatoy/UI/HomeUIComponent/Search.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:amigatoy/Blocs/blocs.dart';
+import 'package:amigatoy/Repository/repository.dart';
+
+class CatelogueProductList extends StatefulWidget {
+  final int categoriesId;
+
+  CatelogueProductList({ Key? key, required this.categoriesId }) : super(key: key);
+
+  @override
+  _catelogueProductListState createState() => _catelogueProductListState();
+}
+
+class _catelogueProductListState extends State<CatelogueProductList> {
+  List<Product?> lcategories=[];
+
+  @override
+  Widget build(BuildContext context) {
+    int parentId=0;
+
+    /// Component appbar
+    var _appbar = AppBar(
+      backgroundColor: Color(0xFFFFFFFF),
+      elevation: 0.0,
+      title: Padding(
+        padding: const EdgeInsets.only(left: 10.0),
+        child: Text(
+          "Category",
+          style: TextStyle(
+              fontFamily: "Gotik",
+              fontSize: 20.0,
+              color: Colors.black54,
+              fontWeight: FontWeight.w700),
+        ),
+      ),
+      actions: <Widget>[
+        InkWell(
+          onTap: () {
+            Navigator.of(context).push(PageRouteBuilder(
+                pageBuilder: (_, __, ___) => new searchAppbar()));
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: Icon(
+              Icons.search,
+              size: 27.0,
+              color: Colors.black54,
+            ),
+          ),
+        )
+      ],
+    );
+
+    Widget _mainCatelist=Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Container(
+        height: 1000,
+        child: RefreshIndicator(
+          onRefresh:() async {
+            _startPage=_startPage+_pageLength;
+            BlocProvider.of<FeaturedsBloc>(context)
+                .add(FeaturedloadMore(start:_startPage,length: _pageLength));
+          },
+          child: GridView.builder(
+            itemCount: _lproduct.length,
+            physics: ScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 4.0,
+                mainAxisSpacing: 4.0,
+                mainAxisExtent: 285
+            ),
+            itemBuilder: (BuildContext context, int index){
+              if(_lproduct[index]!=null){
+                return ItemGrid(_lproduct[index]!);
+              }else{
+                return Container();
+              }
+            },
+
+          ),
+        ),
+      )
+      );
+
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<ProductsBloc>(create: (context) {
+            return ProductsBloc(productRepository: ProductRepository())..add(ListcategoriesEvent(parentId: parentId));
+          }),
+
+        ],
+        child: MultiBlocListener(
+          listeners: [
+            BlocListener<CategoriesBloc, CategoriesState>(
+                listener: (context, state) {
+                  if(state is Categorieslistfetched){
+
+                    // if(state.orderlst.length>0){
+                    setState(() {
+                      lcategories.addAll(state.listcategories);
+
+                    });
+
+                  }
+                }),
+          ],
+          child: BlocBuilder<CategoriesBloc, CategoriesState>(
+            builder: (context,catestate) {
+              if(catestate is Categorieslistfetched){
+                return _mainCatelist;
+              }else{
+                return Container();
+              }
+
+            }
+          ),
+        ));
+  }
+}
+
+

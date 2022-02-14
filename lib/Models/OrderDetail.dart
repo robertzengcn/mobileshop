@@ -6,12 +6,14 @@ class OrderDetail extends Equatable {
   final OrderDelivery orderDelivery;
   final OrderBill orderBill;
   final List<OrderProduct> orderProduct;
+  final OrderPayment? orderPayment;
 
   OrderDetail({
     required this.orderinfo,
     required this.orderDelivery,
     required this.orderBill,
-    required this.orderProduct
+    required this.orderProduct,
+    this.orderPayment
     });
   @override
   List<Object> get props => [orderinfo,orderDelivery,orderBill,orderProduct];
@@ -25,11 +27,13 @@ class OrderDetail extends Equatable {
         productsList.add(OrderProduct.fromJson(value));
       });
     }
+
       return OrderDetail(
           orderinfo: OrderInfo.fromJson(json['info']),
           orderDelivery: OrderDelivery.fromJson(json['delivery']),
           orderBill: OrderBill.fromJson(json['bill']),
         orderProduct: productsList,
+          orderPayment:json['payment']!=null?OrderPayment.fromJson(json['payment']):null,
       );
   }
 }

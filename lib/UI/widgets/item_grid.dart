@@ -185,7 +185,7 @@ class ItemGrid extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                   child: Text(
-                    products.products_price.toString(),
+                    "\$"+products.products_price.toString(),
                     style: TextStyle(
                         fontFamily: "Sans",
                         fontWeight: FontWeight.w500,
@@ -201,29 +201,29 @@ class ItemGrid extends StatelessWidget {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Text(
-                            products.products_price.toString(),
+                          products.product_wish!=null&&products.product_wish!>0?Text(
+                            products.product_wish.toString(),
                             style: TextStyle(
                                 fontFamily: "Sans",
                                 color: Colors.black26,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 12.0),
-                          ),
-                          Icon(
+                          ):Container(),
+                          products.product_wish!=null&&products.product_wish!>0?Icon(
                             Icons.star,
                             color: Colors.yellow,
                             size: 14.0,
-                          )
+                          ):Container()
                         ],
                       ),
-                      Text(
-                        products.products_quantity.toString(),
-                        style: TextStyle(
-                            fontFamily: "Sans",
-                            color: Colors.black26,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12.0),
-                      )
+                      // Text(
+                      //   products.products_quantity.toString(),
+                      //   style: TextStyle(
+                      //       fontFamily: "Sans",
+                      //       color: Colors.black26,
+                      //       fontWeight: FontWeight.w500,
+                      //       fontSize: 12.0),
+                      // )
                     ],
                   ),
                 ),

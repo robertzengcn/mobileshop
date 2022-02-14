@@ -25,5 +25,6 @@ export './OrderDelivery.dart';
 export './OrderBill.dart';
 export './OrderDetail.dart';
 export './OrderProductAttributes.dart';
-
+export './OrderPayment.dart';
+export './Categories.dart';
 
