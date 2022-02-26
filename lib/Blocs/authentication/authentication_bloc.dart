@@ -29,13 +29,10 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
       // final String? tokenStr = await userRepository.hasToken();
     final String? tokenStr=await userRepository.getUsertoken();
-    print("------------------");
-    print(tokenStr);
-        print("*****************");
+
       if (tokenStr!=null&&tokenStr.length>0) {
         List<String> tokenArr=tokenStr.split(":");
-        print(int.parse(tokenArr[1]));
-        print(DateTime.now().millisecondsSinceEpoch);
+
         if(int.parse(tokenArr[1])>DateTime.now().millisecondsSinceEpoch){
 
           //token expire
@@ -53,12 +50,12 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 //      await userRepository.persistToken(event.token);
 //       await userRepository.insertUser(event.user);
       String Tokenstring=event.user.usertoken+":"+event.user.userexpired;
-      print(Tokenstring);
-      await userRepository.persistToken(Tokenstring);
-      print("5252525252");
 
-      final String? tokenStr = await userRepository.hasToken();
-      print(tokenStr);
+      await userRepository.persistToken(Tokenstring);
+
+
+      // final String? tokenStr = await userRepository.hasToken();
+
       yield AuthenticationAuthenticated(token:Tokenstring);
 
     }else if (event is LoggedOut) {

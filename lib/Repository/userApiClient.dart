@@ -102,6 +102,14 @@ class UserApiClient{
     );
   }
 
+  ///save user token
+  Future <void> deleteUsertoken() async{
+    await storage.delete(key: _usertokenkey,
+        iOptions: options,
+        aOptions: _getAndroidOptions()
+    );
+  }
+
   ///decode the encrypted token
   Future <Map<String,dynamic>> decodeToken(String encryptedToken) async {
     String? publicKey=await this.getSecretkey();

@@ -5,17 +5,20 @@ import 'package:http/http.dart' as http;
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/constants/application_constants.dart';
 //import 'dart:developer' as developer;
-import 'package:amigatoy/dao/user_dao.dart';
+// import 'package:amigatoy/dao/user_dao.dart';
 import 'package:amigatoy/Repository/BaseApiClient.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class CustomerAddressApiClient extends BaseApiClient {
-  final userDao = UserDao();
+  // final userDao = UserDao();
 
   @override
   Future<List<CustomerAddress?>> queryCustomeraddress() async {
     var url = Uri.parse('$appServerUrl/customeraddress');
-    String token = await this.getToken();
+    String? token = await this.getToken();
+    if(token==null){
+      throw Exception('token empty');
+    }
     http.Response response = await http
         .get(url, headers: {'Application-Id': '$appId', 'Client-Key': token});
     if (response.statusCode != 200) {
@@ -40,7 +43,10 @@ class CustomerAddressApiClient extends BaseApiClient {
   ///get countries
   Future<List<Countries>> getCountrylist() async {
     String url = '$appServerUrl/countryList';
-    String token = await this.getToken();
+    String? token = await this.getToken();
+    if(token==null){
+      throw Exception('token empty');
+    }
     Map<String, String> headers;
     headers = {'Application-Id': '$appId', 'Client-Key': token};
     var file = await DefaultCacheManager().getSingleFile(url, headers: headers);
@@ -67,7 +73,10 @@ class CustomerAddressApiClient extends BaseApiClient {
       return [];
     }
     String url = '$appServerUrl/zonelist/'+id.toString();
-    String token = await this.getToken();
+    String? token = await this.getToken();
+    if(token==null){
+      throw Exception('token empty');
+    }
     Map<String, String> headers;
     headers = {'Application-Id': '$appId', 'Client-Key': token};
     var file = await DefaultCacheManager().getSingleFile(url, headers: headers);
@@ -113,7 +122,10 @@ class CustomerAddressApiClient extends BaseApiClient {
     }
     data["entry_telephone"]=customerAddress.telephone;
 
-    String token=await this.getToken();
+    String? token=await this.getToken();
+    if(token==null){
+      throw Exception('token empty');
+    }
 
     http.Response response = await http.post(
       url,
@@ -145,8 +157,10 @@ class CustomerAddressApiClient extends BaseApiClient {
 
     data["addressid"]=customerAddressid.toString();
 
-    String token=await this.getToken();
-
+    String? token=await this.getToken();
+    if(token==null){
+      throw Exception('token empty');
+    }
     http.Response response = await http.post(
       url,
       body: data,
