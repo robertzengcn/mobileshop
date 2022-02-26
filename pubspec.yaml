@@ -46,6 +46,9 @@ dependencies:
   convert: ^3.0.1
   webview_flutter: ^2.8.0
   cached_network_image: ^3.2.0
+  flutter_facebook_auth: ^4.0.1
+  flutter_secure_storage: ^5.0.2
+  dart_jsonwebtoken: ^2.4.1
 #  flutter_webview_plugin: ^0.4.0
 #  formz: ^0.4.0
 

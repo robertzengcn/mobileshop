@@ -61,7 +61,7 @@ void main() async {
 
 /// Set orienttation
 class myApp extends StatelessWidget {
-  final userRepository = UserRepository(userApiClient:UserApiClient());
+  final userRepository = UserRepository();
 //  final productRepository=ProductRepository();
   @override
   Widget build(BuildContext context) {

@@ -7,6 +7,9 @@ import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:amigatoy/Arguments/LoginArguments.dart';
 import 'package:amigatoy/UI/HomeUIComponent/DetailProduct.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:amigatoy/Repository/repository.dart';
+import 'package:amigatoy/Models/User.dart';
 
 class loginScreen extends StatefulWidget {
   static const routeName = '/logins';
@@ -101,7 +104,7 @@ class _loginScreenState extends State<loginScreen>
             SnackBar(content: Text('${state.error}')),
           );
       } else if (state is LoginCompleted) {
-        //用户登录成功
+        //user login success
         setState(() {
           tap = 1;
         });
@@ -129,6 +132,40 @@ class _loginScreenState extends State<loginScreen>
 
       }
     }, child: BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
+      Future<Null> _loginFacebook() async {
+        final LoginResult result = await FacebookAuth.instance.login( permissions: ['email', 'public_profile']); // by default we request the email and the public profile
+// or FacebookAuth.i.login()
+        if (result.status == LoginStatus.success) {
+          // you are logged
+          final AccessToken accessToken = result.accessToken!;
+          if (accessToken != null) {
+            final userData = await FacebookAuth.instance.getUserData(
+                fields: "name,email,picture.width(200),id"
+            );
+            BlocProvider.of<LoginBloc>(context).add(
+                LoginFbsuccess(userId:userData["id"],
+                    email:userData["email"],
+                  accessToken: accessToken.token,
+                  username: userData["name"],
+                )
+            );
+
+
+          }
+        } else {
+          String noticeMessage="unkown error happened";
+          if(result.message!=null){
+            noticeMessage=result.message!;
+          }
+          // print(result.status);
+          // print(result.message);
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+                SnackBar(content: Text(noticeMessage)));
+        }
+
+      }
       return Scaffold(
         backgroundColor: Colors.white,
         body: Container(
@@ -198,7 +235,12 @@ class _loginScreenState extends State<loginScreen>
                               Padding(
                                   padding:
                                       EdgeInsets.symmetric(vertical: 30.0)),
-                              buttonCustomFacebook(),
+
+                              GestureDetector(
+                                  onTap: (){
+                                    _loginFacebook();
+                                  },
+                                  child: buttonCustomFacebook()),
 
                               /// ButtonCustomGoogle
                               Padding(
@@ -333,6 +375,8 @@ class textFromField extends StatelessWidget {
       required this.password,
       required this.controllerValue});
 
+
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -392,35 +436,35 @@ class buttonCustomFacebook extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
-      child: Container(
-        alignment: FractionalOffset.center,
-        height: 49.0,
-        width: 500.0,
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(107, 112, 248, 1.0),
-          borderRadius: BorderRadius.circular(40.0),
-          boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 15.0)],
+        child: Container(
+          alignment: FractionalOffset.center,
+          height: 49.0,
+          width: 500.0,
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(107, 112, 248, 1.0),
+            borderRadius: BorderRadius.circular(40.0),
+            boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 15.0)],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(
+                "assets/img/icon_facebook.png",
+                height: 25.0,
+              ),
+              Padding(padding: EdgeInsets.symmetric(horizontal: 7.0)),
+              Text(
+                "Login With Facebook",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Sans'),
+              ),
+            ],
+          ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset(
-              "assets/img/icon_facebook.png",
-              height: 25.0,
-            ),
-            Padding(padding: EdgeInsets.symmetric(horizontal: 7.0)),
-            Text(
-              "Login With Facebook",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'Sans'),
-            ),
-          ],
-        ),
-      ),
-    );
+      );
   }
 }
 

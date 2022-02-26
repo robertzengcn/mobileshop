@@ -5,16 +5,17 @@ import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/dao/user_dao.dart';
 
+
 class UserRepository {
-  final UserApiClient userApiClient;
+  UserApiClient userApiClient=new UserApiClient();
   final userDao = UserDao();
-  UserRepository({required this.userApiClient})
-      : assert(userApiClient != null);
+  UserRepository();
 
   Future<User> authenticate({
     required String username,
     required String password,
   }) async {
+
 //    await Future.delayed(Duration(seconds: 1));
     User futureUser=await userApiClient.loginAuth(username, password);
     return futureUser;
@@ -32,17 +33,43 @@ class UserRepository {
 
   Future<void> persistToken(String token) async {
     /// write to keystore/keychain
-    await Future.delayed(Duration(seconds: 1));
-    return;
+    // await Future.delayed(Duration(seconds: 1));
+    // return;
+    await userApiClient.saveUsertoken(token);
   }
 
-  Future<User?> hasToken() async {
+  Future<String?> hasToken() async {
     /// read from keystore/keychain
 //    await Future.delayed(Duration(seconds: 1));
     User? user=await userDao.getToken();
-    return user;
+    if(user!=null){
+      return user.usertoken;
+    }else{
+      return null;
+    }
+//     return user;
+//      return userApiClient.getUsertoken();
   }
   Future insertUser(User user) => userDao.createUser(user);
 
-  Future getUserbytoken({required String token}) => userDao.getUserbytoken(token);
+  Future <User?> getUserbytoken({required String token}) => userDao.getUserbytoken(token);
+
+  ///download secret key
+  Future <void> downloadPublickey() async {
+    userApiClient.downloadSecretkey();
+  }
+  ///get public key
+  Future <String?> getPublickey() async {
+    return userApiClient.getSecretkey();
+  }
+/// login by facebook
+  Future <User> loginbyFb(String username,String email,String assessCode,String userId) async{
+    return userApiClient.loginbyFb(username,email,assessCode,userId);
+  }
+  ///get public key
+  Future <String?> getUsertoken() async {
+    return userApiClient.getSecretkey();
+  }
+
+
 }

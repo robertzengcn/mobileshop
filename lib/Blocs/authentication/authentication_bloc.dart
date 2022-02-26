@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 //import 'package:meta/meta.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/User.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
@@ -24,23 +25,40 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   ) async* {
     // TODO: implement mapEventToState
     if (event is AppStarted) {
-      final User? user = await userRepository.hasToken();
+        await userRepository.downloadPublickey();
 
-      if (user!=null) {
-        yield AuthenticationAuthenticated(token:user.usertoken);
+      final String? tokenStr = await userRepository.hasToken();
+    final String? testStr=await userRepository.getUsertoken();
+    print("------------------");
+    print(String);
+        print("*****************");
+      if (tokenStr!=null&&tokenStr.length>0) {
+        List<String> tokenArr=tokenStr.split(":");
+        if(int.parse(tokenArr[1])>DateTime.now().millisecondsSinceEpoch){
+          //token expire
+          yield AuthenticationAuthenticated(token:tokenArr[0]);
+        }else{
+
+          yield AuthenticationUnauthenticated();
+        }
+
       } else {
         yield AuthenticationUnauthenticated();
       }
-    }
-
-    if (event is LoggedIn) {
+    }else if (event is LoggedIn) {
       yield AuthenticationLoading();
 //      await userRepository.persistToken(event.token);
-      await userRepository.insertUser(event.user);
-      yield AuthenticationAuthenticated(token:event.user.usertoken);
-    }
+//       await userRepository.insertUser(event.user);
+      String Tokenstring=event.user.usertoken+":"+event.user.userexpired;
+      print(Tokenstring);
+      await userRepository.persistToken(Tokenstring);
+      print("5252525252");
 
-    if (event is LoggedOut) {
+      final String? tokenStr = await userRepository.hasToken();
+      print(tokenStr);
+      yield AuthenticationAuthenticated(token:Tokenstring);
+
+    }else if (event is LoggedOut) {
       yield AuthenticationLoading();
       await userRepository.deleteToken(event.token);
       yield AuthenticationUnauthenticated();

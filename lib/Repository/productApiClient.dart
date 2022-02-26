@@ -157,7 +157,7 @@ class ProductApiClient{
     }
     var responseJson = json.decode(response.body);
     if(responseJson['status']==true){
-      return (responseJson['data'] as List)
+      return (responseJson['data']['list'] as List)
           .map((p) => Product.fromJson(p))
           .toList();
     }else{

@@ -46,7 +46,7 @@ class UserDao{
     return null;
   }
 
-  // 获取有效的用户
+  ///get token from db
   Future<User?> getToken() async {
     final db = await dbProvider.database;
     var maps = await db.query(userTABLE,
@@ -57,10 +57,12 @@ class UserDao{
     );
     if (maps.length > 0) {
       return User.fromMap(maps.first);
+
+      // return await maps.first['user_token']!;
     }
-    return null;
+    // return null;
   }
-  //登出用户前删除token
+  //delete token after user login
   Future <void> deleteUserbytoken(String token) async {
     final db = await dbProvider.database;
 //    count = db
