@@ -27,14 +27,17 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     if (event is AppStarted) {
         await userRepository.downloadPublickey();
 
-      final String? tokenStr = await userRepository.hasToken();
-    final String? testStr=await userRepository.getUsertoken();
+      // final String? tokenStr = await userRepository.hasToken();
+    final String? tokenStr=await userRepository.getUsertoken();
     print("------------------");
-    print(testStr);
+    print(tokenStr);
         print("*****************");
       if (tokenStr!=null&&tokenStr.length>0) {
         List<String> tokenArr=tokenStr.split(":");
+        print(int.parse(tokenArr[1]));
+        print(DateTime.now().millisecondsSinceEpoch);
         if(int.parse(tokenArr[1])>DateTime.now().millisecondsSinceEpoch){
+
           //token expire
           yield AuthenticationAuthenticated(token:tokenArr[0]);
         }else{
