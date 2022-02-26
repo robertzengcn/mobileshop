@@ -5,9 +5,8 @@ import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/Repository/repository.dart';
 // import 'package:amigatoy/dao/user_dao.dart';
 
-
 class UserRepository {
-  UserApiClient userApiClient=new UserApiClient();
+  UserApiClient userApiClient = new UserApiClient();
   // final userDao = UserDao();
   UserRepository();
 
@@ -15,9 +14,8 @@ class UserRepository {
     required String username,
     required String password,
   }) async {
-
 //    await Future.delayed(Duration(seconds: 1));
-    User futureUser=await userApiClient.loginAuth(username, password);
+    User futureUser = await userApiClient.loginAuth(username, password);
     return futureUser;
 //    futureUser.then((news) {
 //      print(news);
@@ -32,11 +30,12 @@ class UserRepository {
     return;
   }
 
-  Future<void> persistToken(String token) async {
+  Future<void> persistToken(String token,String userexpired) async {
     /// write to keystore/keychain
     // await Future.delayed(Duration(seconds: 1));
     // return;
-    await userApiClient.saveUsertoken(token);
+    String tokenstring=token+":"+userexpired;
+    await userApiClient.saveUsertoken(tokenstring);
   }
 
 //   Future<String?> hasToken() async {
@@ -56,21 +55,24 @@ class UserRepository {
   // Future <User?> getUserbytoken({required String token}) => userDao.getUserbytoken(token);
 
   ///download secret key
-  Future <void> downloadPublickey() async {
+  Future<void> downloadPublickey() async {
     userApiClient.downloadSecretkey();
   }
+
   ///get public key
-  Future <String?> getPublickey() async {
+  Future<String?> getPublickey() async {
     return userApiClient.getSecretkey();
   }
-/// login by facebook
-  Future <User> loginbyFb(String username,String email,String assessCode,String userId) async{
-    return userApiClient.loginbyFb(username,email,assessCode,userId);
+
+  /// login by facebook
+  Future<User> loginbyFb(
+      String username, String email, String assessCode, String userId) async {
+    return userApiClient.loginbyFb(username, email, assessCode, userId);
   }
+
   ///get public key
-  Future <String?> getUsertoken() async {
-    return userApiClient.getUsertoken();
+  Future<String?> getUsertoken() async {
+    return await userApiClient.getUsertoken();
+
   }
-
-
 }
