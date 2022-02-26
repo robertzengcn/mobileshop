@@ -88,10 +88,19 @@ class UserApiClient{
   ///get user token
   Future <String?> getUsertoken() async{
 
-    return await storage.read(key: _usertokenkey,
+    String? tokenStr= await storage.read(key: _usertokenkey,
         iOptions: options,
         aOptions: _getAndroidOptions()
     );
+    if (tokenStr != null && tokenStr.length > 0) {
+      List<String> tokenArr = tokenStr.split(":");
+
+      if (int.parse(tokenArr[1]) > DateTime.now().millisecondsSinceEpoch) {
+        return tokenArr[0];
+      } else {
+        return null;
+      }
+    }
   }
   ///save user token
   Future <void> saveUsertoken(String token) async{
