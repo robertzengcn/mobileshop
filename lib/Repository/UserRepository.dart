@@ -68,7 +68,7 @@ class UserRepository {
   }
   ///get public key
   Future <String?> getUsertoken() async {
-    return userApiClient.getSecretkey();
+    return userApiClient.getUsertoken();
   }
 
 

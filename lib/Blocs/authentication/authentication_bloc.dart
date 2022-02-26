@@ -30,7 +30,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       final String? tokenStr = await userRepository.hasToken();
     final String? testStr=await userRepository.getUsertoken();
     print("------------------");
-    print(String);
+    print(testStr);
         print("*****************");
       if (tokenStr!=null&&tokenStr.length>0) {
         List<String> tokenArr=tokenStr.split(":");
