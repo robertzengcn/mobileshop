@@ -49,12 +49,14 @@ dependencies:
   flutter_facebook_auth: ^4.0.1
   flutter_secure_storage: ^5.0.2
   dart_jsonwebtoken: ^2.4.1
+  google_sign_in: ^5.2.4
 #  flutter_webview_plugin: ^0.4.0
 #  formz: ^0.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  test: ^1.17.10
 
 
 # For information on the generic Dart part of this file, see the

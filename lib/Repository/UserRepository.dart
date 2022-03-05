@@ -21,7 +21,7 @@ class UserRepository {
 //      print(news);
 //    });
   }
-
+  ///delete user token
   Future<void> deleteToken(String token) async {
     /// delete from keystore/keychain
 //    await Future.delayed(Duration(seconds: 1));
@@ -69,10 +69,19 @@ class UserRepository {
       String username, String email, String assessCode, String userId) async {
     return userApiClient.loginbyFb(username, email, assessCode, userId);
   }
+  /// login by google
+  Future<User> loginbyGg(
+      String username, String email) async {
+    return userApiClient.loginbyGg(username, email);
+  }
 
   ///get public key
   Future<String?> getUsertoken() async {
     return await userApiClient.getUsertoken();
 
+  }
+  ///register user
+  Future<User> registerUser(String fullName,String email,String password) async {
+    return await userApiClient.registerUser(fullName,email,password);
   }
 }

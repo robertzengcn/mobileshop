@@ -150,9 +150,17 @@ class UserApiClient{
   ///user login by fb
   Future <User> loginbyFb(String username,String email,String assessCode,String userId) async{
     var url = Uri.parse('$appServerUrl/loginfb');
+    final jwt = JWT(
+        {'username':username,
+          'email': email,
+          'accessToken': assessCode,
+          'userId':userId}
+    );
+    // Sign it (default with HS256 algorithm)
+    String fbdatastring = jwt.sign(SecretKey(MobileSecretKey));
     http.Response response = await http.post(
       url,
-      body: {'username':username,'email': email, 'accessToken': assessCode,'userId':userId},
+      body: {'data':fbdatastring},
       headers: {
         'Application-Id': '$appId',
       },
@@ -164,10 +172,84 @@ class UserApiClient{
     }
     var responseJson = json.decode(response.body);
     if(responseJson['status']==true){
+      // print(responseJson['data']['data']);
       if(responseJson['data']['data']!=null){
-        responseJson['data']['user']=this.decodeToken(responseJson['data']['data']);
+        responseJson['data']['user']=await this.decodeToken(responseJson['data']['data']);
       }
+      // print(responseJson['data']['user']);
+      return User.fromJson(responseJson['data']['user']);
+    }else{
+      throw Exception(responseJson['msg']);
+    }
 
+  }
+
+  @override
+  ///user login by google
+  Future <User> loginbyGg(String username,String email) async{
+    var url = Uri.parse('$appServerUrl/logingg');
+    final jwt = JWT(
+        {'username':username,
+          'email': email}
+    );
+    // Sign it (default with HS256 algorithm)
+    String fbdatastring = jwt.sign(SecretKey(MobileSecretKey));
+    http.Response response = await http.post(
+      url,
+      body: {'data':fbdatastring},
+      headers: {
+        'Application-Id': '$appId',
+      },
+    );
+
+    if (response.statusCode != 200) {
+
+      throw Exception('Unable to login in by facebook from the REST API');
+    }
+    var responseJson = json.decode(response.body);
+    if(responseJson['status']==true){
+      // print(responseJson['data']['data']);
+      if(responseJson['data']['data']!=null){
+        responseJson['data']['user']=await this.decodeToken(responseJson['data']['data']);
+      }
+      // print(responseJson['data']['user']);
+      return User.fromJson(responseJson['data']['user']);
+    }else{
+      throw Exception(responseJson['msg']);
+    }
+
+  }
+
+  @override
+  ///user login by fb
+  Future <User> registerUser(String fullName,String email,String password) async{
+    var url = Uri.parse('$appServerUrl/register');
+    final jwt = JWT(
+        {'fullname':fullName,
+          'email': email,
+          'password':password}
+    );
+    // Sign it (default with HS256 algorithm)
+    String fbdatastring = jwt.sign(SecretKey(MobileSecretKey));
+    http.Response response = await http.post(
+      url,
+      body: {'data':fbdatastring},
+      headers: {
+        'Application-Id': '$appId',
+      },
+    );
+
+    if (response.statusCode != 200) {
+
+      throw Exception('Unable to register user from the REST API');
+    }
+    var responseJson = json.decode(response.body);
+    if(responseJson['status']==true){
+      // print(responseJson['data']['data']);
+      if(responseJson['data']['data']!=null){
+        responseJson['data']['user']=await this.decodeToken(responseJson['data']['data']);
+      }
+      // print(responseJson['data']['user']);
       return User.fromJson(responseJson['data']['user']);
     }else{
       throw Exception(responseJson['msg']);

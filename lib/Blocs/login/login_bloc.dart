@@ -51,6 +51,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       User faUser =await userRepository.loginbyFb(event.username,event.email,event.accessToken,event.userId);
       authenticationBloc.add(LoggedIn(user: faUser));
       yield LoginCompleted();
+    }else if(event is LoginGGsuccess){
+      yield LoginLoading();
+      UserRepository userRepository=new UserRepository();
+      User faUser =await userRepository.loginbyGg(event.username,event.email);
+      authenticationBloc.add(LoggedIn(user: faUser));
+      yield LoginCompleted();
     }
   }
   LoginState _mapUsernameChangedToState(

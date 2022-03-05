@@ -117,6 +117,14 @@ class myApp extends StatelessWidget {
           //加载产品的评论
           return PaypalBloc();
         }),
+        BlocProvider<RegisterBloc>(
+          create: (context) {
+            return RegisterBloc(
+              authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+              userRepository: userRepository,
+            );
+          },
+        ),
       ],
       // child: MultiBlocListener(
         // listeners: [

@@ -68,7 +68,7 @@ class WishApiClient extends BaseApiClient{
 //    String token=user!=null?user.usertoken:"";
     String? token=await this.getToken();
     if(token==null){
-      throw Exception('token empty');
+      return false;
     }
     http.Response response = await http.post(
       url,

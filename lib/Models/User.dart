@@ -24,7 +24,8 @@ class User extends Equatable {
   ];
 //convert item from json to object
   static User fromJson(dynamic json){
-    // print(json);
+
+   // print(json);
 //    int expiretime=DateTime.now().millisecondsSinceEpoch+json['expire'] as int;
 //    print('expiretime:'+expiretime.toString());
 //     var today = DateTime.now();
@@ -35,7 +36,8 @@ class User extends Equatable {
 //     final String userexpire =(DateTime.now().millisecondsSinceEpoch+2592000000).toString();
     final String userexpire =(DateTime.now().millisecondsSinceEpoch+json['token_expire']).toString();
 //    print(userexpire);
-    UserRepository userRepository=new UserRepository();
+//     UserRepository userRepository=new UserRepository();
+
     return User(
       userid: json['id'] as int,
       username: json['username'],

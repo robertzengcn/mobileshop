@@ -64,3 +64,19 @@ class LoginFbsuccess extends LoginEvent {
   String toString() =>
       'LoginFbsuccess { username: $username}';
 }
+///login by google
+class LoginGGsuccess extends LoginEvent {
+  final String username;
+  final String email;
+  const LoginGGsuccess({
+    required this.username,
+    required this.email,
+  });
+
+  @override
+  List<Object> get props => [username,email];
+
+  @override
+  String toString() =>
+      'LoginGGsuccess { username: $username,email:$email}';
+}
