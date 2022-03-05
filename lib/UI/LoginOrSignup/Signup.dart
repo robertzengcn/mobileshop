@@ -92,10 +92,10 @@ class _SignupState extends State<Signup> with TickerProviderStateMixin {
         //     MaterialPageRoute(
         //         builder: (BuildContext context) =>
         //             new loginScreen()));
-        // setState(() {
-        //   tap = 1;
-        // });
-        print(59);
+        setState(() {
+          tap = 1;
+        });
+       
         new LoginAnimation(
           animationController: sanimationController,
         );
@@ -108,7 +108,10 @@ class _SignupState extends State<Signup> with TickerProviderStateMixin {
           );
       }
     },
-      child: Scaffold(
+      child: BlocBuilder<RegisterBloc, RegisterState>(
+  builder: (context, state) {
+    return Scaffold(
+        
         body: Stack(
           children: <Widget>[
             Container(
@@ -242,10 +245,12 @@ class _SignupState extends State<Signup> with TickerProviderStateMixin {
                         ),
 
                         /// Set Animaion after user click buttonLogin
-                        InkWell(
+                        tap==0?InkWell(
                                 splashColor: Colors.yellow,
                                 onTap: () {
-                                  _onRegisterButtonPressed();
+                                  if(state is! RegisterLoadingState) {
+                                    _onRegisterButtonPressed();
+                                  }
                                   // setState(() {
                                   //   tap = 1;
                                   // });
@@ -253,7 +258,9 @@ class _SignupState extends State<Signup> with TickerProviderStateMixin {
 //                                return tap;
                                 },
                                 child: buttonBlackBottom(),
-                              )
+                              ): new LoginAnimation(
+                          animationController: sanimationController,
+                        )
 
                       ],
                     ),
@@ -263,7 +270,9 @@ class _SignupState extends State<Signup> with TickerProviderStateMixin {
             ),
           ],
         ),
-      ),
+      );
+  },
+),
     );
   }
 }
