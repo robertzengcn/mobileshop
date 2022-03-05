@@ -41,5 +41,27 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>fb5181365248590316</string>
+        </array>
+      </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>5181365248590316</string>
+    <key>FacebookClientToken</key>
+    <string>f1a25d2de2b1315f30e1d3d79b27cca7</string>
+    <key>FacebookDisplayName</key>
+    <string>Amiga Toy</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>fbapi</string>
+      <string>fb-messenger-share-api</string>
+      <string>fbauth2</string>
+      <string>fbshareextension</string>
+    </array>
 </dict>
 </plist>
