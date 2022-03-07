@@ -63,5 +63,20 @@
       <string>fbauth2</string>
       <string>fbshareextension</string>
     </array>
+    <!-- Google Sign-in Section -->
+    <key>CFBundleURLTypes</key>
+    <array>
+    	<dict>
+    		<key>CFBundleTypeRole</key>
+    		<string>Editor</string>
+    		<key>CFBundleURLSchemes</key>
+    		<array>
+
+    			<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
+    			<string>com.googleusercontent.apps.884455045668-dvp9krj6uhqt33er6atlhkhk5a2q660q</string>
+    		</array>
+    	</dict>
+    </array>
+    <!-- End of the Google Sign-in Section -->
 </dict>
 </plist>
