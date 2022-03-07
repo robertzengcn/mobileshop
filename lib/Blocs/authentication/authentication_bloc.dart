@@ -31,10 +31,13 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     final String? tokenStr=await userRepository.getUsertoken();
 
       if (tokenStr!=null&&tokenStr.length>0) {
-
+        final String? userName=await userRepository.getUsername();
+        if(userName!=null) {
           //token expire
-          yield AuthenticationAuthenticated(token:tokenStr);
-
+          yield AuthenticationAuthenticated(token: tokenStr,name:userName);
+        }else{
+          yield AuthenticationUnauthenticated();
+        }
       } else {
         yield AuthenticationUnauthenticated();
       }
@@ -44,12 +47,12 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 //       await userRepository.insertUser(event.user);
 
 
-      await userRepository.persistToken(event.user.usertoken,event.user.userexpired);
+      await userRepository.persistToken(event.user.usertoken,event.user.userexpired,event.user.username);
 
 
       // final String? tokenStr = await userRepository.hasToken();
 
-      yield AuthenticationAuthenticated(token:event.user.usertoken);
+      yield AuthenticationAuthenticated(token:event.user.usertoken,name:event.user.username);
 
     }else if (event is LoggedOut) {
       yield AuthenticationLoading();

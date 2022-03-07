@@ -13,6 +13,7 @@ class UserApiClient{
   UserApiClient() ;
   String _mobilepublickey="mobilepublickey";
   String _usertokenkey="usertokenkey";
+  String _usernamekey="usernamekey";
 
   final storage = new FlutterSecureStorage();
 
@@ -85,6 +86,13 @@ class UserApiClient{
         aOptions: _getAndroidOptions()
     );
   }
+  ///get secret key
+  Future <String?> getUsername() async{
+    return await storage.read(key: _usernamekey,
+        iOptions: options,
+        aOptions: _getAndroidOptions()
+    );
+  }
   ///get user token
   Future <String?> getUsertoken() async{
 
@@ -106,6 +114,14 @@ class UserApiClient{
   Future <void> saveUsertoken(String token) async{
     await storage.write(key: _usertokenkey,
         value: token,
+        iOptions: options,
+        aOptions: _getAndroidOptions()
+    );
+  }
+  ///save user's name token to db
+  Future <void> saveUsername(String name) async{
+    await storage.write(key: _usernamekey,
+        value: name,
         iOptions: options,
         aOptions: _getAndroidOptions()
     );

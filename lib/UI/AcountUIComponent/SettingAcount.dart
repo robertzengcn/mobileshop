@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 
 class settingAcount extends StatefulWidget {
   @override
@@ -13,12 +14,31 @@ class _settingAcountState extends State<settingAcount> {
     fontFamily: "Gotik",
   );
 
-  static var _txtCustomSub = TextStyle(
-    color: Colors.black38,
-    fontSize: 15.0,
-    fontWeight: FontWeight.w500,
-    fontFamily: "Gotik",
-  );
+  // static var _txtCustomSub = TextStyle(
+  //   color: Colors.black38,
+  //   fontSize: 15.0,
+  //   fontWeight: FontWeight.w500,
+  //   fontFamily: "Gotik",
+  // );
+  void _updateProfile(){
+
+  }
+  void _manageAdd(){
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => new Delivery()),
+      // transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      //   return child;
+      // },
+    );
+
+  }
+  void _manageNotify(){
+
+  }
+  void _deleteAccount(){
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +62,17 @@ class _settingAcountState extends State<settingAcount> {
             children: <Widget>[
               setting(
                 head: "Account",
-                sub1: "Address",
-                sub2: "Telephone",
-                sub3: "Email",
+                sub1: "Profile",
+                f1: _updateProfile,
+                sub2: "Manage Address",
+                f2:_manageAdd,
               ),
               setting(
                 head: "Setting",
-                sub1: "Order Notifications",
-                sub2: "Discount Notifications",
-                sub3: "Credit Card",
+                sub1: "Notifications",
+                f1:_manageNotify,
+                sub2: "Delete Account",
+                f2:_deleteAccount,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 5.0),
@@ -91,9 +113,12 @@ class setting extends StatelessWidget {
     fontFamily: "Gotik",
   );
 
-  String head, sub1, sub2, sub3;
-
-  setting({required this.head, required this.sub1, required this.sub2, required this.sub3});
+  String head, sub1, sub2;
+  String? sub3;
+  // Function f1,f2;
+  Function()? f1,f2,f3;
+  setting(
+      {required this.head, required this.sub1, required this.f1,required this.sub2,required this.f2, this.sub3,this.f3});
 
   @override
   Widget build(BuildContext context) {
@@ -126,18 +151,21 @@ class setting extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        sub1,
-                        style: _txtCustomSub,
-                      ),
-                      Icon(
-                        Icons.keyboard_arrow_right,
-                        color: Colors.black38,
-                      )
-                    ]),
+                child: InkWell(
+                  onTap: f1,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          sub1,
+                          style: _txtCustomSub,
+                        ),
+                        Icon(
+                          Icons.keyboard_arrow_right,
+                          color: Colors.black38,
+                        )
+                      ]),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0, right: 20.0),
@@ -148,18 +176,21 @@ class setting extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        sub2,
-                        style: _txtCustomSub,
-                      ),
-                      Icon(
-                        Icons.keyboard_arrow_right,
-                        color: Colors.black38,
-                      )
-                    ]),
+                child: InkWell(
+                  onTap: f2,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          sub2,
+                          style: _txtCustomSub,
+                        ),
+                        Icon(
+                          Icons.keyboard_arrow_right,
+                          color: Colors.black38,
+                        )
+                      ]),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0, right: 20.0),
@@ -168,21 +199,24 @@ class setting extends StatelessWidget {
                   height: 0.5,
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        sub3,
-                        style: _txtCustomSub,
-                      ),
-                      Icon(
-                        Icons.keyboard_arrow_right,
-                        color: Colors.black38,
-                      )
-                    ]),
-              ),
+              sub3 != null
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 15.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              sub3!,
+                              style: _txtCustomSub,
+                            ),
+                            Icon(
+                              Icons.keyboard_arrow_right,
+                              color: Colors.black38,
+                            )
+                          ]),
+                    )
+                  : Container(),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0, right: 20.0),
                 child: Divider(

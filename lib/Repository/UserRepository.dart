@@ -30,12 +30,13 @@ class UserRepository {
     return;
   }
 
-  Future<void> persistToken(String token,String userexpired) async {
+  Future<void> persistToken(String token,String userexpired,String userName) async {
     /// write to keystore/keychain
     // await Future.delayed(Duration(seconds: 1));
     // return;
     String tokenstring=token+":"+userexpired;
     await userApiClient.saveUsertoken(tokenstring);
+    await userApiClient.saveUsername(userName);
   }
 
 //   Future<String?> hasToken() async {
@@ -78,6 +79,11 @@ class UserRepository {
   ///get public key
   Future<String?> getUsertoken() async {
     return await userApiClient.getUsertoken();
+
+  }
+  ///get public key
+  Future<String?> getUsername() async {
+    return await userApiClient.getUsername();
 
   }
   ///register user
