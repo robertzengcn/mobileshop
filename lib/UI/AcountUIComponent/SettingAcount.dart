@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
+import 'package:amigatoy/UI/CartUIComponent/AddressList.dart';
+import 'package:amigatoy/UI/AcountUIComponent/EditProfile.dart';
 
 class settingAcount extends StatefulWidget {
   @override
@@ -21,15 +22,51 @@ class _settingAcountState extends State<settingAcount> {
   //   fontFamily: "Gotik",
   // );
   void _updateProfile(){
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => new editProfile(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(0.0, 1.0);
+          const end = Offset.zero;
+          const curve = Curves.ease;
 
+          final tween = Tween(begin: begin, end: end);
+          final curvedAnimation = CurvedAnimation(
+            parent: animation,
+            curve: curve,
+          );
+
+          return SlideTransition(
+            position: tween.animate(curvedAnimation),
+            child: child,
+          );
+        },
+      ),
+
+    );
   }
   void _manageAdd(){
     Navigator.of(context).push(
       PageRouteBuilder(
-        pageBuilder: (_, __, ___) => new Delivery()),
-      // transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      //   return child;
-      // },
+        pageBuilder: (_, __, ___) => new AddressList(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(0.0, 1.0);
+          const end = Offset.zero;
+          const curve = Curves.ease;
+
+          final tween = Tween(begin: begin, end: end);
+          final curvedAnimation = CurvedAnimation(
+            parent: animation,
+            curve: curve,
+          );
+
+          return SlideTransition(
+            position: tween.animate(curvedAnimation),
+            child: child,
+          );
+        },
+      ),
+
     );
 
   }

@@ -28,7 +28,7 @@ var _txt = TextStyle(
 var _txtName = _txt.copyWith(fontWeight: FontWeight.w700, fontSize: 17.0);
 
 /// Get _txt and custom value of Variable for Edit text
-var _txtEdit = _txt.copyWith(color: Colors.black26, fontSize: 15.0);
+// var _txtEdit = _txt.copyWith(color: Colors.black26, fontSize: 15.0);
 
 /// Get _txt and custom value of Variable for Category Text
 var _txtCategory = _txt.copyWith(
@@ -201,14 +201,14 @@ class _profilState extends State<profil> {
                                   ___) => new settingAcount()));
                         },
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20.0, left: 85.0, right: 30.0),
-                        child: Divider(
-                          color: Colors.black12,
-                          height: 2.0,
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(
+                      //       top: 20.0, left: 85.0, right: 30.0),
+                      //   child: Divider(
+                      //     color: Colors.black12,
+                      //     height: 2.0,
+                      //   ),
+                      // ),
                       // category(
                       //   txt: "Call Center",
                       //   padding: 30.0,

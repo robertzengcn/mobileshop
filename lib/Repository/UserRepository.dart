@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:meta/meta.dart';
+// import 'package:meta/meta.dart';
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/Repository/repository.dart';
 // import 'package:amigatoy/dao/user_dao.dart';
@@ -90,4 +90,14 @@ class UserRepository {
   Future<User> registerUser(String fullName,String email,String password) async {
     return await userApiClient.registerUser(fullName,email,password);
   }
+  ///get user info
+  Future<UserInfo> getUserinfo() async {
+    return await userApiClient.getUserinfo();
+  }
+  ///update user info
+  Future <bool> updateUserinfo(String name, String telephone) async{
+    return await userApiClient.updateUserinfo(name, telephone);
+  }
+
+
 }

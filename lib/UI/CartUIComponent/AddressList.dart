@@ -83,7 +83,7 @@ class _AddressWrapperState extends State<AddressWrapper> {
               child: Icon(Icons.arrow_back)),
           elevation: 0.0,
           title: Text(
-            "Add shipping address",
+            "Manage shipping address",
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 18.0,

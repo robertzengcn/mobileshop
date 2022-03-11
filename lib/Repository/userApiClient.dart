@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'dart:async';
-import 'package:meta/meta.dart';
+// import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/constants/application_constants.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:amigatoy/Repository/BaseApiClient.dart';
 
-class UserApiClient{
+class UserApiClient extends BaseApiClient{
 
 //  final http.Client httpClient;
   UserApiClient() ;
@@ -95,20 +96,20 @@ class UserApiClient{
   }
   ///get user token
   Future <String?> getUsertoken() async{
-
-    String? tokenStr= await storage.read(key: _usertokenkey,
-        iOptions: options,
-        aOptions: _getAndroidOptions()
-    );
-    if (tokenStr != null && tokenStr.length > 0) {
-      List<String> tokenArr = tokenStr.split(":");
-
-      if (int.parse(tokenArr[1]) > DateTime.now().millisecondsSinceEpoch) {
-        return tokenArr[0];
-      } else {
-        return null;
-      }
-    }
+    return this.getToken();
+    // String? tokenStr= await storage.read(key: _usertokenkey,
+    //     iOptions: options,
+    //     aOptions: _getAndroidOptions()
+    // );
+    // if (tokenStr != null && tokenStr.length > 0) {
+    //   List<String> tokenArr = tokenStr.split(":");
+    //
+    //   if (int.parse(tokenArr[1]) > DateTime.now().millisecondsSinceEpoch) {
+    //     return tokenArr[0];
+    //   } else {
+    //     return null;
+    //   }
+    // }
   }
   ///save user token
   Future <void> saveUsertoken(String token) async{
@@ -152,7 +153,7 @@ class UserApiClient{
       return jwt.payload;
 
       // );
-      return jwt.payload;
+
     } on JWTExpiredError {
       print('jwt expired');
       throw Exception("jwt expired");
@@ -269,6 +270,62 @@ class UserApiClient{
       return User.fromJson(responseJson['data']['user']);
     }else{
       throw Exception(responseJson['msg']);
+    }
+
+  }
+
+  @override
+  ///get customer info from remote
+  Future <UserInfo> getUserinfo() async{
+    String? token=await this.getToken();
+    if(token==null){
+      throw Exception('token empty');
+    }
+    var url = Uri.parse('$appServerUrl/getCustomerinfo');
+    http.Response response = await http.get(
+      url,
+      headers: {
+        'Application-Id': '$appId',
+        'Client-Key':token
+      },
+    );
+    if (response.statusCode != 200) {
+      throw Exception("get user info error");
+    }
+    var responseJson = json.decode(response.body);
+    if (responseJson['status']!=true) {
+      throw Exception("get user info status error");
+    }
+
+    return UserInfo.fromJson(responseJson['data']);
+
+  }
+  ///update user's info
+  Future <bool> updateUserinfo(String name, String telephone) async{
+    String? token=await this.getToken();
+    if(token==null){
+      throw Exception('token empty');
+    }
+    var url = Uri.parse('$appServerUrl/updateUserinfo');
+    http.Response response = await http.post(
+      url,
+      body: {'telephone':telephone,
+        'name':name
+      },
+      headers: {
+        'Application-Id': '$appId',
+        'Client-Key':token
+      },
+    );
+    if (response.statusCode != 200) {
+
+      throw Exception('Unable to update user info');
+    }
+    var responseJson = json.decode(response.body);
+    if (responseJson['status']!=true) {
+      throw Exception("update user info get error");
+    }else{
+      return true;
     }
 
   }
