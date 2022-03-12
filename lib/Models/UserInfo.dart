@@ -34,7 +34,7 @@ class UserInfo extends Equatable {
       firstname: json['customers_firstname'],
       lastname:json['customers_lastname'],
       emailAddress:json['customers_email_address'],
-      telephone:json['customers_telephone'],
+      telephone:json['customers_telephone'].toString(),
     );
   }
 

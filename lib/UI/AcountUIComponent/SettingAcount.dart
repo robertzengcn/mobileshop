@@ -106,10 +106,10 @@ class _settingAcountState extends State<settingAcount> {
               ),
               setting(
                 head: "Setting",
-                sub1: "Notifications",
-                f1:_manageNotify,
-                sub2: "Delete Account",
-                f2:_deleteAccount,
+                // sub1: "Notifications",
+                // f1:_manageNotify,
+                sub1: "Delete Account",
+                f1:_deleteAccount,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 5.0),
@@ -150,12 +150,12 @@ class setting extends StatelessWidget {
     fontFamily: "Gotik",
   );
 
-  String head, sub1, sub2;
-  String? sub3;
+  String head, sub1;
+  String? sub2,sub3;
   // Function f1,f2;
   Function()? f1,f2,f3;
   setting(
-      {required this.head, required this.sub1, required this.f1,required this.sub2,required this.f2, this.sub3,this.f3});
+      {required this.head, required this.sub1, required this.f1,this.sub2,this.f2, this.sub3,this.f3});
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +211,7 @@ class setting extends StatelessWidget {
                   height: 0.5,
                 ),
               ),
-              Padding(
+              sub2 != null?Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
                 child: InkWell(
                   onTap: f2,
@@ -219,7 +219,7 @@ class setting extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          sub2,
+                          sub2!,
                           style: _txtCustomSub,
                         ),
                         Icon(
@@ -228,7 +228,7 @@ class setting extends StatelessWidget {
                         )
                       ]),
                 ),
-              ),
+              ):Container(),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0, right: 20.0),
                 child: Divider(

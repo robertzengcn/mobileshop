@@ -14,12 +14,12 @@ import 'package:email_validator/email_validator.dart';
 // );
 
 /// Custom Text Detail
-var _txtCustomSub = TextStyle(
-  color: Colors.black38,
-  fontSize: 13.5,
-  fontWeight: FontWeight.w500,
-  fontFamily: "Gotik",
-);
+// var _txtCustomSub = TextStyle(
+//   color: Colors.black38,
+//   fontSize: 13.5,
+//   fontWeight: FontWeight.w500,
+//   fontFamily: "Gotik",
+// );
 
 /// Declare example Credit Card
 // String numberCC = "9867 - 2312 - 3212 - 4213";
@@ -32,7 +32,7 @@ class editProfile extends StatefulWidget {
 }
 
 class _editProfileState extends State<editProfile> {
-  Widget _scaffoldWidget(){
+  Widget _scaffoldWidget() {
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
@@ -91,6 +91,7 @@ class _editProfileState extends State<editProfile> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     // MediaQueryData mediaQuery = MediaQuery.of(context);
@@ -100,32 +101,31 @@ class _editProfileState extends State<editProfile> {
     //   child:
     // );
     return MultiBlocProvider(
-        providers: [
+      providers: [
         BlocProvider(
-          create: (context) => UsersBloc(userRepository: new UserRepository())
-            ..add(getUserinfoevent())
-        ),
+            create: (context) => UsersBloc(userRepository: new UserRepository())
+              ..add(getUserinfoevent())),
         BlocProvider(
-              create: (context) => UpdateUserBloc(userRepository: new UserRepository())
-          ),
-        ],
-    child: MultiBlocListener(
-      listeners: [
-        BlocListener<UpdateUserBloc, UpdateUserState>(
-            listener: (context, state) {
-              if (state is UpdateUsersuccessstate) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('update user info success')),
-                );
-              }else if(state is UpdateUserErrorState){
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.error)),
-                );
-              }
-            }),
+            create: (context) =>
+                UpdateUserBloc(userRepository: new UserRepository())),
       ],
-      child:_scaffoldWidget(),
-    ),
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<UpdateUserBloc, UpdateUserState>(
+              listener: (context, state) {
+            if (state is UpdateUsersuccessstate) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('update user info success')),
+              );
+            } else if (state is UpdateUserErrorState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.error)),
+              );
+            }
+          }),
+        ],
+        child: _scaffoldWidget(),
+      ),
     );
   }
 }
@@ -143,6 +143,8 @@ class _edituserCardState extends State<edituserCard> {
 
   @override
   Widget build(BuildContext context) {
+    final _nameController = TextEditingController(text: widget.userinfo.firstname + " " + widget.userinfo.lastname);
+    final _telephoneController = TextEditingController(text:widget.userinfo.telephone);
     return Form(
       key: _formKey,
       child: Column(
@@ -153,27 +155,28 @@ class _edituserCardState extends State<edituserCard> {
             child: TextFormField(
                 decoration: InputDecoration(
                     border: UnderlineInputBorder(), labelText: "Your name"),
-                initialValue:
-                    widget.userinfo.firstname + " " + widget.userinfo.lastname,
+                // initialValue:
+                //     widget.userinfo.firstname + " " + widget.userinfo.lastname,
+                controller: _nameController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter some text';
                   }
                   return null;
-                }
-                ),
+                }),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child: TextFormField(
-              enabled: false,
-              decoration: InputDecoration(
-                  border: UnderlineInputBorder(), labelText: "Email(CAN NOT CHANGE!)"),
-              initialValue: widget.userinfo.emailAddress,
+                enabled: false,
+                decoration: InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: "Email(CAN NOT CHANGE!)"),
+                initialValue: widget.userinfo.emailAddress,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your email';
-                  }else{
+                  } else {
                     bool emailValid = EmailValidator.validate(value);
 
                     if (!emailValid) {
@@ -181,23 +184,22 @@ class _edituserCardState extends State<edituserCard> {
                     }
                   }
                   return null;
-                }
-            ),
+                }),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child: TextFormField(
                 decoration: InputDecoration(
-                    border: UnderlineInputBorder(), labelText: "Your telephone"),
-                initialValue:
-                widget.userinfo.telephone ,
+                    border: UnderlineInputBorder(),
+                    labelText: "Your telephone"),
+                // initialValue: widget.userinfo.telephone,
+                controller: _telephoneController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your telephone';
                   }
                   return null;
-                }
-            ),
+                }),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -209,7 +211,10 @@ class _edituserCardState extends State<edituserCard> {
                   if (_formKey.currentState!.validate()) {
                     // If the form is valid, display a snackbar. In the real world,
                     // you'd often call a server or save the information in a database.
-
+                    BlocProvider.of<UpdateUserBloc>(context).add(
+                        Updateinfoevent(
+                            name: _nameController.text,
+                            telephone: _telephoneController.text));
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing Data')),
                     );
@@ -226,109 +231,109 @@ class _edituserCardState extends State<edituserCard> {
 }
 
 /// Constructor for Transactions
-class transactionsDetail extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // MediaQueryData mediaQuery = MediaQuery.of(context);
-    return Padding(
-      padding: const EdgeInsets.only(
-          top: 10.0, left: 15.0, right: 15.0, bottom: 10.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 4.5,
-              spreadRadius: 1.0,
-            )
-          ],
-        ),
-        child: Column(
-          children: <Widget>[
-            dataTransaction(
-              date: "Jan 01",
-              item: "Buy Dress Red Valvet",
-              price: "\$ 50",
-            ),
-            dataTransaction(
-              date: "Feb 12",
-              item: "Buy Iphone X",
-              price: "\$ 1000",
-            ),
-            dataTransaction(
-              date: "Martch 21",
-              item: "Buy Mackbook Pro M21102 SSD 500 GB",
-              price: "\$ 2500",
-            ),
-            dataTransaction(
-              date: "Oct 16",
-              item: "Buy Case Handphone Hello Kity",
-              price: "\$ 50",
-            ),
-            dataTransaction(
-              date: "Dec 01",
-              item: "Buy Dress Blue ",
-              price: "\$ 50",
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+// class transactionsDetail extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     // MediaQueryData mediaQuery = MediaQuery.of(context);
+//     return Padding(
+//       padding: const EdgeInsets.only(
+//           top: 10.0, left: 15.0, right: 15.0, bottom: 10.0),
+//       child: Container(
+//         decoration: BoxDecoration(
+//           color: Colors.white,
+//           borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//           boxShadow: [
+//             BoxShadow(
+//               color: Colors.black.withOpacity(0.1),
+//               blurRadius: 4.5,
+//               spreadRadius: 1.0,
+//             )
+//           ],
+//         ),
+//         child: Column(
+//           children: <Widget>[
+//             dataTransaction(
+//               date: "Jan 01",
+//               item: "Buy Dress Red Valvet",
+//               price: "\$ 50",
+//             ),
+//             dataTransaction(
+//               date: "Feb 12",
+//               item: "Buy Iphone X",
+//               price: "\$ 1000",
+//             ),
+//             dataTransaction(
+//               date: "Martch 21",
+//               item: "Buy Mackbook Pro M21102 SSD 500 GB",
+//               price: "\$ 2500",
+//             ),
+//             dataTransaction(
+//               date: "Oct 16",
+//               item: "Buy Case Handphone Hello Kity",
+//               price: "\$ 50",
+//             ),
+//             dataTransaction(
+//               date: "Dec 01",
+//               item: "Buy Dress Blue ",
+//               price: "\$ 50",
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 /// Constructor for Transactions Data
-class dataTransaction extends StatelessWidget {
-  @override
-  String date, item, price;
-
-  dataTransaction(
-      {required this.date, required this.item, required this.price});
-
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: Text(
-                  date,
-                  style: _txtCustomSub.copyWith(
-                      color: Colors.black38,
-                      fontSize: 11.0,
-                      fontWeight: FontWeight.w500),
-                ),
-              ),
-              Container(
-                width: 130.0,
-                child: Text(
-                  item,
-                  style: _txtCustomSub.copyWith(color: Colors.black54),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              Text(price,
-                  style: _txtCustomSub.copyWith(
-                    color: Colors.redAccent,
-                    fontSize: 16.0,
-                  )),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Divider(
-            height: 0.5,
-            color: Colors.black12,
-          ),
-        ),
-      ],
-    );
-  }
-}
+// class dataTransaction extends StatelessWidget {
+//   @override
+//   String date, item, price;
+//
+//   dataTransaction(
+//       {required this.date, required this.item, required this.price});
+//
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: <Widget>[
+//         Padding(
+//           padding: const EdgeInsets.all(20.0),
+//           child: Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//             children: <Widget>[
+//               Padding(
+//                 padding: const EdgeInsets.only(right: 10.0),
+//                 child: Text(
+//                   date,
+//                   style: _txtCustomSub.copyWith(
+//                       color: Colors.black38,
+//                       fontSize: 11.0,
+//                       fontWeight: FontWeight.w500),
+//                 ),
+//               ),
+//               Container(
+//                 width: 130.0,
+//                 child: Text(
+//                   item,
+//                   style: _txtCustomSub.copyWith(color: Colors.black54),
+//                   overflow: TextOverflow.ellipsis,
+//                 ),
+//               ),
+//               Text(price,
+//                   style: _txtCustomSub.copyWith(
+//                     color: Colors.redAccent,
+//                     fontSize: 16.0,
+//                   )),
+//             ],
+//           ),
+//         ),
+//         Padding(
+//           padding: const EdgeInsets.symmetric(horizontal: 15.0),
+//           child: Divider(
+//             height: 0.5,
+//             color: Colors.black12,
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }

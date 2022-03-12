@@ -38,6 +38,10 @@ class UserRepository {
     await userApiClient.saveUsertoken(tokenstring);
     await userApiClient.saveUsername(userName);
   }
+  /// save user's name
+  Future<void> saveUsername(String username) async {
+    await userApiClient.saveUsername(username);
+  }
 
 //   Future<String?> hasToken() async {
 //     /// read from keystore/keychain

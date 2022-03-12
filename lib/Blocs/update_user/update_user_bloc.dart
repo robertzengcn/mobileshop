@@ -11,10 +11,12 @@ class UpdateUserBloc extends Bloc<UpdateUserEvent, UpdateUserState> {
   UpdateUserBloc({required this.userRepository}) : super(UpdateUserInitial());
   @override
   Stream<UpdateUserState> mapEventToState(UpdateUserEvent event) async* {
-    if(event is updateinfoevent){
+    if(event is Updateinfoevent){
       try{
-     await userRepository.updateUserinfo(event.name, event.telephone);
-
+     bool res=await userRepository.updateUserinfo(event.name, event.telephone);
+      if(res){
+        await userRepository.saveUsername(event.name);
+      }
       yield UpdateUsersuccessstate();
       }catch (error) {
         yield UpdateUserErrorState(error:error.toString());

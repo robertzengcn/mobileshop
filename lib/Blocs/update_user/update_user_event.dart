@@ -5,10 +5,10 @@ abstract class UpdateUserEvent extends Equatable {
 }
 
 ///update user info event
-class updateinfoevent extends UpdateUserEvent {
+class Updateinfoevent extends UpdateUserEvent {
   final String telephone;
   final String name;
-  const updateinfoevent({required this.telephone,required this.name});
+  const Updateinfoevent({required this.telephone,required this.name});
 
   @override
   List<Object> get props => [];
