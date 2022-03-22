@@ -24,10 +24,18 @@ class LoggedIn extends AuthenticationEvent {
 }
 
 class LoggedOut extends AuthenticationEvent {
-  final String token;
-  const LoggedOut({required this.token});
+  // final String token;
+  const LoggedOut();
   @override
-  List<Object> get props => [token];
+  List<Object> get props => [];
+
+}
+
+class UpdateAuthnameEvent extends AuthenticationEvent {
+  final String name;
+  const UpdateAuthnameEvent({required this.name});
+  @override
+  List<Object> get props => [name];
 
 }
 

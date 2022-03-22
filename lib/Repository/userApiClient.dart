@@ -329,4 +329,30 @@ class UserApiClient extends BaseApiClient{
     }
 
   }
+  ///update user's info
+  Future <bool> deleteAccount() async{
+    String? token=await this.getToken();
+    if(token==null){
+      throw Exception('token empty');
+    }
+    var url = Uri.parse('$appServerUrl/deleteAccount');
+    http.Response response = await http.delete(
+      url,
+      headers: {
+        'Application-Id': '$appId',
+        'Client-Key':token
+      },
+    );
+    if (response.statusCode != 200) {
+
+      throw Exception('Unable to delete user');
+    }
+    var responseJson = json.decode(response.body);
+    if (responseJson['status']!=true) {
+      throw Exception("delete user info get error");
+    }else{
+      return true;
+    }
+
+  }
 }

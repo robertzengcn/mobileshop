@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:amigatoy/UI/CartUIComponent/AddressList.dart';
 import 'package:amigatoy/UI/AcountUIComponent/EditProfile.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:amigatoy/Blocs/blocs.dart';
+import 'package:amigatoy/Repository/repository.dart';
+import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 
 class settingAcount extends StatefulWidget {
   @override
@@ -45,6 +49,38 @@ class _settingAcountState extends State<settingAcount> {
 
     );
   }
+
+  // _showAlertDialog(BuildContext contexts) {  // set up the buttons
+  //   Widget cancelButton = TextButton(
+  //     child: Text("Cancel"),
+  //     onPressed:  () {},
+  //   );
+  //   Widget continueButton = TextButton(
+  //     child: Text("Yes"),
+  //     onPressed:  () {
+  //       // BlocProvider.of<OrdersBloc>(context)
+  //       //     .add(FeatchMoreEvent(start:_startPage,length: _pageLength));
+  //     },
+  //   );  // set up the AlertDialog
+  //   AlertDialog alert =AlertDialog(
+  //     title: Text("AlertDialog"),
+  //     content: Text("Do you confirm to delete your account?"),
+  //     actions: [
+  //       cancelButton,
+  //       continueButton,
+  //     ],
+  //   );
+  //   // show the dialog
+  //
+  //     showDialog(
+  //       context: contexts,
+  //       builder: (BuildContext context) {
+  //         return alert;
+  //       },
+  //     );
+  //
+  //
+  // }
   void _manageAdd(){
     Navigator.of(context).push(
       PageRouteBuilder(
@@ -70,16 +106,38 @@ class _settingAcountState extends State<settingAcount> {
     );
 
   }
-  void _manageNotify(){
+  // void _manageNotify(){
+  //
+  // }
 
-  }
-  void _deleteAccount(){
-
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UpdateUserBloc>(create: (context) {
+        return UpdateUserBloc(userRepository: UserRepository());
+      }),
+      ],
+  // create: (context) => UpdateUserBloc(userRepository: UserRepository()),
+  child: MultiBlocListener(
+    listeners:  [
+      BlocListener<UpdateUserBloc, UpdateUserState>(
+          listener: (context, state) {
+              if(state is UpdateUserErrorState){
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(state.error)),
+                );
+              }else if(state is DeleteUsersuccessstate){
+                BlocProvider.of<AuthenticationBloc>(context).add(
+                    LoggedOut());
+                Navigator.of(context).push(PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => new Home()));
+              }
+          }),
+    ],
+  child: Scaffold(
       appBar: AppBar(
         title: Text(
           "Setting Acount",
@@ -109,7 +167,7 @@ class _settingAcountState extends State<settingAcount> {
                 // sub1: "Notifications",
                 // f1:_manageNotify,
                 sub1: "Delete Account",
-                f1:_deleteAccount,
+
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 5.0),
@@ -131,7 +189,9 @@ class _settingAcountState extends State<settingAcount> {
           ),
         ),
       ),
-    );
+    ),
+),
+);
   }
 }
 
@@ -152,11 +212,43 @@ class setting extends StatelessWidget {
 
   String head, sub1;
   String? sub2,sub3;
-  // Function f1,f2;
-  Function()? f1,f2,f3;
+  // Function f1;
+  void Function()? f1,f2,f3;
   setting(
-      {required this.head, required this.sub1, required this.f1,this.sub2,this.f2, this.sub3,this.f3});
+      {required this.head, required this.sub1, this.f1,this.sub2,this.f2, this.sub3,this.f3});
+  _showAlertDialog(BuildContext context) {  // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("Cancel"),
+      onPressed:  () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Yes"),
+      onPressed:  () {
+        BlocProvider.of<UpdateUserBloc>(context)
+            .add(DeleteUserevent());
 
+        // Navigator.of(context).pop();
+        // BlocProvider.of<OrdersBloc>(context)
+        //     .add(FeatchMoreEvent(start:_startPage,length: _pageLength));
+      },
+    );  // set up the AlertDialog
+    AlertDialog alert =AlertDialog(
+      title: Text("Confirm delete account"),
+      content: Text("Do you confirm to delete your account?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );  // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -189,7 +281,14 @@ class setting extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
                 child: InkWell(
-                  onTap: f1,
+                  // onTap: f1,
+                  onTap: () {
+                    if(f1!=null){
+                      f1!();
+                    }else{
+                    _showAlertDialog(context);
+                    }
+                },
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[

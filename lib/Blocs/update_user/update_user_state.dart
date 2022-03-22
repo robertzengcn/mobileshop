@@ -23,3 +23,7 @@ class UpdateUserErrorState extends UpdateUserState {
   @override
   String toString() => 'query cart error { error: $error }';
 }
+class DeleteUsersuccessstate extends UpdateUserState {
+  @override
+  List<Object> get props => [];
+}

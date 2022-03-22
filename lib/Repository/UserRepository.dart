@@ -22,10 +22,11 @@ class UserRepository {
 //    });
   }
   ///delete user token
-  Future<void> deleteToken(String token) async {
+  Future<void> deleteToken() async {
     /// delete from keystore/keychain
 //    await Future.delayed(Duration(seconds: 1));
 //     await userDao.deleteUserbytoken(token);
+
     await userApiClient.deleteUsertoken();
     return;
   }
@@ -101,6 +102,11 @@ class UserRepository {
   ///update user info
   Future <bool> updateUserinfo(String name, String telephone) async{
     return await userApiClient.updateUserinfo(name, telephone);
+  }
+
+  ///update user account
+  Future <bool> deleteUser() async{
+    return await userApiClient.deleteAccount();
   }
 
 

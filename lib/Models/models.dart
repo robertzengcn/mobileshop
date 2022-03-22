@@ -27,4 +27,5 @@ export './OrderProductAttributes.dart';
 export './OrderPayment.dart';
 export './Categories.dart';
 export './UserInfo.dart';
+export './SearchResList.dart';
 

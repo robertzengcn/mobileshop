@@ -56,8 +56,16 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
     }else if (event is LoggedOut) {
       yield AuthenticationLoading();
-      await userRepository.deleteToken(event.token);
+      await userRepository.deleteToken();
       yield AuthenticationUnauthenticated();
+    }else if (event is UpdateAuthnameEvent){
+      final String? tokenStr=await userRepository.getUsertoken();
+      if(tokenStr!=null){
+        yield AuthenticationAuthenticated(token: tokenStr,name:event.name);
+      }else{
+        yield AuthenticationUnauthenticated();
+      }
+
     }
   }
 }

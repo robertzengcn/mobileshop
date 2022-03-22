@@ -107,7 +107,8 @@ class _editProfileState extends State<editProfile> {
               ..add(getUserinfoevent())),
         BlocProvider(
             create: (context) =>
-                UpdateUserBloc(userRepository: new UserRepository())),
+                UpdateUserBloc(userRepository: new UserRepository(),
+                )),
       ],
       child: MultiBlocListener(
         listeners: [

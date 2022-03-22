@@ -19,5 +19,6 @@ export 'orderApiClient.dart';
 export 'OrderRepository.dart';
 export 'categoriesApiClient.dart';
 export 'categoriesRepository.dart';
+export 'searchRepository.dart';
 
 

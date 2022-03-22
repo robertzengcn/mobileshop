@@ -250,7 +250,7 @@ class _profilState extends State<profil> {
                         tap: () {
                           if (state is AuthenticationAuthenticated) {
                             BlocProvider.of<AuthenticationBloc>(context).add(
-                                LoggedOut(token: state.token));
+                                LoggedOut());
 //    WidgetsBinding.instance?.addPostFrameCallback((_) {
                             Navigator.of(context).push(PageRouteBuilder(
                                 pageBuilder: (_, __, ___) => new Home()));
