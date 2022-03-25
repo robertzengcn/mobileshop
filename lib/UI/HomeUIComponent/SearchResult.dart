@@ -73,7 +73,11 @@ class _searchResultState extends State<SearchResult> {
       );
     }else{
 
-      return Container(child: Text("not find any result"),);
+      return Container(child: Center(
+          child: Text("sorry, we not find any result",
+            textAlign: TextAlign.center,
+          )
+      ),);
     }
 
   }

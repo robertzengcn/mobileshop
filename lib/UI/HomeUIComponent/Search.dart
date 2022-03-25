@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/Repository/repository.dart';
+import 'package:amigatoy/Models/models.dart';
+import 'package:amigatoy/UI/widgets/item_grid.dart';
 
 class searchAppbar extends StatefulWidget {
   @override
@@ -12,6 +14,9 @@ class searchAppbar extends StatefulWidget {
 
 class _searchAppbarState extends State<searchAppbar> {
   List<String?> _serarchterm=[];
+  int _specialStart=0;
+  int _specialLength=25;
+  List<Product?> _speciallist=[];
   final TextEditingController _searchcontroller = TextEditingController();
   @override
   /// Sentence Text header "Hello i am Treva.........."
@@ -99,60 +104,99 @@ class _searchAppbarState extends State<searchAppbar> {
     );
   }
   /// Item Favorite Item with Card item
-  var _favorite = Padding(
-    padding: const EdgeInsets.only(top: 20.0),
-    child: Container(
-      height: 250.0,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 20.0),
-            child: Text(
-              "Favorite",
-              style: TextStyle(fontFamily: "Gotik", color: Colors.black26),
-            ),
-          ),
-          Expanded(
-            child: ListView(
-              padding: EdgeInsets.only(top: 20.0, bottom: 2.0),
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
+  Widget _specialProduct() {
+    if(_speciallist.isNotEmpty) {
+      // List<Widget> lwt=[];
+      // lwt.add(Padding(padding: EdgeInsets.only(left: 20.0)));
+      //
+      // lwt.add(Padding(padding: EdgeInsets.only(right: 10.0)));
+      return Padding(
+        padding: const EdgeInsets.only(top: 20.0),
+        child: Container(
+          height: 250.0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text(
+                  "Special Offer",
+                  style: TextStyle(fontFamily: "Gotik", color: Colors.black26),
+                ),
+              ),
+              // Expanded(
+              //   child: ListView(
+              //     padding: EdgeInsets.only(top: 20.0, bottom: 2.0),
+              //     scrollDirection: Axis.horizontal,
+              //     children: <Widget>[
+              //
+              //       /// Get class FavoriteItem
+              //       // Padding(padding: EdgeInsets.only(left: 20.0)),
+              //       // FavoriteItem(
+              //       //   image: "assets/imgItem/shoes1.jpg",
+              //       //   title: "Firrona Skirt!",
+              //       //   Salary: "\$ 10",
+              //       //   Rating: "4.8",
+              //       //   sale: "923 Sale",
+              //       // ),
+              //       // Padding(padding: EdgeInsets.only(left: 20.0)),
+              //       // FavoriteItem(
+              //       //   image: "assets/imgItem/acesoris1.jpg",
+              //       //   title: "Arpenaz 4",
+              //       //   Salary: "\$ 200",
+              //       //   Rating: "4.2",
+              //       //   sale: "892 Sale",
+              //       // ),
+              //       // Padding(padding: EdgeInsets.only(left: 20.0)),
+              //       // FavoriteItem(
+              //       //   image: "assets/imgItem/kids1.jpg",
+              //       //   title: "Mon Cheri Pingun",
+              //       //   Salary: "\$ 3",
+              //       //   Rating: "4.8",
+              //       //   sale: "110 Sale",
+              //       // ),
+              //       // Padding(padding: EdgeInsets.only(right: 10.0)),
+              //     ],
+              //   ),
+              // ),
+              Expanded(
+                child: Container(
+                  height: (_speciallist.length/2).ceil()*300,
+                  child: RefreshIndicator(
+                    onRefresh:() async {
+                      _specialStart=_specialStart+_specialLength;
+                      BlocProvider.of<SpecialsBloc>(context)
+                          .add(FetchSpecials(start:_specialStart,length: _specialLength));
+                    },
+                    child: GridView.builder(
+                      itemCount: _speciallist.length,
+                      physics: ScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 4.0,
+                          mainAxisSpacing: 4.0,
+                          mainAxisExtent: 285
+                      ),
+                      itemBuilder: (BuildContext context, int index){
+                        if(_speciallist[index]!=null){
+                          return ItemGrid(_speciallist[index]!);
+                        }else{
+                          return Container();
+                        }
+                      },
 
-                /// Get class FavoriteItem
-                Padding(padding: EdgeInsets.only(left: 20.0)),
-                FavoriteItem(
-                  image: "assets/imgItem/shoes1.jpg",
-                  title: "Firrona Skirt!",
-                  Salary: "\$ 10",
-                  Rating: "4.8",
-                  sale: "923 Sale",
+                    ),
+                  ),
                 ),
-                Padding(padding: EdgeInsets.only(left: 20.0)),
-                FavoriteItem(
-                  image: "assets/imgItem/acesoris1.jpg",
-                  title: "Arpenaz 4",
-                  Salary: "\$ 200",
-                  Rating: "4.2",
-                  sale: "892 Sale",
-                ),
-                Padding(padding: EdgeInsets.only(left: 20.0)),
-                FavoriteItem(
-                  image: "assets/imgItem/kids1.jpg",
-                  title: "Mon Cheri Pingun",
-                  Salary: "\$ 3",
-                  Rating: "4.8",
-                  sale: "110 Sale",
-                ),
-                Padding(padding: EdgeInsets.only(right: 10.0)),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
-    ),
-  );
-
+        ),
+      );
+    }else{
+      return Container();
+    }
+  }
   /// Popular Keyword Item
   Widget _sugestedText(List<String?> _serarchterm) {
     List<Widget> list = [];
@@ -201,6 +245,9 @@ class _searchAppbarState extends State<searchAppbar> {
         BlocProvider<SearchBloc>(create: (context) {
           return SearchBloc(searchRepository: SearchRepository())..add(SearchinitEvent());
         }),
+        BlocProvider<SpecialsBloc>(create: (context) {
+          return SpecialsBloc(productRepository: ProductRepository())..add(FetchSpecials(start:_specialStart,length: _specialLength));
+        }),
       ],
       child: MultiBlocListener(
         listeners: [
@@ -208,6 +255,12 @@ class _searchAppbarState extends State<searchAppbar> {
               listener: (context, state) {
                 if(state is SearchTermreadystate){
                   _serarchterm.addAll(state.searchTerms);
+                }
+              }),
+          BlocListener<SpecialsBloc, SpecialsState>(
+              listener: (context, state) {
+                if(state is Specialsloaded){
+                  _speciallist.addAll(state.lstSpecials);
                 }
               }),
         ],
@@ -246,7 +299,7 @@ class _searchAppbarState extends State<searchAppbar> {
                         (state is SearchTermreadystate)?
                         _sugestedText(_serarchterm):Container(),
                         
-                        _favorite,
+                        _specialProduct(),
                         Padding(padding: EdgeInsets.only(
                             bottom: 30.0, top: 2.0))
                       ],

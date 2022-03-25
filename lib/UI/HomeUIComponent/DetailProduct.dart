@@ -1,7 +1,7 @@
 //import 'package:amigatoy/Blocs/Wishs/wishs_bloc.dart';
 import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
 //import 'package:amigatoy/UI/HomeUIComponent/ChatItem.dart';
 //import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
@@ -335,6 +335,7 @@ class _ProductWrapperState extends State<ProductWrapper> {
               Navigator.of(context).push(PageRouteBuilder(
                   opaque: false,
                   pageBuilder: (BuildContext context, _, __) {
+                    // double _screenwidth = MediaQuery. of(context). size. width;
                     return new Material(
                       color: Colors.black54,
                       child: Container(
@@ -342,13 +343,24 @@ class _ProductWrapperState extends State<ProductWrapper> {
                         child: InkWell(
                           child: Hero(
                               tag: "hero-grid-${item.products_attributes_id}",
-                              child: Image.network(
-                                item.products_options_images_url!,
+                              child:
+                              CachedNetworkImage(
+                                imageUrl: item.products_options_images_url!,
                                 width: 300.0,
                                 height: 300.0,
                                 alignment: Alignment.center,
                                 fit: BoxFit.contain,
-                              )),
+                                placeholder: (context, url) => CircularProgressIndicator(),
+                                errorWidget: (context, url, error) => Icon(Icons.error),
+                              ),
+                              // Image.network(
+                              //   item.products_options_images_url!,
+                              //   width: 300.0,
+                              //   height: 300.0,
+                              //   alignment: Alignment.center,
+                              //   fit: BoxFit.contain,
+                              // )
+                          ),
                           onTap: () {
                             Navigator.pop(context);
                           },
@@ -370,7 +382,14 @@ class _ProductWrapperState extends State<ProductWrapper> {
                 height: 56,
                 width: 56,
                 color: Colors.transparent,
-                child: Image.network(item.products_options_images_url!),
+                child:
+                // Image.network(item.products_options_images_url!),
+                CachedNetworkImage(
+                  imageUrl: item.products_options_images_url!,
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+
+                )
               ),
 //              )
             )),
@@ -724,7 +743,14 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                             ? Colors.grey[800]
                                             : Colors.grey[800],
                                     images: prolist
-                                        .map((s) => NetworkImage(s) as dynamic)
+                                        .map((s) =>
+                                    // NetworkImage(s)
+                                    CachedNetworkImage(
+                                      imageUrl: s,
+                                      placeholder: (context, url) => CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) => Icon(Icons.error),
+                                    )
+                                    as dynamic)
                                         .toList()),
                               ),
                             ),
@@ -1377,7 +1403,8 @@ class _RelativeProductContinerState extends State<RelativeProductContiner> {
   List<Widget> _getRelativepro(List<Product>? productlist) {
     List<Widget> relativelist = [];
     productlist?.forEach((value) {
-      relativelist.add(FavoriteItem(
+      relativelist.add(
+          FavoriteItem(
         image: value.products_image,
         title: value.products_name,
         Salary: value.product_specials != null && value.product_specials! > 0
@@ -1391,7 +1418,7 @@ class _RelativeProductContinerState extends State<RelativeProductContiner> {
             : 0,
         product: value,
       ));
-      relativelist.add(Padding(padding: EdgeInsets.only(left: 10.0)));
+      relativelist.add(Padding(padding: EdgeInsets.only(left: 5.0)));
     });
     return relativelist;
   }
@@ -1642,14 +1669,27 @@ class FavoriteItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Container(
-                    height: 150.0,
-                    width: 150.0,
+                      height: 150.0,
+                      width: 150.0,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(7.0),
                             topRight: Radius.circular(7.0)),
-                        image: DecorationImage(
-                            image: AssetImage(image), fit: BoxFit.cover)),
+                        // image:
+
+                        // DecorationImage(
+                        //     image:
+                        //     // AssetImage(image),
+                        //     CachedNetworkImageProvider(image),
+                        //     alignment: Alignment.center,
+                        //     fit: BoxFit.cover)
+                    ),
+                      child:CachedNetworkImage(
+                        imageUrl: image,
+                        placeholder: (context, url) => CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+
+                      )
                   ),
                   Padding(padding: EdgeInsets.only(top: 15.0)),
                   Padding(
