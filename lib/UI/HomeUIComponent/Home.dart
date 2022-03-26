@@ -11,7 +11,8 @@ import 'package:amigatoy/ListItem/ImageSlider.dart';
 import 'package:amigatoy/ListItem/Category.dart';
 import 'package:amigatoy/UI/widgets/home_image_slide.dart';
 import 'package:amigatoy/UI/widgets/home_recommend.dart';
-
+import 'package:amigatoy/provider/connectivity_provider.dart';
+import 'package:provider/provider.dart';
 
 ///Homepage
 
@@ -37,6 +38,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   late List<ImageSlider> imagesliders;
   late List<Category> categorys;
   late Map<int, Category> categorymap;
+
+
 
   /// Set for StartStopPress CountDown
   // onStartStopPress() {
@@ -87,6 +90,28 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
+    final isonline=Provider.of<ConnectivityProvider>(context).isOnline;
+    if(!isonline){
+      Widget cancelButton = TextButton(
+        child: Text("ok"),
+        onPressed:  () {
+          Navigator.of(context).pop();
+        },
+      );
+      AlertDialog alert =AlertDialog(
+        title: Text("Connect error"),
+        content: Text("Plese connect to internet"),
+        actions: [
+          cancelButton,
+        ],
+      );  // show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
     //double size = mediaQueryData.size.height;
 //    final contentProvider = Provider.of<CRUDModel>(context);
 ////    productProvider.fetchProductsAsStream();

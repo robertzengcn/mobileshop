@@ -15,6 +15,11 @@ import 'package:amigatoy/UI/CartUIComponent/Checkout.dart';
 import 'package:amigatoy/UI/Payment/PaymentSuccess.dart';
 // import 'package:amigatoy/Arguments/PaySuccessArguments.dart';
 import 'package:amigatoy/UI/Order/OrderList.dart';
+// import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:amigatoy/Observer/myrouteobserver.dart';
+import 'package:amigatoy/provider/connectivity_provider.dart';
+import 'package:provider/provider.dart';
+
 
 
 class SimpleBlocObserver extends BlocObserver {
@@ -61,6 +66,7 @@ void main() async {
 
 /// Set orienttation
 class myApp extends StatelessWidget {
+  final RouteObserver<PageRoute> _routeObserver = RouteObserver<PageRoute>();
   final userRepository = UserRepository();
 //  final productRepository=ProductRepository();
   @override
@@ -150,29 +156,33 @@ class myApp extends StatelessWidget {
         //     }
         //   }),
         // ],
-        child:MaterialApp(
-          title: "Amiga Toy",
-          theme: ThemeData(
-              brightness: Brightness.light,
-              backgroundColor: Colors.white,
-              primaryColorLight: Colors.white,
-              primaryColorBrightness: Brightness.light,
-              primaryColor: Colors.white),
-          debugShowCheckedModeBanner: false,
-          home: SplashScreen(),
+        child:ChangeNotifierProvider(
+          create: (context)=>ConnectivityProvider(),
+          child: MaterialApp(
+            title: "Amiga Toy",
+            theme: ThemeData(
+                brightness: Brightness.light,
+                backgroundColor: Colors.white,
+                primaryColorLight: Colors.white,
+                primaryColorBrightness: Brightness.light,
+                primaryColor: Colors.white),
+            debugShowCheckedModeBanner: false,
+            home: SplashScreen(),
+              navigatorObservers: [_routeObserver],
 
-          /// Move splash screen to ChoseLogin Layout
-          /// Routes
-          routes: <String, WidgetBuilder>{
-            //"login": (BuildContext context) => new Menu()
-            Home.routeName: (BuildContext context) => new Home(),
-            loginScreen.routeName:(BuildContext context) =>new loginScreen(),
-            Delivery.routeName:(BuildContext context) =>new Delivery(),
-            PaypalPayment.routeName:(BuildContext context) =>new PaypalPayment(),
-            Checkout.routeName:(BuildContext context) =>new Checkout(),
-            PaymentSuccess.routeName:(BuildContext context) =>new PaymentSuccess(),
-            OrderList.routeName:(BuildContext context) =>new OrderList(),
-          }),
+            /// Move splash screen to ChoseLogin Layout
+            /// Routes
+            routes: <String, WidgetBuilder>{
+              //"login": (BuildContext context) => new Menu()
+              Home.routeName: (BuildContext context) => new Home(),
+              loginScreen.routeName:(BuildContext context) =>new loginScreen(),
+              Delivery.routeName:(BuildContext context) =>new Delivery(),
+              PaypalPayment.routeName:(BuildContext context) =>new PaypalPayment(),
+              Checkout.routeName:(BuildContext context) =>new Checkout(),
+              PaymentSuccess.routeName:(BuildContext context) =>new PaymentSuccess(),
+              OrderList.routeName:(BuildContext context) =>new OrderList(),
+            }),
+        ),
       // )
     );
   }
