@@ -101,7 +101,7 @@ class Product extends Equatable {
     }
 
     return Product(
-        products_name: json['products_name'],
+        products_name: json['products_name'].toString(),
         products_id: json['products_id'] as int,
         products_quantity: json['products_quantity'] as int,
         products_model: json['products_model'].toString(),

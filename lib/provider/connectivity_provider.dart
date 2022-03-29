@@ -2,7 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 
 class ConnectivityProvider with ChangeNotifier{
-  late bool _isOnline;
+  bool _isOnline=true;
   bool get isOnline=> _isOnline;
 
   ConnectivityProvider(){

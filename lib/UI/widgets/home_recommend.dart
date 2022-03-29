@@ -16,10 +16,10 @@ class HomeRecommend extends StatefulWidget {
 
 class HomeRecommendstate extends State<HomeRecommend> {
   List<Product?> _lproduct=[];
-  bool isLoading =true;
+  bool _isLoading =true;
   late double _containHeight;
-  double itemHeight =0;
-  double itemWidth =0;
+  // double itemHeight =0;
+  // double itemWidth =0;
   int _startPage=0;
   int _pageLength=25;
 
@@ -50,32 +50,69 @@ class HomeRecommendstate extends State<HomeRecommend> {
       }else if(state is Featuredloaded) {
 
           return Container(
-            height: (_lproduct.length/2).ceil()*300,
-            child: RefreshIndicator(
-              onRefresh:() async {
-                _startPage=_startPage+_pageLength;
-                BlocProvider.of<FeaturedsBloc>(context)
-                    .add(FeaturedloadMore(start:_startPage,length: _pageLength));
-              },
-              child: GridView.builder(
-                itemCount: _lproduct.length,
-                physics: ScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 4.0,
-                    mainAxisSpacing: 4.0,
-                    mainAxisExtent: 285
-                ),
-                itemBuilder: (BuildContext context, int index){
-                  if(_lproduct[index]!=null){
-                    return ItemGrid(_lproduct[index]!);
-                  }else{
-                    return Container();
-                  }
-                },
+            height: (_lproduct.length/2).ceil()*305,
+            // child: RefreshIndicator(
+            //   onRefresh:() async {
+            //     _startPage=_startPage+_pageLength;
+            //     BlocProvider.of<FeaturedsBloc>(context)
+            //         .add(FeaturedloadMore(start:_startPage,length: _pageLength));
+            //   },
+            //   triggerMode: RefreshIndicatorTriggerMode.anywhere,
+              child: Column(
+                children:[
+                  GridView.builder(
+                    shrinkWrap: true,
+                  itemCount: _lproduct.length,
+                  physics: ScrollPhysics(),
+                  //physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                  // physics:const AlwaysScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 4.0,
+                      mainAxisSpacing: 4.0,
+                      mainAxisExtent: 285
+                  ),
+                  itemBuilder: (BuildContext context, int index){
+                    if(_lproduct[index]!=null){
+                      return ItemGrid(_lproduct[index]!);
+                    }else{
+                      return Container();
+                    }
+                  },
 
+                ),
+                _isLoading?const SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 1.5,
+                    )):Container(),
+                _lproduct.length<state.lstFeatureds.totalNum?ElevatedButton(
+                    child: Text(
+                        "Load More",
+                        style: TextStyle(fontSize: 14)
+                    ),
+                    style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
+                                side: BorderSide(color: Colors.red)
+                            )
+                        )
+                    ),
+                    onPressed: () async {
+                          _startPage=_startPage+_pageLength;
+                          BlocProvider.of<FeaturedsBloc>(context)
+                              .add(FeaturedloadMore(start:_startPage,length: _pageLength));
+                          _isLoading = true;
+                    })
+          :Container(),
+                ]
               ),
-            ),
+           // ),
           );
       }
       return Container();
@@ -86,10 +123,10 @@ class HomeRecommendstate extends State<HomeRecommend> {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
      _containHeight=mediaQueryData.size.height;
 
-    var size = MediaQuery.of(context).size;
+    //var size = MediaQuery.of(context).size;
     /*24 is for notification bar on Android*/
-   itemHeight = (size.height - kToolbarHeight - 24) / 1.6;
-   itemWidth = size.width / 2;
+   //itemHeight = (size.height - kToolbarHeight - 24) / 1.6;
+   //itemWidth = size.width / 2;
 
     return MultiBlocProvider(providers: [
       BlocProvider<FeaturedsBloc>(
@@ -108,7 +145,7 @@ class HomeRecommendstate extends State<HomeRecommend> {
                       // if(state.orderlst.length>0){
                       setState(() {
                         _lproduct.addAll(state.lstFeatureds.lproduct);
-                        isLoading = false;
+                        _isLoading = false;
                       });
 
                     }

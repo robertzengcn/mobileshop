@@ -715,7 +715,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       body: Stack(
         children: <Widget>[
           SingleChildScrollView(
-            child: Column(
+            child:
+            Column(
               children: <Widget>[
                 Padding(
                     padding: EdgeInsets.only(
@@ -756,7 +757,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 //Recomendlist,
               ],
             ),
-          ),
+        ),
 
           /// Get a class AppbarGradient
           /// This is a Appbar in home activity

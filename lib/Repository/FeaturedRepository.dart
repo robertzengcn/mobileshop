@@ -14,9 +14,9 @@ class FeaturedRepository{
 //      : assert(productApiClient != null);
 
   Future<ListProduct> loadFeaturedlist(int start, int length) async {
-    ListProduct lst = await productApiClient.getFeaturelist(start,length);
+    return await productApiClient.getFeaturelist(start,length);
 
-    return lst;
+    // return ListFeature(lps: lpst.lproduct,totalNum:lpst.totalNum );
   }
 
 }
