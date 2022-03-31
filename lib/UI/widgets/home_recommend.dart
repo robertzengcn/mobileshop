@@ -21,7 +21,8 @@ class HomeRecommendstate extends State<HomeRecommend> {
   // double itemHeight =0;
   // double itemWidth =0;
   int _startPage=0;
-  int _pageLength=25;
+  int _pageLength=5;
+  double _productlistheight=0;
 
   ///get feature product list
   // List<ItemGrid> _listFeaturegrid(){
@@ -48,9 +49,12 @@ class HomeRecommendstate extends State<HomeRecommend> {
         // is loading
         return Center(child: CircularProgressIndicator());
       }else if(state is Featuredloaded) {
-
+        _productlistheight=((_lproduct.length/2).ceil()*305);
+        if(_lproduct.length<state.lstFeatureds.totalNum){
+          _productlistheight+=77;
+        }
           return Container(
-            height: (_lproduct.length/2).ceil()*305,
+            height: _productlistheight,
             // child: RefreshIndicator(
             //   onRefresh:() async {
             //     _startPage=_startPage+_pageLength;
@@ -133,7 +137,7 @@ class HomeRecommendstate extends State<HomeRecommend> {
         create: (context) {
           return FeaturedsBloc(
             featuredRepository: FeaturedRepository(),
-          )..add(FetchFeatureds(start:0,length: 25));
+          )..add(FetchFeatureds(start:_startPage,length: _pageLength));
         },
       ),
     ],
