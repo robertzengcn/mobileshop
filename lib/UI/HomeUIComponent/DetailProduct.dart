@@ -410,7 +410,7 @@ class _ProductWrapperState extends State<ProductWrapper> {
     productatttibutes?.forEach((item) {
 //      print(item.products_options_type);
       if (item.products_options_type == 2) {
-        if (item.products_options_images_style) {
+        if (item.products_options_images_style&&(item.products_options_images_url?.isNotEmpty==true)) {
           //图片radio
           if (aoptionList[changeKey] == null) {
             aoptionList[changeKey] = 0;
