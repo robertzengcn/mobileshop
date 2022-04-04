@@ -134,21 +134,21 @@ class _orderState extends State<order> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        qeueuItem(
-                          icon: "assets/img/bag.png",
-                          txtHeader: "Ready to Pickup",
-                          txtInfo: "Order from TrevaShop",
-                          time: "11:0",
-                          paddingValue: 55.0,
-                        ),
-                        Padding(padding: EdgeInsets.only(top: 50.0)),
-                        qeueuItem(
-                          icon: "assets/img/courier.png",
-                          txtHeader: "Order Processed",
-                          txtInfo: "We are preparing your order",
-                          time: "9:50",
-                          paddingValue: 16.0,
-                        ),
+                        // qeueuItem(
+                        //   icon: "assets/img/bag.png",
+                        //   txtHeader: "Ready to Pickup",
+                        //   txtInfo: "Order from TrevaShop",
+                        //   time: "11:0",
+                        //   paddingValue: 55.0,
+                        // ),
+                        // Padding(padding: EdgeInsets.only(top: 50.0)),
+                        // qeueuItem(
+                        //   icon: "assets/img/courier.png",
+                        //   txtHeader: "Order Processed",
+                        //   txtInfo: "We are preparing your order",
+                        //   time: "9:50",
+                        //   paddingValue: 16.0,
+                        // ),
                         Padding(padding: EdgeInsets.only(top: 50.0)),
                         qeueuItem(
                           icon: "assets/img/payment.png",

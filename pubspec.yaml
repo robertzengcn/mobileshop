@@ -102,6 +102,7 @@ flutter:
 
   assets:
     - assets/img/google.png
+    - assets/img/userphoto.png
     - assets/img/googlewallet.png
     - assets/img/credit.png
     - assets/img/handshake.png
@@ -117,15 +118,15 @@ flutter:
     - assets/img/search2.png
     - assets/img/chat.png
     - assets/img/notifications-button.png
-    - assets/img/baner1.png
-    - assets/img/baner2.png
-    - assets/img/baner3.png
-    - assets/img/baner4.png
+#    - assets/img/baner1.png
+#    - assets/img/baner2.png
+#    - assets/img/baner3.png
+#    - assets/img/baner4.png
     - assets/img/baner12.png
 #    - assets/icon/book.png
     - assets/icon/addwish.png
     - assets/icon/wishsuccess.png
-    - assets/icon/camera.png
+#    - assets/icon/camera.png
     - assets/icon/fashion.png
     - assets/icon/food.png
     - assets/icon/game.png
@@ -206,8 +207,8 @@ flutter:
     - assets/imgCategoryMan/Man4.jpg
     - assets/imgCategoryMan/Man5.jpg
     - assets/imgCategoryMan/Man6.jpg
-    - assets/img/bag.png
-    - assets/img/courier.png
+#    - assets/img/bag.png
+#    - assets/img/courier.png
     - assets/img/house.png
     - assets/img/order.png
     - assets/img/payment.png

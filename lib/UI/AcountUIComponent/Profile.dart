@@ -56,7 +56,7 @@ Widget _getprofile(String userName) {
                       border: Border.all(color: Colors.white, width: 2.5),
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                          image: AssetImage("assets/img/womanface.jpg"))),
+                          image: AssetImage("assets/img/userphoto.png"))),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 5.0),

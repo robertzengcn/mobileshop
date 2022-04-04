@@ -433,7 +433,7 @@ class _ProductWrapperState extends State<ProductWrapper> {
         } else {
           wList.add(SizedBox(
               height: 50,
-              width: 130,
+              //width: 100,
               child: RadioListTile<int>(
                 title: Text(item.products_options_values_name),
                 value: item.products_options_values_id,
@@ -479,7 +479,7 @@ class _ProductWrapperState extends State<ProductWrapper> {
 
     oList.add(rowColumn);
 
-    return Row(
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: oList);

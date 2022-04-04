@@ -21,7 +21,7 @@ class HomeRecommendstate extends State<HomeRecommend> {
   // double itemHeight =0;
   // double itemWidth =0;
   int _startPage=0;
-  int _pageLength=5;
+  int _pageLength=25;
   double _productlistheight=0;
 
   ///get feature product list
