@@ -1253,7 +1253,7 @@ class _ReviewInfoContinerState extends State<ReviewInfoContiner> {
             setState(() {
               this.rating = rating;
             });
-          }, "assets/avatars/avatar-1.jpg"),
+          }, "assets/img/userphoto.png"),
 
 //    ),
 //    )
