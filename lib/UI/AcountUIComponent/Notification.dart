@@ -140,10 +140,10 @@ class noItemNotifications extends StatelessWidget {
             Padding(
                 padding:
                 EdgeInsets.only(top: mediaQueryData.padding.top + 100.0)),
-            Image.asset(
-              "assets/img/noNotification.png",
-              height: 200.0,
-            ),
+            // Image.asset(
+            //   "assets/img/noNotification.png",
+            //   height: 200.0,
+            // ),
             Padding(padding: EdgeInsets.only(bottom: 30.0)),
             Text(
               "Not Have Notification",

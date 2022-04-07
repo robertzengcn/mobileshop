@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:amigatoy/ListItem/BrandDataList.dart';
-// import 'package:amigatoy/UI/CatelogueUIComponent/Chat.dart';
-import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +8,7 @@ import 'package:amigatoy/UI/widgets/item_grid.dart';
 class catelogueDetail extends StatefulWidget {
   @override
 
-  /// Get data from BrandDataList.dart (List Item)
+
   /// Declare class
   final Categories categories;
   catelogueDetail(this.categories);
@@ -22,7 +19,7 @@ class _catelogueDetailState extends State<catelogueDetail> {
   /// set key for bottom sheet
   GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
-  /// Get data from BrandDataList.dart (List Item)
+
   /// Declare class
   final Categories categories;
   _catelogueDetailState(this.categories);

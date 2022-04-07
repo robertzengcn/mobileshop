@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:amigatoy/ListItem/BrandDataList.dart';
 
 class chatItem extends StatefulWidget {
   @override

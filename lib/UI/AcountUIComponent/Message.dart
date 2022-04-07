@@ -33,10 +33,10 @@ class _chatState extends State<chat> {
      crossAxisAlignment: CrossAxisAlignment.center,
      children: <Widget>[
       Padding(padding: EdgeInsets.only(top: 150.0)),
-      Image.asset(
-       "assets/img/notmessage.png",
-       height: 200.0,
-      ),
+      // Image.asset(
+      //  "assets/img/notmessage.png",
+      //  height: 200.0,
+      // ),
       Padding(padding: EdgeInsets.only(bottom: 20.0)),
       Text(
        "Not Message Yet",

@@ -2,14 +2,13 @@ import 'dart:async';
 import 'package:shimmer/shimmer.dart';
 import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:amigatoy/ListItem/CategoryItem.dart';
-import 'package:amigatoy/UI/HomeUIComponent/PromotionDetail.dart';
+//import 'package:amigatoy/UI/HomeUIComponent/PromotionDetail.dart';
 import 'package:amigatoy/UI/HomeUIComponent/Search.dart';
 //import 'package:amigatoy/Services/CRUDModel.dart';
 import 'package:provider/provider.dart';
 import 'package:amigatoy/ListItem/ImageSlider.dart';
 import 'package:amigatoy/ListItem/Category.dart';
-import 'package:amigatoy/UI/HomeUIComponent/SubCategory.dart';
+//import 'package:amigatoy/UI/HomeUIComponent/SubCategory.dart';
 import 'package:amigatoy/ListItem/Product.dart';
 //import 'package:amigatoy/Services/catelogue_bloc_provider.dart';
 //import 'package:amigatoy/Services/catelogue_bloc.dart';
@@ -989,13 +988,13 @@ class loadingMenuItemCard extends StatelessWidget {
 /// Calling imageLoading animation for set a grid layout
 ///
 ///
-Widget _loadingImageAnimation(BuildContext context){
-  return ListView.builder(
-    scrollDirection: Axis.horizontal,
-    itemBuilder: (BuildContext context, int index)=>loadingMenuItemCard(),
-    itemCount: itemDiscount.length,
-  );
-}
+// Widget _loadingImageAnimation(BuildContext context){
+//   return ListView.builder(
+//     scrollDirection: Axis.horizontal,
+//     itemBuilder: (BuildContext context, int index)=>loadingMenuItemCard(),
+//     itemCount: itemDiscount.length,
+//   );
+// }
 
 
 
@@ -1004,10 +1003,10 @@ Widget _loadingImageAnimation(BuildContext context){
 /// Calling imageLoading animation for set a grid layout
 ///
 ///
-Widget _loadingImageAnimationDiscount(BuildContext context){
-  return ListView.builder(
-    scrollDirection: Axis.horizontal,
-    itemBuilder: (BuildContext context, int index)=>loadingMenuItemDiscountCard(),
-    itemCount: itemDiscount.length,
-  );
-}
+// Widget _loadingImageAnimationDiscount(BuildContext context){
+//   return ListView.builder(
+//     scrollDirection: Axis.horizontal,
+//     itemBuilder: (BuildContext context, int index)=>loadingMenuItemDiscountCard(),
+//     itemCount: itemDiscount.length,
+//   );
+// }

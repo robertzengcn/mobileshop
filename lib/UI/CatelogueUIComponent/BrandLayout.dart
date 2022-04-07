@@ -131,7 +131,7 @@ class _brandState extends State<brand> {
 
 /// Constructor for itemCard for List Menu
 class itemCard extends StatelessWidget {
-  /// Declaration and Get data from BrandDataList.dart
+
   final Categories categories;
   itemCard(this.categories);
 
