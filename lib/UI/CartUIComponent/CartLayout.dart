@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 // import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 // import 'package:amigatoy/UI/CartUIComponent/AddressList.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -144,21 +144,31 @@ class _cartState extends State<Cartpage> {
                                                   blurRadius: 0.5,
                                                   spreadRadius: 0.1)
                                             ]),
-                                        child: new Image.network(
-                                            '${_cartList[position]!.image}',
-                                            height: 130.0,
-                                            width: 120.0,
-                                            fit: BoxFit.cover,
-                                            errorBuilder:
-                                                (BuildContext context,
-                                                    Object exception,
-                                                    StackTrace? stackTrace) {
-                                          return Image.asset(
-                                            "assets/img/error.png",
-                                            height: 130.0,
-                                            width: 120.0,
-                                          );
-                                        }))),
+                                        child:CachedNetworkImage(
+                                          imageUrl: '${_cartList[position]!.image}',
+                                          alignment: Alignment.center,
+                                          fit: BoxFit.contain,
+                                          width:  120.0,
+                                          height: 130.0,
+                                          placeholder: (context, url) => CircularProgressIndicator(),
+                                          errorWidget: (context, url, error) => Icon(Icons.error),
+                                        )
+                                        // new Image.network(
+                                        //     '${_cartList[position]!.image}',
+                                        //     height: 130.0,
+                                        //     width: 120.0,
+                                        //     fit: BoxFit.cover,
+                                        //     errorBuilder:
+                                        //         (BuildContext context,
+                                        //             Object exception,
+                                        //             StackTrace? stackTrace) {
+                                        //   return Image.asset(
+                                        //     "assets/img/error.png",
+                                        //     height: 130.0,
+                                        //     width: 120.0,
+                                        //   );
+                                        // })
+                                    )),
                                 Flexible(
                                   child: Padding(
                                     padding: const EdgeInsets.only(

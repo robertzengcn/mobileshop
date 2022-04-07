@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:amigatoy/UI/AcountUIComponent/AboutApps.dart';
-// import 'package:amigatoy/UI/AcountUIComponent/CallCenter.dart';
+
 // import 'package:amigatoy/UI/AcountUIComponent/Message.dart';
-// import 'package:amigatoy/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
-// import 'package:amigatoy/UI/AcountUIComponent/CreditCardSetting.dart';
-// import 'package:amigatoy/UI/AcountUIComponent/MyOrders.dart';
+
 // import 'package:amigatoy/UI/AcountUIComponent/Notification.dart';
  import 'package:amigatoy/UI/AcountUIComponent/SettingAcount.dart';
 // import 'package:amigatoy/UI/LoginOrSignup/Signup.dart';

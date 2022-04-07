@@ -3,11 +3,10 @@ import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
-//import 'package:amigatoy/UI/HomeUIComponent/ChatItem.dart';
-//import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
+
 
 //import 'package:flutter_rating/flutter_rating.dart';
-//import 'package:amigatoy/UI/HomeUIComponent/ReviewLayout.dart';
+
 import 'package:amigatoy/Models/Product.dart';
 import 'package:amigatoy/Models/Review.dart';
 import 'package:amigatoy/Blocs/blocs.dart';

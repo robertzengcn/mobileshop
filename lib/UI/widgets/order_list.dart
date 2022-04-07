@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/UI/Order/OrderDetail.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 Widget orderListWidget(List<Order?> orderList) {
   return ListView(
@@ -207,21 +208,31 @@ class CustomListItem extends StatelessWidget {
         children: <Widget>[
           Expanded(
             flex: 2,
-            child: new Image.network(
-              itemImage,
-              height: 80,
+            child:
+            CachedNetworkImage(
+              imageUrl: itemImage,
+              alignment: Alignment.center,
+              fit: BoxFit.contain,
               width: 80,
-                errorBuilder:
-                    (BuildContext context,
-                    Object exception,
-                    StackTrace? stackTrace) {
-                  return Image.asset(
-                    "assets/img/error.png",
-                    height: 80.0,
-                    width: 80.0,
-                  );
-                }
+              height: 80,
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
             ),
+            // new Image.network(
+            //   itemImage,
+            //   height: 80,
+            //   width: 80,
+            //     errorBuilder:
+            //         (BuildContext context,
+            //         Object exception,
+            //         StackTrace? stackTrace) {
+            //       return Image.asset(
+            //         "assets/img/error.png",
+            //         height: 80.0,
+            //         width: 80.0,
+            //       );
+            //     }
+            // ),
           ),
           Expanded(
             flex: 3,

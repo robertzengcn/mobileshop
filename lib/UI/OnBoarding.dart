@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 //import 'package:amigatoy/Library/intro_views_flutter-2.4.0/lib/Models/page_view_model.dart';
 //import 'package:amigatoy/Library/intro_views_flutter-2.4.0/lib/intro_views_flutter.dart';
-import 'package:amigatoy/UI/LoginOrSignup/ChoseLoginOrSignup.dart';
 
 class onBoarding extends StatefulWidget {
   @override

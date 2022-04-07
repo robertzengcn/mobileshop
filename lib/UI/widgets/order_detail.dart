@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:amigatoy/Models/models.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 const textStyles = TextStyle(
   fontWeight: FontWeight.w500,
@@ -190,15 +191,25 @@ class CustomListItem extends StatelessWidget {
         children: <Widget>[
           Expanded(
             flex: 2,
-            child: new Image.network(itemImage, height: 100, width: 100,
-                errorBuilder: (BuildContext context, Object exception,
-                    StackTrace? stackTrace) {
-              return Image.asset(
-                "assets/img/error.png",
-                height: 100.0,
-                width: 100.0,
-              );
-            }),
+            child:
+            CachedNetworkImage(
+              imageUrl: itemImage,
+              alignment: Alignment.center,
+              fit: BoxFit.contain,
+              width: 100,
+              height: 100,
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            ),
+            // new Image.network(itemImage, height: 100, width: 100,
+            //     errorBuilder: (BuildContext context, Object exception,
+            //         StackTrace? stackTrace) {
+            //   return Image.asset(
+            //     "assets/img/error.png",
+            //     height: 100.0,
+            //     width: 100.0,
+            //   );
+            // }),
           ),
           Expanded(
             flex: 3,

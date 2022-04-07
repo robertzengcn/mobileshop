@@ -116,7 +116,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 //    final contentProvider = Provider.of<CRUDModel>(context);
 ////    productProvider.fetchProductsAsStream();
 
-    /// Navigation to MenuDetail.dart if user Click icon in category Menu like a example camera
+
 //    var onClickMenuIcon = () {
 //      Navigator.of(context).push(PageRouteBuilder(
 //          pageBuilder: (_, __, ___) => new menuDetail(),

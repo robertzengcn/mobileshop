@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:shimmer/shimmer.dart';
 import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-//import 'package:amigatoy/UI/HomeUIComponent/PromotionDetail.dart';
+
 import 'package:amigatoy/UI/HomeUIComponent/Search.dart';
 //import 'package:amigatoy/Services/CRUDModel.dart';
 import 'package:provider/provider.dart';
