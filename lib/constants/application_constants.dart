@@ -3,8 +3,8 @@
 //const String keyParseServerUrl = 'http://10.203.2.41:1337/parse/';
 //const String keyParseclientKey='Tn5qrRPnELLUPnfmIAtvkVC8Oz1N2xWoTHuGqH3E';
 //const bool keyDebug = true;
-const String appServerUrl='http://10.203.16.189:8081';
-// const String appServerUrl='http://192.168.0.111';
+//const String appServerUrl='http://10.203.16.189:8081';
+const String appServerUrl='http://192.168.0.111:8081';
 const String appId='DnV17C2j1Tj6saBfvxIOIA1z0curBG';
 const String paypalDomain='https://api-m.sandbox.paypal.com';//change to production if online
 // const String paypalDomain = "https://api.paypal.com";

@@ -5,20 +5,20 @@ class Carousel extends Equatable {
   final int id;
   final String title;
   final String url;
-  final String type;
+  // final String type;
 
   const Carousel({
     required this.id,
     required this.title,
     required this.url,
-    required this.type
+    // required this.type
   });
   @override
   List<Object> get props => [
     id,
     title,
     url,
-    type
+    // type
   ];
 
   static Carousel fromJson(dynamic json) {
@@ -26,7 +26,7 @@ class Carousel extends Equatable {
         id: json['carousel_id'] as int,
         title:json['carousel_title'],
         url: json['carousel_url'],
-        type:json['carousel_type']
+        // type:json['carousel_type']
     );
   }
 
