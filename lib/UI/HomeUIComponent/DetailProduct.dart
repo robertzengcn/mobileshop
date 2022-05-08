@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
 
-
 //import 'package:flutter_rating/flutter_rating.dart';
 
 import 'package:amigatoy/Models/Product.dart';
@@ -61,7 +60,8 @@ class _detailProdukState extends State<detailProduk> {
           }),
           BlocProvider<WishsBloc>(create: (context) {
             //加载产品的评论
-            return WishsBloc(wishRepository: WishRepository())..add(CheckWishsEvent(product_id: gridItem.products_id));
+            return WishsBloc(wishRepository: WishRepository())
+              ..add(CheckWishsEvent(product_id: gridItem.products_id));
           }),
         ],
         child: MultiBlocListener(
@@ -80,9 +80,7 @@ class _detailProdukState extends State<detailProduk> {
               }
             }),
             BlocListener<WishsBloc, WishsState>(listener: (context, state) {
-              if (state is WishErrorState) {
-
-              }
+              if (state is WishErrorState) {}
             }),
           ],
           child: ProductWrapper(),
@@ -341,24 +339,25 @@ class _ProductWrapperState extends State<ProductWrapper> {
                         padding: EdgeInsets.all(30.0),
                         child: InkWell(
                           child: Hero(
-                              tag: "hero-grid-${item.products_attributes_id}",
-                              child:
-                              CachedNetworkImage(
-                                imageUrl: item.products_options_images_url!,
-                                width: 300.0,
-                                height: 300.0,
-                                alignment: Alignment.center,
-                                fit: BoxFit.contain,
-                                placeholder: (context, url) => CircularProgressIndicator(),
-                                errorWidget: (context, url, error) => Icon(Icons.error),
-                              ),
-                              // Image.network(
-                              //   item.products_options_images_url!,
-                              //   width: 300.0,
-                              //   height: 300.0,
-                              //   alignment: Alignment.center,
-                              //   fit: BoxFit.contain,
-                              // )
+                            tag: "hero-grid-${item.products_attributes_id}",
+                            child: CachedNetworkImage(
+                              imageUrl: item.products_options_images_url!,
+                              width: 300.0,
+                              height: 300.0,
+                              alignment: Alignment.center,
+                              fit: BoxFit.contain,
+                              placeholder: (context, url) =>
+                                  CircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
+                            // Image.network(
+                            //   item.products_options_images_url!,
+                            //   width: 300.0,
+                            //   height: 300.0,
+                            //   alignment: Alignment.center,
+                            //   fit: BoxFit.contain,
+                            // )
                           ),
                           onTap: () {
                             Navigator.pop(context);
@@ -378,18 +377,17 @@ class _ProductWrapperState extends State<ProductWrapper> {
 //                  setState(() => aoptionList[changeKey] = item.products_attributes_id);},
 //                child:
                   Container(
-                height: 56,
-                width: 56,
-                color: Colors.transparent,
-                child:
-                // Image.network(item.products_options_images_url!),
-                CachedNetworkImage(
-                  imageUrl: item.products_options_images_url!,
-                  placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-
-                )
-              ),
+                      height: 56,
+                      width: 56,
+                      color: Colors.transparent,
+                      child:
+                          // Image.network(item.products_options_images_url!),
+                          CachedNetworkImage(
+                        imageUrl: item.products_options_images_url!,
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      )),
 //              )
             )),
       ),
@@ -409,7 +407,8 @@ class _ProductWrapperState extends State<ProductWrapper> {
     productatttibutes?.forEach((item) {
 //      print(item.products_options_type);
       if (item.products_options_type == 2) {
-        if (item.products_options_images_style&&(item.products_options_images_url?.isNotEmpty==true)) {
+        if (item.products_options_images_style &&
+            (item.products_options_images_url?.isNotEmpty == true)) {
           //图片radio
           if (aoptionList[changeKey] == null) {
             aoptionList[changeKey] = 0;
@@ -596,12 +595,11 @@ class _ProductWrapperState extends State<ProductWrapper> {
       return Container(height: 30.0, width: 75.0);
     }
   }
+
   ///return wish add success icon
-  Widget _addWishsuccessicon(){
+  Widget _addWishsuccessicon() {
     return Center(
-      child: Image.asset(
-          "assets/icon/wishsuccess.png",
-          height: 20.0),
+      child: Image.asset("assets/icon/wishsuccess.png", height: 20.0),
     );
   }
 
@@ -660,8 +658,20 @@ class _ProductWrapperState extends State<ProductWrapper> {
                 actions: <Widget>[
                   InkWell(
                     onTap: () {
+                      // Navigator.of(context).push(PageRouteBuilder(
+                      //     pageBuilder: (_, __, ___) => new Cartpage()));
                       Navigator.of(context).push(PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => new Cartpage()));
+                          pageBuilder: (_, __, ___) => new Cartpage(),
+                          transitionDuration: Duration(milliseconds: 900),
+
+                          /// Set animation Opacity in route to detailProduk layout
+                          transitionsBuilder: (_, Animation<double> animation,
+                              __, Widget child) {
+                            return Opacity(
+                              opacity: animation.value,
+                              child: child,
+                            );
+                          }));
                     },
                     child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
                       builder: (context, authcatState) {
@@ -743,13 +753,15 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                             : Colors.grey[800],
                                     images: prolist
                                         .map((s) =>
-                                    // NetworkImage(s)
-                                    CachedNetworkImage(
-                                      imageUrl: s,
-                                      placeholder: (context, url) => CircularProgressIndicator(),
-                                      errorWidget: (context, url, error) => Icon(Icons.error),
-                                    )
-                                    as dynamic)
+                                            // NetworkImage(s)
+                                            CachedNetworkImage(
+                                              imageUrl: s,
+                                              placeholder: (context, url) =>
+                                                  CircularProgressIndicator(),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Icon(Icons.error),
+                                            ) as dynamic)
                                         .toList()),
                               ),
                             ),
@@ -864,28 +876,29 @@ class _ProductWrapperState extends State<ProductWrapper> {
                           ),
 
                           /// Background white for chose Size and Color
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: Container(
+                          (productAtt.isNotEmpty)
+                              ? Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  child: Container(
 //                              height: 120.0,
-                              width: 600.0,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color:
-                                          Color(0xFF656565).withOpacity(0.15),
-                                      blurRadius: 1.0,
-                                      spreadRadius: 0.2,
-                                    )
-                                  ]),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 20.0, left: 20.0),
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: productAtt
+                                    width: 600.0,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color(0xFF656565)
+                                                .withOpacity(0.15),
+                                            blurRadius: 1.0,
+                                            spreadRadius: 0.2,
+                                          )
+                                        ]),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 20.0, left: 20.0),
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: productAtt
 //                                  <Widget>[
 //                                    ///attributes start
 //                                    Text("Size", style: _subHeaderCustomStyle),
@@ -941,10 +954,11 @@ class _ProductWrapperState extends State<ProductWrapper> {
 //                                    ),
 //                                    ///attributes end
 //                                  ],
+                                          ),
                                     ),
-                              ),
-                            ),
-                          ),
+                                  ),
+                                )
+                              : Container(),
 
                           /// Background white for description
                           Padding(
@@ -1046,23 +1060,11 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                   productId: _pageProduct.products_id,
                                   quantity: 1,
                                   args: args));
-
-//
-//                         var snackbar = SnackBar(
-//                            content: Text("Item Added"),
-//                          );
-//                          ScaffoldMessenger.of(context).showSnackBar(snackbar);
-//                          setState(() {
-//                            valueItemChart++;
-//                          });
-//
-
                         } else {
 //                          Navigator.of(context).push(PageRouteBuilder(
 //                              pageBuilder: (_, __, ___) => new loginScreen()));
                           Navigator.pushNamed(context, loginScreen.routeName,
-                              arguments: LoginArguments(_pageProduct)
-                              );
+                              arguments: LoginArguments(_pageProduct));
                         }
 
 //              _key.currentState?.showSnackBar(snackbar);
@@ -1091,15 +1093,17 @@ class _ProductWrapperState extends State<ProductWrapper> {
                               /// Chat Icon
                               InkWell(
                                 onTap: () {
-                                if(state is AuthenticationAuthenticated) {
-                                  BlocProvider.of<WishsBloc>(context).add(
-                                      AddWishsEvent(
-                                          product_id:
-                                          _pageProduct.products_id));
-                                }else{
-                                  Navigator.pushNamed(context, loginScreen.routeName,
-                                      arguments: LoginArguments(_pageProduct));
-                                }
+                                  if (state is AuthenticationAuthenticated) {
+                                    BlocProvider.of<WishsBloc>(context).add(
+                                        AddWishsEvent(
+                                            product_id:
+                                                _pageProduct.products_id));
+                                  } else {
+                                    Navigator.pushNamed(
+                                        context, loginScreen.routeName,
+                                        arguments:
+                                            LoginArguments(_pageProduct));
+                                  }
 //                                  Navigator.of(context).push(PageRouteBuilder(
 //                                      pageBuilder: (_, ___, ____) =>
 //                                          new chatItem()));
@@ -1114,23 +1118,24 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                   child: BlocBuilder<WishsBloc, WishsState>(
                                     builder: (context, Wishstate) {
                                       if (Wishstate is WishChecksuccessState) {
-                                        if(Wishstate.inWishlist){
+                                        if (Wishstate.inWishlist) {
 //                                          return Center(
 //                                            child: Image.asset(
 //                                                "assets/icon/wishsuccess.png",
 //                                                height: 20.0),
 //                                          );
-                                        return _addWishsuccessicon();
-                                        }else {
+                                          return _addWishsuccessicon();
+                                        } else {
                                           return Center(
                                             child: Image.asset(
                                                 "assets/icon/addwish.png",
                                                 height: 20.0),
                                           );
                                         }
-                                      }else if(Wishstate is WishAddsuccessState){
+                                      } else if (Wishstate
+                                          is WishAddsuccessState) {
                                         return _addWishsuccessicon();
-                                      }else{
+                                      } else {
                                         return Center(
                                           child: Image.asset(
                                               "assets/icon/addwish.png",
@@ -1145,9 +1150,52 @@ class _ProductWrapperState extends State<ProductWrapper> {
                               /// Button Pay
                               InkWell(
                                 onTap: () {
-                                  Navigator.of(context).push(PageRouteBuilder(
-                                      pageBuilder: (_, __, ___) =>
-                                          new payment()));
+                                  // Navigator.of(context).push(PageRouteBuilder(
+                                  //     pageBuilder: (_, __, ___) =>
+                                  //         new payment()));
+                                  if (state is AuthenticationAuthenticated) {
+                                    Map<int, int?> args = {};
+                                    //get product attributes
+                                    int oi = 1;
+                                    for (var okey in _pageProduct
+                                            .products_option?.values
+                                            .toList() ??
+                                        []) {
+                                      if (aoptionList[oi] != null &&
+                                          aoptionList[oi]! > 0) {
+                                        args[okey.products_option_id] =
+                                            aoptionList[oi];
+                                      }
+                                      oi++;
+                                    }
+//
+                                    BlocProvider.of<CartsBloc>(context).add(
+                                        AddToCartEvent(
+                                            productId: _pageProduct.products_id,
+                                            quantity: 1,
+                                            args: args));
+                                    Navigator.of(context).push(PageRouteBuilder(
+                                        pageBuilder: (_, __, ___) =>
+                                        new Cartpage(),
+                                        transitionDuration:
+                                            Duration(milliseconds: 900),
+
+                                        /// Set animation Opacity in route to detailProduk layout
+                                        transitionsBuilder: (_,
+                                            Animation<double> animation,
+                                            __,
+                                            Widget child) {
+                                          return Opacity(
+                                            opacity: animation.value,
+                                            child: child,
+                                          );
+                                        }));
+                                  } else {
+                                    Navigator.pushNamed(
+                                        context, loginScreen.routeName,
+                                        arguments:
+                                            LoginArguments(_pageProduct));
+                                  }
                                 },
                                 child: Container(
                                   height: 45.0,
@@ -1402,8 +1450,7 @@ class _RelativeProductContinerState extends State<RelativeProductContiner> {
   List<Widget> _getRelativepro(List<Product>? productlist) {
     List<Widget> relativelist = [];
     productlist?.forEach((value) {
-      relativelist.add(
-          FavoriteItem(
+      relativelist.add(FavoriteItem(
         image: value.products_image,
         title: value.products_name,
         Salary: value.product_specials != null && value.product_specials! > 0
@@ -1670,7 +1717,7 @@ class FavoriteItem extends StatelessWidget {
                   Container(
                       height: 150.0,
                       width: 150.0,
-                    decoration: BoxDecoration(
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(7.0),
                             topRight: Radius.circular(7.0)),
@@ -1682,14 +1729,13 @@ class FavoriteItem extends StatelessWidget {
                         //     CachedNetworkImageProvider(image),
                         //     alignment: Alignment.center,
                         //     fit: BoxFit.cover)
-                    ),
-                      child:CachedNetworkImage(
+                      ),
+                      child: CachedNetworkImage(
                         imageUrl: image,
-                        placeholder: (context, url) => CircularProgressIndicator(),
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
                         errorWidget: (context, url, error) => Icon(Icons.error),
-
-                      )
-                  ),
+                      )),
                   Padding(padding: EdgeInsets.only(top: 15.0)),
                   Padding(
                     padding: const EdgeInsets.only(left: 15.0, right: 15.0),

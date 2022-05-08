@@ -24,7 +24,7 @@ class HomeImageSlidestate extends State<HomeImageSlide>{
             if(state is Carouselsloaded){
               final imagesliders = state.lstCarousel;
               return Container(
-                height: 175.0,
+                height: 200.0,
                 child: new Carousel(
                     boxFit: BoxFit.cover,
                     dotColor: Color(0xFF6991C7).withOpacity(0.8),

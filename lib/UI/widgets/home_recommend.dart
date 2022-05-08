@@ -49,7 +49,7 @@ class HomeRecommendstate extends State<HomeRecommend> {
         // is loading
         return Center(child: CircularProgressIndicator());
       }else if(state is Featuredloaded) {
-        _productlistheight=((_lproduct.length/2).ceil()*375);
+        _productlistheight=((_lproduct.length/2).ceil()*310);
         if(_lproduct.length<state.lstFeatureds.totalNum){
           _productlistheight+=77;
         }
