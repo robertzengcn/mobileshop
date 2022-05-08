@@ -19,7 +19,7 @@ import 'package:amigatoy/Models/Product_options.dart';
 import 'package:amigatoy/Models/Product_attributes.dart';
 import 'package:amigatoy/UI/LoginOrSignup/Login.dart';
 import 'package:amigatoy/Arguments/LoginArguments.dart';
-import 'package:amigatoy/UI/CartUIComponent/Payment.dart';
+// import 'package:amigatoy/UI/CartUIComponent/Payment.dart';
 
 class detailProduk extends StatefulWidget {
   Product gridItem;
@@ -77,6 +77,23 @@ class _detailProdukState extends State<detailProduk> {
                   content: Text("Item Added failure"),
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackbar);
+              }else if(state is CartsAddfinishState){
+                Navigator.of(context).push(PageRouteBuilder(
+                    pageBuilder: (_, __, ___) =>
+                    new Cartpage(),
+                    transitionDuration:
+                        Duration(milliseconds: 900),
+
+                    /// Set animation Opacity in route to detailProduk layout
+                    transitionsBuilder: (_,
+                        Animation<double> animation,
+                        __,
+                        Widget child) {
+                      return Opacity(
+                        opacity: animation.value,
+                        child: child,
+                      );
+                    }));
               }
             }),
             BlocListener<WishsBloc, WishsState>(listener: (context, state) {
@@ -1059,7 +1076,9 @@ class _ProductWrapperState extends State<ProductWrapper> {
                               AddToCartEvent(
                                   productId: _pageProduct.products_id,
                                   quantity: 1,
-                                  args: args));
+                                  args: args,
+                                gotocart: false
+                              ));
                         } else {
 //                          Navigator.of(context).push(PageRouteBuilder(
 //                              pageBuilder: (_, __, ___) => new loginScreen()));
@@ -1173,23 +1192,8 @@ class _ProductWrapperState extends State<ProductWrapper> {
                                         AddToCartEvent(
                                             productId: _pageProduct.products_id,
                                             quantity: 1,
-                                            args: args));
-                                    Navigator.of(context).push(PageRouteBuilder(
-                                        pageBuilder: (_, __, ___) =>
-                                        new Cartpage(),
-                                        transitionDuration:
-                                            Duration(milliseconds: 900),
+                                            args: args,gotocart: true));
 
-                                        /// Set animation Opacity in route to detailProduk layout
-                                        transitionsBuilder: (_,
-                                            Animation<double> animation,
-                                            __,
-                                            Widget child) {
-                                          return Opacity(
-                                            opacity: animation.value,
-                                            child: child,
-                                          );
-                                        }));
                                   } else {
                                     Navigator.pushNamed(
                                         context, loginScreen.routeName,

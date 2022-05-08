@@ -11,11 +11,13 @@ class AddToCartEvent extends CartsEvent {
   final int productId;
   final int quantity;//数量
   final Map<int, int?>? args;
+  final bool gotocart;
 
   AddToCartEvent({
     required this.productId,
     required this.quantity,
-    this.args
+    this.args,
+    required this.gotocart
   });
 }
 
