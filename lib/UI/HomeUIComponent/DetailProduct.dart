@@ -93,7 +93,7 @@ class _detailProdukState extends State<detailProduk> {
                         opacity: animation.value,
                         child: child,
                       );
-                    }));
+                    })).then((_) => setState(() {}));
               }
             }),
             BlocListener<WishsBloc, WishsState>(listener: (context, state) {
@@ -688,7 +688,7 @@ class _ProductWrapperState extends State<ProductWrapper> {
                               opacity: animation.value,
                               child: child,
                             );
-                          }));
+                          })).then((_) => setState(() {}));
                     },
                     child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
                       builder: (context, authcatState) {
