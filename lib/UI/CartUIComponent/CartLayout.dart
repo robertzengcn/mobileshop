@@ -641,6 +641,12 @@ class _cartState extends State<Cartpage> {
   Widget _scaffoldWidget() {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+          onPressed: (){
+            Navigator.pop(context);
+          },
+        ),
         iconTheme: IconThemeData(color: Color(0xFF6991C7)),
         centerTitle: true,
         backgroundColor: Colors.white,
