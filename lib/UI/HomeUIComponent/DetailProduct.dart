@@ -672,6 +672,13 @@ class _ProductWrapperState extends State<ProductWrapper> {
             return Scaffold(
               key: _key,
               appBar: AppBar(
+                leading:  IconButton(
+                  color:Colors.black54,
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                ),
                 actions: <Widget>[
                   InkWell(
                     onTap: () {

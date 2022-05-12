@@ -27,8 +27,15 @@ class _brandState extends State<brand> {
 
     /// Component appbar
     var _appbar = AppBar(
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: Color(0x00000),
       elevation: 0.0,
+      leading:  IconButton(
+        color:Colors.black54,
+        icon: Icon(Icons.arrow_back),
+        onPressed: (){
+          Navigator.pop(context);
+        },
+      ),
       title: Padding(
         padding: const EdgeInsets.only(left: 10.0),
         child: Text(

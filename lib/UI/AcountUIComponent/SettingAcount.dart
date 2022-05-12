@@ -12,12 +12,12 @@ class settingAcount extends StatefulWidget {
 }
 
 class _settingAcountState extends State<settingAcount> {
-  static var _txtCustomHead = TextStyle(
-    color: Colors.black54,
-    fontSize: 17.0,
-    fontWeight: FontWeight.w600,
-    fontFamily: "Gotik",
-  );
+  // static var _txtCustomHead = TextStyle(
+  //   color: Colors.black54,
+  //   fontSize: 17.0,
+  //   fontWeight: FontWeight.w600,
+  //   fontFamily: "Gotik",
+  // );
 
   // static var _txtCustomSub = TextStyle(
   //   color: Colors.black38,
@@ -103,7 +103,7 @@ class _settingAcountState extends State<settingAcount> {
         },
       ),
 
-    );
+    ).then((_) => setState(() {}));
 
   }
   // void _manageNotify(){
@@ -169,22 +169,22 @@ class _settingAcountState extends State<settingAcount> {
                 sub1: "Delete Account",
 
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 5.0),
-                child: Container(
-                  height: 50.0,
-                  width: 1000.0,
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 13.0, left: 20.0, bottom: 15.0),
-                    child: Text(
-                      "Logout",
-                      style: _txtCustomHead,
-                    ),
-                  ),
-                ),
-              )
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 5.0),
+              //   child: Container(
+              //     height: 50.0,
+              //     width: 1000.0,
+              //     color: Colors.white,
+              //     child: Padding(
+              //       padding: const EdgeInsets.only(
+              //           top: 13.0, left: 20.0, bottom: 15.0),
+              //       child: Text(
+              //         "Logout",
+              //         style: _txtCustomHead,
+              //       ),
+              //     ),
+              //   ),
+              // )
             ],
           ),
         ),

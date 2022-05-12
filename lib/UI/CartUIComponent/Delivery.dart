@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
+// import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
@@ -64,8 +64,10 @@ class _deliveryState extends State<Delivery> {
             BlocListener<CustomerAddressBloc, CustomerAddressState>(
                 listener: (context, state) {
               if (state is AddCustomerAddsuccessState) {
-                Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => new Cartpage()));
+                //Navigator.of(context).pop(false);
+                // Navigator.of(context).push(PageRouteBuilder(
+                //     pageBuilder: (_, __, ___) => new Cartpage()));
+                Navigator.pop(context);
               }else if(state is CustomerAddressErrorState){
                 var snackbar = SnackBar(
                   content: Text(state.error),

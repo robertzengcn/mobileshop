@@ -161,7 +161,7 @@ class _catelogueDetailState extends State<catelogueDetail> {
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData mediaQueryData = MediaQuery.of(context);
+    // MediaQueryData mediaQueryData = MediaQuery.of(context);
     List<Product> _productlist = [];
 
     /// Hero animation for image
@@ -278,7 +278,7 @@ class _catelogueDetailState extends State<catelogueDetail> {
                                         right: 0.0,
                                         bottom: 0.0),
                                     child: Container(
-                                      height: 70.0,
+                                      height: 80.0,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(4.0)),
@@ -293,6 +293,7 @@ class _catelogueDetailState extends State<catelogueDetail> {
                                                 right: 20.0),
                                             child: Text(
                                               categories.categoriesDesc,
+                                              overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
                                                   fontFamily: "Popins",
                                                   fontWeight: FontWeight.w400,

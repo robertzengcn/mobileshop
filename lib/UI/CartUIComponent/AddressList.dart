@@ -9,71 +9,37 @@ import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
 
 class AddressList extends StatefulWidget {
+  static const routeName = '/addresslist';
   @override
   _addressListState createState() => _addressListState();
 }
 
 class _addressListState extends State<AddressList> {
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-        providers: [
-          BlocProvider<CustomerAddressBloc>(create: (context) {
-            return CustomerAddressBloc(
-                customerAddressRepository: CustomerAddressRepository())..add(QueryCustomerAddressEvent());
-          }),
-        ],
-        child: MultiBlocListener(listeners: [
-          BlocListener<CustomerAddressBloc, CustomerAddressState>(
-              listener: (context, state) {
-                if(state is SetCustomersuccessState){
-                  Navigator.of(context).push(PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => new Cartpage()));
-                }
-          }),
-        ], child: AddressWrapper()));
-  }
-}
-
-class AddressWrapper extends StatefulWidget {
-  @override
-  _AddressWrapperState createState() => _AddressWrapperState();
-}
-
-class _AddressWrapperState extends State<AddressWrapper> {
-  void initState() {
-    super.initState();
-  }
-
   List<CustomerAddress?> _customerAddlist = [];
 
-  Widget _customerAddress(){
+  Widget _customerAddress() {
     List<Widget> custlistWidget = [];
     if (_customerAddlist.length > 0) {
       for (var i = 0; i < _customerAddlist.length; i++) {
-        bool asDefault=true;
-        if(i==0){
-          asDefault=false;
+        bool asDefault = true;
+        if (i == 0) {
+          asDefault = false;
         }
-        custlistWidget.add(
-            getCusterAdd(_customerAddlist[i]!,true,context,asDefault)
-        );
+        custlistWidget
+            .add(getCusterAdd(_customerAddlist[i]!, true, context, asDefault));
       }
     }
-      return Column(
-          children:[
-            Container(
-                height: 460,
-                child:ListView(
-                  children: custlistWidget,
-                )),
-            Padding(padding: EdgeInsets.only(top: 10.0)),
-          ]);
-
-
+    return Column(children: [
+      Container(
+          height: 460,
+          child: ListView(
+            children: custlistWidget,
+          )),
+      Padding(padding: EdgeInsets.only(top: 10.0)),
+    ]);
   }
 
-  ///delivery app page
-  Widget _scaffoldDiv() {
+  Widget _scaffoldDiv(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           leading: InkWell(
@@ -100,33 +66,72 @@ class _AddressWrapperState extends State<AddressWrapper> {
               height: 450,
               child: SingleChildScrollView(
                   child: Container(
-                    color: Colors.white,
-                    child: _customerAddress(),
+                color: Colors.white,
+                child: _customerAddress(),
               )),
             ),
             Padding(padding: EdgeInsets.only(top: 10.0)),
             Container(
-                child:OutlinedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => new Delivery()));
-                  },
-                  child: const Text('Add Shipping Address'),
-                )
-            ),
+                child: OutlinedButton(
+              onPressed: () {
+                //print("112");
+                // Navigator.of(context).push(PageRouteBuilder(
+                //     pageBuilder: (_, __, ___) => new Delivery()));
+                Navigator.of(context)
+                    .push(PageRouteBuilder(
+                        pageBuilder: (_, __, ___) => new Delivery(),
+                        transitionDuration: Duration(milliseconds: 900),
+
+                        /// Set animation Opacity in route to detailProduk layout
+                        transitionsBuilder:
+                            (_, Animation<double> animation, __, Widget child) {
+                          return Opacity(
+                            opacity: animation.value,
+                            child: child,
+                          );
+                        }))
+                    .then((value) => setState(() {
+                  BlocProvider.of<CustomerAddressBloc>(context).add(QueryCustomerAddressEvent());
+                }));
+              },
+              child: const Text('Add Shipping Address'),
+            )),
           ],
-        )
-    );
+        ));
   }
 
-  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CustomerAddressBloc, CustomerAddressState>(
-        builder: (context, customeraddstate) {
-      if (customeraddstate is QueryCustomerAddressSuccess) {
-        _customerAddlist = customeraddstate.customerAddressList;
-      }
-      return _scaffoldDiv();
-    });
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider<CustomerAddressBloc>(create: (context) {
+            return CustomerAddressBloc(
+                customerAddressRepository: CustomerAddressRepository())
+              ..add(QueryCustomerAddressEvent());
+          }),
+        ],
+        child: MultiBlocListener(listeners: [
+          BlocListener<CustomerAddressBloc, CustomerAddressState>(
+              listener: (context, state) {
+            if (state is SetCustomersuccessState) {
+              Navigator.of(context).push(PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => new Cartpage()));
+            } else if (state is QueryCustomerAddressSuccess) {
+              setState(() {
+                _customerAddlist = state.customerAddressList;
+              });
+            }
+          }),
+        ],
+        child: BlocBuilder<CustomerAddressBloc, CustomerAddressState>(
+    builder: (context, state) {
+      return _scaffoldDiv(context);
+
+    }
+      )
+        )
+    );
+    }
   }
-}
+
+
+
