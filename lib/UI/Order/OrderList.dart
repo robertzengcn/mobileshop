@@ -7,6 +7,8 @@ import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
 import 'package:amigatoy/UI/widgets/order_list.dart';
 // import 'package:flutter/scheduler.dart';
+//import 'package:amigatoy/UI/AcountUIComponent/Profile.dart';
+import 'package:amigatoy/UI/BottomNavigationBar.dart';
 
 class OrderList extends StatefulWidget {
   static const routeName = '/orderlist';
@@ -66,7 +68,26 @@ class _orderlistState extends State<OrderList> {
       appBar: AppBar(
         leading: InkWell(
             onTap: () {
-              Navigator.of(context).pop(false);
+              // Navigator.of(context).pop(false);
+              // Navigator.of(context).push(PageRouteBuilder(
+              //     pageBuilder: (_, __, ___) =>
+              //     new Profil(),
+              //     transitionDuration:
+              //     Duration(milliseconds: 900),
+              //
+              //     /// Set animation Opacity in route to detailProduk layout
+              //     // transitionsBuilder: (_,
+              //     //     Animation<double> animation,
+              //     //     __,
+              //     //     Widget child) {
+              //     //   return Opacity(
+              //     //     opacity: animation.value,
+              //     //     child: child,
+              //     //   );
+              //     // }
+              //     )).then((_) => setState(() {}));
+              Navigator.of(context).push(PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => new bottomNavigationBar(pageIndex: 3)));
             },
             child: Icon(Icons.arrow_back)),
         elevation: 0.0,

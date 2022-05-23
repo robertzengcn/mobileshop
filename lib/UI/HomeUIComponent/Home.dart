@@ -91,27 +91,28 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     final isonline=Provider.of<ConnectivityProvider>(context).isOnline;
-    if(!isonline){
+    // print("app lost internel connect");
+    // if(!isonline){
       Widget cancelButton = TextButton(
         child: Text("ok"),
         onPressed:  () {
           Navigator.of(context).pop();
         },
       );
-      AlertDialog alert =AlertDialog(
+      AlertDialog alertwidget =AlertDialog(
         title: Text("Connect error"),
         content: Text("Plese connect to internet"),
         actions: [
           cancelButton,
         ],
       );  // show the dialog
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
-    }
+      // showDialog(
+      //   context: context,
+      //   builder: (BuildContext context) {
+      //     return alert;
+      //   },
+      // );
+    // }
     //double size = mediaQueryData.size.height;
 //    final contentProvider = Provider.of<CRUDModel>(context);
 ////    productProvider.fetchProductsAsStream();
@@ -718,6 +719,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             child:
             Column(
               children: <Widget>[
+
                 Padding(
                     padding: EdgeInsets.only(
                         top: mediaQueryData.padding.top + 58.5)),
@@ -746,6 +748,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 //                  padding: EdgeInsets.only(bottom: 2),
 //                ),
                 HomeImageSlide(),
+                (!isonline)?alertwidget:Container(),
                 // Padding(
                 //   padding: EdgeInsets.only(bottom: 1.0),
                 // ),

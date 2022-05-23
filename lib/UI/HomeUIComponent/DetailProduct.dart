@@ -1488,7 +1488,7 @@ class _RelativeProductContinerState extends State<RelativeProductContiner> {
           if (state is RelativeProductloading) {
             return Center(child: CircularProgressIndicator());
           } else if (state is RelativeProductloadedState) {
-            return Padding(
+            return state.lstRelative.isNotEmpty?Padding(
               padding: const EdgeInsets.only(
                   left: 15.0, right: 20.0, top: 30.0, bottom: 20.0),
               child: Container(
@@ -1561,7 +1561,7 @@ class _RelativeProductContinerState extends State<RelativeProductContiner> {
                   ],
                 ),
               ),
-            );
+            ):Container();
           } else {
             return Container();
           }

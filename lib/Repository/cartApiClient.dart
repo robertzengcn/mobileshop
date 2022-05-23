@@ -79,6 +79,9 @@ class CartApiClient extends BaseApiClient{
         'Client-Key':token
       },
     );
+    if (response.statusCode != 200) {
+      throw Exception("get cart quantity error");
+    }
     var responseJson = json.decode(response.body);
     if(responseJson['status']==true){
       return responseJson['data'] as int;
@@ -87,7 +90,16 @@ class CartApiClient extends BaseApiClient{
 //            .map((p) => Menu.fromJson(p))
 //            .toList();
     }else{
-      throw Exception(responseJson['msg']);
+      if(responseJson['code']!=null&&responseJson['code']==20210823091739){
+        return 0;
+      }else{
+        if(responseJson['msg']!=null){
+          throw Exception(responseJson['msg']);
+        }else{
+          throw Exception("unknow error when check cart quantity");
+        }
+
+      }
     }
   }
 

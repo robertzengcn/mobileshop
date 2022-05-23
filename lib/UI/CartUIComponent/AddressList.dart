@@ -17,7 +17,7 @@ class AddressList extends StatefulWidget {
 class _addressListState extends State<AddressList> {
   List<CustomerAddress?> _customerAddlist = [];
 
-  Widget _customerAddress() {
+  Widget _customerAddress(BuildContext context) {
     List<Widget> custlistWidget = [];
     if (_customerAddlist.length > 0) {
       for (var i = 0; i < _customerAddlist.length; i++) {
@@ -67,7 +67,7 @@ class _addressListState extends State<AddressList> {
               child: SingleChildScrollView(
                   child: Container(
                 color: Colors.white,
-                child: _customerAddress(),
+                child: _customerAddress(context),
               )),
             ),
             Padding(padding: EdgeInsets.only(top: 10.0)),

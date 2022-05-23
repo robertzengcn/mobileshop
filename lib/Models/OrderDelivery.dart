@@ -29,15 +29,15 @@ class OrderDelivery extends Equatable {
   static OrderDelivery fromJson(dynamic json) {
 
       return OrderDelivery(
-        name: json['name'],
-        company: json['company'],
-        country: json['country'],
-        suburb: json['suburb'],
-        city: json['city'],
-        postcode: json['postcode'],
-        state: json['state'],
-        countryCode: json['country_code'],
-          streetAddress:json['street_address'],
+        name: json['name'].toString(),
+        company: json['company']?.toString(),
+        country: json['country'].toString(),
+        suburb: json['suburb'].toString(),
+        city: json['city'].toString(),
+        postcode: json['postcode'].toString(),
+        state: json['state'].toString(),
+        countryCode: json['country_code'].toString(),
+          streetAddress:json['street_address'].toString(),
       );
   }
 }

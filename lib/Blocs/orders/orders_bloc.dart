@@ -18,7 +18,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   ) async* {
     // TODO: implement mapEventToState
     if (event is CreateOrderEvent) {
-      // try {
+       try {
       yield OrderPenddingState();
       var data = await orderRepository.createOrder(
           event.payment, event.currency, event.comment, event.shipping);
@@ -39,9 +39,9 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       }
 
       // yield OrderCreatesuccessState(payment:event.payment,paypalRequest:paypalRequest);
-      // }catch (error) {
-      //   yield OrderErrorState(error: error.toString());
-      // }
+      }catch (error) {
+        yield OrderErrorState(error: error.toString());
+      }
     } else if (event is FeatchOrderlistEvent) {
       yield OrderPenddingState();
       ListOrder lorders=await orderRepository.featchOrderlist(event.start, event.length);

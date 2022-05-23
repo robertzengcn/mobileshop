@@ -24,7 +24,7 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
    case 2:
     return new Cartpage();
    case 3:
-    return new profil();
+    return new Profil();
     // break;
    default:
     return Home();

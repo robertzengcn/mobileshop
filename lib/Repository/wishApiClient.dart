@@ -91,6 +91,9 @@ class WishApiClient extends BaseApiClient{
         return false;
       }
     }else{
+      if(responseJson['msg']=="not find such customer"){
+        return false;
+      }
       throw Exception(responseJson['msg']);
     }
 

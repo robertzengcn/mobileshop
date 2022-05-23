@@ -13,6 +13,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:flutter/scheduler.dart';
 
+
 class PaypalPayment extends StatefulWidget {
   final Function? onFinish;
   static const routeName = '/paypalpayment';
@@ -24,9 +25,7 @@ class PaypalPayment extends StatefulWidget {
   }
 }
 
-
 class PaypalPaymentState extends State<PaypalPayment> {
-
   @override
   void initState() {
     super.initState();
@@ -40,14 +39,13 @@ class PaypalPaymentState extends State<PaypalPayment> {
   // String? _executeUrl;
   // String? _accessToken;
   // String _cancelURL="";
-  String _returnURL="";
-  String _cancelUrl="";
-  String _orderId="";
-  String _payerID="";
-  String _paymentStatus="waiting";
- //does the customer finish the payment
-
-
+  String _returnURL = "";
+  String _cancelUrl = "";
+  String _orderId = "";
+  String _payerID = "";
+  String _paymentStatus = "waiting";
+  bool isLoading=true;
+  //does the customer finish the payment
 
   // late WebViewController _controller;
   // PaypalServices services = PaypalServices();
@@ -58,7 +56,7 @@ class PaypalPaymentState extends State<PaypalPayment> {
   // bool isEnableShipping = false;
   // bool isEnableAddress = false;
 
-  Widget _checkoutScaffold(){
+  Widget _checkoutScaffold() {
     return Scaffold(
       // appBar: AppBar(
       //   backgroundColor: Theme.of(context).backgroundColor,
@@ -67,17 +65,28 @@ class PaypalPaymentState extends State<PaypalPayment> {
       //     onTap: () => Navigator.pop(context),
       //   ),
       // ),
-      body: WebView(
-        initialUrl: _checkoutUrl,
-        javascriptMode: JavascriptMode.unrestricted,
-        onProgress: (int progress) {
-          print("paypal payment page is loading (progress : $progress%)");
-        },
-        navigationDelegate: getNavigationDelegate,
+      body: Stack(
+        children: <Widget>[
+          WebView(
+            initialUrl: _checkoutUrl,
+            javascriptMode: JavascriptMode.unrestricted,
+            onProgress: (int progress) {
+              print("paypal payment page is loading (progress : $progress%)");
+            },
+            navigationDelegate: getNavigationDelegate,
+            onPageFinished: (finish) {
+              setState(() {
+                isLoading = false;
+              });
+            }),
+          isLoading ? Center( child: CircularProgressIndicator(),)
+              : Stack(),
+        ],
       ),
     );
   }
-/// navigation
+
+  /// navigation
   Future<NavigationDecision> getNavigationDelegate(
       NavigationRequest request) async {
     if (request.url.contains(_returnURL)) {
@@ -86,30 +95,30 @@ class PaypalPaymentState extends State<PaypalPayment> {
       final payerID = uri.queryParameters['PayerID'];
       print(payerID);
       if (payerID != null) {
-        _payerID=payerID;
+        _payerID = payerID;
         BlocProvider.of<PaypalBloc>(context)
-            .add(successPayment(orderId: _orderId,paymentId: _payerID));
+            .add(successPayment(orderId: _orderId, paymentId: _payerID));
         setState(() {
-          _paymentStatus="finish";
+          _paymentStatus = "finish";
         });
         return NavigationDecision.prevent;
       } else {
         setState(() {
-          _paymentStatus="finish";
+          _paymentStatus = "finish";
         });
         return NavigationDecision.prevent;
       }
-
-    }else if (request.url.contains(_cancelUrl)) {
+    } else if (request.url.contains(_cancelUrl)) {
       setState(() {
-      _paymentStatus="cancel";
+        _paymentStatus = "cancel";
       });
       return NavigationDecision.prevent;
     }
 
     return NavigationDecision.navigate;
   }
-  Widget _loaddingPagescaff(){
+
+  Widget _loaddingPagescaff() {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -124,16 +133,17 @@ class PaypalPaymentState extends State<PaypalPayment> {
       body: Center(child: Container(child: CircularProgressIndicator())),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     // print(checkoutUrl);
     var args;
     if (ModalRoute.of(context)!.settings.arguments != null) {
       args = ModalRoute.of(context)!.settings.arguments as PaypalArguments;
-      _checkoutUrl=args.checkoutUrl;
-      _returnURL=args.returnUrl;
-      _cancelUrl=args.cancelUrl;
-      _orderId=args.orderId;
+      _checkoutUrl = args.checkoutUrl;
+      _returnURL = args.returnUrl;
+      _cancelUrl = args.cancelUrl;
+      _orderId = args.orderId;
       // print(args);
       // _accessToken=payPalstate.accessToken;
     }
@@ -144,43 +154,37 @@ class PaypalPaymentState extends State<PaypalPayment> {
             // if(args!=null){
             //   return PaypalBloc()..add(createPayment(paypalrequest:args.invoice));
             // }else{
-              return PaypalBloc()..add(createPayment());
+            return PaypalBloc()..add(createPayment());
             // }
-
           }),
         ],
         child: MultiBlocListener(
-          listeners: [
-            BlocListener<PaypalBloc, PaypalState>(
-                listener: (context, state) {
-
-                }),
-          ],
-          child: BlocBuilder<PaypalBloc, PaypalState>(
-            builder: (context, payPalstate) {
-              switch(_paymentStatus){
+            listeners: [
+              BlocListener<PaypalBloc, PaypalState>(
+                  listener: (context, state) {}),
+            ],
+            child: BlocBuilder<PaypalBloc, PaypalState>(
+                builder: (context, payPalstate) {
+              switch (_paymentStatus) {
                 case 'finish':
-                SchedulerBinding.instance?.addPostFrameCallback((_) {
-                  Navigator.pushNamed(context, PaymentSuccess.routeName,
-                      arguments: PaySucessArguments(_payerID, _orderId)
-                  );
-                });
-                break;
+                  SchedulerBinding.instance?.addPostFrameCallback((_) {
+                    Navigator.pushNamed(context, PaymentSuccess.routeName,
+                        arguments: PaySucessArguments(_payerID, _orderId));
+                  });
+                  break;
                 case 'cancel':
                   SchedulerBinding.instance?.addPostFrameCallback((_) {
-                    Navigator.of(context).pushReplacementNamed(OrderList.routeName);
+                    Navigator.of(context)
+                        .pushReplacementNamed(OrderList.routeName);
                   });
                   break;
               }
-              if(payPalstate is PaypalCreateState){
+              if (payPalstate is PaypalCreateState) {
                 return _checkoutScaffold();
-              }else if(payPalstate is PaypalpenddingState){
+              } else if (payPalstate is PaypalpenddingState) {
                 return _loaddingPagescaff();
               }
               return Container();
-            }
-          )
-        ));
-
+            })));
   }
 }

@@ -11,7 +11,8 @@ import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 import 'package:amigatoy/UI/Order/OrderList.dart';
 
-class profil extends StatefulWidget {
+class Profil extends StatefulWidget {
+  static const routeName = '/profil';
   @override
   _profilState createState() => _profilState();
 }
@@ -80,7 +81,7 @@ Widget _getprofile(String userName) {
         ),
       ));
 }
-class _profilState extends State<profil> {
+class _profilState extends State<Profil> {
   @override
   Widget build(BuildContext context) {
     /// Declare MediaQueryData
