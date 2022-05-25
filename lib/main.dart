@@ -16,10 +16,15 @@ import 'package:amigatoy/UI/Payment/PaymentSuccess.dart';
 // import 'package:amigatoy/Arguments/PaySuccessArguments.dart';
 import 'package:amigatoy/UI/Order/OrderList.dart';
 // import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:amigatoy/Observer/myrouteobserver.dart';
+// import 'package:amigatoy/Observer/myrouteobserver.dart';
 import 'package:amigatoy/provider/connectivity_provider.dart';
 import 'package:provider/provider.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'firebase_options.dart';
+// import 'dart:io';
+// import 'package:flutter/foundation.dart';
+// import 'package:flutter/material.dart';
 
 
 class SimpleBlocObserver extends BlocObserver {
@@ -44,7 +49,13 @@ class SimpleBlocObserver extends BlocObserver {
 
 /// Run first apps open
 void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   WidgetsFlutterBinding.ensureInitialized();
+  // Pass all uncaught errors from the framework to Crashlytics.
+  // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
 
   Bloc.observer = SimpleBlocObserver();
 //  DatabaseProvider databaseprovider=DatabaseProvider();
