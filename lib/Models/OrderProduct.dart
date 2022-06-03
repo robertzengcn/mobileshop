@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 // import 'package:amigatoy/Models/Product_options.dart';
-// import 'package:amigatoy/Models/Product_attributes.dart';
+import 'package:amigatoy/Models/models.dart';
 //import 'dart:convert';
 
 class OrderProduct extends Equatable {
@@ -11,6 +11,8 @@ class OrderProduct extends Equatable {
   final int productsQuantity;
   final double finalPrice;
   final String productsImage;
+  final List<OrderProductAttributes>? productAttributes;
+  final double? productstax;
 
   const OrderProduct(
       {required this.ordersProductsId,
@@ -20,6 +22,8 @@ class OrderProduct extends Equatable {
       required this.productsQuantity,
       required this.finalPrice,
       required this.productsImage,
+        this.productAttributes,
+        this.productstax,
       });
   @override
   List<Object> get props => [
@@ -38,6 +42,19 @@ class OrderProduct extends Equatable {
     if(!imagenull){
       imgSrc=json['products_image'];
     }
+    //product attributes
+    bool attributesNull =
+    json['attributes'] == null || (json['attributes'].length == 0) ? true : false;
+    List<OrderProductAttributes> productsAttributesList = [];
+    if(!attributesNull){
+      json['attributes'].forEach((value) {
+        productsAttributesList.add(OrderProductAttributes.fromJson(value));
+      });
+    }
+    double? productTax;
+    if(json['products_tax']!=null){
+      productTax=json['products_tax'].toDouble() as double;
+    }
 
     return OrderProduct(
         ordersProductsId: json['orders_products_id'] as int,
@@ -46,7 +63,9 @@ class OrderProduct extends Equatable {
         productsName: json['products_name'],
         productsQuantity: json['products_quantity'],
         finalPrice: json['final_price'].toDouble() as double,
-        productsImage: imgSrc
+        productsImage: imgSrc,
+        productAttributes:productsAttributesList,
+        productstax:productTax
     );
   }
 }

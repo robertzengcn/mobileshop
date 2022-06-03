@@ -7,12 +7,23 @@ import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:amigatoy/Arguments/LoginArguments.dart';
 import 'package:amigatoy/UI/HomeUIComponent/DetailProduct.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+// import 'package:amigatoy/Repository/repository.dart';
+// import 'package:amigatoy/Models/User.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class loginScreen extends StatefulWidget {
   static const routeName = '/logins';
   @override
   _loginScreenState createState() => _loginScreenState();
 }
+
+GoogleSignIn _googleSignIn = GoogleSignIn(
+  scopes: [
+    'email',
+    'https://www.googleapis.com/auth/contacts.readonly',
+  ],
+);
 
 /// Component Widget this layout UI
 class _loginScreenState extends State<loginScreen>
@@ -39,6 +50,17 @@ class _loginScreenState extends State<loginScreen>
           });
     // TODO: implement initState
     super.initState();
+    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
+      if(account!=null&&account.displayName!=null){
+        BlocProvider.of<LoginBloc>(context).add(
+          LoginGGsuccess(
+              email: account.email,
+            username: account.displayName!
+          ),
+        );
+      }
+    });
+    _googleSignIn.signInSilently();
   }
 
   /// Dispose animation controller
@@ -76,8 +98,6 @@ class _loginScreenState extends State<loginScreen>
 //    }
 
     _onLoginButtonPressed() {
-//      print('loginstart');
-//      final FormState form = _formKey.currentState!;
       if (_formKey.currentState!.validate()) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Processing Data')));
@@ -101,12 +121,12 @@ class _loginScreenState extends State<loginScreen>
             SnackBar(content: Text('${state.error}')),
           );
       } else if (state is LoginCompleted) {
-        //用户登录成功
+        //user login success
         setState(() {
           tap = 1;
         });
-        if(args!=null){
-          if(args?.product!=null){
+        if (args != null) {
+          if (args?.product != null) {
             Navigator.of(context).push(PageRouteBuilder(
                 pageBuilder: (_, __, ___) => new detailProduk(args.product),
                 transitionDuration: Duration(milliseconds: 900),
@@ -120,15 +140,57 @@ class _loginScreenState extends State<loginScreen>
                   );
                 }));
           }
-        }else{//默认的处理方法
+        } else {
+          //默认的处理方法
           new LoginAnimation(
             animationController: sanimationController,
           );
           _PlayAnimation();
         }
-
       }
     }, child: BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
+      Future<Null> _loginFacebook() async {
+        final LoginResult result = await FacebookAuth.instance.login(
+            permissions: [
+              'email',
+              'public_profile'
+            ]); // by default we request the email and the public profile
+// or FacebookAuth.i.login()
+        if (result.status == LoginStatus.success) {
+          // you are logged
+          final AccessToken accessToken = result.accessToken!;
+          if (accessToken != null) {
+            final userData = await FacebookAuth.instance
+                .getUserData(fields: "name,email,picture.width(200),id");
+            BlocProvider.of<LoginBloc>(context).add(LoginFbsuccess(
+              userId: userData["id"],
+              email: userData["email"],
+              accessToken: accessToken.token,
+              username: userData["name"],
+            ));
+          }
+        } else {
+          String noticeMessage = "unkown error happened";
+          if (result.message != null) {
+            noticeMessage = result.message!;
+          }
+          // print(result.status);
+          // print(result.message);
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(content: Text(noticeMessage)));
+        }
+      }
+      Future<Null> _loginGoogle() async {
+
+        try {
+          await _googleSignIn.signIn();
+        } catch (error) {
+          print(error);
+        }
+      }
+
+
       return Scaffold(
         backgroundColor: Colors.white,
         body: Container(
@@ -198,12 +260,22 @@ class _loginScreenState extends State<loginScreen>
                               Padding(
                                   padding:
                                       EdgeInsets.symmetric(vertical: 30.0)),
-                              buttonCustomFacebook(),
+
+                              GestureDetector(
+                                  onTap: () {
+                                    _loginFacebook();
+                                  },
+                                  child: buttonCustomFacebook()),
 
                               /// ButtonCustomGoogle
                               Padding(
                                   padding: EdgeInsets.symmetric(vertical: 7.0)),
-                              buttonCustomGoogle(),
+                              GestureDetector(
+                                onTap: () {
+                                  _loginGoogle();
+                                },
+                                child: buttonCustomGoogle(),
+                              ),
 
                               /// Set Text
                               Padding(

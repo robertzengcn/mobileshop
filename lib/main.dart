@@ -6,7 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
 import 'package:amigatoy/Repository/repository.dart';
-import 'package:amigatoy/database/database.dart';
+// import 'package:amigatoy/database/database.dart';
 import 'package:amigatoy/UI/LoginOrSignup/Login.dart';
 import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 import 'package:amigatoy/UI/Payment/PaypalPayment.dart';
@@ -15,6 +15,16 @@ import 'package:amigatoy/UI/CartUIComponent/Checkout.dart';
 import 'package:amigatoy/UI/Payment/PaymentSuccess.dart';
 // import 'package:amigatoy/Arguments/PaySuccessArguments.dart';
 import 'package:amigatoy/UI/Order/OrderList.dart';
+// import 'package:connectivity_plus/connectivity_plus.dart';
+// import 'package:amigatoy/Observer/myrouteobserver.dart';
+import 'package:amigatoy/provider/connectivity_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'firebase_options.dart';
+// import 'dart:io';
+// import 'package:flutter/foundation.dart';
+// import 'package:flutter/material.dart';
 
 
 class SimpleBlocObserver extends BlocObserver {
@@ -39,7 +49,13 @@ class SimpleBlocObserver extends BlocObserver {
 
 /// Run first apps open
 void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   WidgetsFlutterBinding.ensureInitialized();
+  // Pass all uncaught errors from the framework to Crashlytics.
+  // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
 
   Bloc.observer = SimpleBlocObserver();
 //  DatabaseProvider databaseprovider=DatabaseProvider();
@@ -61,7 +77,8 @@ void main() async {
 
 /// Set orienttation
 class myApp extends StatelessWidget {
-  final userRepository = UserRepository(userApiClient:UserApiClient());
+  final RouteObserver<PageRoute> _routeObserver = RouteObserver<PageRoute>();
+  final userRepository = UserRepository();
 //  final productRepository=ProductRepository();
   @override
   Widget build(BuildContext context) {
@@ -117,6 +134,14 @@ class myApp extends StatelessWidget {
           //加载产品的评论
           return PaypalBloc();
         }),
+        BlocProvider<RegisterBloc>(
+          create: (context) {
+            return RegisterBloc(
+              authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+              userRepository: userRepository,
+            );
+          },
+        ),
       ],
       // child: MultiBlocListener(
         // listeners: [
@@ -142,29 +167,33 @@ class myApp extends StatelessWidget {
         //     }
         //   }),
         // ],
-        child:MaterialApp(
-          title: "Amiga Toy",
-          theme: ThemeData(
-              brightness: Brightness.light,
-              backgroundColor: Colors.white,
-              primaryColorLight: Colors.white,
-              primaryColorBrightness: Brightness.light,
-              primaryColor: Colors.white),
-          debugShowCheckedModeBanner: false,
-          home: SplashScreen(),
+        child:ChangeNotifierProvider(
+          create: (context)=>ConnectivityProvider(),
+          child: MaterialApp(
+            title: "Amiga Toy",
+            theme: ThemeData(
+                brightness: Brightness.light,
+                backgroundColor: Colors.white,
+                primaryColorLight: Colors.white,
+                primaryColorBrightness: Brightness.light,
+                primaryColor: Colors.white),
+            debugShowCheckedModeBanner: false,
+            home: SplashScreen(),
+              navigatorObservers: [_routeObserver],
 
-          /// Move splash screen to ChoseLogin Layout
-          /// Routes
-          routes: <String, WidgetBuilder>{
-            //"login": (BuildContext context) => new Menu()
-            Home.routeName: (BuildContext context) => new Home(),
-            loginScreen.routeName:(BuildContext context) =>new loginScreen(),
-            Delivery.routeName:(BuildContext context) =>new Delivery(),
-            PaypalPayment.routeName:(BuildContext context) =>new PaypalPayment(),
-            Checkout.routeName:(BuildContext context) =>new Checkout(),
-            PaymentSuccess.routeName:(BuildContext context) =>new PaymentSuccess(),
-            OrderList.routeName:(BuildContext context) =>new OrderList(),
-          }),
+            /// Move splash screen to ChoseLogin Layout
+            /// Routes
+            routes: <String, WidgetBuilder>{
+              //"login": (BuildContext context) => new Menu()
+              Home.routeName: (BuildContext context) => new Home(),
+              loginScreen.routeName:(BuildContext context) =>new loginScreen(),
+              Delivery.routeName:(BuildContext context) =>new Delivery(),
+              PaypalPayment.routeName:(BuildContext context) =>new PaypalPayment(),
+              Checkout.routeName:(BuildContext context) =>new Checkout(),
+              PaymentSuccess.routeName:(BuildContext context) =>new PaymentSuccess(),
+              OrderList.routeName:(BuildContext context) =>new OrderList(),
+            }),
+        ),
       // )
     );
   }

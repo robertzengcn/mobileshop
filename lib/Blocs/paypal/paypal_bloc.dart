@@ -32,6 +32,7 @@ class PaypalBloc extends Bloc<PaypalEvent, PaypalState> {
         // }
 
     }else if(event is successPayment){
+
       yield PaypalFinishState(paymentId:event.paymentId,orderId:event.orderId);
       // yield PaypalpenddingState();
       // String paymentId=await services.executePayment(event.url,event.payerId,event.accessToken);

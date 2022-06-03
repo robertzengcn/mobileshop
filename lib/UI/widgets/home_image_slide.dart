@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 //import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeImageSlide extends StatefulWidget {
   @override
@@ -23,7 +24,7 @@ class HomeImageSlidestate extends State<HomeImageSlide>{
             if(state is Carouselsloaded){
               final imagesliders = state.lstCarousel;
               return Container(
-                height: 182.0,
+                height: 200.0,
                 child: new Carousel(
                     boxFit: BoxFit.cover,
                     dotColor: Color(0xFF6991C7).withOpacity(0.8),
@@ -36,7 +37,7 @@ class HomeImageSlidestate extends State<HomeImageSlide>{
                     overlayShadowSize: 0.9,
                     radius:Radius.circular(8.0),
                     images: imagesliders.map((i) {
-                      return NetworkImage(i.url);
+                      return CachedNetworkImageProvider(i.url);
                     }).toList()),
               );
             }

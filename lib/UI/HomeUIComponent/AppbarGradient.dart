@@ -9,7 +9,7 @@ import 'package:amigatoy/UI/AcountUIComponent/Profile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 //import 'package:amigatoy/Models/models.dart';
-import 'package:amigatoy/UI/BrandUIComponent/BrandLayout.dart';
+import 'package:amigatoy/UI/CatelogueUIComponent/BrandLayout.dart';
 import 'package:amigatoy/UI/BottomNavigationBar.dart';
 
 class AppbarGradient extends StatefulWidget {
@@ -112,10 +112,10 @@ class _AppbarGradientState extends State<AppbarGradient> {
                     Navigator.of(context).push(PageRouteBuilder(
                         pageBuilder: (_, __, ___) => new loginScreen()));
                     }else if(state is AuthenticationAuthenticated){
-                      Navigator.of(context).push(PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => new profil()));
                       // Navigator.of(context).push(PageRouteBuilder(
-                      //     pageBuilder: (_, __, ___) => new bottomNavigationBar(pageIndex: 0)));
+                      //     pageBuilder: (_, __, ___) => new profil()));
+                      Navigator.of(context).push(PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => new bottomNavigationBar(pageIndex: 3)));
 
                       // Navigator.of(context).pushReplacement(MaterialPageRoute(
                       //     builder: (BuildContext context) => new bottomNavigationBar(pageIndex: 0,)));

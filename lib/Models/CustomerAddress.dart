@@ -53,13 +53,13 @@ class CustomerAddress extends Equatable {
     }
     return CustomerAddress(
       addressBookId: json['address_book_id'],
-      company:json['entry_company'],
-      firstName:json['entry_firstname'],
-      lastName:json['entry_lastname'],
+      company:json['entry_company'].toString(),
+      firstName:json['entry_firstname'].toString(),
+      lastName:json['entry_lastname'].toString(),
       streetAddress:json['entry_street_address'],
       postcode:json['entry_postcode'].toString(),
-      city:json['entry_city'],
-      state:json['entry_state'],
+      city:json['entry_city'].toString(),
+      state:json['entry_state'].toString(),
       countryId:json['entry_country_id'],
       zoneId:zoneId,
       telephone:json['entry_telephone'].toString(),

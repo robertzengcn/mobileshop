@@ -20,7 +20,11 @@ class CartsBloc extends Bloc<CartsEvent, CartsState> {
         int cartQuantity = await cartRepository.addCart(
             event.productId, event.quantity, event.args);
         if (cartQuantity > 0) {
-          yield CartsAddsuccessState(cartQuantity: cartQuantity);
+          if(event.gotocart){
+            yield CartsAddfinishState(cartQuantity: cartQuantity);
+          }else {
+            yield CartsAddsuccessState(cartQuantity: cartQuantity);
+          }
         } else {
           yield CartsErrorState(error: "unknow error happened");
         }

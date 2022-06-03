@@ -41,6 +41,7 @@ Widget getCusterAdd(CustomerAddress customeradd, bool editor,context,bool asDefu
               Navigator.pushNamed(context, Delivery.routeName,
                   arguments: AddressArguments(customeradd)
               );
+
              },
           ),
           const SizedBox(width: 8),

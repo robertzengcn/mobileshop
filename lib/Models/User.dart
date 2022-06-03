@@ -1,19 +1,20 @@
 import 'package:equatable/equatable.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
+import 'package:amigatoy/Repository/repository.dart';
 
 class User extends Equatable {
 
   final int userid;
   final String username;
   final String usertoken;
-  final String? userexpired;//用户数据过期时间
+  final String userexpired;//the expire time of token
 
 
   const User({
     required this.userid,
     required this.username,
     required this.usertoken,
-    this.userexpired
+    required this.userexpired
   });
   @override
   List<Object> get props => [
@@ -22,15 +23,21 @@ class User extends Equatable {
     usertoken
   ];
 //convert item from json to object
-  static User fromJson(dynamic json) {
+  static User fromJson(dynamic json){
+
+   // print(json);
 //    int expiretime=DateTime.now().millisecondsSinceEpoch+json['expire'] as int;
 //    print('expiretime:'+expiretime.toString());
-    var today = DateTime.now();
-    var expireObj = today.add(const Duration(days: 30));
-//    var expireObj = new DateTime.fromMicrosecondsSinceEpoch(expiretime);
-    var format = new DateFormat('yyyy-MM-dd HH:mm ss');
-    final String userexpire = format.format(expireObj);
+//     var today = DateTime.now();
+//     var expireObj = today.add(const Duration(days: 30));
+// //    var expireObj = new DateTime.fromMicrosecondsSinceEpoch(expiretime);
+//     var format = new DateFormat('yyyy-MM-dd HH:mm ss');
+//     final String userexpire = format.format(expireObj);
+//     final String userexpire =(DateTime.now().millisecondsSinceEpoch+2592000000).toString();
+    final String userexpire =(DateTime.now().millisecondsSinceEpoch+json['token_expire']).toString();
 //    print(userexpire);
+//     UserRepository userRepository=new UserRepository();
+
     return User(
       userid: json['id'] as int,
       username: json['username'],
@@ -51,7 +58,7 @@ class User extends Equatable {
     userid: json["user_id"],
     username: json["user_name"],
     usertoken: json["user_token"],
-
+      userexpired:json["user_expired"],
   );
 
 

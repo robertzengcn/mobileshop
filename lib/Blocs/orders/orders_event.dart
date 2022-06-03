@@ -30,3 +30,23 @@ class FeatchOrderlistEvent extends OrdersEvent {
   List<Object> get props => [];
 
 }
+@immutable
+class FeatchMoreEvent extends OrdersEvent {
+  final int start;
+  final int length;
+  FeatchMoreEvent({required this.start,required this.length});
+
+  @override
+  List<Object> get props => [start,length];
+
+}
+
+@immutable
+class FeatchOrderDetailEvent extends OrdersEvent {
+  final int orderId;
+  FeatchOrderDetailEvent({required this.orderId});
+
+  @override
+  List<Object> get props => [orderId];
+
+}

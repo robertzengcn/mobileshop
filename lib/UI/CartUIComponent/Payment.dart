@@ -95,13 +95,13 @@ class _paymentState extends State<payment> {
                         "Credit / Debit Card",
                         style: _customStyle,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 40.0),
-                        child: Image.asset(
-                        "assets/img/credit.png",
-                        height: 25.0,
-                      ),
-                      )
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 40.0),
+                      //   child: Image.asset(
+                      //   "assets/img/credit.png",
+                      //   height: 25.0,
+                      // ),
+                      // )
                     ],
                   ),
                 ),
@@ -129,13 +129,13 @@ class _paymentState extends State<payment> {
                         onChanged: null,
                       ),
                       Text("Cash On Delivery", style: _customStyle),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 50.0),
-                        child: Image.asset(
-                          "assets/img/handshake.png",
-                          height: 25.0,
-                        ),
-                      )
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 50.0),
+                      //   child: Image.asset(
+                      //     "assets/img/handshake.png",
+                      //     height: 25.0,
+                      //   ),
+                      // )
                     ],
                   ),
                 ),
@@ -163,13 +163,13 @@ class _paymentState extends State<payment> {
                         onChanged: null,
                       ),
                       Text("Paypal", style: _customStyle),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 130.0),
-                        child: Image.asset(
-                          "assets/img/paypal.png",
-                          height: 25.0,
-                        ),
-                      )
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 130.0),
+                      //   child: Image.asset(
+                      //     "assets/img/paypal.png",
+                      //     height: 25.0,
+                      //   ),
+                      // )
                     ],
                   ),
                 ),

@@ -16,26 +16,31 @@ class HomeRecommend extends StatefulWidget {
 
 class HomeRecommendstate extends State<HomeRecommend> {
   List<Product?> _lproduct=[];
-  bool isLoading =true;
+  bool _isLoading =true;
   late double _containHeight;
-  double itemHeight =0;
-  double itemWidth =0;
+  // double itemHeight =0;
+  // double itemWidth =0;
+  int _startPage=0;
+  int _pageLength=25;
+  double _productlistheight=0;
 
   ///get feature product list
-  List<ItemGrid> _listFeaturegrid(){
-    List<ItemGrid> resGrid=[];
-    _lproduct.forEach((value) {
-      if(value!=null){
-      resGrid.add(ItemGrid(value));
-      }
-    });
-    return resGrid;
-  }
+  // List<ItemGrid> _listFeaturegrid(){
+  //   List<ItemGrid> resGrid=[];
+  //   _lproduct.forEach((value) {
+  //     if(value!=null){
+  //     resGrid.add(ItemGrid(value));
+  //     }
+  //   });
+  //   return resGrid;
+  // }
 
-  void _loadMore async(){
-    BlocProvider.of<FeaturedsBloc>(context)
-        .add(FeaturedloadMore(start:_startPage,length: _pageLength));
-  }
+  // Future<void> _loadMore() async {
+  //   _startPage=_startPage+_pageLength;
+  //   BlocProvider.of<FeaturedsBloc>(context)
+  //       .add(FeaturedloadMore(start:_startPage,length: _pageLength));
+  //   // return true;
+  // }
 
   //feature list widget
   Widget _listFeatureProduct(){
@@ -44,85 +49,95 @@ class HomeRecommendstate extends State<HomeRecommend> {
         // is loading
         return Center(child: CircularProgressIndicator());
       }else if(state is Featuredloaded) {
-
-        // final featurelist = state.lstFeatureds.lproduct;
-      // return Container(
-      //     height: _containHeight,
-      //     // height: 1000,
-      //     padding: EdgeInsets.all(2.0),
-      //     child: GridView.count(
-      //         physics: ScrollPhysics(),
-      //         primary: false,
-      //         padding: const EdgeInsets.all(10),
-      //         crossAxisSpacing: 10,
-      //         mainAxisSpacing: 10,
-      //         crossAxisCount: 2,
-      //
-      //        // childAspectRatio: (itemWidth / itemHeight),
-      //         children: _listFeaturegrid()
-      //     )
-
+        _productlistheight=((_lproduct.length/2).ceil()*310);
+        if(_lproduct.length<state.lstFeatureds.totalNum){
+          _productlistheight+=77;
+        }
           return Container(
-            height: 1000,
-            child: RefreshIndicator(
-              onRefresh:_loadMore(),
-              child: GridView.builder(
-                itemCount: _lproduct.length,
-                physics: ScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 4.0,
-                    mainAxisSpacing: 4.0,
-                    mainAxisExtent: 285
+            height: _productlistheight,
+            // child: RefreshIndicator(
+            //   onRefresh:() async {
+            //     _startPage=_startPage+_pageLength;
+            //     BlocProvider.of<FeaturedsBloc>(context)
+            //         .add(FeaturedloadMore(start:_startPage,length: _pageLength));
+            //   },
+            //   triggerMode: RefreshIndicatorTriggerMode.anywhere,
+              child: Column(
+                children:[
+                  GridView.builder(
+                    shrinkWrap: true,
+                  itemCount: _lproduct.length,
+                  physics: ScrollPhysics(),
+                  //physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                  // physics:const AlwaysScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 4.0,
+                      mainAxisSpacing: 4.0,
+                      mainAxisExtent: 285
+                  ),
+                  itemBuilder: (BuildContext context, int index){
+                    if(_lproduct[index]!=null){
+                      return ItemGrid(_lproduct[index]!);
+                    }else{
+                      return Container();
+                    }
+                  },
+
                 ),
-                itemBuilder: (BuildContext context, int index){
-                  if(_lproduct[index]!=null){
-                    return ItemGrid(_lproduct[index]!);
-                  }else{
-                    return Container();
-                  }
-                },
-
+                _isLoading?const SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 1.5,
+                    )):Container(),
+                _lproduct.length<state.lstFeatureds.totalNum?ElevatedButton(
+                    child: Text(
+                        "Load More",
+                        style: TextStyle(fontSize: 14)
+                    ),
+                    style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
+                                side: BorderSide(color: Colors.red)
+                            )
+                        )
+                    ),
+                    onPressed: () async {
+                          _startPage=_startPage+_pageLength;
+                          BlocProvider.of<FeaturedsBloc>(context)
+                              .add(FeaturedloadMore(start:_startPage,length: _pageLength));
+                          _isLoading = true;
+                    })
+          :Container(),
+                ]
               ),
-            ),
+           // ),
           );
-      // );
-
-//        developer.log('feature list all load',
-//            name: 'my.app.category', error: featurelist);
-
-//         return Container(
-// //                  color: Color(0xFF6991C7),
-// //            height: 600.0,
-//         height:MediaQuery
-//             .of(context)
-//             .size
-//             .height * 0.5,
-//             margin: EdgeInsets.symmetric(vertical: 1.0),
-//             child: Row(children: getWidgets(featurelist)));
-
-
       }
       return Container();
-      // return Center(child: CircularProgressIndicator());
     });
   }
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     MediaQueryData mediaQueryData = MediaQuery.of(context);
      _containHeight=mediaQueryData.size.height;
 
-    var size = MediaQuery.of(context).size;
+    //var size = MediaQuery.of(context).size;
     /*24 is for notification bar on Android*/
-   itemHeight = (size.height - kToolbarHeight - 24) / 1.6;
-   itemWidth = size.width / 2;
+   //itemHeight = (size.height - kToolbarHeight - 24) / 1.6;
+   //itemWidth = size.width / 2;
 
     return MultiBlocProvider(providers: [
       BlocProvider<FeaturedsBloc>(
         create: (context) {
           return FeaturedsBloc(
             featuredRepository: FeaturedRepository(),
-          )..add(FetchFeatureds(start:0,length: 25));
+          )..add(FetchFeatureds(start:_startPage,length: _pageLength));
         },
       ),
     ],
@@ -134,7 +149,7 @@ class HomeRecommendstate extends State<HomeRecommend> {
                       // if(state.orderlst.length>0){
                       setState(() {
                         _lproduct.addAll(state.lstFeatureds.lproduct);
-                        isLoading = false;
+                        _isLoading = false;
                       });
 
                     }
@@ -143,44 +158,6 @@ class HomeRecommendstate extends State<HomeRecommend> {
             child:_listFeatureProduct(),
     ));
 
-
   }
 
-//   List<Widget> getWidgets(List<Product> lstFeatureds) {
-//     List<Widget> widgetlist = [];
-//     int plength = lstFeatureds.length; //总数量
-//     if (plength == 0) {
-//       return widgetlist;
-//     }
-//
-// //    developer.log('feature list render',
-// //        name: 'my.app.category', error: plength);
-//     int rownumbe = (plength / 2).round();
-//     for (int i = 0; i < rownumbe; i++) {
-// //      developer.log('feature item render', name: 'my.app.category', error: i);
-//       widgetlist.add(
-//           Expanded(
-//          child: Row(children: [
-//           Column(
-//             children: <Widget>[
-//               Expanded(
-// //              flex: 5,
-//                 child: ItemGrid(lstFeatureds[i]),
-//               ),
-//             ],
-//           ),
-//           Column(
-//             children: <Widget>[
-//               Expanded(
-// //              flex: 5,
-//                 child: ItemGrid(lstFeatureds[i+1]),
-//               ),
-//             ],
-//           ),
-//       ]),
-//        ));
-//     }
-//
-//     return widgetlist;
-//   }
 }

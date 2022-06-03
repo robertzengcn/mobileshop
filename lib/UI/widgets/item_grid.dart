@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:amigatoy/Models/Product.dart';
 import 'package:amigatoy/UI/HomeUIComponent/DetailProduct.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 /// ItemGrid in bottom item "Recomended" item
 class ItemGrid extends StatelessWidget {
@@ -60,7 +61,7 @@ class ItemGrid extends StatelessWidget {
                 /// Set Animation image to detailProduk layout
                 // Hero(
                 //   tag: "hero-grid-${products.products_id}",
-                //   child: Material(
+                //   child: Material(CachedNetworkImage
                 //     child: InkWell(
                 //       onTap: () {
                 //         Navigator.of(context).push(PageRouteBuilder(
@@ -144,22 +145,33 @@ class ItemGrid extends StatelessWidget {
 
                 Padding(
                   padding: EdgeInsets.only(top: 3.0),
-                  child: Container(
-                    child: Image.network(products.products_image,
-                        alignment: Alignment.center,
-                        fit: BoxFit.contain,
-                       width: _listImagewidth,
-                        height: _listImageheigh,
-                        errorBuilder:
-                            (BuildContext context, Object exception,
-                                StackTrace? stackTrace) {
-                      return Image.asset(
-                        "assets/img/error.png",
-                        fit: BoxFit.contain,
-                        width: _listImagewidth,
-                        height: _listImageheigh,
-                      );
-                    }),
+                  child:
+                  Container(
+                    child:
+                    CachedNetworkImage(
+                      imageUrl: products.products_image,
+                          alignment: Alignment.center,
+                          fit: BoxFit.contain,
+                         width: _listImagewidth,
+                          height: _listImageheigh,
+                      placeholder: (context, url) => CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+                    // Image.network(products.products_image,
+                    //     alignment: Alignment.center,
+                    //     fit: BoxFit.contain,
+                    //    width: _listImagewidth,
+                    //     height: _listImageheigh,
+                    //     errorBuilder:
+                    //         (BuildContext context, Object exception,
+                    //             StackTrace? stackTrace) {
+                    //   return Image.asset(
+                    //     "assets/img/error.png",
+                    //     fit: BoxFit.contain,
+                    //     width: _listImagewidth,
+                    //     height: _listImageheigh,
+                    //   );
+                    // }),
                   ),
                 ),
                 Padding(padding: EdgeInsets.only(top: 3.0)),
@@ -185,7 +197,7 @@ class ItemGrid extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                   child: Text(
-                    products.products_price.toString(),
+                    "\$"+products.products_price.toString(),
                     style: TextStyle(
                         fontFamily: "Sans",
                         fontWeight: FontWeight.w500,
@@ -201,29 +213,29 @@ class ItemGrid extends StatelessWidget {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Text(
-                            products.products_price.toString(),
+                          products.product_wish!=null&&products.product_wish!>0?Text(
+                            products.product_wish.toString(),
                             style: TextStyle(
                                 fontFamily: "Sans",
                                 color: Colors.black26,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 12.0),
-                          ),
-                          Icon(
+                          ):Container(),
+                          products.product_wish!=null&&products.product_wish!>0?Icon(
                             Icons.star,
                             color: Colors.yellow,
                             size: 14.0,
-                          )
+                          ):Container()
                         ],
                       ),
-                      Text(
-                        products.products_quantity.toString(),
-                        style: TextStyle(
-                            fontFamily: "Sans",
-                            color: Colors.black26,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12.0),
-                      )
+                      // Text(
+                      //   products.products_quantity.toString(),
+                      //   style: TextStyle(
+                      //       fontFamily: "Sans",
+                      //       color: Colors.black26,
+                      //       fontWeight: FontWeight.w500,
+                      //       fontSize: 12.0),
+                      // )
                     ],
                   ),
                 ),

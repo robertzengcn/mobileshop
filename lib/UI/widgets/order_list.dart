@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:amigatoy/Models/models.dart';
+import 'package:amigatoy/UI/Order/OrderDetail.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 Widget orderListWidget(List<Order?> orderList) {
   return ListView(
@@ -67,17 +69,69 @@ class CustomOrderItem extends StatelessWidget {
       litems.add(
           CustomListItem(itemPrice: value.finalPrice,itemName: value.productsName,itemImage: value.productsImage,itemQuantity: value.productsQuantity,));
     });
-    return Column(
-        children: [
-      Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  flex: 4,
+    return Container(
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(PageRouteBuilder(
+              pageBuilder: (_, __, ___) => new OrderDetailPage(orderId: orderId),
+              transitionDuration: Duration(milliseconds: 900),
+
+              /// Set animation Opacity in route to detailProduk layout
+              transitionsBuilder:
+                  (_, Animation<double> animation, __, Widget child) {
+                return Opacity(
+                  opacity: animation.value,
+                  child: child,
+                );
+              }));
+        },
+        child: Column(
+            children: [
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 4,
+                      child: Text(
+                        "Order Number:"+orderId.toString(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14.0,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "Status:"+ordersStatusName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]
+              )
+          ),
+        Column(
+            children:litems
+        ),
+              // Padding(padding: EdgeInsets.only(top: 5.0)),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5.0),
+                child: Align(
+                  alignment: Alignment.centerRight,
                   child: Text(
-                    "Order Number:"+orderId.toString(),
+                    "Sub total:"+subTotaltext,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -86,82 +140,48 @@ class CustomOrderItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                Expanded(
-                  flex: 3,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      "Status:"+ordersStatusName,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.0,
-                      ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5.0),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    "Shipping fee:"+shippingText,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.0,
                     ),
                   ),
                 ),
-              ]
-          )
+              ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5.0),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    "Total:"+orderTotal,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.0,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(padding: EdgeInsets.only(top: 5.0)),
+              Divider(
+                height: 1.0,
+                color: Colors.black26,
+              ),
+              Padding(padding: EdgeInsets.only(top: 10.0)),
+
+        ]),
       ),
-    Column(
-        children:litems
-    ),
-          // Padding(padding: EdgeInsets.only(top: 5.0)),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5.0),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                "Sub total:"+subTotaltext,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.0,
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5.0),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                "Shipping fee:"+shippingText,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.0,
-                ),
-              ),
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5.0),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                "Total:"+orderTotal,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.0,
-                ),
-              ),
-            ),
-          ),
-          Padding(padding: EdgeInsets.only(top: 5.0)),
-          Divider(
-            height: 1.0,
-            color: Colors.black26,
-          ),
-          Padding(padding: EdgeInsets.only(top: 10.0)),
-
-    ]);
+    );
   }
 }
 
@@ -188,21 +208,31 @@ class CustomListItem extends StatelessWidget {
         children: <Widget>[
           Expanded(
             flex: 2,
-            child: new Image.network(
-              itemImage,
-              height: 80,
+            child:
+            CachedNetworkImage(
+              imageUrl: itemImage,
+              alignment: Alignment.center,
+              fit: BoxFit.contain,
               width: 80,
-                errorBuilder:
-                    (BuildContext context,
-                    Object exception,
-                    StackTrace? stackTrace) {
-                  return Image.asset(
-                    "assets/img/error.png",
-                    height: 80.0,
-                    width: 80.0,
-                  );
-                }
+              height: 80,
+              placeholder: (context, url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
             ),
+            // new Image.network(
+            //   itemImage,
+            //   height: 80,
+            //   width: 80,
+            //     errorBuilder:
+            //         (BuildContext context,
+            //         Object exception,
+            //         StackTrace? stackTrace) {
+            //       return Image.asset(
+            //         "assets/img/error.png",
+            //         height: 80.0,
+            //         width: 80.0,
+            //       );
+            //     }
+            // ),
           ),
           Expanded(
             flex: 3,

@@ -1,17 +1,18 @@
 //import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:amigatoy/ListItem/HomeGridItemRecomended.dart';
+// import 'package:amigatoy/ListItem/HomeGridItemRecomended.dart';
 import 'package:amigatoy/UI/HomeUIComponent/AppbarGradient.dart';
-import 'package:amigatoy/Library/countdown/countdown.dart';
+// import 'package:amigatoy/Library/countdown/countdown.dart';
 //import 'package:amigatoy/UI/HomeUIComponent/CategoryDetail.dart';
 
-import 'package:amigatoy/UI/HomeUIComponent/FlashSale.dart';
+// import 'package:amigatoy/UI/HomeUIComponent/FlashSale.dart';
 import 'package:amigatoy/ListItem/Product.dart';
 import 'package:amigatoy/ListItem/ImageSlider.dart';
 import 'package:amigatoy/ListItem/Category.dart';
 import 'package:amigatoy/UI/widgets/home_image_slide.dart';
 import 'package:amigatoy/UI/widgets/home_recommend.dart';
-
+import 'package:amigatoy/provider/connectivity_provider.dart';
+import 'package:provider/provider.dart';
 
 ///Homepage
 
@@ -24,7 +25,7 @@ class Home extends StatefulWidget {
 /// Component all widget in home
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   /// Declare class GridItem from HomeGridItemReoomended.dart in folder ListItem
-  late GridItem gridItem;
+  // late GridItem gridItem;
 
   bool isStarted = false;
   // var hourssub, minutesub, secondsub;
@@ -37,6 +38,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   late List<ImageSlider> imagesliders;
   late List<Category> categorys;
   late Map<int, Category> categorymap;
+
+
 
   /// Set for StartStopPress CountDown
   // onStartStopPress() {
@@ -87,11 +90,34 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
+    final isonline=Provider.of<ConnectivityProvider>(context).isOnline;
+    // print("app lost internel connect");
+    // if(!isonline){
+      Widget cancelButton = TextButton(
+        child: Text("ok"),
+        onPressed:  () {
+          Navigator.of(context).pop();
+        },
+      );
+      AlertDialog alertwidget =AlertDialog(
+        title: Text("Connect error"),
+        content: Text("Plese connect to internet"),
+        actions: [
+          cancelButton,
+        ],
+      );  // show the dialog
+      // showDialog(
+      //   context: context,
+      //   builder: (BuildContext context) {
+      //     return alert;
+      //   },
+      // );
+    // }
     //double size = mediaQueryData.size.height;
 //    final contentProvider = Provider.of<CRUDModel>(context);
 ////    productProvider.fetchProductsAsStream();
 
-    /// Navigation to MenuDetail.dart if user Click icon in category Menu like a example camera
+
 //    var onClickMenuIcon = () {
 //      Navigator.of(context).push(PageRouteBuilder(
 //          pageBuilder: (_, __, ___) => new menuDetail(),
@@ -690,8 +716,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       body: Stack(
         children: <Widget>[
           SingleChildScrollView(
-            child: Column(
+            child:
+            Column(
               children: <Widget>[
+
                 Padding(
                     padding: EdgeInsets.only(
                         top: mediaQueryData.padding.top + 58.5)),
@@ -720,9 +748,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 //                  padding: EdgeInsets.only(bottom: 2),
 //                ),
                 HomeImageSlide(),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 2.0),
-                ),
+                (!isonline)?alertwidget:Container(),
+                // Padding(
+                //   padding: EdgeInsets.only(bottom: 1.0),
+                // ),
 
                 /// Call a Grid variable, this is item list in Recomended item
                 //Grid,
@@ -731,7 +760,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 //Recomendlist,
               ],
             ),
-          ),
+        ),
 
           /// Get a class AppbarGradient
           /// This is a Appbar in home activity
@@ -745,186 +774,186 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
 
 /// Component FlashSaleItem
-class flashSaleItem extends StatelessWidget {
-  final String image;
-  final String title;
-  final String normalprice;
-  final String discountprice;
-  final String ratingvalue;
-  final String place;
-  final String stock;
-  final int colorLine;
-  final double widthLine;
-
-  flashSaleItem(
-      {required this.image,
-        required this.title,
-        required this.normalprice,
-        required this.discountprice,
-        required this.ratingvalue,
-        required this.place,
-        required this.stock,
-        required this.colorLine,
-        required this.widthLine});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            InkWell(
-              onTap: () {
-                Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => new flashSale(),
-                    transitionsBuilder:
-                        (_, Animation<double> animation, __, Widget child) {
-                      return Opacity(
-                        opacity: animation.value,
-                        child: child,
-                      );
-                    },
-                    transitionDuration: Duration(milliseconds: 850)));
-              },
-              child: Container(
-                height: 305.0,
-                width: 145.0,
-                color: Colors.white,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 140.0,
-                      width: 145.0,
-                      child: Image.asset(
-                        image,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(left: 8.0, right: 3.0, top: 15.0),
-                      child: Text(title,
-                          style: TextStyle(
-                              fontSize: 10.5,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: "Sans")),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 10.0, top: 5.0),
-                      child: Text(normalprice,
-                          style: TextStyle(
-                              fontSize: 10.5,
-                              decoration: TextDecoration.lineThrough,
-                              color: Colors.black54,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: "Sans")),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 10.0, top: 5.0),
-                      child: Text(discountprice,
-                          style: TextStyle(
-                              fontSize: 12.0,
-                              color: Color(0xFF7F7FD5),
-                              fontWeight: FontWeight.w800,
-                              fontFamily: "Sans")),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0, top: 5.0),
-                      child: Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.star,
-                            size: 11.0,
-                            color: Colors.yellow,
-                          ),
-                          Icon(
-                            Icons.star,
-                            size: 11.0,
-                            color: Colors.yellow,
-                          ),
-                          Icon(
-                            Icons.star,
-                            size: 11.0,
-                            color: Colors.yellow,
-                          ),
-                          Icon(
-                            Icons.star,
-                            size: 11.0,
-                            color: Colors.yellow,
-                          ),
-                          Icon(
-                            Icons.star_half,
-                            size: 11.0,
-                            color: Colors.yellow,
-                          ),
-                          Text(
-                            ratingvalue,
-                            style: TextStyle(
-                                fontSize: 10.0,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "Sans",
-                                color: Colors.black38),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0, top: 5.0),
-                      child: Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.location_on,
-                            size: 11.0,
-                            color: Colors.black38,
-                          ),
-                          Text(
-                            place,
-                            style: TextStyle(
-                                fontSize: 10.0,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "Sans",
-                                color: Colors.black38),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10.0, left: 10.0),
-                      child: Text(
-                        stock,
-                        style: TextStyle(
-                            fontSize: 10.0,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "Sans",
-                            color: Colors.black),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4.0, left: 10.0),
-                      child: Container(
-                        height: 5.0,
-                        width: widthLine,
-                        decoration: BoxDecoration(
-                            color: Color(colorLine),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(4.0)),
-                            shape: BoxShape.rectangle),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            )
-          ],
-        )
-      ],
-    );
-  }
-}
+// class flashSaleItem extends StatelessWidget {
+//   final String image;
+//   final String title;
+//   final String normalprice;
+//   final String discountprice;
+//   final String ratingvalue;
+//   final String place;
+//   final String stock;
+//   final int colorLine;
+//   final double widthLine;
+//
+//   flashSaleItem(
+//       {required this.image,
+//         required this.title,
+//         required this.normalprice,
+//         required this.discountprice,
+//         required this.ratingvalue,
+//         required this.place,
+//         required this.stock,
+//         required this.colorLine,
+//         required this.widthLine});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children: <Widget>[
+//         Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             InkWell(
+//               onTap: () {
+//                 Navigator.of(context).push(PageRouteBuilder(
+//                     pageBuilder: (_, __, ___) => new flashSale(),
+//                     transitionsBuilder:
+//                         (_, Animation<double> animation, __, Widget child) {
+//                       return Opacity(
+//                         opacity: animation.value,
+//                         child: child,
+//                       );
+//                     },
+//                     transitionDuration: Duration(milliseconds: 850)));
+//               },
+//               child: Container(
+//                 height: 305.0,
+//                 width: 145.0,
+//                 color: Colors.white,
+//                 child: Column(
+//                   mainAxisAlignment: MainAxisAlignment.start,
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: <Widget>[
+//                     SizedBox(
+//                       height: 140.0,
+//                       width: 145.0,
+//                       child: Image.asset(
+//                         image,
+//                         fit: BoxFit.cover,
+//                       ),
+//                     ),
+//                     Padding(
+//                       padding:
+//                           EdgeInsets.only(left: 8.0, right: 3.0, top: 15.0),
+//                       child: Text(title,
+//                           style: TextStyle(
+//                               fontSize: 10.5,
+//                               fontWeight: FontWeight.w500,
+//                               fontFamily: "Sans")),
+//                     ),
+//                     Padding(
+//                       padding: EdgeInsets.only(left: 10.0, top: 5.0),
+//                       child: Text(normalprice,
+//                           style: TextStyle(
+//                               fontSize: 10.5,
+//                               decoration: TextDecoration.lineThrough,
+//                               color: Colors.black54,
+//                               fontWeight: FontWeight.w600,
+//                               fontFamily: "Sans")),
+//                     ),
+//                     Padding(
+//                       padding: EdgeInsets.only(left: 10.0, top: 5.0),
+//                       child: Text(discountprice,
+//                           style: TextStyle(
+//                               fontSize: 12.0,
+//                               color: Color(0xFF7F7FD5),
+//                               fontWeight: FontWeight.w800,
+//                               fontFamily: "Sans")),
+//                     ),
+//                     Padding(
+//                       padding: const EdgeInsets.only(left: 10.0, top: 5.0),
+//                       child: Row(
+//                         children: <Widget>[
+//                           Icon(
+//                             Icons.star,
+//                             size: 11.0,
+//                             color: Colors.yellow,
+//                           ),
+//                           Icon(
+//                             Icons.star,
+//                             size: 11.0,
+//                             color: Colors.yellow,
+//                           ),
+//                           Icon(
+//                             Icons.star,
+//                             size: 11.0,
+//                             color: Colors.yellow,
+//                           ),
+//                           Icon(
+//                             Icons.star,
+//                             size: 11.0,
+//                             color: Colors.yellow,
+//                           ),
+//                           Icon(
+//                             Icons.star_half,
+//                             size: 11.0,
+//                             color: Colors.yellow,
+//                           ),
+//                           Text(
+//                             ratingvalue,
+//                             style: TextStyle(
+//                                 fontSize: 10.0,
+//                                 fontWeight: FontWeight.w500,
+//                                 fontFamily: "Sans",
+//                                 color: Colors.black38),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     Padding(
+//                       padding: const EdgeInsets.only(left: 10.0, top: 5.0),
+//                       child: Row(
+//                         children: <Widget>[
+//                           Icon(
+//                             Icons.location_on,
+//                             size: 11.0,
+//                             color: Colors.black38,
+//                           ),
+//                           Text(
+//                             place,
+//                             style: TextStyle(
+//                                 fontSize: 10.0,
+//                                 fontWeight: FontWeight.w500,
+//                                 fontFamily: "Sans",
+//                                 color: Colors.black38),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     Padding(
+//                       padding: const EdgeInsets.only(top: 10.0, left: 10.0),
+//                       child: Text(
+//                         stock,
+//                         style: TextStyle(
+//                             fontSize: 10.0,
+//                             fontWeight: FontWeight.w500,
+//                             fontFamily: "Sans",
+//                             color: Colors.black),
+//                       ),
+//                     ),
+//                     Padding(
+//                       padding: const EdgeInsets.only(top: 4.0, left: 10.0),
+//                       child: Container(
+//                         height: 5.0,
+//                         width: widthLine,
+//                         decoration: BoxDecoration(
+//                             color: Color(colorLine),
+//                             borderRadius:
+//                                 BorderRadius.all(Radius.circular(4.0)),
+//                             shape: BoxShape.rectangle),
+//                       ),
+//                     )
+//                   ],
+//                 ),
+//               ),
+//             )
+//           ],
+//         )
+//       ],
+//     );
+//   }
+// }
 
 /// Component category item bellow FlashSale
 class CategoryItemValue extends StatelessWidget {

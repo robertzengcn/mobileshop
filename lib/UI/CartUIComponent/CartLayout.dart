@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 // import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 // import 'package:amigatoy/UI/CartUIComponent/AddressList.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -144,21 +144,31 @@ class _cartState extends State<Cartpage> {
                                                   blurRadius: 0.5,
                                                   spreadRadius: 0.1)
                                             ]),
-                                        child: new Image.network(
-                                            '${_cartList[position]!.image}',
-                                            height: 130.0,
-                                            width: 120.0,
-                                            fit: BoxFit.cover,
-                                            errorBuilder:
-                                                (BuildContext context,
-                                                    Object exception,
-                                                    StackTrace? stackTrace) {
-                                          return Image.asset(
-                                            "assets/img/error.png",
-                                            height: 130.0,
-                                            width: 120.0,
-                                          );
-                                        }))),
+                                        child:CachedNetworkImage(
+                                          imageUrl: '${_cartList[position]!.image}',
+                                          alignment: Alignment.center,
+                                          fit: BoxFit.contain,
+                                          width:  120.0,
+                                          height: 130.0,
+                                          placeholder: (context, url) => CircularProgressIndicator(),
+                                          errorWidget: (context, url, error) => Icon(Icons.error),
+                                        )
+                                        // new Image.network(
+                                        //     '${_cartList[position]!.image}',
+                                        //     height: 130.0,
+                                        //     width: 120.0,
+                                        //     fit: BoxFit.cover,
+                                        //     errorBuilder:
+                                        //         (BuildContext context,
+                                        //             Object exception,
+                                        //             StackTrace? stackTrace) {
+                                        //   return Image.asset(
+                                        //     "assets/img/error.png",
+                                        //     height: 130.0,
+                                        //     width: 120.0,
+                                        //   );
+                                        // })
+                                    )),
                                 Flexible(
                                   child: Padding(
                                     padding: const EdgeInsets.only(
@@ -631,6 +641,12 @@ class _cartState extends State<Cartpage> {
   Widget _scaffoldWidget() {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+          onPressed: (){
+            Navigator.pop(context);
+          },
+        ),
         iconTheme: IconThemeData(color: Color(0xFF6991C7)),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -646,23 +662,6 @@ class _cartState extends State<Cartpage> {
       ),
       body: Column(children: <Widget>[
         _buildList(),
-        // Container(
-        //   // height: 80.0,
-        //   color: Colors.transparent,
-        //   child: new Container(
-        //     child: BlocBuilder<CustomerAddressBloc, CustomerAddressState>(
-        //         builder: (BuildContext context, customeraddState) {
-        //       if (customeraddState is QueryCustomerAddressSuccess) {
-        //         _countriesList = customeraddState.countries;
-        //         _customerAddlist = customeraddState.customerAddressList;
-        //
-        //         return _customerAddress();
-        //       } else {
-        //         return Container();
-        //       }
-        //     }),
-        //   ),
-        // ),
         Padding(padding: EdgeInsets.only(top: 15.0)),
         Divider(
           height: 1.0,
@@ -777,6 +776,8 @@ class _cartState extends State<Cartpage> {
   }
 }
 
+
+
 ///
 ///
 /// If no item cart this class showing
@@ -785,31 +786,47 @@ class noItemCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-    return Container(
-      width: 500.0,
-      color: Colors.white,
-      height: double.infinity,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-                padding:
-                    EdgeInsets.only(top: mediaQueryData.padding.top + 50.0)),
-            Image.asset(
-              "assets/imgIllustration/IlustrasiCart.png",
-              height: 300.0,
-            ),
-            Padding(padding: EdgeInsets.only(bottom: 10.0)),
-            Text(
-              "Not Have Item",
-              style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 18.5,
-                  color: Colors.black26.withOpacity(0.2),
-                  fontFamily: "Popins"),
-            ),
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Color(0xFF6991C7)),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: Text(
+          "Shopping Cart",
+          style: TextStyle(
+              fontFamily: "Gotik",
+              fontSize: 18.0,
+              color: Colors.black54,
+              fontWeight: FontWeight.w700),
+        ),
+        elevation: 0.0,
+      ),
+      body: Container(
+        width: 500.0,
+        color: Colors.white,
+        height: double.infinity,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                  padding:
+                      EdgeInsets.only(top: mediaQueryData.padding.top + 50.0)),
+              Image.asset(
+                "assets/imgIllustration/IlustrasiCart.png",
+                height: 300.0,
+              ),
+              Padding(padding: EdgeInsets.only(bottom: 10.0)),
+              Text(
+                "Not Have Item",
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18.5,
+                    color: Colors.black26.withOpacity(0.2),
+                    fontFamily: "Popins"),
+              ),
+            ],
+          ),
         ),
       ),
     );

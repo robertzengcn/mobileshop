@@ -28,8 +28,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     // TODO: implement mapEventToState
     if (event is LoginButtonPressed) {
       yield LoginLoading();
-
-      try {
+       try {
         final user = await userRepository.authenticate(
           username: event.username,
           password: event.password,
@@ -46,6 +45,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield _mapPasswordChangedToState(event, state);
     } else if (event is LoginSubmitted) {
       yield* _mapLoginSubmittedToState(event, state);
+    }else if(event is LoginFbsuccess){
+      yield LoginLoading();
+      UserRepository userRepository=new UserRepository();
+      User faUser =await userRepository.loginbyFb(event.username,event.email,event.accessToken,event.userId);
+      authenticationBloc.add(LoggedIn(user: faUser));
+      yield LoginCompleted();
+    }else if(event is LoginGGsuccess){
+      yield LoginLoading();
+      UserRepository userRepository=new UserRepository();
+      User faUser =await userRepository.loginbyGg(event.username,event.email);
+      authenticationBloc.add(LoggedIn(user: faUser));
+      yield LoginCompleted();
     }
   }
   LoginState _mapUsernameChangedToState(

@@ -23,19 +23,19 @@ late FeaturedRepository _featuredRepository;
   Stream<FeaturedState> mapEventToState(FeaturedEvent event) async* {
     if (event is FetchFeatureds) {
       yield FeaturedLoading();
-//      try {
+     try {
 //        developer.log('get feature product list',
 //          name: 'my.app.category',
 //
 //        );
-        ListProduct result = await _featuredRepository.loadFeaturedlist(event.start,event.length);
+      ListProduct result = await _featuredRepository.loadFeaturedlist(event.start,event.length);
 
-        yield Featuredloaded(lstFeatureds:result);
+        yield Featuredloaded(lstFeatureds:result );
 
-//      } catch (e) {
-//        print('error caught: $e');
-//        yield FeaturedError();
-//      }
+     } catch (e) {
+       print('error caught: $e');
+       yield FeaturedError();
+     }
     }else if(event is FeaturedloadMore){
       ListProduct result = await _featuredRepository.loadFeaturedlist(event.start,event.length);
 

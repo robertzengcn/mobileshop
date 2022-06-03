@@ -14,4 +14,8 @@ export './zones/zones_bloc.dart';
 export './orders/orders_bloc.dart';
 export './paypal/paypal_bloc.dart';
 export './specials/specials.dart';
+export './categories/categories_bloc.dart';
+export './register/register.dart';
+export './users/users_bloc.dart';
+export './update_user/update_user_bloc.dart';
 

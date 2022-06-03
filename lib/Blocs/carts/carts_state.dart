@@ -13,6 +13,10 @@ class CartsAddsuccessState extends CartsState {
   int cartQuantity;
   CartsAddsuccessState({required this.cartQuantity});
 }
+class CartsAddfinishState extends CartsState {
+  int cartQuantity;
+  CartsAddfinishState({required this.cartQuantity});
+}
 
 class CartsErrorState extends CartsState {
   final String error;

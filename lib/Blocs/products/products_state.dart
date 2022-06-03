@@ -34,6 +34,16 @@ class ProductsloadedState extends ProductsState {
 
 class ProductsErrorState extends ProductsState {}
 
+class ProductlistloadedState extends ProductsState {
+  final List<Product> lproduct;
+
+
+  const ProductlistloadedState({required this.lproduct});
+
+  @override
+  List<Object> get props => [lproduct];
+}
+
 
 
 

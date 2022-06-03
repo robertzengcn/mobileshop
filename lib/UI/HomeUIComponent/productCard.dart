@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:amigatoy/Models/Product.dart';
 
-
-
 class ProductCard extends StatelessWidget {
   final Product productDetails;
 

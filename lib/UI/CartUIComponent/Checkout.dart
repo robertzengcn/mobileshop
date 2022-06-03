@@ -10,6 +10,8 @@ import 'package:amigatoy/UI/CartUIComponent/Delivery.dart';
 import 'package:amigatoy/Arguments/CheckoutArguments.dart';
 import 'package:amigatoy/UI/Payment/PaypalPayment.dart';
 import 'package:amigatoy/Arguments/PaypalArguments.dart';
+import 'package:amigatoy/UI/Order/OrderList.dart';
+import 'package:flutter/scheduler.dart';
 
 class Checkout extends StatefulWidget {
   static const routeName = '/checkout';
@@ -68,7 +70,7 @@ class _checkoutState extends State<Checkout> {
             child: OutlinedButton(
           onPressed: () {
             Navigator.of(context).push(PageRouteBuilder(
-                pageBuilder: (_, __, ___) => new AddressList()));
+                pageBuilder: (_, __, ___) => new AddressList())).then((_) => setState(() {}));
           },
           child: const Text('Use other address'),
         )),
@@ -341,9 +343,15 @@ class _checkoutState extends State<Checkout> {
           BlocListener<OrdersBloc, OrdersState>(listener: (context, state) {
                 if (state is OrderErrorState) {
                   var snackbar = SnackBar(
-                    content: Text("create order failure"),
+                    // content: Text("create order failure,please try again"),
+                  content:Text(state.error),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
+
+                  SchedulerBinding.instance?.addPostFrameCallback((_) {
+                    Navigator.of(context)
+                        .pushReplacementNamed(OrderList.routeName);
+                  });
                 }else if(state is OrderPaypalwaitingState){
 
                     Navigator.pushNamed(context, PaypalPayment.routeName,

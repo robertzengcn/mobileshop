@@ -42,7 +42,7 @@ class LoginFailure extends LoginState {
   @override
   String toString() => 'LoginFailure { error: $error }';
 }
-//用户登录完成
+///user login success
 class LoginCompleted extends LoginState {}
 
 

@@ -28,7 +28,10 @@ class CartApiClient extends BaseApiClient{
     });
 //    User? user=await userDao.getToken();
 //    String token=user!=null?user.usertoken:"";
-     String token=await this.getToken();
+     String? token=await this.getToken();
+     if(token==null){
+       throw Exception('token empty');
+     }
 
     http.Response response = await http.post(
       url,
@@ -65,7 +68,10 @@ class CartApiClient extends BaseApiClient{
   ///获取购物车种的商品数量
   Future <int> getCartquantity() async{
     var url = Uri.parse('$appServerUrl/getCartquantity');
-    String token=await this.getToken();
+    String? token=await this.getToken();
+    if(token==null){
+      throw Exception("token empty");
+    }
     http.Response response = await http.get(
       url,
       headers: {
@@ -73,6 +79,9 @@ class CartApiClient extends BaseApiClient{
         'Client-Key':token
       },
     );
+    if (response.statusCode != 200) {
+      throw Exception("get cart quantity error");
+    }
     var responseJson = json.decode(response.body);
     if(responseJson['status']==true){
       return responseJson['data'] as int;
@@ -81,14 +90,26 @@ class CartApiClient extends BaseApiClient{
 //            .map((p) => Menu.fromJson(p))
 //            .toList();
     }else{
-      throw Exception(responseJson['msg']);
+      if(responseJson['code']!=null&&responseJson['code']==20210823091739){
+        return 0;
+      }else{
+        if(responseJson['msg']!=null){
+          throw Exception(responseJson['msg']);
+        }else{
+          throw Exception("unknow error when check cart quantity");
+        }
+
+      }
     }
   }
 
   ///获取购物车种的商品
   Future <CartInfo> getCartcontent() async{
     var url = Uri.parse('$appServerUrl/listCart');
-    String token=await this.getToken();
+    String? token=await this.getToken();
+    if(token==null){
+      throw Exception("token empty");
+    }
     http.Response response = await http.get(
       url,
       headers: {
@@ -142,7 +163,10 @@ class CartApiClient extends BaseApiClient{
   ///获取购物车中商品的数量
   Future <bool> updateCartquanity(String product_id,int quantity) async{
     var url = Uri.parse('$appServerUrl/updateCart');
-    String token=await this.getToken();
+    String? token=await this.getToken();
+    if(token==null){
+      throw Exception("token empty");
+    }
     Map<String,String>data;
     data={"products_id":product_id,
       "cart_quantity":quantity.toString()
@@ -167,7 +191,11 @@ class CartApiClient extends BaseApiClient{
   ///获取购物车中商品的数量
   Future <bool> deleteCart(String product_id) async{
     var url = Uri.parse('$appServerUrl/deleteCart');
-    String token=await this.getToken();
+    String? token=await this.getToken();
+    if(token==null){
+      throw Exception("token empty");
+    }
+
     Map<String,String>data;
     data={"products_id":product_id,
     };
