@@ -237,7 +237,7 @@ class _SplashScreenState extends State<SplashScreen> {
         /// Set Background image in splash screen layout (Click to open code)
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/img/man.png'), fit: BoxFit.cover)),
+                image: AssetImage('assets/img/start.png'), fit: BoxFit.cover)),
         child: Container(
           /// Set gradient black in image splash screen (Click to open code)
           decoration: BoxDecoration(
