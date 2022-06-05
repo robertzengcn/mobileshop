@@ -26,6 +26,7 @@ class HomeImageSlidestate extends State<HomeImageSlide>{
               return Container(
                 height: 200.0,
                 child: new Carousel(
+                    animationDuration:const Duration(milliseconds: 600),
                     boxFit: BoxFit.cover,
                     dotColor: Color(0xFF6991C7).withOpacity(0.8),
                     dotSize: 5.5,

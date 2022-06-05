@@ -49,10 +49,11 @@ class SimpleBlocObserver extends BlocObserver {
 
 /// Run first apps open
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  WidgetsFlutterBinding.ensureInitialized();
+
   // Pass all uncaught errors from the framework to Crashlytics.
   // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
