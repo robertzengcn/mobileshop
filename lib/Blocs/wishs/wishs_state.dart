@@ -10,7 +10,7 @@ class WishsInitial extends WishsState {
 }
 
 class WishAddsuccessState extends WishsState {
-  int wishQuantity;
+  final int wishQuantity;
   WishAddsuccessState({required this.wishQuantity});
   @override
   List<Object> get props => [wishQuantity];
@@ -29,7 +29,7 @@ class WishErrorState extends WishsState {
 }
 ///check whether product in wish success
 class WishChecksuccessState extends WishsState {
-  bool inWishlist;
+  final bool inWishlist;
   WishChecksuccessState({required this.inWishlist});
   @override
   List<Object> get props => [inWishlist];

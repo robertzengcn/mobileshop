@@ -7,11 +7,11 @@ class Cart extends Equatable {
   final String model;
   final String image;
   final double price;
-int quantity;
-double? weight;
-double final_price;
-  final String option_name;
-  final String option_value;
+  int quantity;
+  double? weight;
+  double final_price;
+  String option_name;
+  String option_value;
 
 
 

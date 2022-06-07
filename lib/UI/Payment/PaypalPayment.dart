@@ -5,7 +5,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:amigatoy/Arguments/PaypalArguments.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 // import 'package:amigatoy/Models/models.dart';
-import 'package:amigatoy/constants/application_constants.dart';
+//import 'package:amigatoy/constants/application_constants.dart';
 import 'package:amigatoy/Arguments/PaySuccessArguments.dart';
 import 'package:amigatoy/UI/Payment/PaymentSuccess.dart';
 import 'package:amigatoy/UI/Order/OrderList.dart';
@@ -167,13 +167,13 @@ class PaypalPaymentState extends State<PaypalPayment> {
                 builder: (context, payPalstate) {
               switch (_paymentStatus) {
                 case 'finish':
-                  SchedulerBinding.instance?.addPostFrameCallback((_) {
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
                     Navigator.pushNamed(context, PaymentSuccess.routeName,
                         arguments: PaySucessArguments(_payerID, _orderId));
                   });
                   break;
                 case 'cancel':
-                  SchedulerBinding.instance?.addPostFrameCallback((_) {
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
                     Navigator.of(context)
                         .pushReplacementNamed(OrderList.routeName);
                   });

@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+// import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 import 'package:amigatoy/Models/models.dart';
 
@@ -26,7 +26,7 @@ class ProductsloadedState extends ProductsState {
   final Product product;
 
 
-  const ProductsloadedState({required this.product}) : assert(product != null);
+  const ProductsloadedState({required this.product});
 
   @override
   List<Object> get props => [product];

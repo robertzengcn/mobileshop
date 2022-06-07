@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+// import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
 
@@ -12,7 +12,7 @@ abstract class CarouselsEvent extends Equatable {
 class FetchCarousels extends CarouselsEvent {
   final String type;
 
-  const FetchCarousels({required this.type}) : assert(type != null);
+  const FetchCarousels({required this.type});
 
   @override
   List<Object> get props => [type];

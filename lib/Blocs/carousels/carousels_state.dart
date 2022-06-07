@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+// import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 import 'package:amigatoy/Models/models.dart';
 
@@ -23,7 +23,7 @@ class Carouselsloaded extends CarouselsState {
   final List<Carousel> lstCarousel;
 
 
-  const Carouselsloaded({required this.lstCarousel}) : assert(lstCarousel != null);
+  const Carouselsloaded({required this.lstCarousel});
 
   @override
 

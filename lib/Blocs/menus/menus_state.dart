@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+// import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 import 'package:amigatoy/Models/models.dart';
 
@@ -22,7 +22,7 @@ class Menusloaded extends MenusState {
   final List<Menu> lstMenu;
 
 
-  const Menusloaded({required this.lstMenu}) : assert(lstMenu != null);
+  const Menusloaded({required this.lstMenu});
 
   @override
   List<Object> get props => [lstMenu];

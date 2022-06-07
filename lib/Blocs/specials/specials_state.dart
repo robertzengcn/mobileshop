@@ -20,7 +20,7 @@ class Specialsloaded extends SpecialsState {
   final List<Product> lstSpecials;
 
 
-  const Specialsloaded({required this.lstSpecials}) : assert(lstSpecials != null);
+  const Specialsloaded({required this.lstSpecials});
 
   @override
   List<Object> get props => [lstSpecials];

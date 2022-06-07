@@ -42,13 +42,24 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        // Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.amigatoy.appdata"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
+    }
+    flavorDimensions "flavors"
+    productFlavors {
+        dev {
+            dimension "flavors"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+        }
+        prod {
+            dimension "flavors"
+        }
     }
 
     signingConfigs {

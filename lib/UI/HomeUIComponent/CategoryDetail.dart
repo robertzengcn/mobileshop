@@ -114,11 +114,11 @@ var imageNetwork = NetworkImage("https://img.alicdn.com/tfscom/i3/2996558363/TB2
           overlayShadow: false,
           overlayShadowColors: Colors.white.withOpacity(0.9),
           overlayShadowSize: 0.9,
-          images:imagesliders?.map((i){
+          images:imagesliders.map((i){
 
               return NetworkImage(i.url);
 
-            })?.toList()??[],
+            }).toList(),
             radius:Radius.circular(8.0)
         ),
       ),

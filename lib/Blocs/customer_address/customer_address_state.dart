@@ -10,9 +10,9 @@ class CustomerAddressInitial extends CustomerAddressState {
 }
 class QueryCustomerAddressSuccess extends CustomerAddressState {
   
-  @override
-  List<CustomerAddress?> customerAddressList;
-  List<Countries> countries;
+
+  final List<CustomerAddress?> customerAddressList;
+  final List<Countries> countries;
   QueryCustomerAddressSuccess({required this.customerAddressList,required this.countries});
   List<Object> get props => [customerAddressList];
 }

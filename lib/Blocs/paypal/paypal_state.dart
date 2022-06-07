@@ -37,8 +37,8 @@ class PaypalErrorState extends PaypalState {
 
 ///make paypal payment finish
 class PaypalFinishState extends PaypalState {
-  String paymentId;
-  String orderId;
+  final String paymentId;
+  final String orderId;
   PaypalFinishState({required this.paymentId,required this.orderId});
 
   @override

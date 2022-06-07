@@ -14,6 +14,7 @@ import 'package:amigatoy/UI/widgets/home_recommend.dart';
 import 'package:amigatoy/provider/connectivity_provider.dart';
 import 'package:provider/provider.dart';
 
+
 ///Homepage
 
 class Home extends StatefulWidget {
@@ -86,22 +87,25 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
     //GridItem.getItem();
   }
-
+  bool _isonline=true;
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-    final isonline=Provider.of<ConnectivityProvider>(context).isOnline;
+    _isonline=Provider.of<ConnectivityProvider>(context).isOnline;
     // print("app lost internel connect");
+
     // if(!isonline){
       Widget cancelButton = TextButton(
         child: Text("ok"),
         onPressed:  () {
-          Navigator.of(context).pop();
+          // Navigator.of(context).pop();
+          //Navigator.pop(context);
+          setState(() =>{});
         },
       );
       AlertDialog alertwidget =AlertDialog(
         title: Text("Connect error"),
-        content: Text("Plese connect to internet"),
+        content: Text("Plese check your internet connect"),
         actions: [
           cancelButton,
         ],
@@ -748,7 +752,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 //                  padding: EdgeInsets.only(bottom: 2),
 //                ),
                 HomeImageSlide(),
-                (!isonline)?alertwidget:Container(),
+                (!_isonline)?alertwidget:Container(),
                 // Padding(
                 //   padding: EdgeInsets.only(bottom: 1.0),
                 // ),

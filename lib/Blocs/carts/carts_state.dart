@@ -2,7 +2,7 @@ part of 'carts_bloc.dart';
 
 @immutable
 abstract class CartsState extends Equatable {
- int cartQuantity=0;
+ final int cartQuantity=0;
   List<Object> get props => [];
 
 }
@@ -10,11 +10,11 @@ abstract class CartsState extends Equatable {
 class CartsInitialState extends CartsState {}
 
 class CartsAddsuccessState extends CartsState {
-  int cartQuantity;
+  final int cartQuantity;
   CartsAddsuccessState({required this.cartQuantity});
 }
 class CartsAddfinishState extends CartsState {
-  int cartQuantity;
+  final int cartQuantity;
   CartsAddfinishState({required this.cartQuantity});
 }
 
@@ -30,16 +30,16 @@ class CartsErrorState extends CartsState {
   String toString() => 'query cart error { error: $error }';
 }
 class CartsQuantitygetsuccessState extends CartsState {
-  int cartQuantity;
+  final int cartQuantity;
   CartsQuantitygetsuccessState({required this.cartQuantity});
 }
 
 class CartlistsuccessState extends CartsState {
-  List<Cart?> cartList;
-  CartTotal? cartTotal;
-  List<ShippingMethod?> shippingMelist;
-  List<Payment?> paymentList;
-  String symbol;
+  final List<Cart?> cartList;
+  final CartTotal? cartTotal;
+  final List<ShippingMethod?> shippingMelist;
+  final List<Payment?> paymentList;
+  final String symbol;
   CartlistsuccessState({
     required this.cartList,
     this.cartTotal,

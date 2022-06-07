@@ -2,8 +2,8 @@ part of 'carts_bloc.dart';
 
 @immutable
 abstract class CartsEvent {
-  @override
-  List<Object> get props => [];
+  // @override
+  // List<Object> get props => [];
 }
 
 @immutable
@@ -31,8 +31,8 @@ class queryCartcontentEvent extends CartsEvent {
 
 @immutable
 class updateCartquantityEvent extends CartsEvent {
-  String cartId;
-  int quantity;//数量
+  final String cartId;
+  final int quantity;//数量
   updateCartquantityEvent({
     required this.cartId,
     required this.quantity
@@ -41,7 +41,7 @@ class updateCartquantityEvent extends CartsEvent {
 
 @immutable
 class deleteCartEvent extends CartsEvent {
-  String cartId;
+  final String cartId;
 
   deleteCartEvent({
     required this.cartId

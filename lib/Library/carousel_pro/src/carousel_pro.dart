@@ -83,14 +83,7 @@ class Carousel extends StatefulWidget {
         this.overlayShadowColors,
         this.overlayShadowSize = 0.5,
         this.autoplay = true,
-        this.autoplayDuration = const Duration(seconds: 3)})
-      : assert(images != null),
-        assert(animationCurve != null),
-        assert(animationDuration != null),
-        assert(dotSize != null),
-        assert(dotSpacing != null),
-        assert(dotIncreaseSize != null),
-        assert(dotColor != null);
+        this.autoplayDuration = const Duration(seconds: 3)});
 
   @override
   State createState() => new CarouselState();

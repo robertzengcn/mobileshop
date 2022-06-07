@@ -1,4 +1,4 @@
-import 'package:flutter_html/shims/dart_ui.dart';
+// import 'package:flutter_html/shims/dart_ui.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
@@ -21,7 +21,7 @@ class FetchProductsEvent extends ProductsEvent {
 class FetchProducttypeEvent extends ProductsEvent {
   final String type;
 
-  const FetchProducttypeEvent({required this.type}) : assert(type != null);
+  const FetchProducttypeEvent({required this.type});
 
   @override
   List<Object> get props => [type];

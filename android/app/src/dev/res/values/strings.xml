@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AmigaToy Test</string>
+    <string name="facebook_app_id">5181365248590316</string>
+    <string name="fb_login_protocol_scheme">fb5181365248590316</string>
+    <string name="facebook_client_token">f1a25d2de2b1315f30e1d3d79b27cca7</string>
+</resources>

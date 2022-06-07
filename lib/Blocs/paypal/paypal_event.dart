@@ -12,9 +12,9 @@ class createPayment extends PaypalEvent {
 }
 
 class executePayment extends PaypalEvent {
-  String url;
-  String payerId;
-  String accessToken;
+  final String url;
+  final String payerId;
+  final String accessToken;
   executePayment({
     required this.url,
     required this.payerId,
@@ -26,10 +26,10 @@ class executePayment extends PaypalEvent {
 }
 
 class successPayment extends PaypalEvent {
-  String paymentId;
-  String orderId;
+  final String paymentId;
+  final String orderId;
   successPayment({required this.orderId,required this.paymentId});
-  @override
+
   List<Object> get props => [orderId,paymentId];
 }
 class cancelPayment extends PaypalEvent {

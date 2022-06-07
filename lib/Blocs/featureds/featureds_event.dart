@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+// import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
 
@@ -22,7 +22,7 @@ class FetchFeatureds extends FeaturedEvent {
 class FetchFeaturedtype extends FeaturedEvent {
   final String type;
 
-  const FetchFeaturedtype({required this.type}) : assert(type != null);
+  const FetchFeaturedtype({required this.type});
 
   @override
   List<Object> get props => [type];

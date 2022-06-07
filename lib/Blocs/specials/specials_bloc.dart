@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+// import 'package:meta/meta.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
@@ -12,7 +12,7 @@ late ProductRepository _productRepository;
   SpecialsBloc({required ProductRepository productRepository}): super(SpecialsEmpty()){
     _productRepository=ProductRepository();
   }
-  @override
+
   SpecialsState get initialState => SpecialsEmpty();
 
   @override

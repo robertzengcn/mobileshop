@@ -10,7 +10,7 @@ class CountriesInitial extends CountriesState {
 
 class QueryCountriesSuccessState extends CountriesState {
 
-  List<Countries> countries;
+  final List<Countries> countries;
   QueryCountriesSuccessState({required this.countries});
   List<Object> get props => [Countries];
 }

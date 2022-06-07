@@ -348,7 +348,7 @@ class _checkoutState extends State<Checkout> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackbar);
 
-                  SchedulerBinding.instance?.addPostFrameCallback((_) {
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
                     Navigator.of(context)
                         .pushReplacementNamed(OrderList.routeName);
                   });

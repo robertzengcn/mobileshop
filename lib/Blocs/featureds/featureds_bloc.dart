@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+// import 'package:meta/meta.dart';
 import 'package:amigatoy/Blocs/featureds/featureds.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
@@ -16,7 +16,7 @@ late FeaturedRepository _featuredRepository;
 
 //      : assert(featuredRepository != null),
 //        _featuredRepository = featuredRepository;
-  @override
+
   FeaturedState get initialState => FeaturedEmpty();
 
   @override

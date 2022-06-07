@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+// import 'package:meta/meta.dart';
 import 'package:amigatoy/Blocs/carousels/carousels.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/Models/models.dart';
-import 'package:http/http.dart';
+// import 'package:http/http.dart';
 
 
 class CarouselsBloc extends Bloc<CarouselsEvent, CarouselsState> {
@@ -19,7 +19,7 @@ late CarouselRepository _carouselRepository;
   }
 //      : assert(carouselsRepository != null),
 //        _carouselRepository = carouselsRepository;
-  @override
+//   @override
   CarouselsState get initialState => CarouselsEmpty();
 
   @override
