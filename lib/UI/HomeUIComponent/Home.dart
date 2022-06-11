@@ -752,7 +752,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 //                  padding: EdgeInsets.only(bottom: 2),
 //                ),
                 HomeImageSlide(),
-                (!_isonline)?alertwidget:Container(),
+                // (!_isonline)?alertwidget:Container(),
                 // Padding(
                 //   padding: EdgeInsets.only(bottom: 1.0),
                 // ),

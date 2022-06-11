@@ -146,7 +146,7 @@ class _ProductWrapperState extends State<ProductWrapper> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 2.0),
                 child: Container(
-                  height: 1500.0,
+                  height: 30000.0,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
