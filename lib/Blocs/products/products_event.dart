@@ -47,7 +47,7 @@ class FetchMoreProductcatEvent extends ProductsEvent {
   @override
   List<Object> get props => [cateId,start,length];
 }
-///产品详情页面打开
+///open product detail page
 @immutable
 class ProductScreenLoadedEvent extends ProductsEvent {
   final int productId;
@@ -75,4 +75,15 @@ class ProductAddToCartEvent extends ProductsEvent {
     required this.quantity,
     this.args
   });
+}
+
+@immutable
+class ScreenLoadedrandEvent extends ProductsEvent {
+  final int randnum;
+
+  ScreenLoadedrandEvent({
+    required this.randnum,
+  });
+  @override
+  List<Object> get props => [randnum];
 }

@@ -14,12 +14,20 @@ class ProductsInitState extends ProductsState {}
 
 class ProductsEmptyState extends ProductsState {}
 
-///loading home images
-
+///loading product
 class ProductsLoadingState extends ProductsState {
 
 }
 
+///rand product loaded success
+class RandProductsLoadedState extends ProductsState {
+  final List<Product?> loadproduct;
+  RandProductsLoadedState({
+    required this.loadproduct,
+  });
+  @override
+  List<Object> get props => [loadproduct];
+}
 
 
 class ProductsloadedState extends ProductsState {
@@ -32,7 +40,12 @@ class ProductsloadedState extends ProductsState {
   List<Object> get props => [product];
 }
 
-class ProductsErrorState extends ProductsState {}
+class ProductsErrorState extends ProductsState {
+  final String error;
+  const ProductsErrorState({required this.error});
+  @override
+  List<Object> get props => [error];
+}
 
 class ProductlistloadedState extends ProductsState {
   final List<Product> lproduct;

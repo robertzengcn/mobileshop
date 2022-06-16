@@ -64,7 +64,7 @@ class ProductApiClient{
 
   }
 
-  ///从api处获取产品
+  ///get product detail from api
   Future <Product> getProductbyid(int id) async{
     var url = Uri.parse('$appServerUrl/getProduct/'+id.toString());
     http.Response response = await http.get(
@@ -162,6 +162,31 @@ class ProductApiClient{
           .toList();
     }else{
       throw Exception('get product list in catalogue failure');
+    }
+
+  }
+
+  ///get product list by rand
+  Future<List<Product?>> getProductbyrand(int length) async{
+    var url = Uri.parse('$appServerUrl/getproductrand/length/'+length.toString());
+    http.Response response = await http.get(
+      url,
+      headers: {
+        'Application-Id': '$appId',
+      },
+    );
+
+    if (response.statusCode != 200) {
+
+      throw Exception('Unable to fetch products list by rand from the API');
+    }
+    var responseJson = json.decode(response.body);
+    if(responseJson['status']==true){
+      return (responseJson['data'] as List)
+          .map((p) => Product.fromJson(p))
+          .toList();
+    }else{
+      throw Exception('get product list by rand failure');
     }
 
   }

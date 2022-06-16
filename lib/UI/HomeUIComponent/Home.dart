@@ -13,6 +13,7 @@ import 'package:amigatoy/UI/widgets/home_image_slide.dart';
 import 'package:amigatoy/UI/widgets/home_recommend.dart';
 import 'package:amigatoy/provider/connectivity_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:amigatoy/UI/widgets/home_rand_product.dart';
 
 
 ///Homepage
@@ -722,8 +723,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           SingleChildScrollView(
             child:
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-
                 Padding(
                     padding: EdgeInsets.only(
                         top: mediaQueryData.padding.top + 58.5)),
@@ -751,12 +753,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 //                Padding(
 //                  padding: EdgeInsets.only(bottom: 2),
 //                ),
-                HomeImageSlide(),
+   HomeImageSlide(),
                 // (!_isonline)?alertwidget:Container(),
                 // Padding(
                 //   padding: EdgeInsets.only(bottom: 1.0),
                 // ),
-
+   HomeRandproduct(),
                 /// Call a Grid variable, this is item list in Recomended item
                 //Grid,
                 //recommend product list

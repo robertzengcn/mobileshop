@@ -37,5 +37,14 @@ class ProductRepository{
 
     return lst;
   }
+  ///get product by rand
+  Future<List<Product?>> loadProductlistbyrand(int length) async {
+
+
+    List<Product?> lst =await productApiClient.getProductbyrand(length);
+
+    return lst;
+  }
+
 
 }
