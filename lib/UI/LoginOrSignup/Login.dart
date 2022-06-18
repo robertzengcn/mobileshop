@@ -193,179 +193,181 @@ class _loginScreenState extends State<loginScreen>
 
       return Scaffold(
         backgroundColor: Colors.white,
-        body: Container(
-          /// Set Background image in layout (Click to open code)
-          decoration: BoxDecoration(
-              image: DecorationImage(
-            image: AssetImage("assets/img/loginscreenbackground.png"),
-            fit: BoxFit.cover,
-          )),
-          child: Container(
-            /// Set gradient color in image (Click to open code)
+        body: Stack(
+          children:<Widget>[
+            Container(
+            /// Set Background image in layout (Click to open code)
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromRGBO(0, 0, 0, 0.0),
-                  Color.fromRGBO(0, 0, 0, 0.3)
-                ],
-                begin: FractionalOffset.topCenter,
-                end: FractionalOffset.bottomCenter,
+                image: DecorationImage(
+              image: AssetImage("assets/img/loginscreenbackground.png"),
+              fit: BoxFit.cover,
+            )),
+            child: Container(
+              /// Set gradient color in image (Click to open code)
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromRGBO(0, 0, 0, 0.0),
+                    Color.fromRGBO(0, 0, 0, 0.3)
+                  ],
+                  begin: FractionalOffset.topCenter,
+                  end: FractionalOffset.bottomCenter,
+                ),
               ),
-            ),
 
-            /// Set component layout
-            child: ListView(
-              children: <Widget>[
-                Stack(
-                  alignment: AlignmentDirectional.bottomCenter,
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Container(
-                          alignment: AlignmentDirectional.topCenter,
-                          child: Column(
-                            children: <Widget>[
-                              /// padding logo
-                              Padding(
-                                  padding: EdgeInsets.only(
-                                      top: mediaQueryData.padding.top + 40.0)),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Image(
-                                    image: AssetImage("assets/img/Logo.png"),
-                                    height: 70.0,
-                                  ),
-                                  Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10.0)),
-
-                                  /// Animation text treva shop accept from signup layout (Click to open code)
-                                  Hero(
-                                    tag: "Treva",
-                                    child: Text(
-                                      "Amiga Toy",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                          letterSpacing: 0.6,
-                                          color: Colors.white,
-                                          fontFamily: "Sans",
-                                          fontSize: 20.0),
+              /// Set component layout
+              child: ListView(
+                children: <Widget>[
+                  Stack(
+                    alignment: AlignmentDirectional.bottomCenter,
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            alignment: AlignmentDirectional.topCenter,
+                            child: Column(
+                              children: <Widget>[
+                                /// padding logo
+                                Padding(
+                                    padding: EdgeInsets.only(
+                                        top: mediaQueryData.padding.top + 40.0)),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Image(
+                                      image: AssetImage("assets/img/Logo.png"),
+                                      height: 70.0,
                                     ),
-                                  ),
-                                ],
-                              ),
+                                    Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10.0)),
 
-                              /// ButtonCustomFacebook
-                              Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(vertical: 30.0)),
+                                    /// Animation text treva shop accept from signup layout (Click to open code)
+                                    Hero(
+                                      tag: "Treva",
+                                      child: Text(
+                                        "Amiga Toy",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w900,
+                                            letterSpacing: 0.6,
+                                            color: Colors.white,
+                                            fontFamily: "Sans",
+                                            fontSize: 20.0),
+                                      ),
+                                    ),
+                                  ],
+                                ),
 
-                              GestureDetector(
+                                /// ButtonCustomFacebook
+                                Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 30.0)),
+
+                                GestureDetector(
+                                    onTap: () {
+                                      _loginFacebook();
+                                    },
+                                    child: buttonCustomFacebook()),
+
+                                /// ButtonCustomGoogle
+                                Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 7.0)),
+                                GestureDetector(
                                   onTap: () {
-                                    _loginFacebook();
+                                    _loginGoogle();
                                   },
-                                  child: buttonCustomFacebook()),
+                                  child: buttonCustomGoogle(),
+                                ),
 
-                              /// ButtonCustomGoogle
-                              Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 7.0)),
-                              GestureDetector(
-                                onTap: () {
-                                  _loginGoogle();
-                                },
-                                child: buttonCustomGoogle(),
-                              ),
+                                /// Set Text
+                                Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 10.0)),
+                                Text(
+                                  "OR",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      color: Colors.white,
+                                      letterSpacing: 0.2,
+                                      fontFamily: 'Sans',
+                                      fontSize: 17.0),
+                                ),
+                                Form(
+                                  key: _formKey,
 
-                              /// Set Text
-                              Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(vertical: 10.0)),
-                              Text(
-                                "OR",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w900,
-                                    color: Colors.white,
-                                    letterSpacing: 0.2,
-                                    fontFamily: 'Sans',
-                                    fontSize: 17.0),
-                              ),
-                              Form(
-                                key: _formKey,
+                                  /// TextFromField Email
+                                  child: Column(children: <Widget>[
+                                    Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 10.0)),
 
-                                /// TextFromField Email
-                                child: Column(children: <Widget>[
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 10.0)),
+                                    textFromField(
+                                        icon: Icons.email,
+                                        password: false,
+                                        email: "Email",
+                                        inputType: TextInputType.emailAddress,
+                                        controllerValue: _emailController),
 
-                                  textFromField(
-                                      icon: Icons.email,
-                                      password: false,
-                                      email: "Email",
-                                      inputType: TextInputType.emailAddress,
-                                      controllerValue: _emailController),
+                                    /// TextFromField Password
+                                    Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 5.0)),
+                                    textFromField(
+                                        icon: Icons.vpn_key,
+                                        password: true,
+                                        email: "Password",
+                                        inputType: TextInputType.text,
+                                        controllerValue: _passwordController),
 
-                                  /// TextFromField Password
-                                  Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 5.0)),
-                                  textFromField(
-                                      icon: Icons.vpn_key,
-                                      password: true,
-                                      email: "Password",
-                                      inputType: TextInputType.text,
-                                      controllerValue: _passwordController),
-
-                                  /// Button Signup
-                                  TextButton(
+                                    /// Button Signup
+                                    TextButton(
 //                                padding: EdgeInsets.only(top: 20.0),
-                                      onPressed: () {
-                                        if (state is! LoginLoading) {
-                                          Navigator.of(context).pushReplacement(
-                                              MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          new Signup()));
-                                        }
-                                      },
+                                        onPressed: () {
+                                          if (state is! LoginLoading) {
+                                            Navigator.of(context).pushReplacement(
+                                                MaterialPageRoute(
+                                                    builder:
+                                                        (BuildContext context) =>
+                                                            new Signup()));
+                                          }
+                                        },
 //    state is! LoginLoading ? _onSignupButtonPressed() : null,
 //                                  Navigator.of(context).pushReplacement(
 //                                      MaterialPageRoute(
 //                                          builder: (BuildContext context) =>
 //                                              new Signup()));
 
-                                      style: TextButton.styleFrom(
-                                          padding: EdgeInsets.only(top: 20.0)),
-                                      child: Text(
-                                        "Not Have Acount? Sign Up",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 13.0,
-                                            fontWeight: FontWeight.w600,
-                                            fontFamily: "Sans"),
-                                      )),
-                                ]),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    top: mediaQueryData.padding.top + 100.0,
-                                    bottom: 0.0),
-                              )
-                            ],
+                                        style: TextButton.styleFrom(
+                                            padding: EdgeInsets.only(top: 20.0)),
+                                        child: Text(
+                                          "Not Have Acount? Sign Up",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 13.0,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: "Sans"),
+                                        )),
+                                  ]),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      top: mediaQueryData.padding.top + 100.0,
+                                      bottom: 0.0),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
 
-                    /// Set Animaion after user click buttonLogin
-                    tap == 0
-                        ? InkWell(
-                            splashColor: Colors.yellow,
-                            onTap: () {
-                              state is! LoginLoading
-                                  ? _onLoginButtonPressed()
-                                  : null;
+                      /// Set Animaion after user click buttonLogin
+                      tap == 0
+                          ? InkWell(
+                              splashColor: Colors.yellow,
+                              onTap: () {
+                                state is! LoginLoading
+                                    ? _onLoginButtonPressed()
+                                    : null;
 //    setState(() {
 //    tap = 1;
 //    });
@@ -374,17 +376,32 @@ class _loginScreenState extends State<loginScreen>
 //    );
 //    _PlayAnimation();
 //                            return tap;
-                            },
-                            child: buttonBlackBottom(),
-                          )
-                        : new LoginAnimation(
-                            animationController: sanimationController,
-                          )
-                  ],
-                ),
-              ],
+                              },
+                              child: buttonBlackBottom(),
+                            )
+                          : new LoginAnimation(
+                              animationController: sanimationController,
+                            )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
+            new Positioned(
+              top: 0.0,
+              left: 0.0,
+              right: 0.0,
+              child: AppBar(
+                title: Text(''),// You can add title here
+                leading: new IconButton(
+                  icon: new Icon(Icons.arrow_back_ios, color: Colors.white),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+               backgroundColor: Colors.transparent, //You can make this transparent
+                elevation: 0.0, //No shadow
+              ),),
+          ]
         ),
       );
     }));
