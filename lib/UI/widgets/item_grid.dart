@@ -146,32 +146,35 @@ class ItemGrid extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(top: 3.0),
                   child:
-                  Container(
-                    child:
-                    CachedNetworkImage(
-                      imageUrl: products.products_image,
-                          alignment: Alignment.center,
-                          fit: BoxFit.contain,
-                         width: _listImagewidth,
-                          height: _listImageheigh,
-                      placeholder: (context, url) => CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      child:
+                      CachedNetworkImage(
+                        imageUrl: products.products_image,
+                            alignment: Alignment.center,
+                            fit: BoxFit.contain,
+                           width: _listImagewidth,
+                            height: _listImageheigh,
+                        placeholder: (context, url) => CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                      // Image.network(products.products_image,
+                      //     alignment: Alignment.center,
+                      //     fit: BoxFit.contain,
+                      //    width: _listImagewidth,
+                      //     height: _listImageheigh,
+                      //     errorBuilder:
+                      //         (BuildContext context, Object exception,
+                      //             StackTrace? stackTrace) {
+                      //   return Image.asset(
+                      //     "assets/img/error.png",
+                      //     fit: BoxFit.contain,
+                      //     width: _listImagewidth,
+                      //     height: _listImageheigh,
+                      //   );
+                      // }),
                     ),
-                    // Image.network(products.products_image,
-                    //     alignment: Alignment.center,
-                    //     fit: BoxFit.contain,
-                    //    width: _listImagewidth,
-                    //     height: _listImageheigh,
-                    //     errorBuilder:
-                    //         (BuildContext context, Object exception,
-                    //             StackTrace? stackTrace) {
-                    //   return Image.asset(
-                    //     "assets/img/error.png",
-                    //     fit: BoxFit.contain,
-                    //     width: _listImagewidth,
-                    //     height: _listImageheigh,
-                    //   );
-                    // }),
                   ),
                 ),
                 Padding(padding: EdgeInsets.only(top: 3.0)),

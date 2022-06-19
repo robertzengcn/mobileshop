@@ -4,6 +4,7 @@ import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Repository/repository.dart';
 import 'package:amigatoy/UI/widgets/item_grid.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class catelogueDetail extends StatefulWidget {
   @override
@@ -171,7 +172,9 @@ class _catelogueDetailState extends State<catelogueDetail> {
         decoration: new BoxDecoration(
           image: new DecorationImage(
             fit: BoxFit.cover,
-            image: new NetworkImage(categories.categoriesImageUrl),
+            image:
+            CachedNetworkImageProvider(categories.categoriesImageUrl)
+            // new NetworkImage(categories.categoriesImageUrl),
           ),
           shape: BoxShape.rectangle,
         ),

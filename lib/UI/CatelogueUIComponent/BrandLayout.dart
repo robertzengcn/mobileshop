@@ -5,6 +5,7 @@ import 'package:amigatoy/UI/HomeUIComponent/Search.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amigatoy/Blocs/blocs.dart';
 import 'package:amigatoy/Repository/repository.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class brand extends StatefulWidget {
   final int? parentcategoriesId;
@@ -193,11 +194,23 @@ class itemCard extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
                     image: DecorationImage(
-                      image: NetworkImage(
-                        categories.categoriesImageUrl,
-                      ),
-                      fit: BoxFit.contain,
-                    )),
+                      image: CachedNetworkImageProvider(categories.categoriesImageUrl),
+                      // CachedNetworkImage(
+                      //   imageUrl: products.products_image,
+                      //   alignment: Alignment.center,
+                      //   fit: BoxFit.contain,
+                      //   width: _listImagewidth,
+                      //   height: _listImageheigh,
+                      //   placeholder: (context, url) => CircularProgressIndicator(),
+                      //   errorWidget: (context, url, error) => Icon(Icons.error),
+                      // ),
+                      // NetworkImage(
+                      //   categories.categoriesImageUrl,
+                      // ),
+
+                      fit: BoxFit.fill,
+                    )
+                ),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
