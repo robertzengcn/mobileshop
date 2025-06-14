@@ -8,9 +8,9 @@ class OrderRepository{
   OrderRepository();
 
   ///create order
-  Future<Map<String, dynamic>> createOrder(String payment,String? currency,String? comment,String? shipping) async {
+  Future<Map<String, dynamic>> createOrder(String payment,String? currency,String? comment,String? shipping,String? platform ) async {
 
-    Map<String, dynamic> paypalRequest=await orderApiClient.createOrder(payment,currency,comment,shipping);
+    Map<String, dynamic> paypalRequest=await orderApiClient.createOrder(payment,currency,comment,shipping,platform);
 
     return paypalRequest;
   }
@@ -24,6 +24,10 @@ class OrderRepository{
   Future<OrderDetail>featchOrderdetail(int orderId) async{
     OrderDetail orderdetail =await orderApiClient.getOrderDetail(orderId);
     return orderdetail;
+  }
+  ///check order has been make payment success
+  Future <void> checkOrderpayment(int orderId) async{
+    await orderApiClient.checkOrderpayment(orderId);
   }
 
 }

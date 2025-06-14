@@ -133,7 +133,7 @@ class myApp extends StatelessWidget {
         // }),
         BlocProvider<PaypalBloc>(create: (context) {
           //加载产品的评论
-          return PaypalBloc();
+          return PaypalBloc(orderRepository: OrderRepository());
         }),
         BlocProvider<RegisterBloc>(
           create: (context) {

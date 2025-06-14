@@ -122,7 +122,7 @@ class _paymentsuccessState extends State<PaymentSuccess> {
     return MultiBlocProvider(
         providers: [
           BlocProvider<PaypalBloc>(create: (context) {
-            return PaypalBloc()..add(createPayment());
+            return PaypalBloc(orderRepository: OrderRepository())..add(createPayment());
           }),
           BlocProvider<SpecialsBloc>(create: (context) {
             return SpecialsBloc(productRepository: ProductRepository())..add(FetchSpecials(start:0,length: 10));

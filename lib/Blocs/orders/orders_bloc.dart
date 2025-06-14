@@ -21,7 +21,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
        try {
       yield OrderPenddingState();
       var data = await orderRepository.createOrder(
-          event.payment, event.currency, event.comment, event.shipping);
+          event.payment, event.currency, event.comment, event.shipping,event.platform);
       // print("create order success");
       switch (event.payment) {
         case 'paypal':
@@ -39,7 +39,9 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       }
 
       // yield OrderCreatesuccessState(payment:event.payment,paypalRequest:paypalRequest);
-      }catch (error) {
+      }catch (error,stacktrace) {
+         print(error.toString());
+         print(stacktrace.toString());
         yield OrderErrorState(error: error.toString());
       }
     } else if (event is FeatchOrderlistEvent) {

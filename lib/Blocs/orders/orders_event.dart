@@ -9,12 +9,14 @@ final String payment;
 final String? comment;
 final String shipping;
 final String? currency;
+final String? platform;
 
 CreateOrderEvent({
   required this.payment,
   this.comment,
   required this.shipping,
-  this.currency
+  this.currency,
+  this.platform
 });
   @override
   List<Object> get props => [payment,shipping];

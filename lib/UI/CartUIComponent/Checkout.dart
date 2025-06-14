@@ -177,6 +177,7 @@ class _checkoutState extends State<Checkout> {
           .forEach((element) => shippingWidget.add(_shippingWidget(element!)));
     }
     return Scaffold(
+        resizeToAvoidBottomInset : false,
         appBar: AppBar(
           iconTheme: IconThemeData(color: Color(0xFF6991C7)),
           centerTitle: true,
@@ -191,111 +192,130 @@ class _checkoutState extends State<Checkout> {
           ),
           elevation: 0.0,
         ),
-        body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-          Container(
-            height: _deviceHeight,
-            child: SingleChildScrollView(
-              child: Column(children: <Widget>[
-                Container(
-                  // height: 80.0,
-                  color: Colors.transparent,
-                  child: BlocBuilder<CustomerAddressBloc, CustomerAddressState>(
-                      builder: (BuildContext context, customeraddState) {
-                    if (customeraddState is QueryCustomerAddressSuccess) {
-                      _countriesList = customeraddState.countries;
-                      _customerAddlist = customeraddState.customerAddressList;
+        body: SingleChildScrollView(
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+             ConstrainedBox(
+               constraints: BoxConstraints(),
+              // height: _deviceHeight,
+              // child: SingleChildScrollView(
+                child: Column(children: <Widget>[
+                  Container(
+                    // height: 80.0,
+                    color: Colors.transparent,
+                    child: BlocBuilder<CustomerAddressBloc, CustomerAddressState>(
+                        builder: (BuildContext context, customeraddState) {
+                      if (customeraddState is QueryCustomerAddressSuccess) {
+                        _countriesList = customeraddState.countries;
+                        _customerAddlist = customeraddState.customerAddressList;
 
-                      return _customerAddress();
-                    } else {
-                      return Container();
-                    }
-                  }),
-                ),
-                Padding(padding: EdgeInsets.only(top: 15.0)),
-                Divider(
-                  height: 1.0,
-                  color: Colors.black26,
-                ),
-                Padding(padding: EdgeInsets.only(top: 10.0)),
-                ListTile(title: Text('Shipping Method')),
-                Padding(
+                        return _customerAddress();
+                      } else {
+                        return Container();
+                      }
+                    }),
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 15.0)),
+                  Divider(
+                    height: 1.0,
+                    color: Colors.black26,
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 10.0)),
+                  ListTile(title: Text('Shipping Method')),
+                  Padding(
+                      padding: const EdgeInsets.only(
+                          top: 5.0, left: 10.0, right: 10.0, bottom: 5.0),
+                      child: Column(
+                        children: shippingWidget,
+                      )),
+                  Divider(
+                    height: 1.0,
+                    color: Colors.black26,
+                  ),
+                  ListTile(title: Text('Payment Method')),
+                  Padding(
+                      padding: const EdgeInsets.only(
+                          top: 1.0, left: 10.0, right: 10.0, bottom: 5.0),
+                      child: Column(
+                        children: [
+                          _paymentlistWidget(),
+                        ],
+                      )),
+                  Padding(
                     padding: const EdgeInsets.only(
-                        top: 5.0, left: 10.0, right: 10.0, bottom: 5.0),
-                    child: Column(
-                      children: shippingWidget,
-                    )),
-                Divider(
-                  height: 1.0,
-                  color: Colors.black26,
-                ),
-                ListTile(title: Text('Payment Method')),
-                Padding(
-                    padding: const EdgeInsets.only(
-                        top: 1.0, left: 10.0, right: 10.0, bottom: 5.0),
-                    child: Column(
-                      children: [
-                        _paymentlistWidget(),
-                      ],
-                    )),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10.0, left: 10.0, right: 10.0, bottom: 5.0),
-                  child: TextField(
-                      maxLength: 1000,
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Order comment',
-                      ),
-                      onSubmitted: (String? value) {
-                        setState(() => _orderComment = value);
-                      }),
-                ),
-                Padding(padding: EdgeInsets.only(top: 10.0)),
-                _totalWidget(),
-                Padding(padding: EdgeInsets.only(top: 10.0)),
-                // ])
-                // : Container(),
-              ]),
+                        top: 10.0, left: 10.0, right: 10.0, bottom: 5.0),
+                    child: TextField(
+                        maxLength: 1000,
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Order comment',
+                        ),
+                        onSubmitted: (String? value) {
+                          setState(() => _orderComment = value);
+                        }),
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 10.0)),
+                  _totalWidget(),
+                  Padding(padding: EdgeInsets.only(top: 10.0)),
+                  // ])
+                  // : Container(),
+                ]),
+              // ),
             ),
-          ),
-          BlocBuilder<OrdersBloc, OrdersState>(
+            BlocBuilder<OrdersBloc, OrdersState>(
   builder: (context, state) {
+    var platform = Theme.of(context).platform;
+    String userPlatform="";
+    if(platform == TargetPlatform.iOS){
+      userPlatform='ios';
+    }else{
+      userPlatform='android';
+    }
     return Align(
-            alignment: Alignment.center,
-            child: Container(
-              child: OutlinedButton(
-                onPressed: () {
-                  // print('Received click');
-                  if (_selectPaymentcode != null && _selectShipping != null) {
-                     // _createOrder(_selectPaymentcode!,_selectShipping!,_orderComment,_orderCurrency);
-                    BlocProvider.of<OrdersBloc>(context)
-                        .add(CreateOrderEvent(
-                      payment: _selectPaymentcode!,
-                      shipping: _selectShipping!,
-                      comment: _orderComment,
-                      currency: _orderCurrency,
-                    ));
-                  }
-                },
-                child: const Text(
-                  'Make payment',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-                style: OutlinedButton.styleFrom(
+              alignment: Alignment.center,
+              child: Container(
+                child: OutlinedButton(
+                  onPressed: () {
+                    if (_shippingMelist.isEmpty){//customer address empty
+                      var snackbar = SnackBar(
+                        // content: Text("create order failure,please try again"),
+                        content:Text("your address is empty, please add your address first"),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                    return;
+                    }
+                    // print('Received click');
+                    if (_selectPaymentcode != null && _selectShipping != null) {
+                       // _createOrder(_selectPaymentcode!,_selectShipping!,_orderComment,_orderCurrency);
+                      BlocProvider.of<OrdersBloc>(context)
+                          .add(CreateOrderEvent(
+                        payment: _selectPaymentcode!,
+                        shipping: _selectShipping!,
+                        comment: _orderComment,
+                        currency: _orderCurrency,
+                        platform: userPlatform
+                      ));
+                    }
+                  },
+                  child: const Text(
+                    'Make payment',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                  style: OutlinedButton.styleFrom(
 //                      primary: Colors.deepOrange.withOpacity(0.9),
-                  backgroundColor: Colors.deepOrange.withOpacity(0.95),
+                    backgroundColor: Colors.deepOrange.withOpacity(0.95),
+                  ),
                 ),
               ),
-            ),
-          );
+            );
   },
 )
-        ]));
+          ]),
+        ));
   }
 
   double _deviceHeight=0;

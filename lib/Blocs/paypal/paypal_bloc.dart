@@ -4,14 +4,17 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
+import 'package:amigatoy/Repository/repository.dart';
 // import 'package:amigatoy/Repository/repository.dart';
-
 part 'paypal_event.dart';
 part 'paypal_state.dart';
 
 class PaypalBloc extends Bloc<PaypalEvent, PaypalState> {
+  final OrderRepository orderRepository;
+  // OrdersBloc({required this.orderRepository}) : super(OrdersInitial());
+
   // final PaypalServices services = PaypalServices();
-  PaypalBloc() : super(PaypalInitial());
+  PaypalBloc({required this.orderRepository}) : super(PaypalInitial());
 
   @override
   Stream<PaypalState> mapEventToState(
@@ -31,8 +34,9 @@ class PaypalBloc extends Bloc<PaypalEvent, PaypalState> {
         //
         // }
 
-    }else if(event is successPayment){
+    }else if(event is successPayment){//paypal payment finish
 
+      await orderRepository.checkOrderpayment(int.parse(event.orderId));
       yield PaypalFinishState(paymentId:event.paymentId,orderId:event.orderId);
       // yield PaypalpenddingState();
       // String paymentId=await services.executePayment(event.url,event.payerId,event.accessToken);

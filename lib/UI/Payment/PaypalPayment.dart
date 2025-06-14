@@ -12,6 +12,7 @@ import 'package:amigatoy/UI/Order/OrderList.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter/scheduler.dart';
+import 'package:amigatoy/Repository/repository.dart';
 
 
 class PaypalPayment extends StatefulWidget {
@@ -154,7 +155,7 @@ class PaypalPaymentState extends State<PaypalPayment> {
             // if(args!=null){
             //   return PaypalBloc()..add(createPayment(paypalrequest:args.invoice));
             // }else{
-            return PaypalBloc()..add(createPayment());
+            return PaypalBloc(orderRepository: OrderRepository())..add(createPayment());
             // }
           }),
         ],

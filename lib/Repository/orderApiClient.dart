@@ -11,13 +11,14 @@ class OrderApiClient extends BaseApiClient{
   OrderApiClient();
 
   @override
-  Future <Map<String, dynamic>> createOrder(String payment,String? currency,String? comment,String? shipping) async{
+  Future <Map<String, dynamic>> createOrder(String payment,String? currency,String? comment,String? shipping,String? platform) async{
     var url = Uri.parse('$appServerUrl/createOrder');
     Map<String,String?>data;
     data={"payment":payment,
       "currency":currency!=null?currency:"USD",
       "comment":comment!=null?comment:"",
-      "shipping":shipping
+      "shipping":shipping,
+      "platform":platform
     };
 
 //    User? user=await userDao.getToken();
@@ -43,9 +44,9 @@ class OrderApiClient extends BaseApiClient{
       if(responseJson['status']==true){
         return responseJson['data'];
       }else{
+        print(responseJson);
         throw Exception(responseJson['msg']);
       }
-
   }
   ///fetch order list
   Future <ListOrder> fetchOrderlist(int start, int length)async{
@@ -112,6 +113,30 @@ class OrderApiClient extends BaseApiClient{
       throw Exception(responseJson['msg']);
     }
 
+  }
+  ///check order has been payid success
+  Future <void> checkOrderpayment(int orderId)async{
+    String? token=await this.getToken();
+    if(token==null){
+      throw Exception('token empty');
+    }
+    var url = Uri.parse('$appServerUrl/checkorderpayment');
+    Map<String,String?>data;
+    data={"type":"paypal",
+      "order_id":orderId.toString()
+    };
+    http.Response response = await http.post(
+      url,
+      body: data,
+      headers: {
+        'Application-Id': '$appId',
+        'Client-Key':token
+      },
+    );
+    var responseJson = json.decode(response.body);
+    if(responseJson['status']!=true){
+      print(responseJson);
+    }
   }
 
 }
