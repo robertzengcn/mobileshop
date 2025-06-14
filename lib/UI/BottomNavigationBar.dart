@@ -1,36 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/UI/BrandUIComponent/BrandLayout.dart';
-import 'package:treva_shop_flutter/UI/CartUIComponent/CartLayout.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/Home.dart';
-import 'package:treva_shop_flutter/UI/AcountUIComponent/Profile.dart';
+import 'package:amigatoy/UI/CatelogueUIComponent/BrandLayout.dart';
+import 'package:amigatoy/UI/CartUIComponent/CartLayout.dart';
+import 'package:amigatoy/UI/HomeUIComponent/Home.dart';
+import 'package:amigatoy/UI/AcountUIComponent/Profile.dart';
 
 class bottomNavigationBar extends StatefulWidget {
+  final int pageIndex;
+  bottomNavigationBar ({ Key? key, required this.pageIndex }): super(key: key);
  @override
  _bottomNavigationBarState createState() => _bottomNavigationBarState();
 }
 
 class _bottomNavigationBarState extends State<bottomNavigationBar> {
  int currentIndex = 0;
+ //  late int currentIndex;
  /// Set a type current number a layout class
  Widget callPage(int current) {
   switch (current) {
    case 0:
-    return new Menu();
+    return new Home();
    case 1:
     return new brand();
    case 2:
-    return new cart();
+    return new Cartpage();
    case 3:
-    return new profil();
-    break;
+    return new Profil();
+    // break;
    default:
-    return Menu();
+    return Home();
   }
  }
 
  /// Build BottomNavigationBar Widget
  @override
  Widget build(BuildContext context) {
+   currentIndex=widget.pageIndex;
   return Scaffold(
    body: callPage(currentIndex),
    bottomNavigationBar: Theme(
@@ -43,8 +47,13 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
         currentIndex: currentIndex,
         fixedColor: Color(0xFF6991C7),
         onTap: (value) {
-         currentIndex = value;
-         setState(() {});
+          print(value);
+          // setState(() {
+          //   currentIndex = value;
+          // });
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (BuildContext context) => new bottomNavigationBar(pageIndex: value,)));
+
         },
         items: [
          BottomNavigationBarItem(
@@ -52,31 +61,39 @@ class _bottomNavigationBarState extends State<bottomNavigationBar> {
               Icons.home,
               size: 23.0,
              ),
-             title: Text(
-              "Home",
-              style: TextStyle(fontFamily: "Berlin", letterSpacing: 0.5),
-             )),
+             label:"Home",
+             // title: Text(
+             //  "Home",
+             //  style: TextStyle(fontFamily: "Berlin", letterSpacing: 0.5),
+             // )
+           ),
          BottomNavigationBarItem(
              icon: Icon(Icons.shop),
-             title: Text(
-              "Brand",
-              style: TextStyle(fontFamily: "Berlin", letterSpacing: 0.5),
-             )),
+           label:"Brand",
+             // title: Text(
+             //  "Brand",
+             //  style: TextStyle(fontFamily: "Berlin", letterSpacing: 0.5),
+             // )
+         ),
          BottomNavigationBarItem(
              icon: Icon(Icons.shopping_cart),
-             title: Text(
-              "Cart",
-              style: TextStyle(fontFamily: "Berlin", letterSpacing: 0.5),
-             )),
+             label:"Cart",
+             // title: Text(
+             //  "Cart",
+             //  style: TextStyle(fontFamily: "Berlin", letterSpacing: 0.5),
+             // )
+         ),
          BottomNavigationBarItem(
              icon: Icon(
               Icons.person,
               size: 24.0,
              ),
-             title: Text(
-              "Acount",
-              style: TextStyle(fontFamily: "Berlin", letterSpacing: 0.5),
-             )),
+             label:"Acount",
+             // title: Text(
+             //  "Acount",
+             //  style: TextStyle(fontFamily: "Berlin", letterSpacing: 0.5),
+             // )
+         ),
         ],
        )),
   );

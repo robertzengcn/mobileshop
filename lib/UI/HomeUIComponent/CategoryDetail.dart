@@ -1,19 +1,17 @@
 import 'dart:async';
-
-
 import 'package:shimmer/shimmer.dart';
-import 'package:treva_shop_flutter/Library/carousel_pro/carousel_pro.dart';
+import 'package:amigatoy/Library/carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/ListItem/CategoryItem.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/PromotionDetail.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/Search.dart';
-import 'package:treva_shop_flutter/Services/CRUDModel.dart';
+
+import 'package:amigatoy/UI/HomeUIComponent/Search.dart';
+//import 'package:amigatoy/Services/CRUDModel.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:treva_shop_flutter/ListItem/ImageSlider.dart';
-import 'package:treva_shop_flutter/ListItem/Category.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/SubCategory.dart';
-import 'package:treva_shop_flutter/ListItem/Product.dart';
+import 'package:amigatoy/ListItem/ImageSlider.dart';
+import 'package:amigatoy/ListItem/Category.dart';
+//import 'package:amigatoy/UI/HomeUIComponent/SubCategory.dart';
+import 'package:amigatoy/ListItem/Product.dart';
+//import 'package:amigatoy/Services/catelogue_bloc_provider.dart';
+//import 'package:amigatoy/Services/catelogue_bloc.dart';
 
 class categoryDetail extends StatefulWidget {
   final int id;
@@ -25,20 +23,27 @@ class categoryDetail extends StatefulWidget {
 
 /// if user click icon in category layout navigate to categoryDetail Layout
 class _categoryDetailState extends State<categoryDetail> {
+//  CatelogueBloc _bloc;
 
+  void initState() {
+    super.initState();
+  }
   ///
   /// Get image data dummy from firebase server
   ///
 var imageNetwork = NetworkImage("https://img.alicdn.com/tfscom/i3/2996558363/TB2a.PkdcIrBKNjSZK9XXagoVXa_!!2996558363.jpg_360x360xzq90.jpg_.webp");
-  List<Category> categorys;
-Map<int, Category> categorymap;
-List<Product> products;
+  late List<Category> categorys;
+  late Map<int, Category> categorymap;
+  late List<Product> products;
+
+
+
   ///
   /// check the condition is right or wrong for image loaded or no
   ///
   bool loadImage = true;
 
-  List<ImageSlider> imagesliders;
+  late List<ImageSlider> imagesliders;
   /// custom text variable is make it easy a custom textStyle black font
   static var _customTextStyleBlack = TextStyle(
       fontFamily: "Gotik",
@@ -56,23 +61,35 @@ List<Product> products;
   ///
   /// SetState after imageNetwork loaded to change list card
   ///
+  //@override
+//  void initState() {
+//
+////    Firestore.instance.collection('image_slider').where('status', isEqualTo: 1).where('type','catelogue').then((data) async {
+////      var list = data.documents;
+////      documents = list;
+////      print("init state document:" +
+////          documents.length.toString()); // value is getting
+////      super.initState();
+////      setState(() {
+////        isDocLoaded = true;
+////        documents = list;
+////      });
+////    });
+//
+//    // TODO: implement initState
+//    super.initState();
+//  }
+
   @override
-  void initState() {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+//    _bloc = CatelogueBlocProvider.of(context);
+  }
 
-//    Firestore.instance.collection('image_slider').where('status', isEqualTo: 1).where('type','catelogue').then((data) async {
-//      var list = data.documents;
-//      documents = list;
-//      print("init state document:" +
-//          documents.length.toString()); // value is getting
-//      super.initState();
-//      setState(() {
-//        isDocLoaded = true;
-//        documents = list;
-//      });
-//    });
+  @override
+  void dispose() {
 
-    // TODO: implement initState
-    super.initState();
+    super.dispose();
   }
 
   /// All Widget Component layout
@@ -80,7 +97,7 @@ List<Product> products;
   Widget build(BuildContext context) {
 
     widget.id;
-    final contentProvider = Provider.of<CRUDModel>(context);
+//    final contentProvider = Provider.of<CRUDModel>(context);
     /// imageSlider in header layout category detail
     var _imageSlider = Padding(
       padding: const EdgeInsets.only(
@@ -97,99 +114,100 @@ List<Product> products;
           overlayShadow: false,
           overlayShadowColors: Colors.white.withOpacity(0.9),
           overlayShadowSize: 0.9,
-          images:imagesliders?.map((i){
+          images:imagesliders.map((i){
 
               return NetworkImage(i.url);
 
-            })?.toList()??[]
+            }).toList(),
+            radius:Radius.circular(8.0)
         ),
       ),
     );
 
-    List<Widget> ListMyWidgets() {
-      List<Widget> list = new List();
-      if(categorys!=null){
-
-        for(var i = 0; i < categorymap.length; i++){
-          if(i==0){
-            list.add(Padding(padding: EdgeInsets.only(left: 20.0)));
-          }
-          list.add(
-              SubCategory(
-                title: categorymap[i].title,
-                id:categorymap[i].id,
-              )
-          );
-          list.add(Padding(padding: EdgeInsets.only(left: 15.0)));
-
-        }
-      }
-    return list;
-    }
+//    List<Widget> ListMyWidgets() {
+//      List<Widget> list = [];
+//      if(categorys!=null&&categorymap!=null){
+//
+//        for(var i = 0; i < categorymap.length; i++){
+//          if(i==0){
+//            list.add(Padding(padding: EdgeInsets.only(left: 20.0)));
+//          }
+//          list.add(
+//              SubCategory(
+//                title: categorymap[i].title,
+//                id:categorymap[i].id,
+//              )
+//          );
+//          list.add(Padding(padding: EdgeInsets.only(left: 15.0)));
+//
+//        }
+//      }
+//    return list;
+//    }
 
     /// Variable Category (Sub Category)
-    var _subCategory = Container(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0, left: 20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "Sub Category",
-                  style: _customTextStyleBlack,
-                ),
-//                InkWell(
-//                  onTap: () {
-//                    Navigator.of(context).push(PageRouteBuilder(
-//                        pageBuilder: (_, __, ___) => new promoDetail()));
-//                  },
-//                  child: Text("See More",
-//                      style:
-//                      _customTextStyleBlue.copyWith(color: Colors.black26)),
+//    var _subCategory = Container(
+//      child: Column(
+//        children: <Widget>[
+//          Padding(
+//            padding: const EdgeInsets.only(right: 20.0, left: 20.0),
+//            child: Row(
+//              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//              children: <Widget>[
+//                Text(
+//                  "Sub Category",
+//                  style: _customTextStyleBlack,
 //                ),
-              ],
-            ),
-          ),
-          SingleChildScrollView(
-            child: Container(
-              color: Colors.white,
-              margin: EdgeInsets.only(right: 10.0, top: 5.0),
-              height: 42.0,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: ListMyWidgets()
-              //  children:
-//                  <Widget>[
-//                  Padding(padding: EdgeInsets.only(left: 20.0)),
-//                  KeywordItem(
-//                    title: "Polo Shirt",
-//                    title2: "Shirt",
-//                  ),
-//                  Padding(padding: EdgeInsets.only(left: 15.0)),
-//                  KeywordItem(
-//                    title: "Suit",
-//                    title2: "Jacket",
-//                  ),
-//                  Padding(padding: EdgeInsets.only(left: 15.0)),
-//                  KeywordItem(
-//                    title: "Jeans",
-//                    title2: "Bag",
-//                  ),
-//                  Padding(padding: EdgeInsets.only(left: 15.0)),
-//                  KeywordItem(
-//                    title: "Watch",
-//                    title2: "Shoes",
-//                  ),
-//                  Padding(padding: EdgeInsets.only(right: 20.0)),
-//                ],
-              ),
-            ),
-          )
-        ],
-      ),
-    );
+////                InkWell(
+////                  onTap: () {
+////                    Navigator.of(context).push(PageRouteBuilder(
+////                        pageBuilder: (_, __, ___) => new promoDetail()));
+////                  },
+////                  child: Text("See More",
+////                      style:
+////                      _customTextStyleBlue.copyWith(color: Colors.black26)),
+////                ),
+//              ],
+//            ),
+//          ),
+//          SingleChildScrollView(
+//            child: Container(
+//              color: Colors.white,
+//              margin: EdgeInsets.only(right: 10.0, top: 5.0),
+//              height: 42.0,
+//              child: ListView(
+//                scrollDirection: Axis.horizontal,
+//                children: ListMyWidgets()
+//              //  children:
+////                  <Widget>[
+////                  Padding(padding: EdgeInsets.only(left: 20.0)),
+////                  KeywordItem(
+////                    title: "Polo Shirt",
+////                    title2: "Shirt",
+////                  ),
+////                  Padding(padding: EdgeInsets.only(left: 15.0)),
+////                  KeywordItem(
+////                    title: "Suit",
+////                    title2: "Jacket",
+////                  ),
+////                  Padding(padding: EdgeInsets.only(left: 15.0)),
+////                  KeywordItem(
+////                    title: "Jeans",
+////                    title2: "Bag",
+////                  ),
+////                  Padding(padding: EdgeInsets.only(left: 15.0)),
+////                  KeywordItem(
+////                    title: "Watch",
+////                    title2: "Shoes",
+////                  ),
+////                  Padding(padding: EdgeInsets.only(right: 20.0)),
+////                ],
+//              ),
+//            ),
+//          )
+//        ],
+//      ),
+//    );
 
     /// Variable item Discount with Card
 //    var _itemDiscount = Container(
@@ -362,82 +380,82 @@ List<Product> products;
       ),
     );
 
-    var _Categoryimageslide= StreamBuilder(
-        stream: contentProvider.fetchTypeimageAsStream('catelogue'),
-      //stream:Firestore.instance.collection('image_slider').where('status', isEqualTo: 1).where('type',isEqualTo:'catelogue').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//    var _Categoryimageslide= StreamBuilder(
+//        stream: contentProvider.fetchTypeimageAsStream('catelogue'),
+//      //stream:Firestore.instance.collection('image_slider').where('status', isEqualTo: 1).where('type',isEqualTo:'catelogue').snapshots(),
+//        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//
+//          if (snapshot.hasData) {
+//            if (snapshot.data.documents.length == 0){//没有子类目
+//              return Container(
+//                  color: Colors.white // This is optional
+//              );
+//            }
+//
+//
+//            setState(() {
+//              imagesliders = snapshot.data.documents
+//                  .map((doc) => ImageSlider.fromMap(doc.data, doc.documentID))
+//                  .toList();
+//            });
+//            return _imageSlider;
+//            //return imageSliderview;
+//          } else {
+//            print("nodata377");
+//            return CircularProgressIndicator();
+//          }
+//        });
 
-          if (snapshot.hasData) {
-            if (snapshot.data.documents.length == 0){//没有子类目
-              return Container(
-                  color: Colors.white // This is optional
-              );
-            }
+//    var _Getsubcatelogue= StreamBuilder(//get category
+//        //stream: contentProvider.fetchlevelCategoryAsStream(1,widget.id),
+//        stream:contentProvider.fetchlevelCategoryAsStream(1,widget.id),
+//        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//
+//          if (snapshot.hasData) {
+//
+//            if (snapshot.data.documents.length == 0){//not have category
+//              return Container(
+//                  color: Colors.white // This is optional
+//              );
+//            }
+//
+//            categorys = snapshot.data.documents
+//                .map((doc) => Category.fromMap(doc.data, doc.documentID))
+//                .toList();
+//            categorymap = categorys.asMap();
+//
+//
+//            return _subCategory;
+//            //return imageSliderview;
+//          } else {
+//
+//            return CircularProgressIndicator();
+//          }
+//        });
 
-
-            setState(() {
-              imagesliders = snapshot.data.documents
-                  .map((doc) => ImageSlider.fromMap(doc.data, doc.documentID))
-                  .toList();
-            });
-            return _imageSlider;
-            //return imageSliderview;
-          } else {
-            print("nodata377");
-            return CircularProgressIndicator();
-          }
-        });
-
-    var _Getsubcatelogue= StreamBuilder(//get category
-        stream: contentProvider.fetchlevelCategoryAsStream(1,widget.id),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
-          if (snapshot.hasData) {
-
-            if (snapshot.data.documents.length == 0){//not have category
-              return Container(
-                  color: Colors.white // This is optional
-              );
-            }
-
-            categorys = snapshot.data.documents
-                .map((doc) => Category.fromMap(doc.data, doc.documentID))
-                .toList();
-            categorymap = categorys.asMap();
-            print("subcatelogue");
-            print(categorymap);
-
-            return _subCategory;
-            //return imageSliderview;
-          } else {
-            print("nodata403");
-            return CircularProgressIndicator();
-          }
-        });
-
-    var  _GetItemlist= StreamBuilder(
-        stream: contentProvider.fetchProductsAsStream(widget.id),
-
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
-          if (snapshot.hasData) {
-            if (snapshot.data.documents.length == 0){//没有产品
-              print("noitem414");
-              return Container(
-                  color: Colors.white // This is optional
-              );
-            }
-            products = snapshot.data.documents
-                .map((doc) => Product.fromMap(doc.data, doc.documentID))
-                .toList();
-
-            return _grid;
-            //return imageSliderview;
-          } else {
-            print("notdata425");
-            return CircularProgressIndicator();
-          }
-        });
+//    var  _GetItemlist= StreamBuilder(
+//        stream: contentProvider.fetchProductsAsStream(widget.id),
+//
+//        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//
+//          if (snapshot.hasData) {
+//            if (snapshot.data.documents.length == 0){//没有产品
+//              print("noitem414");
+//              return Container(
+//                  color: Colors.white // This is optional
+//              );
+//            }
+//            products = snapshot.data.documents
+//                .map((doc) => Product.fromMap(doc.data, doc.documentID))
+//                .toList();
+//
+//            return _grid;
+//            //return imageSliderview;
+//          } else {
+//            print("notdata425");
+//            return CircularProgressIndicator();
+//          }
+//        });
 
 
     return Scaffold(
@@ -472,9 +490,9 @@ List<Product> products;
           child: Column(
             children: <Widget>[
               //_imageSlider,
-              _Categoryimageslide,
-              _Getsubcatelogue,
-              _GetItemlist,
+//              _Categoryimageslide,
+//              _Getsubcatelogue,
+//              _GetItemlist,
 //              _itemPopular,
 //              _itemNew
             ],
@@ -970,13 +988,13 @@ class loadingMenuItemCard extends StatelessWidget {
 /// Calling imageLoading animation for set a grid layout
 ///
 ///
-Widget _loadingImageAnimation(BuildContext context){
-  return ListView.builder(
-    scrollDirection: Axis.horizontal,
-    itemBuilder: (BuildContext context, int index)=>loadingMenuItemCard(),
-    itemCount: itemDiscount.length,
-  );
-}
+// Widget _loadingImageAnimation(BuildContext context){
+//   return ListView.builder(
+//     scrollDirection: Axis.horizontal,
+//     itemBuilder: (BuildContext context, int index)=>loadingMenuItemCard(),
+//     itemCount: itemDiscount.length,
+//   );
+// }
 
 
 
@@ -985,10 +1003,10 @@ Widget _loadingImageAnimation(BuildContext context){
 /// Calling imageLoading animation for set a grid layout
 ///
 ///
-Widget _loadingImageAnimationDiscount(BuildContext context){
-  return ListView.builder(
-    scrollDirection: Axis.horizontal,
-    itemBuilder: (BuildContext context, int index)=>loadingMenuItemDiscountCard(),
-    itemCount: itemDiscount.length,
-  );
-}
+// Widget _loadingImageAnimationDiscount(BuildContext context){
+//   return ListView.builder(
+//     scrollDirection: Axis.horizontal,
+//     itemBuilder: (BuildContext context, int index)=>loadingMenuItemDiscountCard(),
+//     itemCount: itemDiscount.length,
+//   );
+// }

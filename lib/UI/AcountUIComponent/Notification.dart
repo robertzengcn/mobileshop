@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/ListItem/notificationsData.dart';
+import 'package:amigatoy/ListItem/notificationsData.dart';
 
 class notification extends StatefulWidget {
   @override
@@ -7,7 +7,7 @@ class notification extends StatefulWidget {
 }
 
 class _notificationState extends State<notification> {
-  final List<Post> items = new List();
+  final List<Post> items = [];
   @override
   void initState() {
     super.initState();
@@ -115,7 +115,8 @@ class _notificationState extends State<notification> {
                         Divider(height: 5.0),
                       ],
                     ),
-                  ));
+                  )
+              );
             }):noItemNotifications()
     );
   }
@@ -139,10 +140,10 @@ class noItemNotifications extends StatelessWidget {
             Padding(
                 padding:
                 EdgeInsets.only(top: mediaQueryData.padding.top + 100.0)),
-            Image.asset(
-              "assets/img/noNotification.png",
-              height: 200.0,
-            ),
+            // Image.asset(
+            //   "assets/img/noNotification.png",
+            //   height: 200.0,
+            // ),
             Padding(padding: EdgeInsets.only(bottom: 30.0)),
             Text(
               "Not Have Notification",

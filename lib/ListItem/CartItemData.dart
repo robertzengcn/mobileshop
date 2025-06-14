@@ -1,12 +1,13 @@
 class cartItem{
   String img,title,desc,price;
-  int id,totalPrice;
+  int id;
+  double? totalPrice;
   cartItem({
-    this.id,
-   this.img,
-    this.title,
-    this.desc,
-    this.price,
+    required this.id,
+    required this.img,
+    required this.title,
+    required this.desc,
+    required this.price,
     this.totalPrice
 });
 }

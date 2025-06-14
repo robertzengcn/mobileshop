@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/ListItem/Product.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/productDetails.dart';
-
+import 'package:amigatoy/Models/Product.dart';
 
 class ProductCard extends StatelessWidget {
   final Product productDetails;
 
-  ProductCard({@required this.productDetails});
+  ProductCard({required this.productDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +20,17 @@ class ProductCard extends StatelessWidget {
             height: MediaQuery
                 .of(context)
                 .size
-                .height * 0.45,
+                .height * 0.8,
             width: MediaQuery
                 .of(context)
                 .size
-                .width * 0.9,
+                .width * 0.5,
             child: Column(
               children: <Widget>[
                 Hero(
-                  tag: productDetails.id,
+                  tag: productDetails.products_id,
                   child: Image.network(
-                    productDetails.img,
+                    productDetails.products_image,
                     height: MediaQuery
                         .of(context)
                         .size
@@ -47,14 +45,15 @@ class ProductCard extends StatelessWidget {
                     MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        productDetails.title,
+                        productDetails.products_name,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontWeight: FontWeight.w900,
-                            fontSize: 22,
+                            fontSize: 13.0,
                             fontStyle: FontStyle.italic),
                       ),
                       Text(
-                        '${productDetails.price} \$',
+                        '${productDetails.products_price} \$',
                         style: TextStyle(
                             fontWeight: FontWeight.w900,
                             fontSize: 22,

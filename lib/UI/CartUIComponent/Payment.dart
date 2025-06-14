@@ -1,10 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/UI/BottomNavigationBar.dart';
-import 'package:treva_shop_flutter/UI/CartUIComponent/CartLayout.dart';
-import 'package:treva_shop_flutter/UI/CartUIComponent/Delivery.dart';
-import 'package:treva_shop_flutter/UI/HomeUIComponent/Home.dart';
+import 'package:amigatoy/UI/BottomNavigationBar.dart';
 
 class payment extends StatefulWidget {
   @override
@@ -20,7 +17,7 @@ class _paymentState extends State<payment> {
   /// Navigation to route after user succes payment
   void navigator() {
     Navigator.of(context).pushReplacement(PageRouteBuilder(
-        pageBuilder: (_, __, ___) => new bottomNavigationBar()));
+        pageBuilder: (_, __, ___) => new bottomNavigationBar(pageIndex: 0,)));
   }
 
   @override
@@ -98,13 +95,13 @@ class _paymentState extends State<payment> {
                         "Credit / Debit Card",
                         style: _customStyle,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 40.0),
-                        child: Image.asset(
-                          "assets/img/credit.png",
-                          height: 25.0,
-                        ),
-                      )
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 40.0),
+                      //   child: Image.asset(
+                      //   "assets/img/credit.png",
+                      //   height: 25.0,
+                      // ),
+                      // )
                     ],
                   ),
                 ),
@@ -132,13 +129,13 @@ class _paymentState extends State<payment> {
                         onChanged: null,
                       ),
                       Text("Cash On Delivery", style: _customStyle),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 50.0),
-                        child: Image.asset(
-                          "assets/img/handshake.png",
-                          height: 25.0,
-                        ),
-                      )
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 50.0),
+                      //   child: Image.asset(
+                      //     "assets/img/handshake.png",
+                      //     height: 25.0,
+                      //   ),
+                      // )
                     ],
                   ),
                 ),
@@ -166,13 +163,13 @@ class _paymentState extends State<payment> {
                         onChanged: null,
                       ),
                       Text("Paypal", style: _customStyle),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 130.0),
-                        child: Image.asset(
-                          "assets/img/paypal.png",
-                          height: 25.0,
-                        ),
-                      )
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 130.0),
+                      //   child: Image.asset(
+                      //     "assets/img/paypal.png",
+                      //     height: 25.0,
+                      //   ),
+                      // )
                     ],
                   ),
                 ),
@@ -214,7 +211,7 @@ class _paymentState extends State<payment> {
                 /// Button pay
                 InkWell(
                   onTap: () {
-                    _showDialog(context);
+//                    _showDialog(context);
                     StartTime();
                   },
                   child: Container(
@@ -246,54 +243,54 @@ class _paymentState extends State<payment> {
 }
 
 /// Custom Text Header for Dialog after user succes payment
-var _txtCustomHead = TextStyle(
-  color: Colors.black54,
-  fontSize: 23.0,
-  fontWeight: FontWeight.w600,
-  fontFamily: "Gotik",
-);
+//var _txtCustomHead = TextStyle(
+//  color: Colors.black54,
+//  fontSize: 23.0,
+//  fontWeight: FontWeight.w600,
+//  fontFamily: "Gotik",
+//);
 
 /// Custom Text Description for Dialog after user succes payment
-var _txtCustomSub = TextStyle(
-  color: Colors.black38,
-  fontSize: 15.0,
-  fontWeight: FontWeight.w500,
-  fontFamily: "Gotik",
-);
+//var _txtCustomSub = TextStyle(
+//  color: Colors.black38,
+//  fontSize: 15.0,
+//  fontWeight: FontWeight.w500,
+//  fontFamily: "Gotik",
+//);
 
 /// Card Popup if success payment
-_showDialog(BuildContext ctx) {
-  showDialog(
-    context: ctx,
-    barrierDismissible: true,
-    child: SimpleDialog(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.only(top: 30.0, right: 60.0, left: 60.0),
-          color: Colors.white,
-          child: Image.asset(
-            "assets/img/checklist.png",
-            height: 110.0,
-            color: Colors.lightGreen,
-          ),
-        ),
-        Center(
-            child: Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: Text(
-            "Yuppy!!",
-            style: _txtCustomHead,
-          ),
-        )),
-        Center(
-            child: Padding(
-          padding: const EdgeInsets.only(top: 30.0, bottom: 40.0),
-          child: Text(
-            "Your Payment Receive to Seller",
-            style: _txtCustomSub,
-          ),
-        )),
-      ],
-    ),
-  );
-}
+//_showDialog(BuildContext ctx) {
+//  showDialog(
+//    context: ctx,
+//    barrierDismissible: true,
+////    child: SimpleDialog(
+////      children: <Widget>[
+////        Container(
+////          padding: EdgeInsets.only(top: 30.0, right: 60.0, left: 60.0),
+////          color: Colors.white,
+////          child: Image.asset(
+////            "assets/img/checklist.png",
+////            height: 110.0,
+////            color: Colors.lightGreen,
+////          ),
+////        ),
+////        Center(
+////            child: Padding(
+////          padding: const EdgeInsets.only(top: 16.0),
+////          child: Text(
+////            "Yuppy!!",
+////            style: _txtCustomHead,
+////          ),
+////        )),
+////        Center(
+////            child: Padding(
+////          padding: const EdgeInsets.only(top: 30.0, bottom: 40.0),
+////          child: Text(
+////            "Your Payment Receive to Seller",
+////            style: _txtCustomSub,
+////          ),
+////        )),
+////      ],
+////    ),
+//  );
+//}

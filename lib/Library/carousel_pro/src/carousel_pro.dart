@@ -52,7 +52,7 @@ class Carousel extends StatefulWidget {
   final bool overlayShadow;
 
   //Choose the color of the overlay Shadow color. Default Colors.grey[800]
-  final Color overlayShadowColors;
+  final Color? overlayShadowColors;
 
   //Choose the size of the Overlay Shadow, from 0.0 to 1.0. Default 0.5
   final double overlayShadowSize;
@@ -64,33 +64,26 @@ class Carousel extends StatefulWidget {
   final Duration autoplayDuration;
 
   Carousel(
-      {this.images,
+      {required this.images,
         this.animationCurve = Curves.ease,
         this.animationDuration = const Duration(milliseconds: 300),
         this.dotSize = 8.0,
         this.dotSpacing = 25.0,
         this.dotIncreaseSize = 2.0,
         this.dotColor = Colors.white,
-        this.dotBgColor,
+        required this.dotBgColor,
         this.showIndicator = true,
         this.indicatorBgPadding = 20.0,
         this.boxFit = BoxFit.cover,
         this.borderRadius = false,
-        this.radius,
+        required this.radius,
         this.moveIndicatorFromBottom = 0.0,
         this.noRadiusForIndicator = false,
         this.overlayShadow = false,
         this.overlayShadowColors,
         this.overlayShadowSize = 0.5,
         this.autoplay = true,
-        this.autoplayDuration = const Duration(seconds: 3)})
-      : assert(images != null),
-        assert(animationCurve != null),
-        assert(animationDuration != null),
-        assert(dotSize != null),
-        assert(dotSpacing != null),
-        assert(dotIncreaseSize != null),
-        assert(dotColor != null);
+        this.autoplayDuration = const Duration(seconds: 3)});
 
   @override
   State createState() => new CarouselState();
@@ -98,12 +91,13 @@ class Carousel extends StatefulWidget {
 
 class CarouselState extends State<Carousel> {
   PageController _controller = new PageController();
-  Timer timer;
+  Timer? timer;
   @override
   void initState() {
     super.initState();
 
     if (widget.autoplay) {
+
       timer = new Timer.periodic(widget.autoplayDuration, (_) {
         if (_controller.page == widget.images.length - 1) {
           _controller.animateToPage(
@@ -122,7 +116,7 @@ class CarouselState extends State<Carousel> {
   @override
   void dispose() {
     _controller.dispose();
-    _controller = null;
+//    _controller = null;
     timer?.cancel();
     timer = null;
     super.dispose();
@@ -153,14 +147,11 @@ class CarouselState extends State<Carousel> {
               end: Alignment.center,
               stops: [0.0, widget.overlayShadowSize],
               colors: [
-                widget.overlayShadowColors != null
-                    ? widget.overlayShadowColors
-                    .withOpacity(1.0)
-                    : Colors.grey[800].withOpacity(1.0),
-                widget.overlayShadowColors != null
-                    ? widget.overlayShadowColors
-                    .withOpacity(0.0)
-                    : Colors.grey[800].withOpacity(0.0)
+
+                widget.overlayShadowColors?.withOpacity(1.0)??
+                    widget.dotBgColor.withOpacity(1.0),
+                widget.overlayShadowColors
+                    ?.withOpacity(0.0)??widget.dotBgColor.withOpacity(0.0)
               ],
             ),
           ),
@@ -187,9 +178,7 @@ class CarouselState extends State<Carousel> {
           right: 0.0,
           child: new Container(
             decoration: new BoxDecoration(
-              color: widget.dotBgColor == null
-                  ? Colors.grey[800].withOpacity(0.5)
-                  : widget.dotBgColor,
+              color:widget.dotBgColor,
               borderRadius: widget.borderRadius
                   ? (widget.noRadiusForIndicator
                   ? null
@@ -231,13 +220,13 @@ class CarouselState extends State<Carousel> {
 /// An indicator showing the currently selected page of a PageController
 class DotsIndicator extends AnimatedWidget {
   DotsIndicator(
-      {this.controller,
-        this.itemCount,
-        this.onPageSelected,
-        this.color,
-        this.dotSize,
-        this.dotIncreaseSize,
-        this.dotSpacing})
+      {required this.controller,
+        required  this.itemCount,
+        required this.onPageSelected,
+        required this.color,
+        required this.dotSize,
+        required this.dotIncreaseSize,
+        required this.dotSpacing})
       : super(listenable: controller);
 
   // The PageController that this DotsIndicator is representing.
@@ -288,6 +277,7 @@ class DotsIndicator extends AnimatedWidget {
   }
 
   Widget build(BuildContext context) {
+
     return new Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: new List<Widget>.generate(itemCount, _buildDot),

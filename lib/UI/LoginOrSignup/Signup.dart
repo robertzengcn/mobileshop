@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:treva_shop_flutter/UI/BottomNavigationBar.dart';
-import 'package:treva_shop_flutter/UI/LoginOrSignup/Login.dart';
-import 'package:treva_shop_flutter/UI/LoginOrSignup/LoginAnimation.dart';
-import 'package:treva_shop_flutter/UI/LoginOrSignup/Signup.dart';
-
+//import 'package:amigatoy/UI/BottomNavigationBar.dart';
+import 'package:amigatoy/UI/LoginOrSignup/Login.dart';
+import 'package:amigatoy/UI/LoginOrSignup/LoginAnimation.dart';
+//import 'package:amigatoy/UI/LoginOrSignup/Signup.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:amigatoy/Blocs/blocs.dart';
+import 'package:email_validator/email_validator.dart';
 
 class Signup extends StatefulWidget {
   @override
@@ -14,10 +16,14 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> with TickerProviderStateMixin {
   //Animation Declaration
-  AnimationController sanimationController;
-  AnimationController animationControllerScreen;
-  Animation animationScreen;
+  late AnimationController sanimationController;
+  late AnimationController animationControllerScreen;
+  late Animation animationScreen;
   var tap = 0;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   /// Set AnimationController to initState
   @override
@@ -38,8 +44,8 @@ class _SignupState extends State<Signup> with TickerProviderStateMixin {
   /// Dispose animationController
   @override
   void dispose() {
-    super.dispose();
     sanimationController.dispose();
+    super.dispose();
   }
 
   /// Playanimation set forward reverse
@@ -49,6 +55,8 @@ class _SignupState extends State<Signup> with TickerProviderStateMixin {
       await sanimationController.reverse();
     } on TickerCanceled {}
   }
+
+
   /// Component Widget layout UI
   @override
   Widget build(BuildContext context) {
@@ -57,145 +65,227 @@ class _SignupState extends State<Signup> with TickerProviderStateMixin {
     mediaQueryData.size.height;
     mediaQueryData.size.width;
 
+    _onRegisterButtonPressed() {
+      if (_formKey.currentState!.validate()) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Processing Data')));
+      } else {
+        print('Form is invalid');
+        return;
+      }
+      BlocProvider.of<RegisterBloc>(context).add(
+          RegisterBtnclick(email: _emailController.text,
+              password: _passwordController.text,
+              fullName: _nameController.text
+          )
+      );
+    }
+    return BlocListener<RegisterBloc, RegisterState>(listener: (context, state) {
+      if (state is Registerfailure) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(content: Text('${state.error}')),
+          );
+      }else if(state is RegisterCompleted){
+        // Navigator.of(context).pushReplacement(
+        //     MaterialPageRoute(
+        //         builder: (BuildContext context) =>
+        //             new loginScreen()));
+        setState(() {
+          tap = 1;
+        });
+       
+        new LoginAnimation(
+          animationController: sanimationController,
+        );
+        _PlayAnimation();
+      }else if(state is RegisterLoadingState){
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(content: Text('Registering, please wait...')),
+          );
+      }
+    },
+      child: BlocBuilder<RegisterBloc, RegisterState>(
+  builder: (context, state) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Container(
-            /// Set Background image in layout
-            decoration: BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage("assets/img/backgroundgirl.png"),
-              fit: BoxFit.cover,
-            )),
-            child: Container(
-              /// Set gradient color in image
+        
+        body: Stack(
+          children: <Widget>[
+            Container(
+              /// Set Background image in layout
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color.fromRGBO(0, 0, 0, 0.2),
-                    Color.fromRGBO(0, 0, 0, 0.3)
-                  ],
-                  begin: FractionalOffset.topCenter,
-                  end: FractionalOffset.bottomCenter,
+                  image: DecorationImage(
+                image: AssetImage("assets/img/backgroundgirl.png"),
+                fit: BoxFit.cover,
+              )),
+              child: Container(
+                /// Set gradient color in image
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromRGBO(0, 0, 0, 0.2),
+                      Color.fromRGBO(0, 0, 0, 0.3)
+                    ],
+                    begin: FractionalOffset.topCenter,
+                    end: FractionalOffset.bottomCenter,
+                  ),
                 ),
-              ),
-              /// Set component layout
-              child: ListView(
-                padding: EdgeInsets.all(0.0),
-                children: <Widget>[
-                  Stack(
-                    alignment: AlignmentDirectional.bottomCenter,
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            alignment: AlignmentDirectional.topCenter,
-                            child: Column(
-                              children: <Widget>[
-                                /// padding logo
-                                Padding(
-                                    padding: EdgeInsets.only(
-                                        top:
-                                            mediaQueryData.padding.top + 40.0)),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                /// Set component layout
+                child: ListView(
+                  padding: EdgeInsets.all(0.0),
+                  children: <Widget>[
+                    Stack(
+                      alignment: AlignmentDirectional.bottomCenter,
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            Container(
+                              alignment: AlignmentDirectional.topCenter,
+                              child: Form(
+                                key: _formKey,
+                                child: Column(
                                   children: <Widget>[
-                                    Image(
-                                      image: AssetImage("assets/img/Logo.png"),
-                                      height: 70.0,
+                                    /// padding logo
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            top:
+                                                mediaQueryData.padding.top + 40.0)),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Image(
+                                          image: AssetImage("assets/img/Logo.png"),
+                                          height: 70.0,
+                                        ),
+                                        Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 10.0)),
+                                        /// Animation text treva shop accept from login layout
+                                        Hero(
+                                          tag: "Treva",
+                                          child: Text(
+                                            "Amiga Toy",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w900,
+                                                letterSpacing: 0.6,
+                                                fontFamily: "Sans",
+                                                color: Colors.white,
+                                                fontSize: 20.0),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10.0)),
-                                    /// Animation text treva shop accept from login layout
-                                    Hero(
-                                      tag: "Treva",
-                                      child: Text(
-                                        "Treva Shop",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w900,
-                                            letterSpacing: 0.6,
-                                            fontFamily: "Sans",
-                                            color: Colors.white,
-                                            fontSize: 20.0),
-                                      ),
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 70.0)),
+                                    textFromField(
+                                      icon: Icons.account_box_rounded,
+                                      password: false,
+                                      email: "Your Name",
+                                      inputType: TextInputType.text,
+                                      controllerValue: _nameController,
                                     ),
+                                    Padding(
+                                        padding:
+                                        EdgeInsets.symmetric(vertical: 5.0)),
+                                    /// TextFromField Email
+                                    textFromField(
+                                      icon: Icons.email,
+                                      password: false,
+                                      email: "Email",
+                                      inputType: TextInputType.emailAddress,
+                                      controllerValue: _emailController,
+                                    ),
+                                    Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 5.0)),
+
+                                    /// TextFromField Password
+                                    textFromField(
+                                      icon: Icons.vpn_key,
+                                      password: true,
+                                      email: "Password",
+                                      inputType: TextInputType.text,
+                                      controllerValue: _passwordController,
+                                    ),
+                                    Padding(
+                                        padding:
+                                        EdgeInsets.only(top: 20.0)),
+                                    /// Button Login
+                                    TextButton(
+                                        // padding: EdgeInsets.only(top: 20.0),
+                                        onPressed: () {
+                                          // _onRegisterButtonPressed();
+                                          Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (BuildContext context) =>
+                                                      new loginScreen()));
+                                        },
+                                        child: Text(
+                                          " Have Acount? Sign In",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 13.0,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: "Sans"),
+                                        )),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top: mediaQueryData.padding.top + 175.0,
+                                          bottom: 0.0),
+                                    )
                                   ],
                                 ),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 70.0)),
-                                /// TextFromField Email
-                                textFromField(
-                                  icon: Icons.email,
-                                  password: false,
-                                  email: "Email",
-                                  inputType: TextInputType.emailAddress,
-                                ),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 5.0)),
-
-                                /// TextFromField Password
-                                textFromField(
-                                  icon: Icons.vpn_key,
-                                  password: true,
-                                  email: "Password",
-                                  inputType: TextInputType.text,
-                                ),
-
-                                /// Button Login
-                                FlatButton(
-                                    padding: EdgeInsets.only(top: 20.0),
-                                    onPressed: () {
-                                      Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  new loginScreen()));
-                                    },
-                                    child: Text(
-                                      " Have Acount? Sign In",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 13.0,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: "Sans"),
-                                    )),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: mediaQueryData.padding.top + 175.0,
-                                      bottom: 0.0),
-                                )
-                              ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
 
-                      /// Set Animaion after user click buttonLogin
-                      tap == 0
-                          ? InkWell(
-                              splashColor: Colors.yellow,
-                              onTap: () {
-                                setState(() {
-                                  tap = 1;
-                                });
-                                _PlayAnimation();
-                                return tap;
-                              },
-                              child: buttonBlackBottom(),
-                            )
-                          : new LoginAnimation(
-                              animationController: sanimationController.view,
-                            )
-                    ],
-                  ),
-                ],
+                        /// Set Animaion after user click buttonLogin
+                        tap==0?InkWell(
+                                splashColor: Colors.yellow,
+                                onTap: () {
+                                  if(state is! RegisterLoadingState) {
+                                    _onRegisterButtonPressed();
+                                  }
+                                  // setState(() {
+                                  //   tap = 1;
+                                  // });
+                                  // _PlayAnimation();
+//                                return tap;
+                                },
+                                child: buttonBlackBottom(),
+                              ): new LoginAnimation(
+                          animationController: sanimationController,
+                        )
+
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
-      ),
+            new Positioned(
+              top: 0.0,
+              left: 0.0,
+              right: 0.0,
+              child: AppBar(
+                title: Text(''),// You can add title here
+                leading: new IconButton(
+                  icon: new Icon(Icons.arrow_back_ios, color: Colors.white),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                backgroundColor: Colors.transparent, //You can make this transparent
+                elevation: 0.0, //No shadow
+              ),)
+          ],
+        ),
+      );
+  },
+),
     );
   }
 }
@@ -206,8 +296,9 @@ class textFromField extends StatelessWidget {
   String email;
   IconData icon;
   TextInputType inputType;
+  TextEditingController controllerValue;
 
-  textFromField({this.email, this.icon, this.inputType, this.password});
+  textFromField({required this.email, required this.icon, required this.inputType, required this.password,required this.controllerValue});
 
   @override
   Widget build(BuildContext context) {
@@ -242,6 +333,19 @@ class textFromField extends StatelessWidget {
                     color: Colors.black38,
                     fontWeight: FontWeight.w600)),
             keyboardType: inputType,
+            controller: controllerValue,
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              } else if (email == 'Email') {
+                bool emailValid = EmailValidator.validate(value);
+
+                if (!emailValid) {
+                  return 'email address error';
+                }
+              }
+              return null;
+            },
           ),
         ),
       ),

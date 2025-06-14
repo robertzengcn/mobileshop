@@ -30,6 +30,13 @@
             {
               "client_id": "884455045668-cuamkq8h00avf4635trepsmddd2731nm.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "884455045668-dvp9krj6uhqt33er6atlhkhk5a2q660q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.amigatoy.appdata"
+              }
             }
           ]
         }

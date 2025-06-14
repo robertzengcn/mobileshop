@@ -4,7 +4,11 @@ class Category {
   String image;
   String description;
 
-  Category({this.id, this.title,this.image,this.description});
+  Category({
+    required this.id,
+    required this.title,
+    required this.image,
+    required this.description});
 
   Category.fromMap(Map snapshot,String documentid) :
         id = snapshot['id']??0,
